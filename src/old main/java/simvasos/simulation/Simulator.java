@@ -1,6 +1,5 @@
 package simvasos.simulation;
 
-import simvasos.scenario.mciresponse.MCIResponseRunner;
 import simvasos.simulation.component.Action;
 import simvasos.simulation.component.Agent;
 import simvasos.simulation.analysis.Snapshot;
@@ -9,9 +8,6 @@ import simvasos.simulation.component.World;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.concurrent.TimeUnit;
-
-import java.util.concurrent.TimeUnit;
 /**
  * Created by mgjin on 2017-06-21.
  */

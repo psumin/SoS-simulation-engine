@@ -1,8 +1,7 @@
 package simvasos.scenario.mciresponse;
 
-import kiise2016.SoS;
-import kr.ac.kaist.se.simulator.BaseConstituent;
-import simvasos.scenario.faultscenario.FaultWorld;
+
+
 import simvasos.scenario.mciresponse.entity.*;
 import simvasos.simulation.component.Scenario;
 import simvasos.simulation.component.World;

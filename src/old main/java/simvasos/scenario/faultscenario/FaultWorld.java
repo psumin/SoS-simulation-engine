@@ -1,6 +1,6 @@
 package simvasos.scenario.faultscenario;
 
-import com.sun.xml.internal.ws.wsdl.writer.document.Fault;
+
 import simvasos.scenario.mciresponse.MCIResponseScenario.SoSType;
 import simvasos.scenario.mciresponse.MCIResponseWorld;
 import simvasos.simulation.component.Message;

@@ -1,13 +1,11 @@
 package simvasos.scenario.mciresponse;
 
-import com.sun.org.glassfish.external.statistics.Statistic;
 import simvasos.scenario.faultscenario.FaultWorld;
 import simvasos.scenario.faultscenario.Statistics;
 import simvasos.simulation.Simulator;
 import simvasos.simulation.analysis.Snapshot;
 import simvasos.simulation.component.Scenario;
 import simvasos.scenario.mciresponse.MCIResponseScenario.SoSType;
-import simvasos.simulation.component.World;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -101,7 +99,7 @@ public class MCIResponseRunner {
 
                                 durationSum = 0;
                                 messageCntSum = 0;
-                                //world.setSeed(new Random().nextLong());
+                                world.setSeed(new Random().nextLong());
                                 //for (int i = minTrial - 1; i <= maxTrial; i++) {        // 왜인지는 모르겠지만 maxtrial보다 한번 더 돌리네...
                                 //world.setSeed(new Random().nextLong());
                                 ((MCIResponseWorld) world).setSoSType(sostype);

@@ -1,6 +1,5 @@
 package simvasos.scenario.mciresponse.entity;
 
-import kiise2016.SoS;
 import simvasos.modelparsing.modeling.ABCPlus.ABCItem;
 import simvasos.modelparsing.modeling.ABCPlus.ABCPlusCS;
 import simvasos.scenario.mciresponse.MCIResponseScenario.SoSType;
