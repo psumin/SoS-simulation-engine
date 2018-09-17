@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NewSimulator.iml" filepath="$PROJECT_DIR$/NewSimulator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NewSimulator_main.iml" filepath="$PROJECT_DIR$/.idea/modules/NewSimulator_main.iml" group="NewSimulator" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NewSimulator_test.iml" filepath="$PROJECT_DIR$/.idea/modules/NewSimulator_test.iml" group="NewSimulator" />
+      <module fileurl="file://$PROJECT_DIR$/src/new main/new main.iml" filepath="$PROJECT_DIR$/src/new main/new main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/old main/old main.iml" filepath="$PROJECT_DIR$/src/old main/old main.iml" />
     </modules>
   </component>
 </project>
