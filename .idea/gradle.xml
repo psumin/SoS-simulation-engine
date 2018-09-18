@@ -11,6 +11,10 @@
           </set>
         </option>
       </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/src/engine" />
+      </GradleProjectSettings>
     </option>
   </component>
 </project>
