@@ -23,6 +23,10 @@ public class SoSObjectManager {
     public void remove(SoSObject object) {
         objects.add(object);
     }
+    public void clear() {
+        objects.stream().forEach(obj -> obj.clear());
+        objects.clear();
+    }
 
     public void draw(Graphics2D g) {
         objects.add(null);

@@ -3,12 +3,17 @@ package maps;
 import misc.Position;
 import misc.SoSObject;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class Tile {
 
     Map map;
-    Position position;
+    Position position = new Position();
     LinkedList<SoSObject> objects = new LinkedList<>();
 
     public Tile(Map map) {

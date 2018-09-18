@@ -1,4 +1,8 @@
+import javafx.scene.Scene;
 import misc.Time;
+import privates.SoSObjectManager;
+import scenarios.SoSScenario;
+import scenarios.TestScenario;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -8,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 // 참고: http://www.java-gaming.org/topics/basic-game/21919/view.html
+// SoSSimulationEngine 클래스에서 참조하고 있는 클래스: Time, SoSObjectManager, SoSScenario
 public class SoSSimulationEngine implements Runnable {
 
     final int SIMULATION_WIDTH = 800;
@@ -75,6 +80,8 @@ public class SoSSimulationEngine implements Runnable {
         while(running){
             beginLoopTime = System.nanoTime();
 
+            init();
+
             // 보통은 update 이후 render를 하는데, 여기서는 순서가 반대임
             // 이게 맞는 것 같기도 함
             // 문제 생길 것 같진 않지만
@@ -108,6 +115,11 @@ public class SoSSimulationEngine implements Runnable {
         bufferStrategy.show();
     }
 
+    protected void init() {
+        SoSScenario scenario = new TestScenario();
+        scenario.start();
+    }
+
     // misc.Time class implementation
     private static final class TimeImpl extends Time {
         public TimeImpl() {
@@ -131,6 +143,7 @@ public class SoSSimulationEngine implements Runnable {
     // deltaTime 단위: 밀리초
     protected void update(int deltaTime){
         timeImpl.update(deltaTime);
+        SoSObjectManager.getInstance().update();
     }
 
     /**
@@ -139,6 +152,8 @@ public class SoSSimulationEngine implements Runnable {
     protected void render(Graphics2D g){
         g.setColor(new Color(255, 255, 255));
         g.fillRect(0, 0, SIMULATION_WIDTH, SIMULATION_HEIGHT);
+
+        SoSObjectManager.getInstance().draw(g);
     }
 
     public static void main(String [] args){

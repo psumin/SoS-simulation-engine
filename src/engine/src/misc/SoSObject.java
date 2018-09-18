@@ -3,6 +3,7 @@ package misc;
 import interfaces.IDrawable;
 import interfaces.IUpdatable;
 import misc.Position;
+import privates.SoSObjectManager;
 
 // 시뮬레이션 대상 오브젝트
 // 여기서부터 IUpdateable, IDrawable를 구현하기 때문에
@@ -24,12 +25,17 @@ public abstract class SoSObject implements IUpdatable, IDrawable {
         return name;
     }
 
+    public SoSObject() {
+        SoSObjectManager.getInstance().add(this);
+    }
+
     // init()과 clear()를 인터페이스로 빼서 할지 고민.
     // 일단 그냥 감
-    public void init() {
+    public abstract void init();
+    public abstract void clear();
 
-    }
-    public void clear() {
-
+    public final void destroy(SoSObject object) {
+        object.clear();
+        SoSObjectManager.getInstance().remove(object);
     }
 }

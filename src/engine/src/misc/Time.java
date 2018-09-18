@@ -24,4 +24,9 @@ public abstract class Time {
     public static int getFrameCount() {
         return instance.frameCount;
     }
+
+    public static void clear() {
+        instance.time = 0;
+        instance.frameCount = 0;
+    }
 }
