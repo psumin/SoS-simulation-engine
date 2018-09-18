@@ -1,3 +1,5 @@
+package misc;
+
 import interfaces.IDrawable;
 import interfaces.IUpdatable;
 import misc.Position;
@@ -9,7 +11,7 @@ import misc.Position;
 // 일단 간단하게 감
 public abstract class SoSObject implements IUpdatable, IDrawable {
 
-    String name;
+    String name = "No Named";
 
     // 2D라는 전제를 깔고 있음
     // 3D까지 고려하면서 구현하려면 차라리 게임 엔진(ex. 유니티 엔진 등)을 사용하는 것이 낫다 생각함

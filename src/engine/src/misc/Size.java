@@ -1,6 +1,8 @@
+package misc;
+
 public class Size {
-    int width;
-    int height;
+    public int width;
+    public int height;
 
     public Size() {
         width = 0;

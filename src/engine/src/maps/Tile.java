@@ -1,5 +1,7 @@
+package maps;
+
 import misc.Position;
-import publics.SoSObject;
+import misc.SoSObject;
 
 import java.util.LinkedList;
 

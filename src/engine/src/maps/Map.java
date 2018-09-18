@@ -1,3 +1,5 @@
+package maps;
+
 import misc.Position;
 import misc.Size;
 
