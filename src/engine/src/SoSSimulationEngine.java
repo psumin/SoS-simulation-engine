@@ -1,6 +1,4 @@
-package base;
-
-import base.singletons.Time;
+import misc.Time;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -109,12 +107,30 @@ public class SoSSimulationEngine implements Runnable {
         g.dispose();
         bufferStrategy.show();
     }
+
+    // misc.Time class implementation
+    private static final class TimeImpl extends Time {
+        public TimeImpl() {
+            instance = this;
+            deltaTime = 0;
+            time = 0;
+            frameCount = 0;
+        }
+
+        public void update(int deltaTime) {
+            this.deltaTime = deltaTime;
+            time += deltaTime;
+            frameCount++;
+        }
+    }
+    TimeImpl timeImpl = new TimeImpl();
+
     /**
      * Rewrite this method for your game
      */
     // deltaTime 단위: 밀리초
     protected void update(int deltaTime){
-        Time.getInstance().update(deltaTime);
+        timeImpl.update(deltaTime);
     }
 
     /**
@@ -126,6 +142,7 @@ public class SoSSimulationEngine implements Runnable {
     }
 
     public static void main(String [] args){
+
         SoSSimulationEngine simulationEngine = new SoSSimulationEngine();
         new Thread(simulationEngine).start();
     }
