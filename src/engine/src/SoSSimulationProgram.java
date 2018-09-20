@@ -1,8 +1,5 @@
-import javafx.scene.Scene;
+import core.World;
 import misc.Time;
-import privates.SoSObjectManager;
-import scenarios.SoSScenario;
-import scenarios.TestScenario;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -12,8 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 // 참고: http://www.java-gaming.org/topics/basic-game/21919/view.html
-// SoSSimulationEngine 클래스에서 참조하고 있는 클래스: Time, SoSObjectManager, SoSScenario
-public class SoSSimulationEngine implements Runnable {
+// SoSSimulationProgram 클래스에서 참조하고 있는 클래스: Time, SoSObjectManager, SoSScenario
+public class SoSSimulationProgram implements Runnable {
 
     final int SIMULATION_WIDTH = 800;
     final int SIMULATION_HEIGHT = 800;
@@ -23,7 +20,7 @@ public class SoSSimulationEngine implements Runnable {
     Canvas canvas;
     BufferStrategy bufferStrategy;
 
-    public SoSSimulationEngine(){
+    public SoSSimulationProgram(){
         frame = new JFrame("SimulationEngine");
 
         JPanel panel = (JPanel) frame.getContentPane();
@@ -77,10 +74,9 @@ public class SoSSimulationEngine implements Runnable {
         long lastUpdateTime;
         long deltaLoop;
 
+        init();
         while(running){
             beginLoopTime = System.nanoTime();
-
-            init();
 
             // 보통은 update 이후 render를 하는데, 여기서는 순서가 반대임
             // 이게 맞는 것 같기도 함
@@ -105,6 +101,7 @@ public class SoSSimulationEngine implements Runnable {
                 }
             }
         }
+        clear();
     }
 
     private void render() {
@@ -115,9 +112,11 @@ public class SoSSimulationEngine implements Runnable {
         bufferStrategy.show();
     }
 
+    World world;
+    // 시뮬레이션 초기화
     protected void init() {
-        SoSScenario scenario = new TestScenario();
-        scenario.start();
+        world = new World();
+        world.init();
     }
 
     // misc.Time class implementation
@@ -143,7 +142,7 @@ public class SoSSimulationEngine implements Runnable {
     // deltaTime 단위: 밀리초
     protected void update(int deltaTime){
         timeImpl.update(deltaTime);
-        SoSObjectManager.getInstance().update();
+        world.update();
     }
 
     /**
@@ -152,13 +151,16 @@ public class SoSSimulationEngine implements Runnable {
     protected void render(Graphics2D g){
         g.setColor(new Color(255, 255, 255));
         g.fillRect(0, 0, SIMULATION_WIDTH, SIMULATION_HEIGHT);
+        world.render(g);
+    }
 
-        SoSObjectManager.getInstance().draw(g);
+    protected void clear() {
+        world.clear();
     }
 
     public static void main(String [] args){
 
-        SoSSimulationEngine simulationEngine = new SoSSimulationEngine();
+        SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
         new Thread(simulationEngine).start();
     }
 }

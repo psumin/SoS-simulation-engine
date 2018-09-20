@@ -1,6 +1,6 @@
 package misc;
 
-// SoSSimulationEngine.java에서 misc.Time 클래스의 콘크리트 클래스 구현
+// SoSSimulationProgram.java에서 misc.Time 클래스의 콘크리트 클래스 구현
 // 그 구현에 update() 메소드가 있고, update 메소드에서 변수들의 값을 업데이트
 public abstract class Time {
 
