@@ -27,4 +27,9 @@ public class Position {
     public Position down() {
         return new Position(x, y + 1);
     }
+
+    public void move(Position offset) {
+        x += offset.x;
+        y += offset.y;
+    }
 }

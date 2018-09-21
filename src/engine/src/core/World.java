@@ -3,6 +3,7 @@ package core;
 import agents.FireFighter;
 import agents.Patient;
 import misc.Size;
+import misc.Time;
 
 import java.awt.*;
 import java.util.Random;
@@ -17,11 +18,8 @@ public class World {
     int maxPatient = 10;
 
     public void init() {
-        map = new Map();
-        map.init(mapSize);
-
+        map = new Map().init(mapSize);
         Map.setGlobal(map);
-
 
         SoSObject.initAll();
 
@@ -38,8 +36,15 @@ public class World {
         generatePaitents();
     }
 
+    // 일단 매 1초마다
+    int time = 0;
     public void update() {
-        SoSObject.updateAll();
+
+        time += Time.getDeltaTime();
+        if(time > Time.fromSecond(0.2f)) {
+            SoSObject.updateAll();
+            time = 0;
+        }
     }
 
     public void render(Graphics2D g) {
@@ -53,18 +58,21 @@ public class World {
 
     private void generateFireFighters(){
         for(int i = 0; i < maxFireFighter; ++i) {
-            FireFighter fireFighter = new FireFighter();
-            fireFighter.init();
-            fireFighter.setPosition(0, 0);
+            FireFighter fireFighter = new FireFighter()
+                    .init()
+                    .setPosition(0, 0)
+                    .canUpdate(true)
+                    .setVisualRange(new Size(3, 3));
         }
     }
 
     private void generatePaitents() {
         Random random = new Random();
         for(int i = 0; i < maxPatient; ++i) {
-            Patient patient = new Patient();
-            patient.init();
-            patient.setPosition(random.nextInt(mapSize.width), random.nextInt(mapSize.height));
+            Patient patient = new Patient()
+                    .init()
+                    .setPosition(random.nextInt(mapSize.width), random.nextInt(mapSize.height))
+                    .canUpdate(true);
         }
     }
 }

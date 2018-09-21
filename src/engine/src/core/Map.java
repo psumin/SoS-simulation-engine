@@ -1,14 +1,16 @@
 package core;
 
 import misc.Position;
+import misc.Region;
 import misc.Size;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Map {
 
-    static Map global = null;
+    public static Map global = null;
 
     Size mapSize;
     Tile[][] tiles;
@@ -17,7 +19,7 @@ public class Map {
         global = map;
     }
 
-    public void init(int width, int height) {
+    public Map init(int width, int height) {
         mapSize = new Size(width, height);
         tiles = new Tile[height][width];
         for(int y = 0; y < height; ++y) {
@@ -27,9 +29,10 @@ public class Map {
                 tiles[y][x] = tile;
             }
         }
+        return this;
     }
-    public void init(Size size) {
-        init(size.width, size.height);
+    public Map init(Size size) {
+        return init(size.width, size.height);
     }
 
     public void render(Graphics2D g) {
@@ -50,7 +53,7 @@ public class Map {
         mapSize = null;
     }
 
-    Tile getTile(int x, int y) {
+    public Tile getTile(int x, int y) {
         if(x < 0 || x >= mapSize.width)
             return null;
         if(y < 0 || y >= mapSize.height)
@@ -58,7 +61,30 @@ public class Map {
         return tiles[y][x];
     }
 
-    Tile getTile(Position position) {
+    public Tile getTile(Position position) {
         return getTile(position.x, position.y);
+    }
+
+    // 사각 영역 [from, to]
+    // from: 왼쪽 위
+    // to: 오른쪽 아래
+    public Tile[] getTile(Position from, Position to) {
+        ArrayList<Tile> values = new ArrayList<>();
+        for(int y = from.y; y <= to.y; ++y) {
+            for(int x = from.x; x <= to.x; ++x) {
+                Tile tile = getTile(x, y);
+                if(tile != null) {
+                    values.add(tile);
+                }
+            }
+        }
+        return (Tile[])values.toArray();
+    }
+    public Tile[] getTile(Region region) {
+        return getTile(region.from, region.to);
+    }
+
+    public Size getMapSize() {
+        return mapSize;
     }
 }

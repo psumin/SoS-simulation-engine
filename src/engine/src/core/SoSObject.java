@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class SoSObject {
+public abstract class SoSObject <T extends SoSObject> {
 
     // 1. 여기서부터
     static Queue<SoSObject> all = null;
@@ -43,31 +43,54 @@ public class SoSObject {
     }
     // 1. 여기까지 다른 클래스로 빼도 됨. 그냥 이렇게 하고 싶었음. 설계따위
 
-
     protected String name;
     protected Position position;
     protected Queue<Msg> msgQueue = new LinkedList<>();
     protected BufferedImage image;
+
+    boolean _canUpdate = true;
+    boolean _canRender = true;
 
     public SoSObject() {
         assert all != null : "오브젝트를 생성하기 전에 SoSObject.initAll()을 호출할 것";
         all.add(this);
     }
 
-    public void init() {
+    public abstract T init();
+
+    public T canUpdate(boolean _canUpdate) {
+        this._canUpdate = _canUpdate;
+        return (T)this;
+    }
+
+    // 외부용
+    public final void update() {
+        if(_canUpdate) {
+            onUpdate();
+        }
+    }
+    // 상속용
+    protected void onUpdate() {
 
     }
 
-    public void update() {
-
+    // 외부용
+    public final void render(Graphics2D g) {
+        if(_canRender) {
+            onRender(g);
+        }
     }
-    public void render(Graphics2D g) {
+
+    // 상속용
+    protected void onRender(Graphics2D g) {
         int width = image.getWidth();
         int height = image.getHeight();
         g.drawImage(image, position.x * width, position.y * height, null);
     }
-    public void clear() {
+
+    public T clear() {
         position = null;
+        return (T)this;
     }
 
     public void destroy() {
@@ -75,22 +98,32 @@ public class SoSObject {
         all.remove(this);
     }
 
-    public void setPosition(Position position) {
-        setPosition(position.x, position.y);
+    public T setPosition(Position position) {
+        return setPosition(position.x, position.y);
     }
-    public void setPosition(int x, int y) {
+    public T setPosition(int x, int y) {
+        Tile nextTile = Map.global.getTile(x, y);
+        if(nextTile == null)
+            return (T) this;
+
         if(position != null) {
-            Map.global.getTile(position).remove(this);
+            Tile tile = Map.global.getTile(position);
+            if(tile != null) {
+                tile.remove(this);
+            }
         }
         position = new Position(x, y);
-        Map.global.getTile(x, y).add(this);
+
+        nextTile.add(this);
+        return (T)this;
     }
 
-    protected void loadImage(String filepath) {
+    protected T loadImage(String filepath) {
         try {
             image = ImageIO.read(new File(filepath));
         } catch(IOException e) {
             e.printStackTrace();
         }
+        return (T)this;
     }
 }

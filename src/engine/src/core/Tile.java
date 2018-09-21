@@ -16,7 +16,13 @@ public class Tile {
 
     BufferedImage image;
 
-    public void init(int x, int y) {
+    boolean _visited = false;
+    public Tile visited(boolean _visited) {
+        this._visited = _visited;
+        return this;
+    }
+
+    public Tile init(int x, int y) {
         position = new Position(x, y);
         objects = new ArrayList<>();
 
@@ -25,6 +31,7 @@ public class Tile {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return this;
     }
 
     public void clear() {
