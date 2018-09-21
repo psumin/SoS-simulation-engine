@@ -80,10 +80,10 @@ public class SoSObject {
     }
     public void setPosition(int x, int y) {
         if(position != null) {
-            Map.current.getTile(position).remove(this);
+            Map.global.getTile(position).remove(this);
         }
         position = new Position(x, y);
-        Map.current.getTile(x, y).add(this);
+        Map.global.getTile(x, y).add(this);
     }
 
     protected void loadImage(String filepath) {

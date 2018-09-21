@@ -8,13 +8,13 @@ import java.util.Arrays;
 
 public class Map {
 
-    static Map current = null;
+    static Map global = null;
 
     Size mapSize;
     Tile[][] tiles;
 
-    public Map() {
-        current = this;
+    static void setGlobal(Map map) {
+        global = map;
     }
 
     public void init(int width, int height) {
@@ -27,6 +27,9 @@ public class Map {
                 tiles[y][x] = tile;
             }
         }
+    }
+    public void init(Size size) {
+        init(size.width, size.height);
     }
 
     public void render(Graphics2D g) {

@@ -46,15 +46,15 @@ public class Tile {
 
 
     public Tile left() {
-        return Map.current.getTile(position.left());
+        return Map.global.getTile(position.left());
     }
     public Tile right() {
-        return Map.current.getTile(position.right());
+        return Map.global.getTile(position.right());
     }
     public Tile up() {
-        return Map.current.getTile(position.up());
+        return Map.global.getTile(position.up());
     }
     public Tile down() {
-        return Map.current.getTile(position.down());
+        return Map.global.getTile(position.down());
     }
 }
