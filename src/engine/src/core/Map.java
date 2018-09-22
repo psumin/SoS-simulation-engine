@@ -68,7 +68,7 @@ public class Map {
     // 사각 영역 [from, to]
     // from: 왼쪽 위
     // to: 오른쪽 아래
-    public Tile[] getTile(Position from, Position to) {
+    public ArrayList<Tile> getTile(Position from, Position to) {
         ArrayList<Tile> values = new ArrayList<>();
         for(int y = from.y; y <= to.y; ++y) {
             for(int x = from.x; x <= to.x; ++x) {
@@ -78,9 +78,9 @@ public class Map {
                 }
             }
         }
-        return (Tile[])values.toArray();
+        return values;
     }
-    public Tile[] getTile(Region region) {
+    public ArrayList<Tile> getTile(Region region) {
         return getTile(region.from, region.to);
     }
 

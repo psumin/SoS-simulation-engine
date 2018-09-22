@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -57,8 +58,8 @@ public class FireFighter extends SoSObject<FireFighter> {
     }
 
     private void setVisitedToTile() {
-        Tile[] tiles = localMap.getTile(getVisualRegion());
-        Arrays.stream(tiles).forEach(tile -> tile.visited(true));
+        ArrayList<Tile> tiles = localMap.getTile(getVisualRegion());
+        tiles.stream().forEach(tile -> tile.visited(true));
     }
 
     @Override
