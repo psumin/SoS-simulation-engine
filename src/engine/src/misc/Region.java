@@ -14,6 +14,10 @@ public class Region {
         this.to = to;
     }
 
+    public void move(int offsetX, int offsetY) {
+        move(new Position(offsetX, offsetY));
+    }
+
     public void move(Position offset) {
         from.move(offset);
         to.move(offset);

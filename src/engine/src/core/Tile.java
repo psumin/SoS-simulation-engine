@@ -14,7 +14,8 @@ public class Tile {
     Position position;
     ArrayList<SoSObject> objects;
 
-    BufferedImage image;
+    BufferedImage lightImage;
+    BufferedImage darkImage;
 
     boolean _visited = false;
     public Tile visited(boolean _visited) {
@@ -22,12 +23,17 @@ public class Tile {
         return this;
     }
 
+    public boolean isVisited() {
+        return  _visited;
+    }
+
     public Tile init(int x, int y) {
         position = new Position(x, y);
         objects = new ArrayList<>();
 
         try {
-            image = ImageIO.read(new File("src/engine/resources/tile30x30.png"));
+            lightImage = ImageIO.read(new File("src/engine/resources/tile30x30.png"));
+            darkImage = ImageIO.read(new File("src/engine/resources/tile_dark30x30.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,9 +52,14 @@ public class Tile {
     }
 
     public void render(Graphics2D g) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        g.drawImage(image, position.x * width, position.y * height, null);
+        int width = lightImage.getWidth();
+        int height = lightImage.getHeight();
+        if(_visited) {
+            g.drawImage(lightImage, position.x * width, position.y * height, null);
+        } else {
+            //g.drawImage(lightImage, position.x * width, position.y * height, null);
+            g.drawImage(darkImage, position.x * width, position.y * height, null);
+        }
     }
 
 
@@ -63,5 +74,9 @@ public class Tile {
     }
     public Tile down() {
         return Map.global.getTile(position.down());
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

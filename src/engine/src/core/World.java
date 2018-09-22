@@ -32,8 +32,8 @@ public class World {
 //        Patient p = new Patient();
 //        p.init();
 //        p.setPosition(0, 0);
-        generateFireFighters();
         generatePaitents();
+        generateFireFighters();
     }
 
     // 일단 매 1초마다
@@ -41,7 +41,7 @@ public class World {
     public void update() {
 
         time += Time.getDeltaTime();
-        if(time > Time.fromSecond(0.2f)) {
+        if(time > Time.fromSecond(0.1f)) {
             SoSObject.updateAll();
             time = 0;
         }
