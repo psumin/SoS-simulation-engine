@@ -112,12 +112,7 @@ public class SoSSimulationProgram implements Runnable {
         bufferStrategy.show();
     }
 
-    World world;
-    // 시뮬레이션 초기화
-    protected void init() {
-        world = new World();
-        world.init();
-    }
+
 
     // misc.Time class implementation
     private static final class TimeImpl extends Time {
@@ -135,6 +130,11 @@ public class SoSSimulationProgram implements Runnable {
         }
     }
     TimeImpl timeImpl = new TimeImpl();
+
+    World world;
+    protected void init() {
+        world = new World();
+    }
 
     /**
      * Rewrite this method for your game
@@ -155,11 +155,9 @@ public class SoSSimulationProgram implements Runnable {
     }
 
     protected void clear() {
-        world.clear();
     }
 
     public static void main(String [] args){
-
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
         new Thread(simulationEngine).start();
     }

@@ -1,78 +1,36 @@
 package core;
 
-import agents.FireFighter;
-import agents.Patient;
+import misc.Position;
 import misc.Size;
-import misc.Time;
 
 import java.awt.*;
-import java.util.Random;
+import java.util.ArrayList;
 
-public class World {
+public class World extends SoSObject{
 
-    Map map;
-    Size mapSize = new Size(20, 20);
+    public static final Size mapSize = new Size(20, 20);
+    public static final Size tileSize = new Size(30, 30);
+    ArrayList<Tile> tiles = new ArrayList<>(mapSize.width * mapSize.height);
 
-    // 테스트
-    int maxFireFighter = 10;
-    int maxPatient = 10;
-
-    public void init() {
-        map = new Map().init(mapSize);
-        Map.setGlobal(map);
-
-        SoSObject.initAll();
-
-//        // 소방관 생성 예시
-//        FireFighter ff = new FireFighter();
-//        ff.init();
-//        ff.setPosition(1, 1);
-//
-//        // 환자 생성 예시
-//        Patient p = new Patient();
-//        p.init();
-//        p.setPosition(0, 0);
-        generatePaitents();
-        generateFireFighters();
+    public World() {
+        createTiles();
     }
 
-    // 일단 매 1초마다
-    int time = 0;
-    public void update() {
-
-        time += Time.getDeltaTime();
-        if(time > Time.fromSecond(0.1f)) {
-            SoSObject.updateAll();
-            time = 0;
+    private void createTiles() {
+        for(int y = 0; y < mapSize.height; ++y) {
+            for(int x = 0; x < mapSize.width; ++x) {
+                Tile tile = new Tile(new Position(x, y), tileSize);
+                tiles.add(tile);
+                addChild(tile);
+            }
         }
     }
 
-    public void render(Graphics2D g) {
-        map.render(g);
-        SoSObject.renderAll(g);
-    }
-    public void clear() {
-        SoSObject.clearAll();
-        map.clear();
+    @Override
+    public void onRender(Graphics2D g) {
+        Rectangle rect = g.getDeviceConfiguration().getBounds();
+        g.setColor(new Color(100, 100, 100));
+        g.fillRect(rect.x, rect.y, rect.width, rect.height);
     }
 
-    private void generateFireFighters(){
-        for(int i = 0; i < maxFireFighter; ++i) {
-            FireFighter fireFighter = new FireFighter()
-                    .init()
-                    .setPosition(0, 0)
-                    .canUpdate(true)
-                    .setVisualRange(new Size(3, 3));
-        }
-    }
-
-    private void generatePaitents() {
-        Random random = new Random();
-        for(int i = 0; i < maxPatient; ++i) {
-            Patient patient = new Patient()
-                    .init()
-                    .setPosition(random.nextInt(mapSize.width), random.nextInt(mapSize.height))
-                    .canUpdate(true);
-        }
-    }
 }

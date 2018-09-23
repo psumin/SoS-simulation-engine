@@ -1,82 +1,35 @@
 package core;
 
 import misc.Position;
+import misc.Size;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+public class Tile extends SoSObject {
 
-public class Tile {
-
-    Position position;
-    ArrayList<SoSObject> objects;
-
-    BufferedImage lightImage;
-    BufferedImage darkImage;
+    SoSObject light;
+    SoSObject dark;
 
     boolean _visited = false;
-    public Tile visited(boolean _visited) {
+    public void visited(boolean _vistied) {
         this._visited = _visited;
-        return this;
-    }
 
+        light.visible(_visited);
+        dark.visible(!_vistied);
+    }
     public boolean isVisited() {
-        return  _visited;
+        return _visited;
     }
 
-    public Tile init(int x, int y) {
-        position = new Position(x, y);
-        objects = new ArrayList<>();
+    public Tile(Position position, Size tileSize) {
 
-        try {
-            lightImage = ImageIO.read(new File("src/engine/resources/tile30x30.png"));
-            darkImage = ImageIO.read(new File("src/engine/resources/tile_dark30x30.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return this;
-    }
+        setPosition(position.x * tileSize.width, position.y * tileSize.height);
 
-    public void clear() {
-        objects = null;
-    }
+        light = new ImageObject("src/engine/resources/tile30x30.png");
+        dark = new ImageObject("src/engine/resources/tile_dark30x30.png");
 
-    public void add(SoSObject object) {
-        objects.add(object);
-    }
-    public void remove(SoSObject object) {
-        objects.remove(object);
-    }
-
-    public void render(Graphics2D g) {
-        int width = lightImage.getWidth();
-        int height = lightImage.getHeight();
-        if(_visited) {
-            g.drawImage(lightImage, position.x * width, position.y * height, null);
-        } else {
-            //g.drawImage(lightImage, position.x * width, position.y * height, null);
-            g.drawImage(darkImage, position.x * width, position.y * height, null);
-        }
+        addChild(light);
+        addChild(dark);
     }
 
 
-    public Tile left() {
-        return Map.global.getTile(position.left());
-    }
-    public Tile right() {
-        return Map.global.getTile(position.right());
-    }
-    public Tile up() {
-        return Map.global.getTile(position.up());
-    }
-    public Tile down() {
-        return Map.global.getTile(position.down());
-    }
 
-    public Position getPosition() {
-        return position;
-    }
 }
