@@ -18,7 +18,7 @@ public class Search extends Action {
     }
 
     private void search() {
-        if(rescue()) {
+        if(selectPatient()) {
             return;
         }
         while(true) {
@@ -37,18 +37,34 @@ public class Search extends Action {
         if(msg.startsWith("action complete")) {
             search();
         } else if(msg.startsWith("move")) {
-            rescue();
+            selectPatient();
         } else if(msg == "rescue complete") {
             search();
         }
     }
 
-    private boolean rescue() {
+    private boolean selectPatient() {
         LinkedList<Patient> patients =  fireFighter.getPatientsMemory();
-        if(patients.isEmpty() == false) {
+        LinkedList<Patient> serious = new LinkedList<>();
+        LinkedList<Patient> wounded = new LinkedList<>();
+
+        patients.forEach(p -> {
+            switch (p.getStatus()) {
+                case Wounded:
+                    wounded.add(p);
+                    break;
+                case Serious:
+                    serious.add(p);
+                    break;
+                case Dead:
+                    break;
+            }
+        });
+
+        if(serious.isEmpty() == false) {
             int minDistance = 99999999;
             Patient minPatient = null;
-            for(Patient patient : patients) {
+            for(Patient patient : serious) {
                 int dist = Math.abs(fireFighter.position.x - patient.position.x);
                 dist += Math.abs(fireFighter.position.y - patient.position.y);
                 if (dist < minDistance) {
@@ -58,6 +74,33 @@ public class Search extends Action {
             }
             if(minPatient != null) {
                 patients.remove(minPatient);
+                //serious.remove(minPatient);
+                //currentAction = new MoveTo(target, minPatient.position);
+                if(currentAction != null) {
+                    currentAction.remove();
+                    currentAction = null;
+                }
+                currentAction = new Rescue(fireFighter, minPatient);
+                currentAction.parentAction = this;
+                return true;
+            }
+        }
+
+
+        if(wounded.isEmpty() == false) {
+            int minDistance = 99999999;
+            Patient minPatient = null;
+            for(Patient patient : wounded) {
+                int dist = Math.abs(fireFighter.position.x - patient.position.x);
+                dist += Math.abs(fireFighter.position.y - patient.position.y);
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    minPatient = patient;
+                }
+            }
+            if(minPatient != null) {
+                patients.remove(minPatient);
+                //wounded.remove(minPatient);
                 //currentAction = new MoveTo(target, minPatient.position);
                 if(currentAction != null) {
                     currentAction.remove();
@@ -69,5 +112,30 @@ public class Search extends Action {
             }
         }
         return false;
+
+//        if(patients.isEmpty() == false) {
+//            int minDistance = 99999999;
+//            Patient minPatient = null;
+//            for(Patient patient : patients) {
+//                int dist = Math.abs(fireFighter.position.x - patient.position.x);
+//                dist += Math.abs(fireFighter.position.y - patient.position.y);
+//                if (dist < minDistance) {
+//                    minDistance = dist;
+//                    minPatient = patient;
+//                }
+//            }
+//            if(minPatient != null) {
+//                patients.remove(minPatient);
+//                //currentAction = new MoveTo(target, minPatient.position);
+//                if(currentAction != null) {
+//                    currentAction.remove();
+//                    currentAction = null;
+//                }
+//                currentAction = new Rescue(fireFighter, minPatient);
+//                currentAction.parentAction = this;
+//                return true;
+//            }
+//        }
+//        return false;
     }
 }

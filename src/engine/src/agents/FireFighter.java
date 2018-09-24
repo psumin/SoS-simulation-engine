@@ -18,6 +18,8 @@ public class FireFighter extends SoSObject {
     Queue<Tile> unVisited;
     LinkedList<Patient> patientsMemory = new LinkedList<>();
 
+    int sightRange = 5;
+
     public FireFighter(World world, String name) {
         super(name);
         this.world = world;
@@ -64,8 +66,8 @@ public class FireFighter extends SoSObject {
     @Override
     public void setPosition(int _x, int _y) {
         this.position.set(_x, _y);
-        for(int y = position.y - 1; y <= position.y + 1; ++y) {
-            for(int x = position.x - 1; x <= position.x + 1; ++x) {
+        for(int y = position.y - sightRange / 2; y <= position.y + sightRange / 2; ++y) {
+            for(int x = position.x - sightRange / 2; x <= position.x + sightRange / 2; ++x) {
 
                 Tile worldTile = world.getMap().getTile(x, y);
                 if(worldTile != null && worldTile.isVisited() == false) {

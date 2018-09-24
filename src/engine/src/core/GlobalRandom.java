@@ -1,5 +1,6 @@
 package core;
 
+import agents.Patient;
 import misc.Position;
 
 import java.util.Random;
@@ -15,5 +16,9 @@ public class GlobalRandom {
 
     public static Position nextPosition(int boundX, int boundY) {
         return new Position(random.nextInt(boundX), random.nextInt(boundY));
+    }
+
+    public static int nextInt(int bound) {
+        return random.nextInt(bound);
     }
 }
