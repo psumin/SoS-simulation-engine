@@ -140,9 +140,15 @@ public class SoSSimulationProgram implements Runnable {
      * Rewrite this method for your game
      */
     // deltaTime 단위: 밀리초
+    int time = 0;
     protected void update(int deltaTime){
         timeImpl.update(deltaTime);
-        world.update();
+
+        time += Time.getDeltaTime();
+        if(time >= Time.fromSecond(0.1f)) {
+            world.update();
+            time = 0;
+        }
     }
 
     /**

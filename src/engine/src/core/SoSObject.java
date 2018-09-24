@@ -11,6 +11,13 @@ import java.util.Queue;
 // 등록 해지하면 실행 X
 public abstract class SoSObject {
 
+    public SoSObject() {
+
+    }
+    public SoSObject(String name) {
+        setName(name);
+    }
+
     SoSObject parent;
     public void setParent(SoSObject parent) {
         this.parent = parent;
@@ -26,8 +33,7 @@ public abstract class SoSObject {
     }
 
     // << Field: position >>
-    // 타일 좌표
-    private Position position = new Position();
+    public Position position = new Position();
     public void setPosition(Position position) {
         this.position = position;
     }
@@ -107,7 +113,7 @@ public abstract class SoSObject {
         if(_visible) {
 
             Graphics2D localGraphic = (Graphics2D)g.create();
-            localGraphic.translate(position.x, position.y);
+            localGraphic.translate(position.x * World.tileSize.width, position.y * World.tileSize.height);
             onRender(localGraphic);
 
             children.add(null);
@@ -141,5 +147,34 @@ public abstract class SoSObject {
     // 자기 자신 삭제
     public void remove() {
         clear();
+    }
+
+
+    private String name = "";
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    SoSObject findObject(String targetName) {
+        if(name == targetName) {
+            return this;
+        } else {
+            for (SoSObject child : children) {
+                SoSObject object = child.findObject(targetName);
+                if(object != null) {
+                    return object;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public void sendMessage(String msg, Object data) {
+
     }
 }

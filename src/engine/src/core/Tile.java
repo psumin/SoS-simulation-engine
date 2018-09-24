@@ -19,9 +19,9 @@ public class Tile extends SoSObject {
         return _visited;
     }
 
-    public Tile(Position position, Size tileSize) {
+    public Tile(Position position) {
 
-        setPosition(position.x * tileSize.width, position.y * tileSize.height);
+        setPosition(position);
 
         light = new ImageObject("src/engine/resources/tile30x30.png");
         dark = new ImageObject("src/engine/resources/tile_dark30x30.png");
