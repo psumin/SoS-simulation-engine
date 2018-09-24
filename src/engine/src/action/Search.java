@@ -18,6 +18,9 @@ public class Search extends Action {
     }
 
     private void search() {
+        if(rescue()) {
+            return;
+        }
         while(true) {
             if(fireFighter.getUnVisited().isEmpty()) break;
             Tile tile = fireFighter.getUnVisited().poll();

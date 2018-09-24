@@ -12,7 +12,7 @@ public class World extends SoSObject{
 
     public static final Size mapSize = new Size(20, 20);
     public static final Size tileSize = new Size(30, 30);
-    public static final int maxPatient = 10;
+    public static final int maxPatient = 200;
     public static final int maxFireFighter = 10;
 
     Map map;
