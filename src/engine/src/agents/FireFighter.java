@@ -2,10 +2,7 @@ package agents;
 
 import action.Action;
 import action.MoveTo;
-import core.ImageObject;
-import core.SoSObject;
-import core.Tile;
-import core.World;
+import core.*;
 import misc.Position;
 import misc.Time;
 
@@ -17,7 +14,7 @@ import java.util.Queue;
 public class FireFighter extends SoSObject {
 
     World world;
-    ArrayList<Tile> localMap;
+    Map localMap;
     Queue<Tile> unVisited;
 
     public FireFighter(World world, String name) {
@@ -25,8 +22,9 @@ public class FireFighter extends SoSObject {
         this.world = world;
         addChild(new ImageObject("src/engine/resources/ff30x30.png"));
 
-        localMap = world.createTiles();
-        LinkedList<Tile> temp= new LinkedList<>(localMap);
+        localMap = new Map();
+        //LinkedList<Tile> temp= new LinkedList<>(localMap.getTiles());
+        LinkedList<Tile> temp= new LinkedList<>(world.getMap().getTiles());
         Collections.shuffle(temp);
         unVisited = temp;
 
@@ -35,6 +33,7 @@ public class FireFighter extends SoSObject {
 
     @Override
     public void onUpdate() {
+
     }
 
     @Override
@@ -44,19 +43,12 @@ public class FireFighter extends SoSObject {
 
     @Override
     public void sendMessage(String msg, Object data) {
-        if(getName().startsWith("FireFighter10")) {
-            System.out.println("completed: " + unVisited.size());
-        }
         if(msg.startsWith("action complete")) {
             search();
         }
     }
 
     public void search() {
-        //while(unVisited.isEmpty() == false) {
-        if(getName().startsWith("FireFighter10")) {
-            System.out.println("unvisited count: " + unVisited.size());
-        }
         while(true) {
             if(unVisited.isEmpty()) break;
             Tile tile = unVisited.poll();
@@ -64,6 +56,17 @@ public class FireFighter extends SoSObject {
 
             new MoveTo(this, tile.position);
             break;
+        }
+    }
+
+    @Override
+    public void setPosition(int _x, int _y) {
+        this.position.set(_x, _y);
+        for(int y = position.y - 1; y <= position.y + 1; ++y) {
+            for(int x = position.x - 1; x <= position.x + 1; ++x) {
+                localMap.visited(x, y, true);
+                world.getMap().visited(x, y, true);
+            }
         }
     }
 }

@@ -15,25 +15,14 @@ public class World extends SoSObject{
     public static final int maxPatient = 10;
     public static final int maxFireFighter = 10;
 
-    ArrayList<Tile> tiles = new ArrayList<>(mapSize.width * mapSize.height);
+    Map map;
 
     public World() {
-        tiles = createTiles();
-        tiles.forEach(tile -> addChild(tile));
+        map = new Map();
+        addChild(map);
 
         createPatients();
         createFireFighters();
-    }
-
-    public ArrayList<Tile> createTiles() {
-        ArrayList<Tile> values = new ArrayList<>();
-        for(int y = 0; y < mapSize.height; ++y) {
-            for(int x = 0; x < mapSize.width; ++x) {
-                Tile tile = new Tile(new Position(x, y));
-                values.add(tile);
-            }
-        }
-        return values;
     }
 
     private void createPatients() {
@@ -49,6 +38,7 @@ public class World extends SoSObject{
         for (int i = 0; i < maxFireFighter; i++) {
             FireFighter ff = new FireFighter(this, "FireFighter" + (i + 1));
             addChild(ff);
+            ff.setPosition(0, 0);
         }
     }
 
@@ -57,5 +47,9 @@ public class World extends SoSObject{
         Rectangle rect = g.getDeviceConfiguration().getBounds();
         g.setColor(new Color(100, 100, 100));
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
+    }
+
+    public Map getMap() {
+        return map;
     }
 }

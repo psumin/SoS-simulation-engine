@@ -13,8 +13,7 @@ public class Action extends SoSObject {
     }
 
     public void complete() {
-        target.sendMessage("action complete", null);
-        target.removeChild(this);
         clear();
+        target.sendMessage("action complete", null);
     }
 }

@@ -9,11 +9,11 @@ public class Tile extends SoSObject {
     SoSObject dark;
 
     boolean _visited = false;
-    public void visited(boolean _vistied) {
+    public void visited(boolean _visited) {
         this._visited = _visited;
 
         light.visible(_visited);
-        dark.visible(!_vistied);
+        dark.visible(!_visited);
     }
     public boolean isVisited() {
         return _visited;

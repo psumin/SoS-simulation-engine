@@ -29,6 +29,7 @@ public abstract class SoSObject {
         children.add(child);
     }
     public void removeChild(SoSObject child) {
+        child.parent = null;
         children.remove(child);
     }
 
@@ -93,8 +94,8 @@ public abstract class SoSObject {
             while(true) {
                 SoSObject child = children.poll();
                 if(child == null) break;
-                child.update();
                 children.add(child);
+                child.update();
             }
         }
     }
@@ -120,8 +121,8 @@ public abstract class SoSObject {
             while(true) {
                 SoSObject child = children.poll();
                 if(child == null) break;
-                child.render(localGraphic);
                 children.add(child);
+                child.render(localGraphic);
             }
         }
     }
