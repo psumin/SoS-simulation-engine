@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class World extends SoSObject{
 
-    public static final Size mapSize = new Size(20, 20);
-    public static final Size tileSize = new Size(30, 30);
     public static final int maxPatient = 200;
     public static final int maxFireFighter = 10;
 
@@ -28,7 +26,7 @@ public class World extends SoSObject{
     private void createPatients() {
         for (int i = 0; i < maxPatient; i++) {
             Patient patient = new Patient();
-            Position randomPosition = GlobalRandom.nextPosition(mapSize.width, mapSize.height);
+            Position randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
             patient.position.set(randomPosition.x, randomPosition.y);
             addChild(patient);
 

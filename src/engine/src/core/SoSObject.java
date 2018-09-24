@@ -114,7 +114,7 @@ public abstract class SoSObject {
         if(_visible) {
 
             Graphics2D localGraphic = (Graphics2D)g.create();
-            localGraphic.translate(position.x * World.tileSize.width, position.y * World.tileSize.height);
+            localGraphic.translate(position.x * Map.tileSize.width, position.y * Map.tileSize.height);
             onRender(localGraphic);
 
             children.add(null);
