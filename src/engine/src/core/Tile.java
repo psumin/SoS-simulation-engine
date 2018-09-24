@@ -3,10 +3,14 @@ package core;
 import misc.Position;
 import misc.Size;
 
+import java.util.ArrayList;
+
 public class Tile extends SoSObject {
 
     SoSObject light;
     SoSObject dark;
+
+    ArrayList<SoSObject> objects = new ArrayList<>();
 
     boolean _visited = false;
     public void visited(boolean _visited) {
@@ -31,5 +35,14 @@ public class Tile extends SoSObject {
     }
 
 
+    public void add(SoSObject object) {
+        objects.add(object);
+    }
+    public void remove(SoSObject object) {
+        objects.remove(object);
+    }
 
+    public ArrayList<SoSObject> getObjects() {
+        return objects;
+    }
 }

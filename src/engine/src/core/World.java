@@ -31,6 +31,8 @@ public class World extends SoSObject{
             Position randomPosition = GlobalRandom.nextPosition(mapSize.width, mapSize.height);
             patient.position.set(randomPosition.x, randomPosition.y);
             addChild(patient);
+
+            map.addObject(randomPosition.x, randomPosition.y, patient);
         }
     }
 

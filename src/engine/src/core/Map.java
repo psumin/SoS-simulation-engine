@@ -42,4 +42,11 @@ public class Map extends SoSObject {
     public ArrayList<Tile> getTiles() {
         return tiles;
     }
+
+    public void addObject(int x, int y, SoSObject object) {
+        Tile tile = getTile(x, y);
+        if(tile != null) {
+            tile.add(object);
+        }
+    }
 }

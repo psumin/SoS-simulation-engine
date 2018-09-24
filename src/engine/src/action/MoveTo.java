@@ -28,5 +28,9 @@ public class MoveTo extends Action {
         } else {
             target.setPosition( target.position.x, target.position.y + distanceY / Math.abs(distanceY));
         }
+
+        if(parentAction != null) {
+            parentAction.sendMessage("move", null);
+        }
     }
 }
