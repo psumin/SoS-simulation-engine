@@ -140,7 +140,11 @@ public abstract class SoSObject {
             parent.removeChild(this);
             parent = null;
         }
-        children.forEach(child -> child.clear());
+        children.forEach(child -> {
+            if(child != null) {
+                child.clear();
+            }
+        });
     }
     // << Method: clear >>
 

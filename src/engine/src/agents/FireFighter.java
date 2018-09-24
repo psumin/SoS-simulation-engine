@@ -24,8 +24,8 @@ public class FireFighter extends SoSObject {
         addChild(new ImageObject("src/engine/resources/ff30x30.png"));
 
         localMap = new Map();
-        //LinkedList<Tile> temp= new LinkedList<>(localMap.getTiles());
-        LinkedList<Tile> temp= new LinkedList<>(world.getMap().getTiles());
+        LinkedList<Tile> temp= new LinkedList<>(localMap.getTiles());
+        //LinkedList<Tile> temp= new LinkedList<>(world.getMap().getTiles());
         Collections.shuffle(temp);
         unVisited = temp;
 

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class World extends SoSObject{
 
-    public static final int maxPatient = 200;
-    public static final int maxFireFighter = 10;
+    public static final int maxPatient = 40;
+    public static final int maxFireFighter = 1;
 
     Map map;
 

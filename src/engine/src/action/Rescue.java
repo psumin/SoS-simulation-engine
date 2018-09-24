@@ -17,6 +17,8 @@ public class Rescue extends Action {
     @Override
     public void sendMessage(String msg, Object data) {
         if(msg == "action complete") {
+            Action action = new FrameDelay(this, 1);
+        } else if(msg == "delay complete") {
             targetPatient.remove();
             complete("rescue complete");
         }
