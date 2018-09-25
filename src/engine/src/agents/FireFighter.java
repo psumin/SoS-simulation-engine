@@ -65,7 +65,8 @@ public class FireFighter extends SoSObject {
 
     @Override
     public void setPosition(int _x, int _y) {
-        this.position.set(_x, _y);
+        super.setPosition(_x, _y);
+        //this.position.set(_x, _y);
         for(int y = position.y - sightRange / 2; y <= position.y + sightRange / 2; ++y) {
             for(int x = position.x - sightRange / 2; x <= position.x + sightRange / 2; ++x) {
 
@@ -73,7 +74,9 @@ public class FireFighter extends SoSObject {
                 if(worldTile != null && worldTile.isVisited() == false) {
                     ArrayList<SoSObject> objects = worldTile.getObjects();
                     objects.forEach(obj -> {
-                        patientsMemory.add((Patient)obj);
+                        if(obj instanceof Patient) {
+                            patientsMemory.add((Patient) obj);
+                        }
                     });
                 }
                 localMap.visited(x, y, true);

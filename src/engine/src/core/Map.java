@@ -49,4 +49,10 @@ public class Map extends SoSObject {
             tile.add(object);
         }
     }
+    public void removeObject(int x, int y, SoSObject object) {
+        Tile tile = getTile(x, y);
+        if(tile != null) {
+            tile.remove(object);
+        }
+    }
 }
