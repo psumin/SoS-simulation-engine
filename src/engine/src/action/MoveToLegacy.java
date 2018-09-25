@@ -3,11 +3,11 @@ package action;
 import core.SoSObject;
 import misc.Position;
 
-public class MoveTo extends Action {
+public class MoveToLegacy extends ActionLegacy {
 
     Position dest;
 
-    public MoveTo(SoSObject target, Position dest) {
+    public MoveToLegacy(SoSObject target, Position dest) {
         super(target);
         this.dest = dest;
     }
@@ -29,8 +29,8 @@ public class MoveTo extends Action {
             target.setPosition( target.position.x, target.position.y + distanceY / Math.abs(distanceY));
         }
 
-        if(parentAction != null) {
-            parentAction.sendMessage("move", null);
+        if(parentActionLegacy != null) {
+            parentActionLegacy.sendMessage("move", null);
         }
     }
 }

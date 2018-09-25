@@ -2,13 +2,13 @@ package action;
 
 import core.SoSObject;
 
-public class Action extends SoSObject {
+public class ActionLegacy extends SoSObject {
 
-    protected Action parentAction;
+    protected ActionLegacy parentActionLegacy;
     protected SoSObject target;
     protected boolean _complete = false;
 
-    public Action(SoSObject target) {
+    public ActionLegacy(SoSObject target) {
         this.target = target;
         target.addChild(this);
     }
@@ -19,12 +19,12 @@ public class Action extends SoSObject {
 
     public void complete(String msg) {
 
-        if(parentAction != null) {
-            parentAction.sendMessage(msg, null);
+        if(parentActionLegacy != null) {
+            parentActionLegacy.sendMessage(msg, null);
         } else {
             target.sendMessage(msg, null);
         }
-        parentAction = null;
+        parentActionLegacy = null;
         clear();
     }
 }

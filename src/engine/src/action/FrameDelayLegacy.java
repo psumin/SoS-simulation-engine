@@ -2,9 +2,9 @@ package action;
 
 import core.SoSObject;
 
-public class FrameDelay extends Action {
+public class FrameDelayLegacy extends ActionLegacy {
     int frame;
-    public FrameDelay(SoSObject target, int frame) {
+    public FrameDelayLegacy(SoSObject target, int frame) {
         super(target);
         this.frame = frame + 1;
     }

@@ -1,13 +1,8 @@
 package agents;
 
-import action.Action;
-import action.MoveTo;
-import action.Search;
+import action.SearchLegacy;
 import core.*;
 import core.Map;
-import misc.Position;
-import misc.Time;
-import sun.plugin2.os.windows.SECURITY_ATTRIBUTES;
 
 import java.util.*;
 
@@ -31,7 +26,7 @@ public class FireFighter extends SoSObject {
         Collections.shuffle(temp);
         unVisited = temp;
 
-        new Search(this);
+        new SearchLegacy(this);
         //search();
     }
 
@@ -58,7 +53,7 @@ public class FireFighter extends SoSObject {
 //            Tile tile = unVisited.poll();
 //            if(tile.isVisited()) continue;
 //
-//            new MoveTo(this, tile.position);
+//            new MoveToLegacy(this, tile.position);
 //            break;
 //        }
 //    }

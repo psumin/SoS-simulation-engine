@@ -6,11 +6,11 @@ import core.Tile;
 
 import java.util.LinkedList;
 
-public class Search extends Action {
+public class SearchLegacy extends ActionLegacy {
 
     FireFighter fireFighter;
-    Action currentAction;
-    public Search(FireFighter target) {
+    ActionLegacy currentActionLegacy;
+    public SearchLegacy(FireFighter target) {
         super(target);
         fireFighter = target;
 
@@ -26,8 +26,8 @@ public class Search extends Action {
             Tile tile = fireFighter.getUnVisited().poll();
             if(tile.isVisited()) continue;
 
-            currentAction = new MoveTo(target, tile.position);
-            currentAction.parentAction = this;
+            currentActionLegacy = new MoveToLegacy(target, tile.position);
+            currentActionLegacy.parentActionLegacy = this;
             break;
         }
     }
@@ -75,13 +75,13 @@ public class Search extends Action {
             if(minPatient != null) {
                 patients.remove(minPatient);
                 //serious.remove(minPatient);
-                //currentAction = new MoveTo(target, minPatient.position);
-                if(currentAction != null) {
-                    currentAction.remove();
-                    currentAction = null;
+                //currentActionLegacy = new MoveToLegacy(target, minPatient.position);
+                if(currentActionLegacy != null) {
+                    currentActionLegacy.remove();
+                    currentActionLegacy = null;
                 }
-                currentAction = new Rescue(fireFighter, minPatient);
-                currentAction.parentAction = this;
+                currentActionLegacy = new RescueLegacy(fireFighter, minPatient);
+                currentActionLegacy.parentActionLegacy = this;
                 return true;
             }
         }
@@ -101,13 +101,13 @@ public class Search extends Action {
             if(minPatient != null) {
                 patients.remove(minPatient);
                 //wounded.remove(minPatient);
-                //currentAction = new MoveTo(target, minPatient.position);
-                if(currentAction != null) {
-                    currentAction.remove();
-                    currentAction = null;
+                //currentActionLegacy = new MoveToLegacy(target, minPatient.position);
+                if(currentActionLegacy != null) {
+                    currentActionLegacy.remove();
+                    currentActionLegacy = null;
                 }
-                currentAction = new Rescue(fireFighter, minPatient);
-                currentAction.parentAction = this;
+                currentActionLegacy = new RescueLegacy(fireFighter, minPatient);
+                currentActionLegacy.parentActionLegacy = this;
                 return true;
             }
         }
@@ -126,13 +126,13 @@ public class Search extends Action {
 //            }
 //            if(minPatient != null) {
 //                patients.remove(minPatient);
-//                //currentAction = new MoveTo(target, minPatient.position);
-//                if(currentAction != null) {
-//                    currentAction.remove();
-//                    currentAction = null;
+//                //currentActionLegacy = new MoveToLegacy(target, minPatient.position);
+//                if(currentActionLegacy != null) {
+//                    currentActionLegacy.remove();
+//                    currentActionLegacy = null;
 //                }
-//                currentAction = new Rescue(fireFighter, minPatient);
-//                currentAction.parentAction = this;
+//                currentActionLegacy = new RescueLegacy(fireFighter, minPatient);
+//                currentActionLegacy.parentActionLegacy = this;
 //                return true;
 //            }
 //        }
