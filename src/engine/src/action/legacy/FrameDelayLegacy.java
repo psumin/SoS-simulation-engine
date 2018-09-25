@@ -1,4 +1,4 @@
-package action;
+package action.legacy;
 
 import core.SoSObject;
 

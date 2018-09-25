@@ -1,4 +1,4 @@
-package action;
+package action.legacy;
 
 import agents.Patient;
 import core.SoSObject;
