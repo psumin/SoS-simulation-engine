@@ -9,8 +9,9 @@ import java.util.ArrayList;
 public class CS extends SoSObject {
 
     World world;
-    public CS(World world) {
+    public CS(World world, String name) {
         this.world = world;
+        setName(name);
     }
 
     @Override

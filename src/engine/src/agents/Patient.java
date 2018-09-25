@@ -1,11 +1,8 @@
 package agents;
 
-import core.GlobalRandom;
-import core.ImageObject;
-import core.SoSImage;
-import core.SoSObject;
+import core.*;
 
-public class Patient extends SoSObject {
+public class Patient extends CS {
 
    public enum Status {
         Wounded, Serious, Dead;
@@ -42,7 +39,8 @@ public class Patient extends SoSObject {
     SoSObject serious;
     SoSObject wounded;
 
-    public Patient() {
+    public Patient(World world, String name) {
+        super(world, name);
         serious = new ImageObject("src/engine/resources/patient_serious.png");
         wounded = new ImageObject("src/engine/resources/patient_wounded.png");
         addChild(serious);

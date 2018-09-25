@@ -26,6 +26,7 @@ public abstract class SoSObject {
     Queue<SoSObject> children = new LinkedList<>();
     public void addChild(SoSObject child) {
         child.setParent(this);
+        children.remove(child);
         children.add(child);
     }
     public void removeChild(SoSObject child) {

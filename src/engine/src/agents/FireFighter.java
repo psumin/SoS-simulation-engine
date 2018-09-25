@@ -1,22 +1,27 @@
 package agents;
 
-import action.SearchLegacy;
+import action.Action;
+import action.MoveTo;
+import action.Search;
+import action.legacy.SearchLegacy;
 import core.*;
 import core.Map;
 
 import java.util.*;
 
-public class FireFighter extends SoSObject {
+public class FireFighter extends CS {
 
     World world;
     Map localMap;
     Queue<Tile> unVisited;
     LinkedList<Patient> patientsMemory = new LinkedList<>();
 
-    int sightRange = 5;
+    int sightRange = 3;
+
+    Search search;
 
     public FireFighter(World world, String name) {
-        super(name);
+        super(world, name);
         this.world = world;
         addChild(new ImageObject("src/engine/resources/ff30x30.png"));
 
@@ -26,13 +31,20 @@ public class FireFighter extends SoSObject {
         Collections.shuffle(temp);
         unVisited = temp;
 
-        new SearchLegacy(this);
+        //Search search = new Search(this);
+        //search.start();
+        //new SearchLegacy(this);
         //search();
+        search = new Search(this);
     }
 
+    boolean isFirstUpdate = true;
     @Override
     public void onUpdate() {
-
+        if(isFirstUpdate) {
+            isFirstUpdate = false;
+            search.start();
+        }
     }
 
     @Override
@@ -53,7 +65,11 @@ public class FireFighter extends SoSObject {
 //            Tile tile = unVisited.poll();
 //            if(tile.isVisited()) continue;
 //
-//            new MoveToLegacy(this, tile.position);
+//            Action moveTo = new MoveTo(this, tile.position);
+//            moveTo.onComplete = () -> {
+//                search();
+//            };
+//            moveTo.start();
 //            break;
 //        }
 //    }
@@ -62,21 +78,30 @@ public class FireFighter extends SoSObject {
     public void setPosition(int _x, int _y) {
         super.setPosition(_x, _y);
         //this.position.set(_x, _y);
-        for(int y = position.y - sightRange / 2; y <= position.y + sightRange / 2; ++y) {
-            for(int x = position.x - sightRange / 2; x <= position.x + sightRange / 2; ++x) {
 
-                Tile worldTile = world.getMap().getTile(x, y);
+        ArrayList<Patient> foundPatients = new ArrayList<>();
+        for(int y = position.y - getSightRange() / 2; y <= position.y + getSightRange() / 2; ++y) {
+            for(int x = position.x - getSightRange() / 2; x <= position.x + getSightRange() / 2; ++x) {
+
+                Tile worldTile = getWorld().getMap().getTile(x, y);
                 if(worldTile != null && worldTile.isVisited() == false) {
                     ArrayList<SoSObject> objects = worldTile.getObjects();
                     objects.forEach(obj -> {
                         if(obj instanceof Patient) {
-                            patientsMemory.add((Patient) obj);
+                            foundPatients.add((Patient)obj);
+                            //fireFighter.getPatientsMemory().add((Patient) obj);
                         }
                     });
                 }
-                localMap.visited(x, y, true);
-                world.getMap().visited(x, y, true);
+                getLocalMap().visited(x, y, true);
+                getWorld().getMap().visited(x, y, true);
             }
+        }
+        getPatientsMemory().addAll(foundPatients);
+
+        if(foundPatients.isEmpty() == false) {
+            search.onFoundPatients(foundPatients);
+            //onFoundPatients.accept(foundPatients);
         }
     }
 
@@ -86,5 +111,17 @@ public class FireFighter extends SoSObject {
 
     public LinkedList<Patient> getPatientsMemory() {
         return patientsMemory;
+    }
+
+    public int getSightRange() {
+        return sightRange;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public Map getLocalMap() {
+        return localMap;
     }
 }

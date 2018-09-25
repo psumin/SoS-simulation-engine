@@ -25,7 +25,7 @@ public class World extends SoSObject{
 
     private void createPatients() {
         for (int i = 0; i < maxPatient; i++) {
-            Patient patient = new Patient();
+            Patient patient = new Patient(this, "Patient");
             patient.setStatus(Patient.Status.random());
             Position randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
             patient.position.set(randomPosition.x, randomPosition.y);
