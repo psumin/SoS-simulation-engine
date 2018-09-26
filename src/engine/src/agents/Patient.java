@@ -46,4 +46,10 @@ public class Patient extends CS {
         addChild(serious);
         addChild(wounded);
     }
+
+    @Override
+    public void remove() {
+        removeFromTile();
+        super.remove();
+    }
 }

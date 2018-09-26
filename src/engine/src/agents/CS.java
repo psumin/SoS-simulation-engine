@@ -20,4 +20,18 @@ public class CS extends SoSObject {
         this.position.set(_x, _y);
         world.getMap().addObject(position.x, position.y, this);
     }
+
+
+    public int getDistanceTo(CS other) {
+        return Math.abs(other.position.x - position.x)
+                + Math.abs(other.position.y - position.y);
+    }
+
+    public void addToTile() {
+        world.getMap().getTile(position.x, position.y).add(this);
+    }
+
+    public void removeFromTile() {
+        world.getMap().getTile(position.x, position.y).remove(this);
+    }
 }
