@@ -156,7 +156,7 @@ public abstract class SoSObject {
     }
 
 
-    private String name = "";
+    public String name = "";
     public void setName(String name) {
         this.name = name;
     }

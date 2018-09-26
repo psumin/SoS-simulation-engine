@@ -14,6 +14,7 @@ public class Patient extends CS {
     }
 
     Status status = Status.Wounded;
+    public FireFighter fireFighter = null;
 
     public Status getStatus() {
         return status;

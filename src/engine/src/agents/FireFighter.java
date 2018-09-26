@@ -5,7 +5,9 @@ import action.firefighteraction.Search;
 import action.firefighteraction.FireFighterAction;
 import core.*;
 import core.Map;
+import jdk.nashorn.internal.objects.Global;
 
+import java.awt.*;
 import java.util.*;
 
 public class FireFighter extends CS {
@@ -107,5 +109,15 @@ public class FireFighter extends CS {
         currentAction.stop();
         currentAction = action;
         currentAction.start();
+        currentAction.update();
+    }
+
+    @Override
+    public void onRender(Graphics2D graphics2D) {
+
+        graphics2D.setColor(Color.red);
+        graphics2D.setFont(new Font("default", Font.BOLD, 16));
+        graphics2D.drawChars(name.toCharArray(), 0, name.length(), 0, 0);
+
     }
 }

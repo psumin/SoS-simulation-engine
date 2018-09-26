@@ -55,13 +55,14 @@ public class MoveToPatient extends FireFighterAction {
                 // 가장 가까운 환자 위치를 구한 후
                 // 그 환자에게 가기
                 LinkedList<Patient> serious = new LinkedList<>();
-                LinkedList<Patient> wounded = new LinkedList<>();
+                //LinkedList<Patient> wounded = new LinkedList<>();
                 patientsMemory.forEach(patient -> {
                     if(patient.getStatus() == Patient.Status.Serious) {
                         serious.add(patient);
                     }
                 });
 
+                // 더 위급한 환자가 있으면 그 환자한테 가기
                 Patient seriousMin = getMinDistantPatient(serious);
                 Patient minDistantPatient = null;
                 if(seriousMin != null) {
@@ -74,16 +75,28 @@ public class MoveToPatient extends FireFighterAction {
                 // 목적지에 도착
                 fireFighter.changeAction(new Treatment(fireFighter, targetPatient));
             } else {
-                // 목적지로 가는 도중
+                int distanceX = Math.abs(targetPatient.position.x - fireFighter.position.x);
+                int distanceY = Math.abs(targetPatient.position.y - fireFighter.position.y);
+
+                if(distanceX <= 1 && distanceY <= 1) {
+                    // 시야 안
+                    Tile tile = fireFighter.world.getMap().getTile(targetPatient.position.x, targetPatient.position.y);
+                    if (tile.contain(targetPatient) == false) {
+                        fireFighter.patientsMemory.remove(targetPatient);
+                        fireFighter.changeAction(new Search(fireFighter));
+                        return;
+                    }
+
+                    if (targetPatient.fireFighter != null && targetPatient.fireFighter != fireFighter) {
+                        fireFighter.patientsMemory.remove(targetPatient);
+                        fireFighter.changeAction(new Search(fireFighter));
+                    }
+//                    else {
+//                        targetPatient.fireFighter = fireFighter;
+//                    }
+                }
             }
         }
-
-//        if(moveTo(destination)) {
-//            // 목적지 도착 완료
-//            destination = null;
-//        } else {
-//            // 목적지 도착 전
-//        }
     }
 
     void searchPatient() {

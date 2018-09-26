@@ -42,6 +42,15 @@ public class Tile extends SoSObject {
         objects.remove(object);
     }
 
+    public boolean contain(SoSObject object) {
+        for(SoSObject obj: objects) {
+            if(obj == object) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<SoSObject> getObjects() {
         return objects;
     }
