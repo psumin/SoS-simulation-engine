@@ -55,7 +55,7 @@ public class World extends SoSObject{
 
     @Override
     public void onUpdate() {
-        if(map.getUnvisitedTileCount() == 0) {
+        if(map.getUnvisitedTileCount() == 0 && map.getPatientCount() == 0) {
             this.canUpdate(false);
         } else {
             frameCount++;

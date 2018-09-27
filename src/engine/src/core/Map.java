@@ -1,5 +1,6 @@
 package core;
 
+import agents.Patient;
 import misc.Position;
 import misc.Size;
 
@@ -61,6 +62,18 @@ public class Map extends SoSObject {
         for(Tile tile: tiles) {
             if(tile.isVisited() == false) {
                 count++;
+            }
+        }
+        return count;
+    }
+
+    public int getPatientCount() {
+        int count = 0;
+        for(Tile tile: tiles) {
+            for(SoSObject object: tile.getObjects()) {
+                if(object instanceof Patient) {
+                    count++;
+                }
             }
         }
         return count;
