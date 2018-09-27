@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class World extends SoSObject{
 
     public static final int maxPatient = 100;
-    public static final int maxFireFighter = 2;
+    public static final int maxFireFighter = 5;
 
     Map map;
     public MsgRouter router;
