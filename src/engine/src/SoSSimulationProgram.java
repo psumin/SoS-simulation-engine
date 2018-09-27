@@ -3,6 +3,7 @@ import misc.Time;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
@@ -58,7 +59,9 @@ public class SoSSimulationProgram implements Runnable {
 
 
     private class MouseControl extends MouseAdapter{
-
+        public void mouseClicked(MouseEvent e) {
+            int a = 10;
+        }
     }
 
     long desiredFPS = 60;

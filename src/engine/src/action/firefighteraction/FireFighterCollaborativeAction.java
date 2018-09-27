@@ -198,13 +198,13 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                         .setTo("broadcast")
                         .setData(individualMap),
                 position, communicationRange);
-//        router.broadcast(fireFighter,
-//                new Msg()
-//                        .setFrom(fireFighter.name)
-//                        .setTitle("patientsMemory")
-//                        .setTo("broadcast")
-//                        .setData(patientsMemory),
-//                position, communicationRange);
+        router.broadcast(fireFighter,
+                new Msg()
+                        .setFrom(fireFighter.name)
+                        .setTitle("patientsMemory")
+                        .setTo("broadcast")
+                        .setData(patientsMemory),
+                position, communicationRange);
         switch (currentState) {
             case None:
                 break;

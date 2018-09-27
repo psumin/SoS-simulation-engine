@@ -165,14 +165,16 @@ public abstract class SoSObject {
         return name;
     }
 
-    SoSObject findObject(String targetName) {
+    public SoSObject findObject(String targetName) {
         if(name == targetName) {
             return this;
         } else {
             for (SoSObject child : children) {
-                SoSObject object = child.findObject(targetName);
-                if(object != null) {
-                    return object;
+                if(child != null) {
+                    SoSObject object = child.findObject(targetName);
+                    if (object != null) {
+                        return object;
+                    }
                 }
             }
         }

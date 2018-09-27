@@ -1,5 +1,6 @@
 package core;
 
+import agents.ControlTower;
 import agents.FireFighter;
 import agents.Patient;
 import misc.Position;
@@ -12,10 +13,11 @@ import java.util.ArrayList;
 public class World extends SoSObject{
 
     public static final int maxPatient = 100;
-    public static final int maxFireFighter = 5;
+    public static final int maxFireFighter = 20;
 
     Map map;
     public MsgRouter router;
+    public ArrayList<FireFighter> fireFighters = new ArrayList<FireFighter>();
 
     int frameCount = 0;
 
@@ -29,6 +31,7 @@ public class World extends SoSObject{
 
         createFireFighters();
         createPatients();
+        //createControlTower();
     }
 
     private void createPatients() {
@@ -45,6 +48,7 @@ public class World extends SoSObject{
     private void createFireFighters() {
         for (int i = 0; i < maxFireFighter; i++) {
             FireFighter ff = new FireFighter(this, "FireFighter" + (i + 1));
+            fireFighters.add(ff);
 //            if(i == 0) {
 //                addChild(ff.individualMap);
 //            }
@@ -53,12 +57,17 @@ public class World extends SoSObject{
         }
     }
 
+    private void createControlTower() {
+        addChild(new ControlTower(this, "ControlTower"));
+    }
+
     @Override
     public void onUpdate() {
         if(map.getUnvisitedTileCount() == 0 && map.getPatientCount() == 0) {
             this.canUpdate(false);
         } else {
             frameCount++;
+            System.out.println("FrameCount: " + frameCount);
         }
     }
 

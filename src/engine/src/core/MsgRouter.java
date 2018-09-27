@@ -22,6 +22,10 @@ public class MsgRouter extends SoSObject {
     }
 
     public void route(Msg msg) {
+        SoSObject target = world.findObject(msg.to);
+        if(target != null) {
+            target.recvMsg(msg);
+        }
     }
 
     // 그 범위 내의 소방관에게만 브로드캐스팅
