@@ -8,8 +8,14 @@ public class Patient extends CS {
         Wounded, Serious, Dead;
 
        public static Status random() {
-            Status[] values = Status.values();
-            return values[GlobalRandom.nextInt(values.length - 1)];
+           Status[] values = Status.values();
+           int index = GlobalRandom.nextInt(1000);
+           if (index >= 100)
+               index = 0;
+           else
+               index = 1;
+           return values[index];
+//            return values[GlobalRandom.nextInt(values.length - 1)];
        }
     }
 
