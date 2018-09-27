@@ -4,6 +4,7 @@ import agents.FireFighter;
 import agents.Patient;
 import core.*;
 import misc.Position;
+import misc.Time;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,7 +12,7 @@ import java.util.Queue;
 
 public class FireFighterCollaborativeAction extends FireFighterAction {
 
-    int communicationRange = 5;
+    int communicationRange = 10;
 
     enum State {
         None, Search, Treatment, MoveToPatient
@@ -109,7 +110,8 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
         if(targetPatient.fireFighter != null && targetPatient.fireFighter != fireFighter) {
             fireFighter.patientsMemory.remove(targetPatient);
-            fireFighter.changeAction(new Search(fireFighter));
+            currentState = State.Search;
+            //fireFighter.changeAction(new Search(fireFighter));
         } else {
             targetPatient.fireFighter = fireFighter;
         }
@@ -307,7 +309,9 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
     void treatmentPatient() {
         targetPatient.remove();
         fireFighter.patientsMemory.remove(targetPatient);
-        fireFighter.changeAction(new Search(fireFighter));
+        targetPatient.setStatus(Patient.Status.Saved);
+        currentState = State.Search;
+        //fireFighter.changeAction(new Search(fireFighter));
     }
 
     @Override
@@ -322,6 +326,9 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         if(msg.title == "individual map") {
             Map othersMap = (Map)msg.data;
 
+            if(Time.getFrameCount() > 50) {
+                int a = 10;
+            }
             // 방문 정보 업데이트
             othersMap.getTiles().forEach(tile -> {
                 if(tile.isVisited()) {
@@ -343,7 +350,12 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 int a = 10;
             }
             patientsMemory.removeAll(othersMemory);
-            patientsMemory.addAll(othersMemory);
+            //patientsMemory.addAll(othersMemory);
+            othersMemory.forEach(patient -> {
+                if(patient.getStatus() != Patient.Status.Saved) {
+                    patientsMemory.add(patient);
+                }
+            });
         }
     }
 }

@@ -27,9 +27,19 @@ public class FireFighter extends CS {
         addChild(new ImageObject("src/engine/resources/ff30x30.png"));
 
         individualMap = new Map();
-        LinkedList<Tile> temp= new LinkedList<>(individualMap.getTiles());
+        LinkedList<Tile> temp = new LinkedList<>(individualMap.getTiles());
         //LinkedList<Tile> temp= new LinkedList<>(world.getMap().getTiles());
+
+//        for(int i = 0; i < temp.size() * 3; ++i) {
+//            int leftIndex = GlobalRandom.nextInt(temp.size());
+//            int rightIndex = GlobalRandom.nextInt(temp.size());
+//            Tile swapTemp = temp.get(leftIndex);
+//            temp.set(leftIndex, temp.get(rightIndex));
+//            temp.set(rightIndex, swapTemp);
+//        }
+
         Collections.shuffle(temp);
+
         unvisitedTiles = temp;
 
         //Search search = new Search(this);

@@ -5,7 +5,7 @@ import core.*;
 public class Patient extends CS {
 
    public enum Status {
-        Wounded, Serious, Dead;
+        Wounded, Serious, Dead, Saved;
 
        public static Status random() {
            Status[] values = Status.values();

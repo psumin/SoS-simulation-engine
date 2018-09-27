@@ -4,6 +4,7 @@ import agents.FireFighter;
 import agents.Patient;
 import misc.Position;
 import misc.Size;
+import misc.Time;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class World extends SoSObject{
 
     public static final int maxPatient = 100;
-    public static final int maxFireFighter = 5;
+    public static final int maxFireFighter = 2;
 
     Map map;
     public MsgRouter router;
@@ -24,8 +25,8 @@ public class World extends SoSObject{
         // 안그러면 널 에러
         router = new MsgRouter(this);
 
-        createPatients();
         createFireFighters();
+        createPatients();
     }
 
     private void createPatients() {
@@ -42,6 +43,9 @@ public class World extends SoSObject{
     private void createFireFighters() {
         for (int i = 0; i < maxFireFighter; i++) {
             FireFighter ff = new FireFighter(this, "FireFighter" + (i + 1));
+//            if(i == 0) {
+//                addChild(ff.individualMap);
+//            }
             addChild(ff);
             ff.setPosition(0, 0);
         }
@@ -52,6 +56,11 @@ public class World extends SoSObject{
         Rectangle rect = g.getDeviceConfiguration().getBounds();
         g.setColor(new Color(100, 100, 100));
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
+
+        g.setColor(Color.red);
+        g.setFont(new Font("default", Font.BOLD, 16));
+        String frameCount = "frameCount: " + Time.getFrameCount();
+        g.drawChars(frameCount.toCharArray(), 0, frameCount.length(), 600, 700);
     }
 
     public Map getMap() {

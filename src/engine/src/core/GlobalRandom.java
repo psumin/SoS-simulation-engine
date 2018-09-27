@@ -6,7 +6,7 @@ import misc.Position;
 import java.util.Random;
 
 public class GlobalRandom {
-    private static Random random = new Random();
+    private static Random random = new Random(1);
 
     public static void setSeed(int seed) {
         random.setSeed(seed);

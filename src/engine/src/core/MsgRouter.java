@@ -2,6 +2,7 @@ package core;
 
 import agents.FireFighter;
 import misc.Position;
+import misc.Time;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,11 @@ public class MsgRouter extends SoSObject {
 
     // 그 범위 내의 소방관에게만 브로드캐스팅
     public void broadcast(SoSObject sender,  Msg msg, Position center, int range) {
+
+        if(Time.getFrameCount() > 50) {
+            int a = 10;
+        }
+
         ArrayList<Tile> tiles = new ArrayList<>();
 
         int left = center.x - range / 2;
