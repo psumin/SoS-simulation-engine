@@ -1,6 +1,5 @@
 package action.firefighteraction;
 
-
 import agents.FireFighter;
 import agents.Patient;
 import core.Map;
@@ -13,11 +12,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-// 환자 구하러 이동
-// 이동 중 위급도 높은 환자 발견시 타겟 변경
-public class MoveToPatient extends FireFighterAction {
+public class FireFighterVirtualAction extends FireFighterAction {
 
-    Patient targetPatient;
+    enum State {
+        None, Search, Treatment, MoveToPatient
+    }
+
+    State currentState = State.Search;
+
     World world;
     Map worldMap;
     Map individualMap;
@@ -26,29 +28,106 @@ public class MoveToPatient extends FireFighterAction {
     int sightRange;
     public LinkedList<Patient> patientsMemory;
 
-    public MoveToPatient(FireFighter fireFighter, Patient patient) {
+    // Search에서 목적지
+    Position moveToDest = null;
+
+    // MoveToPatient에서의 타겟
+    Patient targetPatient = null;
+
+    int treatmentTime = 3;
+
+    public FireFighterVirtualAction(FireFighter fireFighter) {
         super(fireFighter);
 
         this.fireFighter = fireFighter;
-        targetPatient = patient;
-
         world = fireFighter.world;
         worldMap = world.getMap();
         individualMap = fireFighter.individualMap;
         unvisitedTiles = fireFighter.unvisitedTiles;
         patientsMemory = fireFighter.patientsMemory;
         sightRange = fireFighter.getSightRange();
-
-        destination = patient.position;
     }
 
-    @Override
-    public void onUpdate() {
+
+    private void searchUpdate() {
+        searchPatient();
+
+        if(patientsMemory.isEmpty()) {
+            // 기억하고 있는 환자가 없으면
+            // 맵의 어두운 부분으로 가기
+            if(destination == null) {
+                destination = selectDestination();
+            } else {
+                if(moveToUpdate(destination)) {
+                    destination = null;
+                }
+            }
+        } else {
+            // 기억하고 있는 환자가 있으면
+            // 가장 가까운 환자 위치를 구한 후
+            // 그 환자에게 가기
+            LinkedList<Patient> serious = new LinkedList<>();
+            LinkedList<Patient> wounded = new LinkedList<>();
+            patientsMemory.forEach(patient -> {
+                if(patient.getStatus() == Patient.Status.Serious) {
+                    serious.add(patient);
+                } else {
+                    wounded.add(patient);
+                }
+            });
+
+            Patient seriousMin = getMinDistantPatient(serious);
+            Patient woundedMin = getMinDistantPatient(wounded);
+
+            Patient minDistantPatient = null;
+            if(seriousMin != null) {
+                minDistantPatient = seriousMin;
+            } else {
+                minDistantPatient = woundedMin;
+            }
+            assert woundedMin != null : "null 일 때 처리 추가해야함";
+
+            targetPatient = minDistantPatient;
+            currentState = State.MoveToPatient;
+            //fireFighter.changeAction(new MoveToPatient(fireFighter, minDistantPatient));
+        }
+    }
+
+    int treatmentFrameCount = 0;
+    private void treatmentInit() {
+        treatmentFrameCount = treatmentTime;
+    }
+    private void treatmentUpdate() {
+        Tile tile = fireFighter.world.getMap().getTile(targetPatient.position.x, targetPatient.position.y);
+        if(tile.contain(targetPatient) == false) {
+            treatmentPatient();
+            return;
+        }
+
+        if(targetPatient.fireFighter != null && targetPatient.fireFighter != fireFighter) {
+            fireFighter.patientsMemory.remove(targetPatient);
+            fireFighter.changeAction(new Search(fireFighter));
+        } else {
+            targetPatient.fireFighter = fireFighter;
+        }
+
+        treatmentFrameCount--;
+        if(treatmentFrameCount == 0) {
+            assert targetPatient.fireFighter == null : "아니면 다시 생각해보자";
+            targetPatient.fireFighter = fireFighter;
+            treatmentPatient();
+        }
+    }
+    private void moveToPatientUpdate() {
+        if(targetPatient != null) {
+            destination = targetPatient.position;
+        }
         searchPatient();
         if(patientsMemory.isEmpty()) {
             // 기억하고 있는 환자가 없으면
             // Search로
-            fireFighter.changeAction(new Search(fireFighter));
+            //fireFighter.changeAction(new Search(fireFighter));
+            currentState = State.Search;
         } else {
             // 기억하고 있는 환자가 있으면
             if(targetPatient.getStatus() == Patient.Status.Wounded) {
@@ -67,13 +146,16 @@ public class MoveToPatient extends FireFighterAction {
                 Patient minDistantPatient = null;
                 if(seriousMin != null) {
                     minDistantPatient = seriousMin;
-                    fireFighter.changeAction(new MoveToPatient(fireFighter, minDistantPatient));
+                    targetPatient = minDistantPatient;
+                    //fireFighter.changeAction(new MoveToPatient(fireFighter, minDistantPatient));
                 }
             }
 
-            if(moveTo(destination)) {
+            if(moveToUpdate(destination)) {
                 // 목적지에 도착
-                fireFighter.changeAction(new Treatment(fireFighter, targetPatient));
+                //fireFighter.changeAction(new Treatment(fireFighter, targetPatient));
+                treatmentInit();
+                currentState = State.Treatment;
             } else {
                 int distanceX = Math.abs(targetPatient.position.x - fireFighter.position.x);
                 int distanceY = Math.abs(targetPatient.position.y - fireFighter.position.y);
@@ -83,13 +165,15 @@ public class MoveToPatient extends FireFighterAction {
                     Tile tile = fireFighter.world.getMap().getTile(targetPatient.position.x, targetPatient.position.y);
                     if (tile.contain(targetPatient) == false) {
                         fireFighter.patientsMemory.remove(targetPatient);
-                        fireFighter.changeAction(new Search(fireFighter));
+                        //fireFighter.changeAction(new Search(fireFighter));
+                        currentState = State.Search;
                         return;
                     }
 
                     if (targetPatient.fireFighter != null && targetPatient.fireFighter != fireFighter) {
                         fireFighter.patientsMemory.remove(targetPatient);
-                        fireFighter.changeAction(new Search(fireFighter));
+                        //fireFighter.changeAction(new Search(fireFighter));
+                        currentState = State.Search;
                     }
 //                    else {
 //                        targetPatient.fireFighter = fireFighter;
@@ -99,6 +183,24 @@ public class MoveToPatient extends FireFighterAction {
         }
     }
 
+    @Override
+    public void onUpdate() {
+        switch (currentState) {
+            case None:
+                break;
+            case Search:
+                searchUpdate();
+                break;
+            case Treatment:
+                treatmentUpdate();
+                break;
+            case MoveToPatient:
+                moveToPatientUpdate();
+                break;
+        }
+    }
+
+    // 시야 범위 내에 환자가 존재하는지 탐색
     void searchPatient() {
         ArrayList<Patient> foundPatients = new ArrayList<>();
         for(int y = fireFighter.position.y - sightRange / 2; y <= fireFighter.position.y + sightRange / 2; ++y) {
@@ -129,6 +231,8 @@ public class MoveToPatient extends FireFighterAction {
 //        }
     }
 
+
+    // 인자로 넘겨준 환자들 중에서 가장 가까운 환자 리턴
     Patient getMinDistantPatient(LinkedList<Patient> patients) {
         int minDistance = 0;
         Patient minDistantPatient = null;
@@ -147,7 +251,11 @@ public class MoveToPatient extends FireFighterAction {
         return minDistantPatient;
     }
 
-    boolean moveTo(Position dest) {
+    // 인자로 넘겨준 목적지까지 이동
+    // 한 프레임에 한 칸 이동
+    // return true: 목적지에 도착했다
+    // return false: 아직 도착하지 못했다
+    boolean moveToUpdate(Position dest) {
         int distanceX = dest.x - fireFighter.position.x;
         int distanceY = dest.y - fireFighter.position.y;
 
@@ -176,4 +284,9 @@ public class MoveToPatient extends FireFighterAction {
         return null;
     }
 
+    void treatmentPatient() {
+        targetPatient.remove();
+        fireFighter.patientsMemory.remove(targetPatient);
+        fireFighter.changeAction(new Search(fireFighter));
+    }
 }

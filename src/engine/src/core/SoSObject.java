@@ -179,8 +179,7 @@ public abstract class SoSObject {
         return null;
     }
 
-
-    public void sendMessage(String msg, Object data) {
-
+    public void recvMsg(Msg msg) {
+        
     }
 }

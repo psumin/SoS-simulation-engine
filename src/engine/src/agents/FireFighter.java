@@ -1,11 +1,11 @@
 package agents;
 
 import action.Action;
-import action.firefighteraction.Search;
+import action.firefighteraction.FireFighterCollaborativeAction;
+import action.firefighteraction.FireFighterVirtualAction;
 import action.firefighteraction.FireFighterAction;
 import core.*;
 import core.Map;
-import jdk.nashorn.internal.objects.Global;
 
 import java.awt.*;
 import java.util.*;
@@ -13,9 +13,9 @@ import java.util.*;
 public class FireFighter extends CS {
 
     public World world;
-    public Map localMap;
+    public Map individualMap;
 
-    public Queue<Tile> unVisited;
+    public Queue<Tile> unvisitedTiles;
     public LinkedList<Patient> patientsMemory = new LinkedList<>();
 
     public Action currentAction;
@@ -26,17 +26,19 @@ public class FireFighter extends CS {
         this.world = world;
         addChild(new ImageObject("src/engine/resources/ff30x30.png"));
 
-        localMap = new Map();
-        LinkedList<Tile> temp= new LinkedList<>(localMap.getTiles());
+        individualMap = new Map();
+        LinkedList<Tile> temp= new LinkedList<>(individualMap.getTiles());
         //LinkedList<Tile> temp= new LinkedList<>(world.getMap().getTiles());
         Collections.shuffle(temp);
-        unVisited = temp;
+        unvisitedTiles = temp;
 
         //Search search = new Search(this);
         //search.start();
         //new SearchLegacy(this);
         //search();
-        currentAction = new Search(this);
+        //currentAction = new Search(this);
+        //currentAction = new FireFighterVirtualAction(this);
+        currentAction = new FireFighterCollaborativeAction(this);
     }
 
     boolean isFirstUpdate = true;
@@ -72,7 +74,7 @@ public class FireFighter extends CS {
 //                        }
 //                    });
 //                }
-//                getLocalMap().visited(x, y, true);
+//                getIndividualMap().visited(x, y, true);
 //                getWorld().getMap().visited(x, y, true);
 //            }
 //        }
@@ -84,8 +86,8 @@ public class FireFighter extends CS {
 //        }
 //    }
 
-    public Queue<Tile> getUnVisited() {
-        return unVisited;
+    public Queue<Tile> getUnvisitedTiles() {
+        return unvisitedTiles;
     }
 
     public LinkedList<Patient> getPatientsMemory() {
@@ -100,8 +102,8 @@ public class FireFighter extends CS {
         return world;
     }
 
-    public Map getLocalMap() {
-        return localMap;
+    public Map getIndividualMap() {
+        return individualMap;
     }
 
 
@@ -119,5 +121,17 @@ public class FireFighter extends CS {
         graphics2D.setFont(new Font("default", Font.BOLD, 16));
         graphics2D.drawChars(name.toCharArray(), 0, name.length(), 0, 0);
 
+    }
+
+    public void removeFromTile() {
+        world.getMap().removeObject(position.x, position.y, this);
+    }
+    public void addToTile() {
+        world.getMap().addObject(position.x, position.y, this);
+    }
+
+    @Override
+    public void recvMsg(Msg msg) {
+        currentAction.recvMsg(msg);
     }
 }

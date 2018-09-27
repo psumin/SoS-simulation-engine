@@ -14,10 +14,15 @@ public class World extends SoSObject{
     public static final int maxFireFighter = 5;
 
     Map map;
+    public MsgRouter router;
 
     public World() {
         map = new Map();
         addChild(map);
+
+        // 맵 생성 후에 라우터 생성해야함
+        // 안그러면 널 에러
+        router = new MsgRouter(this);
 
         createPatients();
         createFireFighters();

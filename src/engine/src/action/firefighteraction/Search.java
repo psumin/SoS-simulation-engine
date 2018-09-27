@@ -31,8 +31,8 @@ public class Search extends FireFighterAction {
 
         world = fireFighter.world;
         worldMap = world.getMap();
-        individualMap = fireFighter.localMap;
-        unvisitedTiles = fireFighter.unVisited;
+        individualMap = fireFighter.individualMap;
+        unvisitedTiles = fireFighter.unvisitedTiles;
         patientsMemory = fireFighter.patientsMemory;
         sightRange = fireFighter.getSightRange();
     }
@@ -98,7 +98,7 @@ public class Search extends FireFighterAction {
                 }
                 individualMap.visited(x, y, true);
                 worldMap.visited(x, y, true);
-                //getLocalMap().visited(x, y, true);
+                //getIndividualMap().visited(x, y, true);
                 //getWorld().getMap().visited(x, y, true);
             }
         }

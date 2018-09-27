@@ -1,10 +1,7 @@
 package action;
 
-import action.legacy.ActionLegacy;
 import agents.CS;
 import core.SoSObject;
-
-import java.util.function.Consumer;
 
 public class Action extends SoSObject {
 

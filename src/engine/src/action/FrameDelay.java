@@ -1,8 +1,6 @@
 package action;
 
-import action.legacy.ActionLegacy;
 import agents.CS;
-import core.SoSObject;
 
 public class FrameDelay extends Action {
     int frame;
