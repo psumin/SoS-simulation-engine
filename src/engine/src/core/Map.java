@@ -55,4 +55,14 @@ public class Map extends SoSObject {
             tile.remove(object);
         }
     }
+
+    public int getUnvisitedTileCount() {
+        int count = 0;
+        for(Tile tile: tiles) {
+            if(tile.isVisited() == false) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

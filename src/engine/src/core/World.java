@@ -17,6 +17,8 @@ public class World extends SoSObject{
     Map map;
     public MsgRouter router;
 
+    int frameCount = 0;
+
     public World() {
         map = new Map();
         addChild(map);
@@ -52,6 +54,15 @@ public class World extends SoSObject{
     }
 
     @Override
+    public void onUpdate() {
+        if(map.getUnvisitedTileCount() == 0) {
+            this.canUpdate(false);
+        } else {
+            frameCount++;
+        }
+    }
+
+    @Override
     public void onRender(Graphics2D g) {
         Rectangle rect = g.getDeviceConfiguration().getBounds();
         g.setColor(new Color(100, 100, 100));
@@ -59,8 +70,8 @@ public class World extends SoSObject{
 
         g.setColor(Color.red);
         g.setFont(new Font("default", Font.BOLD, 16));
-        String frameCount = "frameCount: " + Time.getFrameCount();
-        g.drawChars(frameCount.toCharArray(), 0, frameCount.length(), 600, 700);
+        String strFrameCount = "frameCount: " + frameCount;
+        g.drawChars(strFrameCount.toCharArray(), 0, strFrameCount.length(), 600, 700);
     }
 
     public Map getMap() {
