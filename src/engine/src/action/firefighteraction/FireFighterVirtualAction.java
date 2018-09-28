@@ -288,7 +288,8 @@ public class FireFighterVirtualAction extends FireFighterAction {
     void treatmentPatient() {
         targetPatient.remove();
         fireFighter.patientsMemory.remove(targetPatient);
-        targetPatient.setStatus(Patient.Status.Saved);
+        targetPatient.isSaved = true;
+        //targetPatient.setStatus(Patient.Status.Saved);
         currentState = State.Search;
         //fireFighter.changeAction(new Search(fireFighter));
     }

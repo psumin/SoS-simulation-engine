@@ -4,7 +4,11 @@ import core.ImageObject;
 import core.World;
 import misc.Position;
 
+import java.util.ArrayList;
+
 public class SafeZone extends CS {
+
+    public ArrayList<Patient> patients = new ArrayList<>();
 
     int scale = 5;
 

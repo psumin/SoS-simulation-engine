@@ -210,6 +210,13 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
             transferDestination = SoSObject.minDistantObject(fireFighter, safeZoneAndHospitals);
         } else {
             if(moveToUpdate(transferDestination.position)) {
+
+                if(transferDestination instanceof SafeZone) {
+                    SafeZone safeZone = (SafeZone)transferDestination;
+                    //safeZone.patients.remove(targetPatient);
+                    safeZone.patients.add(targetPatient);
+                }
+
                 transferDestination = null;
                 fireFighter.transferImage.visible(false);
                 fireFighter.defaultImage.visible(true);
@@ -217,7 +224,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 targetPatient.setPosition(fireFighter.position);
                 currentState = State.Search;
 
-                world.savedPatient++;
+                //world.savedPatient++;
             }
         }
     }
@@ -361,7 +368,8 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         //targetPatient.remove();
         world.removeChild(targetPatient);
         fireFighter.patientsMemory.remove(targetPatient);
-        targetPatient.setStatus(Patient.Status.Saved);
+        targetPatient.isSaved = true;
+        //targetPatient.setStatus(Patient.Status.Saved);
         currentState = State.Search;
         //fireFighter.changeAction(new Search(fireFighter));
     }
@@ -383,15 +391,15 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         }
         else if(msg.title == "patientsMemory") {
             ArrayList<Patient> othersMemory = (ArrayList<Patient>)msg.data;
-            if(othersMemory.size() > 0) {
-                int a = 10;
-            }
             patientsMemory.removeAll(othersMemory);
             //patientsMemory.addAll(othersMemory);
             othersMemory.forEach(patient -> {
-                if(patient.getStatus() != Patient.Status.Saved) {
+                if(patient.isSaved == false) {
                     patientsMemory.add(patient);
                 }
+//                if(patient.getStatus() != Patient.Status.Saved) {
+//                    patientsMemory.add(patient);
+//                }
             });
         }
     }

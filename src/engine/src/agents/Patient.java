@@ -5,7 +5,7 @@ import core.*;
 public class Patient extends CS {
 
    public enum Status {
-        Wounded, Serious, Dead, Saved;
+        Wounded, Serious, Dead;
 
        public static Status random() {
            Status[] values = Status.values();
@@ -21,6 +21,7 @@ public class Patient extends CS {
 
     Status status = Status.Wounded;
     public FireFighter fireFighter = null;
+    public boolean isSaved = false;
 
     public Status getStatus() {
         return status;

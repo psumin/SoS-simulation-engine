@@ -1,9 +1,6 @@
 package core;
 
-import agents.FireFighter;
-import agents.Hospital;
-import agents.Patient;
-import agents.SafeZone;
+import agents.*;
 import misc.Position;
 
 import java.awt.*;
@@ -11,7 +8,7 @@ import java.util.ArrayList;
 
 public class World extends SoSObject{
 
-    public static final int maxPatient = 300;
+    public static final int maxPatient = 70;
     public static final int maxFireFighter = 12;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 5;
@@ -23,6 +20,7 @@ public class World extends SoSObject{
     public ArrayList<FireFighter> fireFighters = new ArrayList<FireFighter>(maxFireFighter);
     public ArrayList<Hospital> hospitals = new ArrayList<Hospital>(maxHospital);
     public ArrayList<SafeZone> safeZones = new ArrayList<>(maxSafeZone);
+    public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);
     public int savedPatient = 0;
 
     int frameCount = 0;
@@ -39,8 +37,7 @@ public class World extends SoSObject{
         createSafeZones();
         createPatients();
         createFireFighters();
-
-
+        createAmbulances();
     }
 
     private void createPatients() {
@@ -112,6 +109,14 @@ public class World extends SoSObject{
         safeZones.get(1).setPosition(new Position(3 * Map.mapSize.width / 4, Map.mapSize.height / 4));
         safeZones.get(2).setPosition(new Position(3 * Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
         safeZones.get(3).setPosition(new Position(Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
+    }
+
+    private void createAmbulances() {
+        for(int i = 0; i < maxAmbulance; ++i) {
+            Ambulance ambulance = new Ambulance(this, "Ambulance" + (i + 1));
+            ambulances.add(ambulance);
+            addChild(ambulance);
+        }
     }
 
     @Override
