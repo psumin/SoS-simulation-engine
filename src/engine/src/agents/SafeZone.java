@@ -29,4 +29,11 @@ public class SafeZone extends CS {
             addChild(object);
         }
     }
+
+    public boolean isSafeZone(int x, int y) {
+        int distanceX = Math.abs(position.x - x);
+        int distanceY = Math.abs(position.y - y);
+
+        return distanceX <= 1 && distanceY <= 1;
+    }
 }

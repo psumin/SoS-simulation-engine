@@ -2,6 +2,7 @@ package action.firefighteraction;
 
 import agents.FireFighter;
 import agents.Patient;
+import agents.SafeZone;
 import core.*;
 import misc.Position;
 import misc.Time;
@@ -15,7 +16,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
     int communicationRange = 5;
 
     enum State {
-        None, Search, Treatment, MoveToPatient
+        None, Search, Treatment, MoveToPatient, Transfer
     }
 
     State currentState = State.Search;
@@ -40,11 +41,14 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
     int treatmentTime = 10;
 
+    ArrayList<SafeZone> safeZones;
+
     public FireFighterCollaborativeAction(FireFighter fireFighter) {
         super(fireFighter);
 
         this.fireFighter = fireFighter;
         world = fireFighter.world;
+        safeZones = world.safeZones;
         worldMap = world.getMap();
         individualMap = fireFighter.individualMap;
         unvisitedTiles = fireFighter.unvisitedTiles;
@@ -123,6 +127,10 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
             assert targetPatient.fireFighter == null : "아니면 다시 생각해보자";
             targetPatient.fireFighter = fireFighter;
             treatmentPatient();
+
+            fireFighter.transferImage.visible(true);
+            fireFighter.defaultImage.visible(false);
+            currentState = State.Transfer;
         }
     }
     private void moveToPatientUpdate() {
@@ -190,6 +198,29 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         }
     }
 
+    SoSObject transferDestination = null;
+    int transferTime = 5;
+    void transferUpdate() {
+
+        if(transferDestination == null) {
+            ArrayList<SoSObject> safeZoneAndHospitals = new ArrayList<>();
+            safeZoneAndHospitals.addAll(world.safeZones);
+            safeZoneAndHospitals.addAll(world.hospitals);
+
+            transferDestination = SoSObject.minDistantObject(fireFighter, safeZoneAndHospitals);
+        } else {
+            if(moveToUpdate(transferDestination.position)) {
+                transferDestination = null;
+                fireFighter.transferImage.visible(false);
+                fireFighter.defaultImage.visible(true);
+                world.addChild(targetPatient);
+                targetPatient.setPosition(fireFighter.position);
+                currentState = State.Search;
+            }
+        }
+    }
+
+
     @Override
     public void onUpdate() {
         //fireFighter.addToTile();
@@ -219,6 +250,9 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
             case MoveToPatient:
                 moveToPatientUpdate();
                 break;
+            case Transfer:
+                transferUpdate();
+                break;
         }
         //fireFighter.removeFromTile();
     }
@@ -231,6 +265,15 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
                 Tile worldTile = worldMap.getTile(x, y);
                 Tile individualTile = individualMap.getTile(x, y);
+
+                boolean isSafeZone = false;
+                for(SafeZone zone: safeZones) {
+                    if(zone.isSafeZone(x, y)) {
+                        isSafeZone = true;
+                        return;
+                    }
+                }
+
                 if(worldTile != null && individualTile.isVisited() == false) {
                     ArrayList<SoSObject> objects = worldTile.getObjects();
                     objects.forEach(obj -> {
@@ -309,7 +352,8 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
     }
 
     void treatmentPatient() {
-        targetPatient.remove();
+        //targetPatient.remove();
+        world.removeChild(targetPatient);
         fireFighter.patientsMemory.remove(targetPatient);
         targetPatient.setStatus(Patient.Status.Saved);
         currentState = State.Search;

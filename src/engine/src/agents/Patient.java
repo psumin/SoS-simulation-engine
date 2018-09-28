@@ -29,13 +29,13 @@ public class Patient extends CS {
     public void setStatus(Status status) {
         this.status = status;
 
-        wounded.visible(false);
-        serious.visible(false);
         switch (status) {
             case Wounded:
+                serious.visible(false);
                 wounded.visible(true);
                 break;
             case Serious:
+                wounded.visible(false);
                 serious.visible(true);
                 break;
             case Dead:

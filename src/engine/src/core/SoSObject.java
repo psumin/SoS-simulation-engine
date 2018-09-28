@@ -3,6 +3,7 @@ package core;
 import misc.Position;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -184,5 +185,23 @@ public abstract class SoSObject {
 
     public void recvMsg(Msg msg) {
         
+    }
+
+    public static int distanceBetween(SoSObject left, SoSObject right) {
+        return Math.abs(left.position.x - right.position.x) + Math.abs(left.position.y - right.position.y);
+    }
+
+    public static SoSObject minDistantObject(SoSObject from, ArrayList<SoSObject> targets) {
+        SoSObject minObject = null;
+        for(SoSObject object: targets) {
+            if(minObject == null) {
+                minObject = object;
+            } else {
+                if(distanceBetween(from, minObject) > distanceBetween(from, object)) {
+                    minObject = object;
+                }
+            }
+        }
+        return minObject;
     }
 }

@@ -19,11 +19,22 @@ public class FireFighter extends CS {
 
     public Action currentAction;
 
+    public ImageObject transferImage;
+    public ImageObject defaultImage;
+
     int sightRange = 3;
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;
-        addChild(new ImageObject("src/engine/resources/ff30x30.png"));
+
+        transferImage = new ImageObject("src/engine/resources/transfer.png");
+        defaultImage = new ImageObject("src/engine/resources/ff30x30.png");
+
+        transferImage.visible(false);
+        defaultImage.visible(true);
+
+        addChild(transferImage);
+        addChild(defaultImage);
 
         individualMap = new Map();
         LinkedList<Tile> temp = new LinkedList<>(individualMap.getTiles());
