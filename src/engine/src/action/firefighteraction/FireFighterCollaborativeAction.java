@@ -201,7 +201,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
     SoSObject transferDestination = null;
     int transferTime = 5;
     void transferUpdate() {
-
+        searchPatient();
         if(transferDestination == null) {
             ArrayList<SoSObject> safeZoneAndHospitals = new ArrayList<>();
             safeZoneAndHospitals.addAll(world.safeZones);
