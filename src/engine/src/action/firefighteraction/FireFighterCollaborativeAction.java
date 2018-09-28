@@ -175,7 +175,8 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 int distanceX = Math.abs(targetPatient.position.x - fireFighter.position.x);
                 int distanceY = Math.abs(targetPatient.position.y - fireFighter.position.y);
 
-                if(distanceX <= 1 && distanceY <= 1) {
+                //if(distanceX <= 1 && distanceY <= 1) {
+                if(distanceX <= sightRange / 2 && distanceY <= sightRange / 2) {
                     // 시야 안
                     Tile tile = fireFighter.world.getMap().getTile(targetPatient.position.x, targetPatient.position.y);
                     if (tile.contain(targetPatient) == false) {

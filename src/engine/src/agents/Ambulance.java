@@ -32,6 +32,7 @@ public class Ambulance extends CS{
                 targetSafeZone = null;
                 onBoardPatient = null;
                 targetPatient = null;
+//                world.savedPatient++;
             }
         }
         else if(targetPatient != null) {

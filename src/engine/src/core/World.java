@@ -11,7 +11,7 @@ public class World extends SoSObject{
     public static final int maxPatient = 70;
     public static final int maxFireFighter = 12;
     public static final int maxHospital = 4;
-    public static final int maxAmbulance = 5;
+    public static final int maxAmbulance = 20;
     public static final int maxSearchTeam = 10;
     public static final int maxSafeZone = 4;
 
@@ -121,6 +121,7 @@ public class World extends SoSObject{
 
     @Override
     public void onUpdate() {
+        //if(map.getUnvisitedTileCount() == 0 && map.getPatientCount() == 0) {
         if(map.getUnvisitedTileCount() == 0 && savedPatient == maxPatient) {
             this.canUpdate(false);
         } else {
