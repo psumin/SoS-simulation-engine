@@ -12,7 +12,7 @@ import java.util.Queue;
 
 public class FireFighterCollaborativeAction extends FireFighterAction {
 
-    int communicationRange = 5;
+    int communicationRange = 50;
 
     enum State {
         None, Search, Treatment, MoveToPatient
@@ -190,7 +190,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
     @Override
     public void onUpdate() {
-        fireFighter.addToTile();
+        //fireFighter.addToTile();
         router.broadcast(fireFighter,
                 new Msg()
                         .setFrom(fireFighter.name)
@@ -218,7 +218,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 moveToPatientUpdate();
                 break;
         }
-        fireFighter.removeFromTile();
+        //fireFighter.removeFromTile();
     }
 
     // 시야 범위 내에 환자가 존재하는지 탐색
@@ -316,13 +316,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
     @Override
     public void recvMsg(Msg msg) {
-//        router.broadcast(this,
-//                new Msg()
-//                        .setFrom(name)
-//                        .setTitle("individual map")
-//                        .setTo("broadcast")
-//                        .setData(individualMap),
-//                position, communicationRange);
         if(msg.title == "individual map") {
             Map othersMap = (Map)msg.data;
 
@@ -336,14 +329,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 }
             });
         }
-
-//        router.broadcast(this,
-//                new Msg()
-//                        .setFrom(name)
-//                        .setTitle("patientsMemory")
-//                        .setTo("broadcast")
-//                        .setData(patientsMemory),
-//                position, communicationRange);
         else if(msg.title == "patientsMemory") {
             LinkedList<Patient> othersMemory = (LinkedList<Patient>)msg.data;
             if(othersMemory.size() > 0) {

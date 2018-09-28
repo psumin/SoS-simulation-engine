@@ -14,6 +14,9 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+    public void set(Position other) {
+        set(other.x, other.y);
+    }
 
     public Position left() {
         return new Position(x - 1, y);

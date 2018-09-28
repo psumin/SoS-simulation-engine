@@ -36,6 +36,7 @@ public class Tile extends SoSObject {
 
 
     public void add(SoSObject object) {
+        objects.remove(object);
         objects.add(object);
     }
     public void remove(SoSObject object) {

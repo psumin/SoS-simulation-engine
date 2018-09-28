@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class World extends SoSObject{
 
-    public static final int maxPatient = 100;
-    public static final int maxFireFighter = 20;
+    public static final int maxPatient = 70;
+    public static final int maxFireFighter = 12;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 5;
     public static final int maxSearchTeam = 10;
@@ -34,10 +34,10 @@ public class World extends SoSObject{
         // 안그러면 널 에러
         router = new MsgRouter(this);
 
-        createFireFighters();
         createPatients();
-        createHospitals();
-        createSafeZones();
+        createFireFighters();
+//        createHospitals();
+//        createSafeZones();
     }
 
     private void createPatients() {
@@ -52,14 +52,24 @@ public class World extends SoSObject{
     }
 
     private void createFireFighters() {
+        Position[] positions = new Position[] {
+                new Position(0, 0),
+                new Position(Map.mapSize.width - 1, 0),
+                new Position(Map.mapSize.width - 1, Map.mapSize.height - 1),
+                new Position(0, Map.mapSize.height - 1)
+        };
+        int factor = maxFireFighter / 4;
         for (int i = 0; i < maxFireFighter; i++) {
             FireFighter ff = new FireFighter(this, "FireFighter" + (i + 1));
+            ff.setPosition(0, 0);
+//            ff.setPosition(positions[i / factor]);
             fireFighters.add(ff);
 //            if(i == 0) {
 //                addChild(ff.individualMap);
 //            }
+
+            ff.setPosition(positions[i / factor]);
             addChild(ff);
-            ff.setPosition(0, 0);
         }
     }
 

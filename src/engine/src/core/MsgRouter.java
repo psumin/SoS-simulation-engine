@@ -31,10 +31,6 @@ public class MsgRouter extends SoSObject {
     // 그 범위 내의 소방관에게만 브로드캐스팅
     public void broadcast(SoSObject sender,  Msg msg, Position center, int range) {
 
-        if(Time.getFrameCount() > 50) {
-            int a = 10;
-        }
-
         ArrayList<Tile> tiles = new ArrayList<>();
 
         int left = center.x - range / 2;
@@ -51,14 +47,24 @@ public class MsgRouter extends SoSObject {
             }
         }
 
-        tiles.forEach(tile -> {
-            tile.getObjects().forEach(obj -> {
-                if(obj instanceof FireFighter) {
+        for(Tile tile: tiles) {
+            for(SoSObject obj : tile.getObjects()) {
+                if(obj instanceof  FireFighter) {
                     if(obj != sender) {
                         obj.recvMsg(msg);
                     }
                 }
-            });
-        });
+            }
+        }
+
+//        tiles.forEach(tile -> {
+//            tile.getObjects().forEach(obj -> {
+//                if(obj instanceof FireFighter) {
+//                    if(obj != sender) {
+//                        obj.recvMsg(msg);
+//                    }
+//                }
+//            });
+//        });
     }
 }

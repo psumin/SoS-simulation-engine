@@ -1,7 +1,7 @@
 package agents;
 
 import action.Action;
-import action.firefighteraction.FireFighterVirtualAction;
+import action.firefighteraction.FireFighterCollaborativeAction;
 import action.firefighteraction.FireFighterAction;
 import core.*;
 import core.Map;
@@ -46,8 +46,8 @@ public class FireFighter extends CS {
         //new SearchLegacy(this);
         //search();
         //currentAction = new Search(this);
-        currentAction = new FireFighterVirtualAction(this);
-        //currentAction = new FireFighterCollaborativeAction(this);
+        //currentAction = new FireFighterVirtualAction(this);
+        currentAction = new FireFighterCollaborativeAction(this);
         //currentAction = new FireFighterDirectAction(this);
     }
 

@@ -35,9 +35,10 @@ public abstract class SoSObject {
     }
 
     // << Field: position >>
-    public Position position = new Position();
+    public final Position position = new Position();
     public void setPosition(Position position) {
-        this.position = position;
+        //this.position = position;
+        this.position.set(position);
     }
     public void setPosition(int x, int y) {
         this.position.set(x, y);
