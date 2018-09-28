@@ -270,23 +270,27 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 for(SafeZone zone: safeZones) {
                     if(zone.isSafeZone(x, y)) {
                         isSafeZone = true;
-                        return;
+                        individualMap.visited(x, y, true);
+                        worldMap.visited(x, y, true);
+                        break;
                     }
                 }
 
-                if(worldTile != null && individualTile.isVisited() == false) {
-                    ArrayList<SoSObject> objects = worldTile.getObjects();
-                    objects.forEach(obj -> {
-                        if(obj instanceof Patient) {
-                            foundPatients.add((Patient)obj);
-                            //fireFighter.getPatientsMemory().add((Patient) obj);
-                        }
-                    });
+                if(isSafeZone == false) {
+                    if (worldTile != null && individualTile.isVisited() == false) {
+                        ArrayList<SoSObject> objects = worldTile.getObjects();
+                        objects.forEach(obj -> {
+                            if (obj instanceof Patient) {
+                                foundPatients.add((Patient) obj);
+                                //fireFighter.getPatientsMemory().add((Patient) obj);
+                            }
+                        });
+                    }
+                    individualMap.visited(x, y, true);
+                    worldMap.visited(x, y, true);
+                    //getIndividualMap().visited(x, y, true);
+                    //getWorld().getMap().visited(x, y, true);
                 }
-                individualMap.visited(x, y, true);
-                worldMap.visited(x, y, true);
-                //getIndividualMap().visited(x, y, true);
-                //getWorld().getMap().visited(x, y, true);
             }
         }
         patientsMemory.removeAll(foundPatients);
