@@ -1,8 +1,6 @@
 package agents;
 
 import action.Action;
-import action.firefighteraction.FireFighterCollaborativeAction;
-import action.firefighteraction.FireFighterDirectAction;
 import action.firefighteraction.FireFighterVirtualAction;
 import action.firefighteraction.FireFighterAction;
 import core.*;

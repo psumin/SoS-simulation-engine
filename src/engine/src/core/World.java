@@ -1,11 +1,10 @@
 package core;
 
-import agents.ControlTower;
 import agents.FireFighter;
+import agents.Hospital;
 import agents.Patient;
+import agents.SafeZone;
 import misc.Position;
-import misc.Size;
-import misc.Time;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,10 +13,16 @@ public class World extends SoSObject{
 
     public static final int maxPatient = 100;
     public static final int maxFireFighter = 20;
+    public static final int maxHospital = 4;
+    public static final int maxAmbulance = 5;
+    public static final int maxSearchTeam = 10;
+    public static final int maxSafeZone = 4;
 
     Map map;
     public MsgRouter router;
-    public ArrayList<FireFighter> fireFighters = new ArrayList<FireFighter>();
+    public ArrayList<FireFighter> fireFighters = new ArrayList<FireFighter>(maxFireFighter);
+    public ArrayList<Hospital> hospitals = new ArrayList<Hospital>(maxHospital);
+    public ArrayList<SafeZone> safeZones = new ArrayList<>(maxSafeZone);
 
     int frameCount = 0;
 
@@ -31,7 +36,8 @@ public class World extends SoSObject{
 
         createFireFighters();
         createPatients();
-        //createControlTower();
+        createHospitals();
+        createSafeZones();
     }
 
     private void createPatients() {
@@ -57,8 +63,30 @@ public class World extends SoSObject{
         }
     }
 
-    private void createControlTower() {
-        addChild(new ControlTower(this, "ControlTower"));
+    private void createHospitals() {
+        for(int i = 0; i < maxHospital; ++i) {
+            Hospital hospital = new Hospital(this, "Hospital" + (i + 1));
+            hospitals.add(hospital);
+            addChild(hospital);
+        }
+
+        hospitals.get(0).setPosition(0, 0);
+        hospitals.get(1).setPosition(Map.mapSize.width - 1, 0);
+        hospitals.get(2).setPosition(0, Map.mapSize.height - 1);
+        hospitals.get(3).setPosition(Map.mapSize.width - 1, Map.mapSize.height - 1);
+    }
+
+    private void createSafeZones() {
+        for(int i = 0; i < maxSafeZone; ++i) {
+            SafeZone safeZone = new SafeZone(this, "SafeZone" + (i + 1));
+            safeZones.add(safeZone);
+            addChild(safeZone);
+        }
+
+        safeZones.get(0).setPosition(new Position(Map.mapSize.width / 4, Map.mapSize.height / 4));
+        safeZones.get(1).setPosition(new Position(3 * Map.mapSize.width / 4, Map.mapSize.height / 4));
+        safeZones.get(2).setPosition(new Position(3 * Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
+        safeZones.get(3).setPosition(new Position(Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
     }
 
     @Override
