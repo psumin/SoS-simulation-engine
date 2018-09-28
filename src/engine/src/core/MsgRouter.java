@@ -51,6 +51,9 @@ public class MsgRouter extends SoSObject {
             for(SoSObject obj : tile.getObjects()) {
                 if(obj instanceof  FireFighter) {
                     if(obj != sender) {
+                        if(Time.getFrameCount() > 10) {
+                            int a = 10;
+                        }
                         obj.recvMsg(msg);
                     }
                 }
