@@ -30,6 +30,10 @@ public class SafeZone extends CS {
         }
     }
 
+    public boolean isSafeZone(Position position) {
+        return isSafeZone(position.x, position.y);
+    }
+
     public boolean isSafeZone(int x, int y) {
         int distanceX = Math.abs(position.x - x);
         int distanceY = Math.abs(position.y - y);

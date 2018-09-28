@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 // SoSSimulationProgram 클래스에서 참조하고 있는 클래스: Time, SoSObjectManager, SoSScenario
 public class SoSSimulationProgram implements Runnable {
 
-    final int SIMULATION_WIDTH = 800;
-    final int SIMULATION_HEIGHT = 800;
+    final int SIMULATION_WIDTH = 1720;
+    final int SIMULATION_HEIGHT = 990;
     final int CONSOLE_WIDTH = 200;
 
     JFrame frame;

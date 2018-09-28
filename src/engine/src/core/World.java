@@ -46,7 +46,19 @@ public class World extends SoSObject{
         for (int i = 0; i < maxPatient; i++) {
             Patient patient = new Patient(this, "Patient");
             patient.setStatus(Patient.Status.random());
-            Position randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
+            Position randomPosition = null;
+
+            while(true) {
+                randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
+                boolean isSafeZone = false;
+                for(SafeZone zone: safeZones) {
+                    if(zone.isSafeZone(randomPosition)) {
+                        isSafeZone = true;
+                        break;
+                    }
+                }
+                if(isSafeZone == false) break;
+            }
             patient.position.set(randomPosition.x, randomPosition.y);
             addChild(patient);
             map.addObject(randomPosition.x, randomPosition.y, patient);
