@@ -23,6 +23,7 @@ public class World extends SoSObject{
     public ArrayList<FireFighter> fireFighters = new ArrayList<FireFighter>(maxFireFighter);
     public ArrayList<Hospital> hospitals = new ArrayList<Hospital>(maxHospital);
     public ArrayList<SafeZone> safeZones = new ArrayList<>(maxSafeZone);
+    public int savedPatient = 0;
 
     int frameCount = 0;
 
@@ -115,7 +116,7 @@ public class World extends SoSObject{
 
     @Override
     public void onUpdate() {
-        if(map.getUnvisitedTileCount() == 0 && map.getPatientCount() == 0) {
+        if(map.getUnvisitedTileCount() == 0 && savedPatient == maxPatient) {
             this.canUpdate(false);
         } else {
             frameCount++;

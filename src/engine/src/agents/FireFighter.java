@@ -22,7 +22,7 @@ public class FireFighter extends CS {
     public ImageObject transferImage;
     public ImageObject defaultImage;
 
-    int sightRange = 3;
+    int sightRange = 30;
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;

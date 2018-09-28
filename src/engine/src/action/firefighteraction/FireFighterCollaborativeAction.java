@@ -216,6 +216,8 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 world.addChild(targetPatient);
                 targetPatient.setPosition(fireFighter.position);
                 currentState = State.Search;
+
+                world.savedPatient++;
             }
         }
     }
