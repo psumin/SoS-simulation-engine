@@ -34,10 +34,12 @@ public class World extends SoSObject{
         // 안그러면 널 에러
         router = new MsgRouter(this);
 
+        createHospitals();
+        createSafeZones();
         createPatients();
         createFireFighters();
-//        createHospitals();
-//        createSafeZones();
+
+
     }
 
     private void createPatients() {

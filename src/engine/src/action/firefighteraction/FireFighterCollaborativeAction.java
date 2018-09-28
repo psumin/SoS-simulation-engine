@@ -31,13 +31,14 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
     MsgRouter router;
 
+
     // Search에서 목적지
     Position moveToDest = null;
-
+    Position searchDestination = null;
     // MoveToPatient에서의 타겟
     Patient targetPatient = null;
 
-    int treatmentTime = 3;
+    int treatmentTime = 10;
 
     public FireFighterCollaborativeAction(FireFighter fireFighter) {
         super(fireFighter);
@@ -60,11 +61,11 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         if(patientsMemory.isEmpty()) {
             // 기억하고 있는 환자가 없으면
             // 맵의 어두운 부분으로 가기
-            if(destination == null) {
-                destination = selectDestination();
+            if(searchDestination == null) {
+                searchDestination = selectDestination();
             } else {
-                if(moveToUpdate(destination)) {
-                    destination = null;
+                if(moveToUpdate(searchDestination)) {
+                    searchDestination = null;
                 }
             }
         } else {
