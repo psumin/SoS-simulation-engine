@@ -15,7 +15,7 @@ public class FireFighter extends CS {
     public Map individualMap;
 
     public Queue<Tile> unvisitedTiles;
-    public LinkedList<Patient> patientsMemory = new LinkedList<>();
+    public final ArrayList<Patient> patientsMemory = new ArrayList<>();
 
     public Action currentAction;
 
@@ -100,7 +100,7 @@ public class FireFighter extends CS {
         return unvisitedTiles;
     }
 
-    public LinkedList<Patient> getPatientsMemory() {
+    public ArrayList<Patient> getPatientsMemory() {
         return patientsMemory;
     }
 

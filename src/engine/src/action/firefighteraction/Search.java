@@ -22,7 +22,7 @@ public class Search extends FireFighterAction {
     Queue<Tile> unvisitedTiles;
     Position destination;
     int sightRange;
-    public LinkedList<Patient> patientsMemory;
+    public ArrayList<Patient> patientsMemory;
 
     public Search(FireFighter fireFighter) {
         super(fireFighter);

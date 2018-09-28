@@ -26,7 +26,8 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
     Queue<Tile> unvisitedTiles;
     Position destination;
     int sightRange;
-    public LinkedList<Patient> patientsMemory;
+    //public LinkedList<Patient> patientsMemory;
+    public ArrayList<Patient> patientsMemory;
 
     MsgRouter router;
 
@@ -330,7 +331,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
             });
         }
         else if(msg.title == "patientsMemory") {
-            LinkedList<Patient> othersMemory = (LinkedList<Patient>)msg.data;
+            ArrayList<Patient> othersMemory = (ArrayList<Patient>)msg.data;
             if(othersMemory.size() > 0) {
                 int a = 10;
             }

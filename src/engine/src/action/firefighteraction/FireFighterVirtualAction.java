@@ -26,7 +26,7 @@ public class FireFighterVirtualAction extends FireFighterAction {
     Queue<Tile> unvisitedTiles;
     Position destination;
     int sightRange;
-    public LinkedList<Patient> patientsMemory;
+    public ArrayList<Patient> patientsMemory;
 
     // Search에서 목적지
     Position moveToDest = null;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class World extends SoSObject{
 
-    public static final int maxPatient = 70;
+    public static final int maxPatient = 300;
     public static final int maxFireFighter = 12;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 5;
@@ -61,14 +61,14 @@ public class World extends SoSObject{
         int factor = maxFireFighter / 4;
         for (int i = 0; i < maxFireFighter; i++) {
             FireFighter ff = new FireFighter(this, "FireFighter" + (i + 1));
-            ff.setPosition(0, 0);
-//            ff.setPosition(positions[i / factor]);
+//            ff.setPosition(0, 0);
+            ff.setPosition(positions[i / factor]);
             fireFighters.add(ff);
 //            if(i == 0) {
 //                addChild(ff.individualMap);
 //            }
 
-            ff.setPosition(positions[i / factor]);
+//            ff.setPosition(positions[i / factor]);
             addChild(ff);
         }
     }

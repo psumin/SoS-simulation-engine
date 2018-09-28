@@ -24,7 +24,7 @@ public class MoveToPatient extends FireFighterAction {
     Queue<Tile> unvisitedTiles;
     Position destination;
     int sightRange;
-    public LinkedList<Patient> patientsMemory;
+    public ArrayList<Patient> patientsMemory;
 
     public MoveToPatient(FireFighter fireFighter, Patient patient) {
         super(fireFighter);
