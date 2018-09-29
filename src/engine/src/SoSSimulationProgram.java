@@ -1,11 +1,11 @@
-import core.Logger;
 import core.World;
 import misc.Time;
-import sun.rmi.runtime.Log;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
@@ -57,6 +57,16 @@ public class SoSSimulationProgram implements Runnable {
         bufferStrategy = canvas.getBufferStrategy();
 
         canvas.requestFocus();
+
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                //System.out.println("jdialog window closed event received");
+            }
+
+            public void windowClosing(WindowEvent e) {
+                clear();
+            }
+        });
     }
 
 
@@ -106,7 +116,6 @@ public class SoSSimulationProgram implements Runnable {
                 }
             }
         }
-        clear();
     }
 
     private void render() {
@@ -138,7 +147,6 @@ public class SoSSimulationProgram implements Runnable {
 
     World world;
     protected void init() {
-        Logger.init();
         world = new World();
     }
 
@@ -167,10 +175,11 @@ public class SoSSimulationProgram implements Runnable {
     }
 
     protected void clear() {
-        Logger.clear();
+        world.clear();
     }
 
     public static void main(String [] args){
+
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
         new Thread(simulationEngine).start();
     }

@@ -2,9 +2,21 @@ package core;
 
 import agents.*;
 import misc.Position;
-import sun.rmi.runtime.Log;
+import java.io.File;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.awt.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class World extends SoSObject{
@@ -23,8 +35,14 @@ public class World extends SoSObject{
     public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);
 
 
+    Workbook workbook = new XSSFWorkbook();
+    Sheet savedPatientSheet = workbook.createSheet("patients");
 
     public World() {
+
+//        workbook = new XSSFWorkbook();
+//        savedPatientSheet = workbook.createSheet("patients");
+
         map = new Map();
         addChild(map);
 
@@ -124,19 +142,20 @@ public class World extends SoSObject{
     public int savedPatientCount = 0;
     @Override
     public void onUpdate() {
+
+        Row row = savedPatientSheet.createRow(frameCount);
+        Cell frameCountCell = row.createCell(0);
+        Cell savedPatientCell = row.createCell(1);
+        frameCountCell.setCellValue(frameCount);
+        savedPatientCell.setCellValue(savedPatientCount);
+
+
         if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
             canUpdate(false);
             return;
         }
         frameCount++;
         System.out.println("FrameCount: " + frameCount);
-
-        if(frameCount == 1) {
-            Logger.println("프레임 수, 구한 환자 수");
-        }
-
-        Logger.printColumn(frameCount + "");
-        Logger.println(savedPatientCount + "");
     }
 
     @Override
@@ -164,5 +183,14 @@ public class World extends SoSObject{
             }
         }
         return count;
+    }
+
+    @Override
+    public void clear() {
+        try (OutputStream fileOut = new FileOutputStream("simulator.xlsx")) {
+            workbook.write(fileOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
