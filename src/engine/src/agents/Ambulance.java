@@ -8,16 +8,16 @@ import misc.Position;
 import java.util.ArrayList;
 
 public class Ambulance extends CS{
-    SafeZone targetSafeZone;
-    Patient targetPatient;
-    Patient onBoardPatient;
+    private SafeZone targetSafeZone;
+    private Patient targetPatient;
+    private Patient onBoardPatient;
     public Ambulance(World world, String name) {
         super(world, name);
 
         addChild(new ImageObject("src/engine/resources/ambulance.png"));
     }
 
-    Hospital targetHospital;
+    private Hospital targetHospital;
     @Override
     public void onUpdate() {
         if(onBoardPatient != null) {
@@ -82,7 +82,7 @@ public class Ambulance extends CS{
         }
     }
 
-    SafeZone maxZone(Patient.Status status) {
+    private SafeZone maxZone(Patient.Status status) {
         int maxCount = 0;
         SafeZone maxZone = null;
         for(SafeZone safeZone: world.safeZones) {
@@ -111,7 +111,7 @@ public class Ambulance extends CS{
 //        return count;
 //    }
 
-    boolean moveToUpdate(Position dest) {
+    private boolean moveToUpdate(Position dest) {
         int distanceX = dest.x - position.x;
         int distanceY = dest.y - position.y;
 
