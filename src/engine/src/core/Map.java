@@ -7,7 +7,7 @@ import misc.Size;
 import java.util.ArrayList;
 
 public class Map extends SoSObject {
-    public static final Size mapSize = new Size(110, 65);
+    public static final Size mapSize = new Size(65, 65);
     public static final Size tileSize = new Size(15, 15);
 
     ArrayList<Tile> tiles;

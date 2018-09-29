@@ -216,8 +216,9 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
             transferDestination = SoSObject.minDistantObject(fireFighter, safeZoneAndHospitals);
             if(transferDestination instanceof Hospital) {
-                ((Hospital) transferDestination).patients.remove(targetPatient);
-                ((Hospital) transferDestination).patients.add(targetPatient);
+                ((Hospital) transferDestination).reservation(targetPatient);
+//                ((Hospital) transferDestination).patients.remove(targetPatient);
+//                ((Hospital) transferDestination).patients.add(targetPatient);
             }
         } else {
             if(delayedMoveToUpdate(transferDestination.position)) {
@@ -228,7 +229,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                     safeZone.patients.add(targetPatient);
                 } else {
                     Hospital hospital = (Hospital)transferDestination;
-                    hospital.patients.remove(targetPatient);
+                    //hospital.patients.remove(targetPatient);
                     hospital.hospitalization(targetPatient);
                 }
 

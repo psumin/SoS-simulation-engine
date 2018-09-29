@@ -19,9 +19,19 @@ public class Hospital extends CS {
         return patients.size() == capacity;
     }
 
-    public void hospitalization(Patient patient) {
-        patient.hospitalization = this;
-        patient.treatmentStart();
+    public void reservation(Patient patient) {
+        patients.remove(patient);
         patients.add(patient);
+    }
+
+    // 환자 입원
+    public void hospitalization(Patient patient) {
+        patient.currentHospital = this;
+        patient.treatmentStart();
+    }
+
+    public void leavePatient(Patient patient) {
+        patients.remove(patient);
+        patient.currentHospital = null;
     }
 }

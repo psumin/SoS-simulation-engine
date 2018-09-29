@@ -61,7 +61,7 @@ public class Patient extends CS {
         super.remove();
     }
 
-    public Hospital hospitalization = null;
+    public Hospital currentHospital = null;
     private int seriousTreatmentTime = 1000;
     private int woundedTreatmentTime = 1000;
     boolean isTreatmenting = false;
@@ -81,8 +81,9 @@ public class Patient extends CS {
             counter--;
             if(counter <= 0) {
                 // TODO: 치료 완료
-                assert hospitalization != null: "이러면 안된다";
-                hospitalization.patients.remove(this);
+                assert currentHospital != null: "이러면 안된다";
+                //currentHospital.patients.remove(this);
+                currentHospital.leavePatient(this);
                 world.removeChild(this);
             }
         }

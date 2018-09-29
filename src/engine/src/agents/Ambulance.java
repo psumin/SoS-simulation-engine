@@ -26,7 +26,6 @@ public class Ambulance extends CS{
             if(targetHospital == null) {
                 ArrayList<SoSObject> hospitals = new ArrayList<>();
                 for (Hospital hospital : world.hospitals) {
-                    int hospitalPatientCount = hospital.patients.size();
                     if (hospital.isFull() == false) {
                         hospitals.add(hospital);
                     }
@@ -35,14 +34,15 @@ public class Ambulance extends CS{
                 if (minDistantObject != null) {
                     Hospital hospital = (Hospital) minDistantObject;
                     targetHospital = hospital;
-                    hospital.patients.remove(onBoardPatient);
-                    hospital.patients.add(onBoardPatient);
+                    hospital.reservation(onBoardPatient);
+//                    hospital.patients.remove(onBoardPatient);
+//                    hospital.patients.add(onBoardPatient);
                 }
             } else {
                 if (moveToUpdate(targetHospital.position)) {
                     // TODO: 환자 내려줌
                     //world.removeChild(onBoardPatient);
-                    targetHospital.patients.remove(onBoardPatient);
+                    //targetHospital.patients.remove(onBoardPatient);
                     targetHospital.hospitalization(onBoardPatient);
                     targetHospital = null;
                     targetSafeZone = null;
