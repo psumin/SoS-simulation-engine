@@ -89,7 +89,7 @@ public class FireFighterVirtualAction extends FireFighterAction {
 
             targetPatient = minDistantPatient;
             currentState = State.MoveToPatient;
-            //fireFighter.changeAction(new MoveToPatient(fireFighter, minDistantPatient));
+            //assignedFireFighter.changeAction(new MoveToPatient(assignedFireFighter, minDistantPatient));
         }
     }
 
@@ -104,18 +104,18 @@ public class FireFighterVirtualAction extends FireFighterAction {
             return;
         }
 
-        if(targetPatient.fireFighter != null && targetPatient.fireFighter != fireFighter) {
+        if(targetPatient.assignedFireFighter != null && targetPatient.assignedFireFighter != fireFighter) {
             fireFighter.patientsMemory.remove(targetPatient);
             currentState = State.Search;
-            //fireFighter.changeAction(new Search(fireFighter));
+            //assignedFireFighter.changeAction(new Search(assignedFireFighter));
         } else {
-            targetPatient.fireFighter = fireFighter;
+            targetPatient.assignedFireFighter = fireFighter;
         }
 
         treatmentFrameCount--;
         if(treatmentFrameCount == 0) {
-            assert targetPatient.fireFighter == null : "아니면 다시 생각해보자";
-            targetPatient.fireFighter = fireFighter;
+            assert targetPatient.assignedFireFighter == null : "아니면 다시 생각해보자";
+            targetPatient.assignedFireFighter = fireFighter;
             treatmentPatient();
         }
     }
@@ -127,7 +127,7 @@ public class FireFighterVirtualAction extends FireFighterAction {
         if(patientsMemory.isEmpty()) {
             // 기억하고 있는 환자가 없으면
             // Search로
-            //fireFighter.changeAction(new Search(fireFighter));
+            //assignedFireFighter.changeAction(new Search(assignedFireFighter));
             currentState = State.Search;
         } else {
             // 기억하고 있는 환자가 있으면
@@ -148,13 +148,13 @@ public class FireFighterVirtualAction extends FireFighterAction {
                 if(seriousMin != null) {
                     minDistantPatient = seriousMin;
                     targetPatient = minDistantPatient;
-                    //fireFighter.changeAction(new MoveToPatient(fireFighter, minDistantPatient));
+                    //assignedFireFighter.changeAction(new MoveToPatient(assignedFireFighter, minDistantPatient));
                 }
             }
 
             if(moveToUpdate(destination)) {
                 // 목적지에 도착
-                //fireFighter.changeAction(new Treatment(fireFighter, targetPatient));
+                //assignedFireFighter.changeAction(new Treatment(assignedFireFighter, targetPatient));
                 treatmentInit();
                 currentState = State.Treatment;
             } else {
@@ -166,18 +166,18 @@ public class FireFighterVirtualAction extends FireFighterAction {
                     Tile tile = fireFighter.world.getMap().getTile(targetPatient.position.x, targetPatient.position.y);
                     if (tile.contain(targetPatient) == false) {
                         fireFighter.patientsMemory.remove(targetPatient);
-                        //fireFighter.changeAction(new Search(fireFighter));
+                        //assignedFireFighter.changeAction(new Search(assignedFireFighter));
                         currentState = State.Search;
                         return;
                     }
 
-                    if (targetPatient.fireFighter != null && targetPatient.fireFighter != fireFighter) {
+                    if (targetPatient.assignedFireFighter != null && targetPatient.assignedFireFighter != fireFighter) {
                         fireFighter.patientsMemory.remove(targetPatient);
-                        //fireFighter.changeAction(new Search(fireFighter));
+                        //assignedFireFighter.changeAction(new Search(assignedFireFighter));
                         currentState = State.Search;
                     }
 //                    else {
-//                        targetPatient.fireFighter = fireFighter;
+//                        targetPatient.assignedFireFighter = assignedFireFighter;
 //                    }
                 }
             }
@@ -214,7 +214,7 @@ public class FireFighterVirtualAction extends FireFighterAction {
                     objects.forEach(obj -> {
                         if(obj instanceof Patient) {
                             foundPatients.add((Patient)obj);
-                            //fireFighter.getPatientsMemory().add((Patient) obj);
+                            //assignedFireFighter.getPatientsMemory().add((Patient) obj);
                         }
                     });
                 }
@@ -291,6 +291,6 @@ public class FireFighterVirtualAction extends FireFighterAction {
         targetPatient.isSaved = true;
         //targetPatient.setStatus(Patient.Status.Saved);
         currentState = State.Search;
-        //fireFighter.changeAction(new Search(fireFighter));
+        //assignedFireFighter.changeAction(new Search(assignedFireFighter));
     }
 }

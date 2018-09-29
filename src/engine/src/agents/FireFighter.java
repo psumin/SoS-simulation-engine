@@ -91,7 +91,7 @@ public class FireFighter extends CS {
 //                    objects.forEach(obj -> {
 //                        if(obj instanceof Patient) {
 //                            foundPatients.add((Patient)obj);
-//                            //fireFighter.getPatientsMemory().add((Patient) obj);
+//                            //assignedFireFighter.getPatientsMemory().add((Patient) obj);
 //                        }
 //                    });
 //                }

@@ -19,8 +19,8 @@ public class Patient extends CS {
        }
     }
 
-    Status status = Status.Wounded;
-    public FireFighter fireFighter = null;
+    private Status status = Status.Wounded;
+    public FireFighter assignedFireFighter = null;
     public boolean isSaved = false;
 
     public Status getStatus() {
@@ -61,12 +61,13 @@ public class Patient extends CS {
         super.remove();
     }
 
-    public Hospital currentHospital = null;
-    private int seriousTreatmentTime = 1000;
-    private int woundedTreatmentTime = 1000;
-    boolean isTreatmenting = false;
+    private Hospital currentHospital = null;
+    private int seriousTreatmentTime = 500;
+    private int woundedTreatmentTime = 500;
+    private boolean isTreatmenting = false;
     private int counter = 0;
-    public void treatmentStart() {
+    public void treatmentStart(Hospital hospital) {
+        currentHospital = hospital;
         isTreatmenting = true;
         if(status == Status.Serious) {
             counter = seriousTreatmentTime;
@@ -84,6 +85,7 @@ public class Patient extends CS {
                 assert currentHospital != null: "이러면 안된다";
                 //currentHospital.patients.remove(this);
                 currentHospital.leavePatient(this);
+                currentHospital = null;
                 world.removeChild(this);
             }
         }
