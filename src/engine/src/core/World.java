@@ -2,6 +2,7 @@ package core;
 
 import agents.*;
 import misc.Position;
+import sun.rmi.runtime.Log;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class World extends SoSObject{
     public ArrayList<SafeZone> safeZones = new ArrayList<>(maxSafeZone);
     public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);
 
-    int frameCount = 0;
+
 
     public World() {
         map = new Map();
@@ -119,6 +120,8 @@ public class World extends SoSObject{
         }
     }
 
+    int frameCount = 0;
+    public int savedPatientCount = 0;
     @Override
     public void onUpdate() {
         if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
@@ -127,6 +130,13 @@ public class World extends SoSObject{
         }
         frameCount++;
         System.out.println("FrameCount: " + frameCount);
+
+        if(frameCount == 1) {
+            Logger.println("프레임 수, 구한 환자 수");
+        }
+
+        Logger.printColumn(frameCount + "");
+        Logger.println(savedPatientCount + "");
     }
 
     @Override

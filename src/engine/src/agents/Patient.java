@@ -86,8 +86,7 @@ public class Patient extends CS {
                 currentHospital.leavePatient(this);
                 currentHospital = null;
                 world.removeChild(this);
-
-                Logger.println(Time.getFrameCount() + ", " + name + ", removed from world");
+                world.savedPatientCount++;
             }
         }
     }
