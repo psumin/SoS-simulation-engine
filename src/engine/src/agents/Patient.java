@@ -1,6 +1,7 @@
 package agents;
 
 import core.*;
+import misc.Time;
 
 public class Patient extends CS {
 
@@ -61,8 +62,8 @@ public class Patient extends CS {
     }
 
     private Hospital currentHospital = null;
-    private int seriousTreatmentTime = 500;
-    private int woundedTreatmentTime = 500;
+    private int seriousTreatmentTime = 50;
+    private int woundedTreatmentTime = 50;
     private boolean isTreatmenting = false;
     private int counter = 0;
     public void treatmentStart(Hospital hospital) {
@@ -85,6 +86,8 @@ public class Patient extends CS {
                 currentHospital.leavePatient(this);
                 currentHospital = null;
                 world.removeChild(this);
+
+                Logger.println(Time.getFrameCount() + ", " + name + ", removed from world");
             }
         }
     }

@@ -121,6 +121,10 @@ public class World extends SoSObject{
 
     @Override
     public void onUpdate() {
+        if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
+            canUpdate(false);
+            return;
+        }
         frameCount++;
         System.out.println("FrameCount: " + frameCount);
     }
@@ -139,5 +143,16 @@ public class World extends SoSObject{
 
     public Map getMap() {
         return map;
+    }
+
+
+    public int getPatientCount() {
+        int count = 0;
+        for(SoSObject child: children) {
+            if(child instanceof Patient) {
+                count++;
+            }
+        }
+        return count;
     }
 }

@@ -1,5 +1,7 @@
+import core.Logger;
 import core.World;
 import misc.Time;
+import sun.rmi.runtime.Log;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -136,6 +138,7 @@ public class SoSSimulationProgram implements Runnable {
 
     World world;
     protected void init() {
+        Logger.init();
         world = new World();
     }
 
@@ -164,6 +167,7 @@ public class SoSSimulationProgram implements Runnable {
     }
 
     protected void clear() {
+        Logger.clear();
     }
 
     public static void main(String [] args){
