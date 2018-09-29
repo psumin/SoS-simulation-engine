@@ -69,7 +69,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
             if(searchDestination == null) {
                 searchDestination = selectDestination();
             } else {
-                if(moveToUpdate(searchDestination)) {
+                if(delayedMoveToUpdate(searchDestination)) {
                     searchDestination = null;
                 }
             }
@@ -167,7 +167,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 }
             }
 
-            if(moveToUpdate(destination)) {
+            if(delayedMoveToUpdate(destination)) {
                 // 목적지에 도착
                 //fireFighter.changeAction(new Treatment(fireFighter, targetPatient));
                 treatmentInit();
@@ -220,7 +220,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 ((Hospital) transferDestination).patients.add(targetPatient);
             }
         } else {
-            if(moveToUpdate(transferDestination.position)) {
+            if(delayedMoveToUpdate(transferDestination.position)) {
 
                 if(transferDestination instanceof SafeZone) {
                     SafeZone safeZone = (SafeZone)transferDestination;
@@ -346,6 +346,17 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
             }
         }
         return minDistantPatient;
+    }
+
+    int moveDelay = 3;
+    int counter = moveDelay;
+    boolean delayedMoveToUpdate(Position dest) {
+        counter--;
+        if(counter <= 0) {
+            counter = moveDelay;
+            return moveToUpdate(dest);
+        }
+        return false;
     }
 
     // 인자로 넘겨준 목적지까지 이동

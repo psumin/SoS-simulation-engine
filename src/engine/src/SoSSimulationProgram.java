@@ -64,7 +64,7 @@ public class SoSSimulationProgram implements Runnable {
         }
     }
 
-    long desiredFPS = 60;
+    long desiredFPS = 120;
     long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
 
     boolean running = true;
@@ -148,7 +148,7 @@ public class SoSSimulationProgram implements Runnable {
         timeImpl.update(deltaTime);
 
         time += Time.getDeltaTime();
-        if(time >= Time.fromSecond(0.01f)) {
+        if(time >= Time.fromSecond(0.001f)) {
             world.update();
             time = 0;
         }
