@@ -61,7 +61,7 @@ public class Ambulance extends CS{
             }
         } else {
             SafeZone maxSeriousSafeZone = maxZone(Patient.Status.Serious);
-            if (statusCount(maxSeriousSafeZone, Patient.Status.Serious) == 0) {
+            if (maxSeriousSafeZone.countPatient(Patient.Status.Serious) == 0) {
                 // TODO: 위험하지 않은 놈들 카운트
                 SafeZone maxWoundedSafeZone = maxZone(Patient.Status.Wounded);
                 if (targetSafeZone == null) {
@@ -69,23 +69,14 @@ public class Ambulance extends CS{
                     if(maxWoundedSafeZone.isEmpty()) return;
 
                     targetSafeZone = maxWoundedSafeZone;
-                    for (Patient patient : maxWoundedSafeZone.patients) {
-                        if (patient.getStatus() == Patient.Status.Wounded) {
-                            targetPatient = patient;
-                        }
-                    }
-                    //targetPatient = targetSafeZone.getPatient(Patient.Status.Wounded);
-                    maxWoundedSafeZone.arrivedPatient(targetPatient);
+                    targetPatient = targetSafeZone.getPatient(Patient.Status.Wounded);
+                    maxWoundedSafeZone.leavePatient(targetPatient);
                 }
             } else {
                 if (targetSafeZone == null) {
                     targetSafeZone = maxSeriousSafeZone;
-                    for (Patient patient : maxSeriousSafeZone.patients) {
-                        if (patient.getStatus() == Patient.Status.Serious) {
-                            targetPatient = patient;
-                        }
-                    }
-                    maxSeriousSafeZone.arrivedPatient(targetPatient);
+                    targetPatient = targetSafeZone.getPatient(Patient.Status.Serious);
+                    maxSeriousSafeZone.leavePatient(targetPatient);
                 }
             }
         }
@@ -95,7 +86,8 @@ public class Ambulance extends CS{
         int maxCount = 0;
         SafeZone maxZone = null;
         for(SafeZone safeZone: world.safeZones) {
-            int count = statusCount(safeZone, status);
+            //int count = statusCount(safeZone, status);
+            int count = safeZone.countPatient(status);
 
             if(maxZone == null) {
                 maxCount = count;
@@ -109,15 +101,15 @@ public class Ambulance extends CS{
         }
         return maxZone;
     }
-    int statusCount(SafeZone safeZone, Patient.Status status) {
-        int count = 0;
-        for (Patient patient : safeZone.patients) {
-            if (patient.getStatus() == status) {
-                count++;
-            }
-        }
-        return count;
-    }
+//    int statusCount(SafeZone safeZone, Patient.Status status) {
+//        int count = 0;
+//        for (Patient patient : safeZone.patients) {
+//            if (patient.getStatus() == status) {
+//                count++;
+//            }
+//        }
+//        return count;
+//    }
 
     boolean moveToUpdate(Position dest) {
         int distanceX = dest.x - position.x;

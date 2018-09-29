@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class SafeZone extends CS {
 
-    public ArrayList<Patient> patients = new ArrayList<>();
+    private ArrayList<Patient> patients = new ArrayList<>();
 
 
     private TextObject textObject = new TextObject();
@@ -20,25 +20,6 @@ public class SafeZone extends CS {
         addChild(new ImageObject("src/engine/resources/safezone.png", scale));
         addChild(textObject);
         textObject.fontColor = Color.red;
-
-//        Position[] positions = new Position[]{
-//                new Position(-1, -1),
-//                new Position(0, -1),
-//                new Position(1, -1),
-//
-//                new Position(-1, 0),
-//                new Position(0, 0),
-//                new Position(1, 0),
-//
-//                new Position(-1, 1),
-//                new Position(0, 1),
-//                new Position(1, 1),
-//        };
-//        for(int i = 0; i < 9; ++i) {
-//            SoSObject object = new ImageObject("src/engine/resources/safezone.png");
-//            object.setPosition(positions[i]);
-//            addChild(object);
-//        }
     }
 
     public boolean isSafeZone(Position position) {
@@ -62,7 +43,7 @@ public class SafeZone extends CS {
     }
 
     public void arrivedPatient(Patient patient) {
-        patients.remove(patient);
+        //patients.remove(patient);
         patients.add(patient);
     }
     public void leavePatient(Patient patient) {
@@ -77,5 +58,15 @@ public class SafeZone extends CS {
             }
         }
         return null;
+    }
+
+    public int countPatient(Patient.Status status) {
+        int count = 0;
+        for (Patient patient : patients) {
+            if (patient.getStatus() == status) {
+                count++;
+            }
+        }
+        return count;
     }
 }
