@@ -30,8 +30,10 @@ public class Hospital extends CS {
 
     // 환자 입원
     public void hospitalize(Patient patient) {
+        patients.remove(patient);
         patient.currentHospital = this;
         patient.treatmentStart();
+        patients.add(patient);
     }
 
     // 환자 퇴원

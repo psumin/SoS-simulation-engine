@@ -65,7 +65,8 @@ public class Ambulance extends CS{
                 // TODO: 위험하지 않은 놈들 카운트
                 SafeZone maxWoundedSafeZone = maxZone(Patient.Status.Wounded);
                 if (targetSafeZone == null) {
-                    if(maxWoundedSafeZone.patients.isEmpty()) return;
+                    //if(maxWoundedSafeZone.patients.isEmpty()) return;
+                    if(maxWoundedSafeZone.isEmpty()) return;
 
                     targetSafeZone = maxWoundedSafeZone;
                     for (Patient patient : maxWoundedSafeZone.patients) {
@@ -73,7 +74,8 @@ public class Ambulance extends CS{
                             targetPatient = patient;
                         }
                     }
-                    maxWoundedSafeZone.patients.remove(targetPatient);
+                    //targetPatient = targetSafeZone.getPatient(Patient.Status.Wounded);
+                    maxWoundedSafeZone.arrivedPatient(targetPatient);
                 }
             } else {
                 if (targetSafeZone == null) {
@@ -83,7 +85,7 @@ public class Ambulance extends CS{
                             targetPatient = patient;
                         }
                     }
-                    maxSeriousSafeZone.patients.remove(targetPatient);
+                    maxSeriousSafeZone.arrivedPatient(targetPatient);
                 }
             }
         }

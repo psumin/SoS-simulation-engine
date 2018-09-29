@@ -12,10 +12,9 @@ public class SafeZone extends CS {
 
     public ArrayList<Patient> patients = new ArrayList<>();
 
-    TextObject textObject = new TextObject();
 
-    int scale = 5;
-
+    private TextObject textObject = new TextObject();
+    private int scale = 5;
     public SafeZone(World world, String name) {
         super(world, name);
         addChild(new ImageObject("src/engine/resources/safezone.png", scale));
@@ -56,5 +55,27 @@ public class SafeZone extends CS {
     @Override
     public void onUpdate() {
         textObject.text = "" + patients.size();
+    }
+
+    public boolean isEmpty() {
+        return patients.isEmpty();
+    }
+
+    public void arrivedPatient(Patient patient) {
+        patients.remove(patient);
+        patients.add(patient);
+    }
+    public void leavePatient(Patient patient) {
+        patients.remove(patient);
+    }
+
+    public Patient getPatient(Patient.Status status) {
+        for (Patient patient : patients) {
+            if (patient.getStatus() == status) {
+                //targetPatient = patient;
+                return patient;
+            }
+        }
+        return null;
     }
 }

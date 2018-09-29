@@ -226,7 +226,8 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 if(transferDestination instanceof SafeZone) {
                     SafeZone safeZone = (SafeZone)transferDestination;
                     //safeZone.patients.remove(targetPatient);
-                    safeZone.patients.add(targetPatient);
+                    //safeZone.patients.add(targetPatient);
+                    safeZone.arrivedPatient(targetPatient);
                 } else {
                     Hospital hospital = (Hospital)transferDestination;
                     //hospital.patients.remove(targetPatient);
