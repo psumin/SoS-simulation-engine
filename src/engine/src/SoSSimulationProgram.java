@@ -64,6 +64,7 @@ public class SoSSimulationProgram implements Runnable {
             }
 
             public void windowClosing(WindowEvent e) {
+                running = false;
                 clear();
             }
         });
