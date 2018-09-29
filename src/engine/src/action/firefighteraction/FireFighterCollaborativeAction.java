@@ -250,6 +250,8 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
     @Override
     public void onUpdate() {
         //fireFighter.addToTile();
+        if(unvisitedTiles.isEmpty() && patientsMemory.isEmpty()) return;
+
         router.broadcast(fireFighter,
                 new Msg()
                         .setFrom(fireFighter.name)
