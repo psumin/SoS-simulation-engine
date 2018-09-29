@@ -43,7 +43,6 @@ public class SafeZone extends CS {
     }
 
     public void arrivedPatient(Patient patient) {
-        //patients.remove(patient);
         patients.add(patient);
     }
     public void leavePatient(Patient patient) {
@@ -53,7 +52,6 @@ public class SafeZone extends CS {
     public Patient getPatient(Patient.Status status) {
         for (Patient patient : patients) {
             if (patient.getStatus() == status) {
-                //targetPatient = patient;
                 return patient;
             }
         }

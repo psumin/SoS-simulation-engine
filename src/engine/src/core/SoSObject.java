@@ -8,15 +8,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
-// SoSObjectManager에 등록해야(register() 함수 호출) update, render 함수 실행됨
-// 등록 해지하면 실행 X
 public abstract class SoSObject {
 
     public SoSObject() {
 
     }
     public SoSObject(String name) {
-        setName(name);
+        this.name = name;
     }
 
     SoSObject parent;
@@ -159,13 +157,6 @@ public abstract class SoSObject {
 
 
     public String name = "";
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public SoSObject findObject(String targetName) {
         if(name == targetName) {

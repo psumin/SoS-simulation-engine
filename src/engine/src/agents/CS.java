@@ -1,18 +1,15 @@
 package agents;
 
 import core.SoSObject;
-import core.Tile;
 import core.World;
 import misc.Position;
-
-import java.util.ArrayList;
 
 public class CS extends SoSObject {
 
     World world;
     public CS(World world, String name) {
         this.world = world;
-        setName(name);
+        this.name = name;
     }
 
     @Override
@@ -26,10 +23,6 @@ public class CS extends SoSObject {
     @Override
     public void setPosition(Position position) {
         setPosition(position.x, position.y);
-//        world.getMap().removeObject(position.x, position.y, this);
-//        this.position.set(position);
-//        world.getMap().removeObject(position.x, position.y, this);
-//        world.getMap().addObject(position.x, position.y, this);
     }
 
 

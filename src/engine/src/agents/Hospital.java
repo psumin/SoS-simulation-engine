@@ -2,7 +2,6 @@ package agents;
 
 import core.ImageObject;
 import core.World;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 

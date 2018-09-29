@@ -28,7 +28,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
     Queue<Tile> unvisitedTiles;
     Position destination;
     int sightRange;
-    //public LinkedList<Patient> patientsMemory;
     public ArrayList<Patient> patientsMemory;
 
     MsgRouter router;
@@ -100,7 +99,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
             targetPatient = minDistantPatient;
             currentState = State.MoveToPatient;
-            //assignedFireFighter.changeAction(new MoveToPatient(assignedFireFighter, minDistantPatient));
         }
     }
 
@@ -118,7 +116,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         if(targetPatient.assignedFireFighter != null && targetPatient.assignedFireFighter != fireFighter) {
             fireFighter.patientsMemory.remove(targetPatient);
             currentState = State.Search;
-            //assignedFireFighter.changeAction(new Search(assignedFireFighter));
         } else {
             targetPatient.assignedFireFighter = fireFighter;
         }
@@ -142,7 +139,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         if(patientsMemory.isEmpty()) {
             // 기억하고 있는 환자가 없으면
             // Search로
-            //assignedFireFighter.changeAction(new Search(assignedFireFighter));
             currentState = State.Search;
         } else {
             // 기억하고 있는 환자가 있으면
@@ -150,7 +146,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 // 가장 가까운 환자 위치를 구한 후
                 // 그 환자에게 가기
                 LinkedList<Patient> serious = new LinkedList<>();
-                //LinkedList<Patient> wounded = new LinkedList<>();
                 patientsMemory.forEach(patient -> {
                     if(patient.getStatus() == Patient.Status.Serious) {
                         serious.add(patient);
@@ -169,45 +164,36 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
             if(delayedMoveToUpdate(destination)) {
                 // 목적지에 도착
-                //assignedFireFighter.changeAction(new Treatment(assignedFireFighter, targetPatient));
                 treatmentInit();
                 currentState = State.Treatment;
             } else {
                 int distanceX = Math.abs(targetPatient.position.x - fireFighter.position.x);
                 int distanceY = Math.abs(targetPatient.position.y - fireFighter.position.y);
 
-                //if(distanceX <= 1 && distanceY <= 1) {
                 if(distanceX <= sightRange / 2 && distanceY <= sightRange / 2) {
                     // 시야 안
                     Tile tile = fireFighter.world.getMap().getTile(targetPatient.position.x, targetPatient.position.y);
                     if (tile.contain(targetPatient) == false) {
                         fireFighter.patientsMemory.remove(targetPatient);
-                        //assignedFireFighter.changeAction(new Search(assignedFireFighter));
                         currentState = State.Search;
                         return;
                     }
 
                     if (targetPatient.assignedFireFighter != null && targetPatient.assignedFireFighter != fireFighter) {
                         fireFighter.patientsMemory.remove(targetPatient);
-                        //assignedFireFighter.changeAction(new Search(assignedFireFighter));
                         currentState = State.Search;
                     }
-//                    else {
-//                        targetPatient.assignedFireFighter = assignedFireFighter;
-//                    }
                 }
             }
         }
     }
 
     SoSObject transferDestination = null;
-    int transferTime = 5;
     void transferUpdate() {
         searchPatient();
         if(transferDestination == null) {
             ArrayList<SoSObject> safeZoneAndHospitals = new ArrayList<>();
             safeZoneAndHospitals.addAll(world.safeZones);
-            //safeZoneAndHospitals.addAll(world.hospitals);
             for(Hospital hospital: world.hospitals) {
                 if(hospital.isAvailable()) {
                     safeZoneAndHospitals.add(hospital);
@@ -217,24 +203,17 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
             transferDestination = SoSObject.minDistantObject(fireFighter, safeZoneAndHospitals);
             if(transferDestination instanceof Hospital) {
                 ((Hospital) transferDestination).reserve(targetPatient);
-//                ((Hospital) transferDestination).patients.remove(targetPatient);
-//                ((Hospital) transferDestination).patients.add(targetPatient);
             }
         } else {
             if(delayedMoveToUpdate(transferDestination.position)) {
 
                 if(transferDestination instanceof SafeZone) {
                     SafeZone safeZone = (SafeZone)transferDestination;
-                    //safeZone.patients.remove(targetPatient);
-                    //safeZone.patients.add(targetPatient);
                     safeZone.arrivedPatient(targetPatient);
                 } else {
                     Hospital hospital = (Hospital)transferDestination;
-                    //hospital.patients.remove(targetPatient);
                     hospital.hospitalize(targetPatient);
                 }
-
-
 
                 transferDestination = null;
                 fireFighter.transferImage.visible(false);
@@ -242,8 +221,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 world.addChild(targetPatient);
                 targetPatient.setPosition(fireFighter.position);
                 currentState = State.Search;
-
-                //world.savedPatient++;
             }
         }
     }
@@ -251,7 +228,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
     @Override
     public void onUpdate() {
-        //assignedFireFighter.addToTile();
         if(unvisitedTiles.isEmpty() && patientsMemory.isEmpty()) return;
 
         router.broadcast(fireFighter,
@@ -284,7 +260,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 transferUpdate();
                 break;
         }
-        //assignedFireFighter.removeFromTile();
     }
 
     // 시야 범위 내에 환자가 존재하는지 탐색
@@ -312,24 +287,16 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                         objects.forEach(obj -> {
                             if (obj instanceof Patient) {
                                 foundPatients.add((Patient) obj);
-                                //assignedFireFighter.getPatientsMemory().add((Patient) obj);
                             }
                         });
                     }
                     individualMap.visited(x, y, true);
                     worldMap.visited(x, y, true);
-                    //getIndividualMap().visited(x, y, true);
-                    //getWorld().getMap().visited(x, y, true);
                 }
             }
         }
         patientsMemory.removeAll(foundPatients);
         patientsMemory.addAll(foundPatients);
-
-//        if(foundPatients.isEmpty() == false) {
-//            search.onFoundPatients(foundPatients);
-//            //onFoundPatients.accept(foundPatients);
-//        }
     }
 
 
@@ -401,9 +368,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         world.removeChild(targetPatient);
         fireFighter.patientsMemory.remove(targetPatient);
         targetPatient.isSaved = true;
-        //targetPatient.setStatus(Patient.Status.Saved);
         currentState = State.Search;
-        //assignedFireFighter.changeAction(new Search(assignedFireFighter));
     }
 
     @Override
@@ -411,9 +376,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         if(msg.title == "individual map") {
             Map othersMap = (Map)msg.data;
 
-            if(Time.getFrameCount() > 50) {
-                int a = 10;
-            }
             // 방문 정보 업데이트
             othersMap.getTiles().forEach(tile -> {
                 if(tile.isVisited()) {
@@ -424,14 +386,10 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         else if(msg.title == "patientsMemory") {
             ArrayList<Patient> othersMemory = (ArrayList<Patient>)msg.data;
             patientsMemory.removeAll(othersMemory);
-            //patientsMemory.addAll(othersMemory);
             othersMemory.forEach(patient -> {
                 if(patient.isSaved == false) {
                     patientsMemory.add(patient);
                 }
-//                if(patient.getStatus() != Patient.Status.Saved) {
-//                    patientsMemory.add(patient);
-//                }
             });
         }
     }

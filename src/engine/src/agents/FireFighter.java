@@ -39,27 +39,10 @@ public class FireFighter extends CS {
         individualMap = new Map();
         LinkedList<Tile> temp = new LinkedList<>(individualMap.getTiles());
         //LinkedList<Tile> temp= new LinkedList<>(world.getMap().getTiles());
-
-//        for(int i = 0; i < temp.size() * 3; ++i) {
-//            int leftIndex = GlobalRandom.nextInt(temp.size());
-//            int rightIndex = GlobalRandom.nextInt(temp.size());
-//            Tile swapTemp = temp.get(leftIndex);
-//            temp.set(leftIndex, temp.get(rightIndex));
-//            temp.set(rightIndex, swapTemp);
-//        }
-
         Collections.shuffle(temp);
 
         unvisitedTiles = temp;
-
-        //Search search = new Search(this);
-        //search.start();
-        //new SearchLegacy(this);
-        //search();
-        //currentAction = new Search(this);
-        //currentAction = new FireFighterVirtualAction(this);
         currentAction = new FireFighterCollaborativeAction(this);
-        //currentAction = new FireFighterDirectAction(this);
     }
 
     boolean isFirstUpdate = true;
@@ -75,59 +58,12 @@ public class FireFighter extends CS {
     public void clear() {
         world = null;
     }
-//
-//    @Override
-//    public void setPosition(int _x, int _y) {
-//        super.setPosition(_x, _y);
-//        //this.position.set(_x, _y);
-//
-//        ArrayList<Patient> foundPatients = new ArrayList<>();
-//        for(int y = position.y - getSightRange() / 2; y <= position.y + getSightRange() / 2; ++y) {
-//            for(int x = position.x - getSightRange() / 2; x <= position.x + getSightRange() / 2; ++x) {
-//
-//                Tile worldTile = getWorld().getMap().getTile(x, y);
-//                if(worldTile != null && worldTile.isVisited() == false) {
-//                    ArrayList<SoSObject> objects = worldTile.getObjects();
-//                    objects.forEach(obj -> {
-//                        if(obj instanceof Patient) {
-//                            foundPatients.add((Patient)obj);
-//                            //assignedFireFighter.getPatientsMemory().add((Patient) obj);
-//                        }
-//                    });
-//                }
-//                getIndividualMap().visited(x, y, true);
-//                getWorld().getMap().visited(x, y, true);
-//            }
-//        }
-//        getPatientsMemory().addAll(foundPatients);
-//
-//        if(foundPatients.isEmpty() == false) {
-//            search.onFoundPatients(foundPatients);
-//            //onFoundPatients.accept(foundPatients);
-//        }
-//    }
-
-    public Queue<Tile> getUnvisitedTiles() {
-        return unvisitedTiles;
-    }
-
-    public ArrayList<Patient> getPatientsMemory() {
-        return patientsMemory;
-    }
-
     public int getSightRange() {
         return sightRange;
     }
-
     public World getWorld() {
         return world;
     }
-
-    public Map getIndividualMap() {
-        return individualMap;
-    }
-
-
     public void changeAction(FireFighterAction action) {
         currentAction.stop();
         currentAction = action;
@@ -137,11 +73,9 @@ public class FireFighter extends CS {
 
     @Override
     public void onRender(Graphics2D graphics2D) {
-
         graphics2D.setColor(Color.red);
         graphics2D.setFont(new Font("default", Font.BOLD, 16));
         graphics2D.drawChars(name.toCharArray(), 0, name.length(), 0, 0);
-
     }
 
     public void removeFromTile() {

@@ -15,7 +15,6 @@ public class Patient extends CS {
            else
                index = 1;
            return values[index];
-//            return values[GlobalRandom.nextInt(values.length - 1)];
        }
     }
 
@@ -83,7 +82,6 @@ public class Patient extends CS {
             if(counter <= 0) {
                 // TODO: 치료 완료
                 assert currentHospital != null: "이러면 안된다";
-                //currentHospital.patients.remove(this);
                 currentHospital.leavePatient(this);
                 currentHospital = null;
                 world.removeChild(this);

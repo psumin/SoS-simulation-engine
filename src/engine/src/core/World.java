@@ -12,7 +12,6 @@ public class World extends SoSObject{
     public static final int maxFireFighter = 12;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 4;
-    public static final int maxSearchTeam = 10;
     public static final int maxSafeZone = 4;
 
     Map map;
@@ -21,7 +20,6 @@ public class World extends SoSObject{
     public ArrayList<Hospital> hospitals = new ArrayList<Hospital>(maxHospital);
     public ArrayList<SafeZone> safeZones = new ArrayList<>(maxSafeZone);
     public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);
-    public int savedPatient = 0;
 
     int frameCount = 0;
 
@@ -74,11 +72,7 @@ public class World extends SoSObject{
         for (int i = 0; i < maxFireFighter; i++) {
             FireFighter ff = new FireFighter(this, "FF" + (i + 1));
             ff.setPosition(0, 0);
-            //ff.setPosition(positions[i / factor]);
             fireFighters.add(ff);
-//            if(i == 0) {
-//                addChild(ff.individualMap);
-//            }
 
             ff.setPosition(positions[i / factor]);
             addChild(ff);
@@ -129,13 +123,6 @@ public class World extends SoSObject{
     public void onUpdate() {
         frameCount++;
         System.out.println("FrameCount: " + frameCount);
-        //if(map.getUnvisitedTileCount() == 0 && map.getPatientCount() == 0) {
-//        if(map.getUnvisitedTileCount() == 0 && savedPatient == maxPatient) {
-//            this.canUpdate(false);
-//        } else {
-//            frameCount++;
-//            System.out.println("FrameCount: " + frameCount);
-//        }
     }
 
     @Override

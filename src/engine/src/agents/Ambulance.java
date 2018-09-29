@@ -21,7 +21,6 @@ public class Ambulance extends CS{
     @Override
     public void onUpdate() {
         if(onBoardPatient != null) {
-            //ArrayList<SoSObject> hospitals = new ArrayList<>(world.hospitals);
             if(targetHospital == null) {
                 ArrayList<SoSObject> hospitals = new ArrayList<>();
                 for (Hospital hospital : world.hospitals) {
@@ -34,20 +33,15 @@ public class Ambulance extends CS{
                     Hospital hospital = (Hospital) minDistantObject;
                     targetHospital = hospital;
                     hospital.reserve(onBoardPatient);
-//                    hospital.patients.remove(onBoardPatient);
-//                    hospital.patients.add(onBoardPatient);
                 }
             } else {
                 if (moveToUpdate(targetHospital.position)) {
                     // TODO: 환자 내려줌
-                    //world.removeChild(onBoardPatient);
-                    //targetHospital.patients.remove(onBoardPatient);
                     targetHospital.hospitalize(onBoardPatient);
                     targetHospital = null;
                     targetSafeZone = null;
                     onBoardPatient = null;
                     targetPatient = null;
-//                world.savedPatient++;
                 }
             }
         }
@@ -65,7 +59,6 @@ public class Ambulance extends CS{
                 // TODO: 위험하지 않은 놈들 카운트
                 SafeZone maxWoundedSafeZone = maxZone(Patient.Status.Wounded);
                 if (targetSafeZone == null) {
-                    //if(maxWoundedSafeZone.patients.isEmpty()) return;
                     if(maxWoundedSafeZone.isEmpty()) return;
 
                     targetSafeZone = maxWoundedSafeZone;
@@ -86,7 +79,6 @@ public class Ambulance extends CS{
         int maxCount = 0;
         SafeZone maxZone = null;
         for(SafeZone safeZone: world.safeZones) {
-            //int count = statusCount(safeZone, status);
             int count = safeZone.countPatient(status);
 
             if(maxZone == null) {
@@ -101,15 +93,6 @@ public class Ambulance extends CS{
         }
         return maxZone;
     }
-//    int statusCount(SafeZone safeZone, Patient.Status status) {
-//        int count = 0;
-//        for (Patient patient : safeZone.patients) {
-//            if (patient.getStatus() == status) {
-//                count++;
-//            }
-//        }
-//        return count;
-//    }
 
     private boolean moveToUpdate(Position dest) {
         int distanceX = dest.x - position.x;

@@ -59,15 +59,5 @@ public class MsgRouter extends SoSObject {
                 }
             }
         }
-
-//        tiles.forEach(tile -> {
-//            tile.getObjects().forEach(obj -> {
-//                if(obj instanceof FireFighter) {
-//                    if(obj != sender) {
-//                        obj.recvMsg(msg);
-//                    }
-//                }
-//            });
-//        });
     }
 }

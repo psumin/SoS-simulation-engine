@@ -24,8 +24,6 @@ public class ImageObject extends SoSObject {
     @Override
     protected void onRender(Graphics2D g) {
         BufferedImage bufImage = image.getImage();
-        //int w = bufImage.getWidth();
-        //int h = bufImage.getHeight();
         g.translate((int)(-scale / 2) * Map.tileSize.width, (int)(-scale / 2) * Map.tileSize.height);
         g.scale(scale, scale);
         g.drawImage(bufImage, 0, 0, Map.tileSize.width, Map.tileSize.height, null);
