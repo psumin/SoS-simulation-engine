@@ -1,6 +1,7 @@
 package action.firefighteraction;
 
 import agents.FireFighter;
+import agents.Hospital;
 import agents.Patient;
 import agents.SafeZone;
 import core.*;
@@ -206,9 +207,18 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         if(transferDestination == null) {
             ArrayList<SoSObject> safeZoneAndHospitals = new ArrayList<>();
             safeZoneAndHospitals.addAll(world.safeZones);
-            safeZoneAndHospitals.addAll(world.hospitals);
+            //safeZoneAndHospitals.addAll(world.hospitals);
+            for(Hospital hospital: world.hospitals) {
+                if(hospital.isFull() == false) {
+                    safeZoneAndHospitals.add(hospital);
+                }
+            }
 
             transferDestination = SoSObject.minDistantObject(fireFighter, safeZoneAndHospitals);
+            if(transferDestination instanceof Hospital) {
+                ((Hospital) transferDestination).patients.remove(targetPatient);
+                ((Hospital) transferDestination).patients.add(targetPatient);
+            }
         } else {
             if(moveToUpdate(transferDestination.position)) {
 
@@ -216,7 +226,13 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                     SafeZone safeZone = (SafeZone)transferDestination;
                     //safeZone.patients.remove(targetPatient);
                     safeZone.patients.add(targetPatient);
+                } else {
+                    Hospital hospital = (Hospital)transferDestination;
+                    hospital.patients.remove(targetPatient);
+                    hospital.hospitalization(targetPatient);
                 }
+
+
 
                 transferDestination = null;
                 fireFighter.transferImage.visible(false);

@@ -60,4 +60,31 @@ public class Patient extends CS {
         removeFromTile();
         super.remove();
     }
+
+    public Hospital hospitalization = null;
+    private int seriousTreatmentTime = 1000;
+    private int woundedTreatmentTime = 1000;
+    boolean isTreatmenting = false;
+    private int counter = 0;
+    public void treatmentStart() {
+        isTreatmenting = true;
+        if(status == Status.Serious) {
+            counter = seriousTreatmentTime;
+        } else if(status == Status.Wounded) {
+            counter = woundedTreatmentTime;
+        }
+    }
+
+    @Override
+    public void onUpdate() {
+        if(isTreatmenting) {
+            counter--;
+            if(counter <= 0) {
+                // TODO: 치료 완료
+                assert hospitalization != null: "이러면 안된다";
+                hospitalization.patients.remove(this);
+                world.removeChild(this);
+            }
+        }
+    }
 }

@@ -11,7 +11,7 @@ public class World extends SoSObject{
     public static final int maxPatient = 70;
     public static final int maxFireFighter = 12;
     public static final int maxHospital = 4;
-    public static final int maxAmbulance = 20;
+    public static final int maxAmbulance = 4;
     public static final int maxSearchTeam = 10;
     public static final int maxSafeZone = 4;
 
@@ -72,7 +72,7 @@ public class World extends SoSObject{
         };
         int factor = maxFireFighter / 4;
         for (int i = 0; i < maxFireFighter; i++) {
-            FireFighter ff = new FireFighter(this, "FireFighter" + (i + 1));
+            FireFighter ff = new FireFighter(this, "FF" + (i + 1));
             ff.setPosition(0, 0);
             //ff.setPosition(positions[i / factor]);
             fireFighters.add(ff);
@@ -90,6 +90,12 @@ public class World extends SoSObject{
             Hospital hospital = new Hospital(this, "Hospital" + (i + 1));
             hospitals.add(hospital);
             addChild(hospital);
+
+            if(i == 0){
+                hospital.capacity = 2;
+            } else {
+                hospital.capacity = 100;
+            }
         }
 
         hospitals.get(0).setPosition(0, 0);
@@ -121,13 +127,15 @@ public class World extends SoSObject{
 
     @Override
     public void onUpdate() {
+        frameCount++;
+        System.out.println("FrameCount: " + frameCount);
         //if(map.getUnvisitedTileCount() == 0 && map.getPatientCount() == 0) {
-        if(map.getUnvisitedTileCount() == 0 && savedPatient == maxPatient) {
-            this.canUpdate(false);
-        } else {
-            frameCount++;
-            System.out.println("FrameCount: " + frameCount);
-        }
+//        if(map.getUnvisitedTileCount() == 0 && savedPatient == maxPatient) {
+//            this.canUpdate(false);
+//        } else {
+//            frameCount++;
+//            System.out.println("FrameCount: " + frameCount);
+//        }
     }
 
     @Override

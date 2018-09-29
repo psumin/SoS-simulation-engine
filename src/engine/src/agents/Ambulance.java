@@ -18,21 +18,38 @@ public class Ambulance extends CS{
         addChild(new ImageObject("src/engine/resources/ambulance.png"));
     }
 
+    Hospital targetHospital;
     @Override
     public void onUpdate() {
-        if(Time.getFrameCount() > 70) {
-            int a = 10;
-        }
         if(onBoardPatient != null) {
-            ArrayList<SoSObject> hospitals = new ArrayList<>(world.hospitals);
-            SoSObject minDistantObject = SoSObject.minDistantObject(this, hospitals);
-            if(moveToUpdate(minDistantObject.position)) {
-                // TODO: 환자 내려줌
-                world.removeChild(onBoardPatient);
-                targetSafeZone = null;
-                onBoardPatient = null;
-                targetPatient = null;
+            //ArrayList<SoSObject> hospitals = new ArrayList<>(world.hospitals);
+            if(targetHospital == null) {
+                ArrayList<SoSObject> hospitals = new ArrayList<>();
+                for (Hospital hospital : world.hospitals) {
+                    int hospitalPatientCount = hospital.patients.size();
+                    if (hospital.isFull() == false) {
+                        hospitals.add(hospital);
+                    }
+                }
+                SoSObject minDistantObject = SoSObject.minDistantObject(this, hospitals);
+                if (minDistantObject != null) {
+                    Hospital hospital = (Hospital) minDistantObject;
+                    targetHospital = hospital;
+                    hospital.patients.remove(onBoardPatient);
+                    hospital.patients.add(onBoardPatient);
+                }
+            } else {
+                if (moveToUpdate(targetHospital.position)) {
+                    // TODO: 환자 내려줌
+                    //world.removeChild(onBoardPatient);
+                    targetHospital.patients.remove(onBoardPatient);
+                    targetHospital.hospitalization(onBoardPatient);
+                    targetHospital = null;
+                    targetSafeZone = null;
+                    onBoardPatient = null;
+                    targetPatient = null;
 //                world.savedPatient++;
+                }
             }
         }
         else if(targetPatient != null) {
