@@ -209,14 +209,14 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
             safeZoneAndHospitals.addAll(world.safeZones);
             //safeZoneAndHospitals.addAll(world.hospitals);
             for(Hospital hospital: world.hospitals) {
-                if(hospital.isFull() == false) {
+                if(hospital.isAvailable()) {
                     safeZoneAndHospitals.add(hospital);
                 }
             }
 
             transferDestination = SoSObject.minDistantObject(fireFighter, safeZoneAndHospitals);
             if(transferDestination instanceof Hospital) {
-                ((Hospital) transferDestination).reservation(targetPatient);
+                ((Hospital) transferDestination).reserve(targetPatient);
 //                ((Hospital) transferDestination).patients.remove(targetPatient);
 //                ((Hospital) transferDestination).patients.add(targetPatient);
             }
@@ -230,7 +230,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                 } else {
                     Hospital hospital = (Hospital)transferDestination;
                     //hospital.patients.remove(targetPatient);
-                    hospital.hospitalization(targetPatient);
+                    hospital.hospitalize(targetPatient);
                 }
 
 

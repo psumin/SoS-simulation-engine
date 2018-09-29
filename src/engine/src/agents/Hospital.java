@@ -2,6 +2,7 @@ package agents;
 
 import core.ImageObject;
 import core.World;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 
@@ -15,21 +16,24 @@ public class Hospital extends CS {
         addChild(new ImageObject("src/engine/resources/hospital.png"));
     }
 
-    public boolean isFull() {
-        return patients.size() == capacity;
+    // 환자 수용 공간이 남아있는지
+    public boolean isAvailable() {
+        return patients.size() < capacity;
     }
 
-    public void reservation(Patient patient) {
+    // 예약
+    public void reserve(Patient patient) {
         patients.remove(patient);
         patients.add(patient);
     }
 
     // 환자 입원
-    public void hospitalization(Patient patient) {
+    public void hospitalize(Patient patient) {
         patient.currentHospital = this;
         patient.treatmentStart();
     }
 
+    // 환자 퇴원
     public void leavePatient(Patient patient) {
         patients.remove(patient);
         patient.currentHospital = null;

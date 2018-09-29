@@ -4,7 +4,6 @@ import core.ImageObject;
 import core.SoSObject;
 import core.World;
 import misc.Position;
-import misc.Time;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,7 @@ public class Ambulance extends CS{
             if(targetHospital == null) {
                 ArrayList<SoSObject> hospitals = new ArrayList<>();
                 for (Hospital hospital : world.hospitals) {
-                    if (hospital.isFull() == false) {
+                    if (hospital.isAvailable()) {
                         hospitals.add(hospital);
                     }
                 }
@@ -34,7 +33,7 @@ public class Ambulance extends CS{
                 if (minDistantObject != null) {
                     Hospital hospital = (Hospital) minDistantObject;
                     targetHospital = hospital;
-                    hospital.reservation(onBoardPatient);
+                    hospital.reserve(onBoardPatient);
 //                    hospital.patients.remove(onBoardPatient);
 //                    hospital.patients.add(onBoardPatient);
                 }
@@ -43,7 +42,7 @@ public class Ambulance extends CS{
                     // TODO: 환자 내려줌
                     //world.removeChild(onBoardPatient);
                     //targetHospital.patients.remove(onBoardPatient);
-                    targetHospital.hospitalization(onBoardPatient);
+                    targetHospital.hospitalize(onBoardPatient);
                     targetHospital = null;
                     targetSafeZone = null;
                     onBoardPatient = null;
