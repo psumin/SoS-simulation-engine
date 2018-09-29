@@ -92,9 +92,9 @@ public class World extends SoSObject{
             addChild(hospital);
 
             if(i == 0){
-                hospital.capacity = 2;
+                hospital.setCapacity(2);
             } else {
-                hospital.capacity = 100;
+                hospital.setCapacity(100);
             }
         }
 

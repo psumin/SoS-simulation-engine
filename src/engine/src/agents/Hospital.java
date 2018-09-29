@@ -6,10 +6,11 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 
+
 public class Hospital extends CS {
 
-    public int capacity = 5;
-    public final ArrayList<Patient> patients = new ArrayList<>();
+    private int capacity = 5;
+    private final ArrayList<Patient> patients = new ArrayList<>();
 
     public Hospital(World world, String name) {
         super(world, name);
@@ -37,5 +38,9 @@ public class Hospital extends CS {
     public void leavePatient(Patient patient) {
         patients.remove(patient);
         patient.currentHospital = null;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 }
