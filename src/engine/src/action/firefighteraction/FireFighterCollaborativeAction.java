@@ -16,8 +16,8 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
     int communicationRange = 5;
 
-    enum State {
-        None, Search, Treatment, MoveToPatient, Transfer
+    public enum State {
+        None, Search, Treatment, MoveToPatient, Transfer, Finish
     }
 
     State currentState = State.Search;
@@ -189,21 +189,47 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
     }
 
     SoSObject transferDestination = null;
+
     void transferUpdate() {
         searchPatient();
         if(transferDestination == null) {
-            ArrayList<SoSObject> safeZoneAndHospitals = new ArrayList<>();
-            safeZoneAndHospitals.addAll(world.safeZones);
-            for(Hospital hospital: world.hospitals) {
-                if(hospital.isAvailable()) {
-                    safeZoneAndHospitals.add(hospital);
+            ArrayList<SoSObject> safeZoneAndHospitals = new ArrayList(world.safeZones);
+            safeZoneAndHospitals.addAll(world.hospitals);
+            SoSObject minDistance = minDistantObject(fireFighter, safeZoneAndHospitals);
+            if(minDistance instanceof SafeZone) {
+                transferDestination = minDistance;
+            } else {
+                for(Hospital hospital: world.hospitals) {
+                    router.route(new Msg()
+                            .setFrom(fireFighter.name)
+                            .setTo(hospital.name)
+                            .setTitle("is available"));
                 }
             }
+//            if(receivedMsgs.isEmpty() == false) {
+//                for(Hospital hospital: world.hospitals) {
+//                    router.route(new Msg()
+//                            .setFrom(fireFighter.name)
+//                            .setTo(hospital.name)
+//                            .setTitle("is available"));
+//                }
+//            } else {
+//                ArrayList<SoSObject> safeZoneAndHospitals = new ArrayList<>();
+//                safeZoneAndHospitals.addAll(world.safeZones);
+//                for(Msg msg: receivedMsgs) {
+//                    if(msg.title == "available false") continue;
+//
+//                    Hospital hospital = (Hospital)msg.data;
+//                    safeZoneAndHospitals.add(hospital);
+//                }
+//                transferDestination = SoSObject.minDistantObject(fireFighter, safeZoneAndHospitals);
+//                if(transferDestination instanceof Hospital) {
+//                    ((Hospital) transferDestination).reserve(targetPatient);
+//                }
+//            }
 
-            transferDestination = SoSObject.minDistantObject(fireFighter, safeZoneAndHospitals);
-            if(transferDestination instanceof Hospital) {
-                ((Hospital) transferDestination).reserve(targetPatient);
-            }
+
+
         } else {
             if(delayedMoveToUpdate(transferDestination.position)) {
 
@@ -228,7 +254,10 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
     @Override
     public void onUpdate() {
-        if(unvisitedTiles.isEmpty() && patientsMemory.isEmpty()) return;
+        if(unvisitedTiles.isEmpty() && patientsMemory.isEmpty()) {
+            currentState = State.Finish;
+            return;
+        }
 
         router.broadcast(fireFighter,
                 new Msg()
@@ -342,6 +371,8 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
             return true;
         }
 
+        fireFighter.totalDistance++;
+
         if(Math.abs(distanceX) > Math.abs(distanceY)) {
             fireFighter.setPosition(fireFighter.position.x + distanceX / Math.abs(distanceX), fireFighter.position.y);
         } else {
@@ -371,26 +402,53 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         currentState = State.Search;
     }
 
+    final ArrayList<Msg> receivedMsgFromHospital = new ArrayList<>();
     @Override
     public void recvMsg(Msg msg) {
-        if(msg.title == "individual map") {
-            Map othersMap = (Map)msg.data;
+        if(msg.from.startsWith("FF")) {
+            if(msg.title == "individual map") {
+                Map othersMap = (Map)msg.data;
 
-            // 방문 정보 업데이트
-            othersMap.getTiles().forEach(tile -> {
-                if(tile.isVisited()) {
-                    individualMap.getTile(tile.position.x, tile.position.y).visited(true);
+                // 방문 정보 업데이트
+                othersMap.getTiles().forEach(tile -> {
+                    if(tile.isVisited()) {
+                        individualMap.getTile(tile.position.x, tile.position.y).visited(true);
+                    }
+                });
+            }
+            else if(msg.title == "patientsMemory") {
+                ArrayList<Patient> othersMemory = (ArrayList<Patient>)msg.data;
+                patientsMemory.removeAll(othersMemory);
+                othersMemory.forEach(patient -> {
+                    if(patient.isSaved == false) {
+                        patientsMemory.add(patient);
+                    }
+                });
+            }
+        } else if(msg.from.startsWith("Hospital")) {
+            receivedMsgFromHospital.add(msg);
+            if(receivedMsgFromHospital.size() == World.maxHospital) {
+                ArrayList<SoSObject> safeZoneAndHospitals = new ArrayList(world.safeZones);
+                //safeZoneAndHospitals.addAll(world.hospitals);
+                for(Msg respond: receivedMsgFromHospital) {
+                    if(respond.title == "available true") {
+                        safeZoneAndHospitals.add((SoSObject)respond.data);
+                    }
                 }
-            });
-        }
-        else if(msg.title == "patientsMemory") {
-            ArrayList<Patient> othersMemory = (ArrayList<Patient>)msg.data;
-            patientsMemory.removeAll(othersMemory);
-            othersMemory.forEach(patient -> {
-                if(patient.isSaved == false) {
-                    patientsMemory.add(patient);
+                transferDestination = minDistantObject(fireFighter, safeZoneAndHospitals);
+                if(transferDestination instanceof Hospital) {
+                    router.route(new Msg()
+                            .setFrom(fireFighter.name)
+                            .setTo(transferDestination.name)
+                            .setTitle("reserve")
+                            .setData(targetPatient));
                 }
-            });
+                receivedMsgFromHospital.clear();
+            }
         }
+    }
+
+    public State getState() {
+        return currentState;
     }
 }

@@ -22,7 +22,9 @@ public class FireFighter extends CS {
     public ImageObject transferImage;
     public ImageObject defaultImage;
 
-    int sightRange = 20;
+    public int totalDistance = 0;
+
+    int sightRange = 5;
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;
@@ -88,5 +90,10 @@ public class FireFighter extends CS {
     @Override
     public void recvMsg(Msg msg) {
         currentAction.recvMsg(msg);
+    }
+
+    public FireFighterCollaborativeAction.State getState() {
+        FireFighterCollaborativeAction action = (FireFighterCollaborativeAction)currentAction;
+        return action.getState();
     }
 }

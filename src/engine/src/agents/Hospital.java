@@ -1,6 +1,8 @@
 package agents;
 
 import core.ImageObject;
+import core.Msg;
+import core.MsgRouter;
 import core.World;
 
 import java.util.ArrayList;
@@ -10,9 +12,11 @@ public class Hospital extends CS {
 
     private int capacity = 5;
     private final ArrayList<Patient> patients = new ArrayList<>();
+    private MsgRouter router;
 
     public Hospital(World world, String name) {
         super(world, name);
+        router = world.router;
         addChild(new ImageObject("src/engine/resources/hospital.png"));
     }
 
@@ -41,5 +45,25 @@ public class Hospital extends CS {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    @Override
+    public void recvMsg(Msg msg) {
+        if(msg.title == "is available") {
+            String title = "";
+            if(isAvailable()) {
+                title = "available true";
+            } else {
+                title = "available false";
+            }
+            router.route(new Msg()
+                    .setFrom(name)
+                    .setTo(msg.from)
+                    .setTitle(title)
+                    .setData(this));
+        } else if(msg.title == "reserve") {
+            Patient patient = (Patient)msg.data;
+            reserve(patient);
+        }
     }
 }

@@ -51,7 +51,7 @@ public class World extends SoSObject{
 
     private void createPatients() {
         for (int i = 0; i < maxPatient; i++) {
-            Patient patient = new Patient(this, "Patient");
+            Patient patient = new Patient(this, "Patient" + (i + 1));
             patient.setStatus(Patient.Status.random());
             Position randomPosition = null;
 
@@ -135,41 +135,89 @@ public class World extends SoSObject{
     @Override
     public void onUpdate() {
 
-        printPatientLog();
-        printFireFighetrLog();
-
         if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
             canUpdate(false);
+            printPatientLog(true);
+            printFireFighetrLog(true);
             return;
+        } else {
+            printPatientLog(false);
+            printFireFighetrLog(false);
+            frameCount++;
+            System.out.println("FrameCount: " + frameCount);
         }
-        frameCount++;
-        System.out.println("FrameCount: " + frameCount);
     }
 
     Workbook workbook = new XSSFWorkbook();
     Sheet patientSheet = workbook.createSheet("patients");
-    private void printPatientLog() {
-        Row row = patientSheet.createRow(frameCount);
+    private void printPatientLog(boolean isFinish) {
+
+        if(frameCount == 0) {
+            Row row = patientSheet.createRow(frameCount);
+            Cell frameCountCell = row.createCell(0);
+            Cell savedPatientCell = row.createCell(1);
+
+            frameCountCell.setCellValue("frame count");
+            savedPatientCell.setCellValue("number of rescued patients");
+        }
+
+        Row row = patientSheet.createRow(frameCount + 1);
         Cell frameCountCell = row.createCell(0);
         Cell savedPatientCell = row.createCell(1);
+
         frameCountCell.setCellValue(frameCount);
         savedPatientCell.setCellValue(savedPatientCount);
     }
 
     Sheet fireFighterSheet = workbook.createSheet("fire fighters");
+    private void printFireFighetrLog(boolean isFinish) {
 
-    private void printFireFighetrLog() {
-        Row row = fireFighterSheet.createRow(frameCount);
+        // i * 2
+        // i * 2 + 1
+
+        if(frameCount == 0) {
+            Row row = fireFighterSheet.createRow(frameCount);
+            Cell frameCountCell = row.createCell(0);
+            frameCountCell.setCellValue("frame count");
+            Cell[] positionCells = new Cell[maxFireFighter];
+
+            for(int i = 0; i < maxFireFighter; ++i) {
+                Cell currentCell = row.createCell(i * 2 + 1);
+                String position = fireFighters.get(i).position.toString();
+                currentCell.setCellValue("FF" + (i + 1) + " pos");
+
+                currentCell = row.createCell(  i * 2 + 2);
+                currentCell.setCellValue("FF" + (i + 1) + " Status");
+            }
+        }
+
+        Row row = fireFighterSheet.createRow(frameCount + 1);
         Cell frameCountCell = row.createCell(0);
         frameCountCell.setCellValue(frameCount);
         Cell[] positionCells = new Cell[maxFireFighter];
 
         for(int i = 0; i < maxFireFighter; ++i) {
-            Cell currentCell = row.createCell(i + 1);
-            positionCells[i] = currentCell;
+            Cell currentCell = row.createCell(i * 2 + 1);
 
             String position = fireFighters.get(i).position.toString();
-            positionCells[i].setCellValue(position);
+            currentCell.setCellValue(position);
+
+            currentCell = row.createCell(  i * 2 + 2);
+            currentCell.setCellValue(fireFighters.get(i).getState().toString());
+        }
+
+        if(isFinish) {
+            row = fireFighterSheet.createRow(frameCount + 2);
+            frameCountCell = row.createCell(0);
+            frameCountCell.setCellValue("total distance");
+            positionCells = new Cell[maxFireFighter];
+
+            for(int i = 0; i < maxFireFighter; ++i) {
+                Cell currentCell = row.createCell(i * 2 + 1);
+                positionCells[i] = currentCell;
+
+                positionCells[i].setCellValue(fireFighters.get(i).totalDistance);
+            }
         }
     }
 
