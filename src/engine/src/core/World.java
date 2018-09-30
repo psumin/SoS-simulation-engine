@@ -42,6 +42,7 @@ public class World extends SoSObject{
         // 맵 생성 후에 라우터 생성해야함
         // 안그러면 널 에러
         router = new MsgRouter(this, workbook);
+        addChild(router);
 
         createHospitals();
         createSafeZones();
@@ -98,7 +99,7 @@ public class World extends SoSObject{
             addChild(hospital);
 
             if(i == 0){
-                hospital.setCapacity(2);
+                hospital.setCapacity(20);
             } else {
                 hospital.setCapacity(100);
             }

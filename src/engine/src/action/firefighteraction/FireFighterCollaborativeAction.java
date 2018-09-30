@@ -206,30 +206,6 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                             .setTitle("is available"));
                 }
             }
-//            if(receivedMsgs.isEmpty() == false) {
-//                for(Hospital hospital: world.hospitals) {
-//                    router.route(new Msg()
-//                            .setFrom(fireFighter.name)
-//                            .setTo(hospital.name)
-//                            .setTitle("is available"));
-//                }
-//            } else {
-//                ArrayList<SoSObject> safeZoneAndHospitals = new ArrayList<>();
-//                safeZoneAndHospitals.addAll(world.safeZones);
-//                for(Msg msg: receivedMsgs) {
-//                    if(msg.title == "available false") continue;
-//
-//                    Hospital hospital = (Hospital)msg.data;
-//                    safeZoneAndHospitals.add(hospital);
-//                }
-//                transferDestination = SoSObject.minDistantObject(fireFighter, safeZoneAndHospitals);
-//                if(transferDestination instanceof Hospital) {
-//                    ((Hospital) transferDestination).reserve(targetPatient);
-//                }
-//            }
-
-
-
         } else {
             if(delayedMoveToUpdate(transferDestination.position)) {
 
