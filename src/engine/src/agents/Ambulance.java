@@ -1,8 +1,6 @@
 package agents;
 
-import core.ImageObject;
-import core.SoSObject;
-import core.World;
+import core.*;
 import misc.Position;
 
 import java.util.ArrayList;
@@ -11,9 +9,10 @@ public class Ambulance extends CS{
     private SafeZone targetSafeZone;
     private Patient targetPatient;
     private Patient onBoardPatient;
+    private MsgRouter router;
     public Ambulance(World world, String name) {
         super(world, name);
-
+        router = world.router;
         addChild(new ImageObject("src/engine/resources/ambulance.png"));
     }
 
@@ -22,18 +21,23 @@ public class Ambulance extends CS{
     public void onUpdate() {
         if(onBoardPatient != null) {
             if(targetHospital == null) {
-                ArrayList<SoSObject> hospitals = new ArrayList<>();
+                // TODO: MoveToHospital
+                //ArrayList<SoSObject> hospitals = new ArrayList<>();
                 for (Hospital hospital : world.hospitals) {
-                    if (hospital.isAvailable()) {
-                        hospitals.add(hospital);
-                    }
+                    router.route(new Msg()
+                            .setFrom(name)
+                            .setTo(hospital.name)
+                            .setTitle("is available"));
+//                    if (hospital.isAvailable()) {
+//                        hospitals.add(hospital);
+//                    }
                 }
-                SoSObject minDistantObject = SoSObject.minDistantObject(this, hospitals);
-                if (minDistantObject != null) {
-                    Hospital hospital = (Hospital) minDistantObject;
-                    targetHospital = hospital;
-                    hospital.reserve(onBoardPatient);
-                }
+//                SoSObject minDistantObject = SoSObject.minDistantObject(this, hospitals);
+//                if (minDistantObject != null) {
+//                    Hospital hospital = (Hospital) minDistantObject;
+//                    targetHospital = hospital;
+//                    hospital.reserve(onBoardPatient);
+//                }
             } else {
                 if (moveToUpdate(targetHospital.position)) {
                     // TODO: 환자 내려줌
@@ -46,6 +50,7 @@ public class Ambulance extends CS{
             }
         }
         else if(targetPatient != null) {
+            // TODO: MoveToSafeZone
             if (moveToUpdate(targetSafeZone.position)) {
                 // TODO: 환자 탑승
                 onBoardPatient = targetPatient;
@@ -108,5 +113,29 @@ public class Ambulance extends CS{
             setPosition( position.x, position.y + distanceY / Math.abs(distanceY));
         }
         return false;
+    }
+
+    private final ArrayList<Msg> receivedMsgFromHospital = new ArrayList<>();
+    @Override
+    public void recvMsg(Msg msg) {
+        if(msg.from.startsWith("Hospital")) {
+            receivedMsgFromHospital.add(msg);
+            if(receivedMsgFromHospital.size() == World.maxHospital) {
+                ArrayList<SoSObject> hospitals = new ArrayList();
+                //safeZoneAndHospitals.addAll(world.hospitals);
+                for(Msg respond: receivedMsgFromHospital) {
+                    if(respond.title == "available true") {
+                        hospitals.add((SoSObject)respond.data);
+                    }
+                }
+                targetHospital = (Hospital)minDistantObject(this, hospitals);
+                router.route(new Msg()
+                        .setFrom(name)
+                        .setTo(targetHospital.name)
+                        .setTitle("reserve")
+                        .setData(targetPatient));
+                receivedMsgFromHospital.clear();
+            }
+        }
     }
 }

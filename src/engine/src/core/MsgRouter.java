@@ -44,7 +44,11 @@ public class MsgRouter extends SoSObject {
         row.createCell(0).setCellValue(Time.getFrameCount());
         row.createCell(1).setCellValue(msg.from);
         row.createCell(2).setCellValue(msg.to);
-        row.createCell(3).setCellValue(msg.title);
+        if(msg.title == "reserve") {
+            row.createCell(3).setCellValue(msg.title + " " + msg.to);
+        } else {
+            row.createCell(3).setCellValue(msg.title);
+        }
 
         SoSObject target = world.findObject(msg.to);
         if(target != null) {

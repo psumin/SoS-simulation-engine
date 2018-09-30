@@ -402,7 +402,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         currentState = State.Search;
     }
 
-    final ArrayList<Msg> receivedMsgFromHospital = new ArrayList<>();
+    private final ArrayList<Msg> receivedMsgFromHospital = new ArrayList<>();
     @Override
     public void recvMsg(Msg msg) {
         if(msg.from.startsWith("FF")) {
