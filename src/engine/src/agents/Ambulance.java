@@ -59,24 +59,30 @@ public class Ambulance extends CS{
                 targetPatient = null;
             }
         } else {
-            SafeZone maxSeriousSafeZone = maxZone(Patient.Status.Serious);
-            if (maxSeriousSafeZone.countPatient(Patient.Status.Serious) == 0) {
-                // TODO: 위험하지 않은 놈들 카운트
-                SafeZone maxWoundedSafeZone = maxZone(Patient.Status.Wounded);
-                if (targetSafeZone == null) {
-                    if(maxWoundedSafeZone.isEmpty()) return;
-
-                    targetSafeZone = maxWoundedSafeZone;
-                    targetPatient = targetSafeZone.getPatient(Patient.Status.Wounded);
-                    maxWoundedSafeZone.leavePatient(targetPatient);
-                }
-            } else {
-                if (targetSafeZone == null) {
-                    targetSafeZone = maxSeriousSafeZone;
-                    targetPatient = targetSafeZone.getPatient(Patient.Status.Serious);
-                    maxSeriousSafeZone.leavePatient(targetPatient);
-                }
+            for(SafeZone zone: world.safeZones) {
+                router.route(new Msg()
+                        .setFrom(name)
+                        .setTo(zone.name)
+                        .setTitle("get weight"));
             }
+//            SafeZone maxSeriousSafeZone = maxZone(Patient.Status.Serious);
+//            if (maxSeriousSafeZone.countPatient(Patient.Status.Serious) == 0) {
+//                // TODO: 위험하지 않은 놈들 카운트
+//                SafeZone maxWoundedSafeZone = maxZone(Patient.Status.Wounded);
+//                if (targetSafeZone == null) {
+//                    if(maxWoundedSafeZone.isEmpty()) return;
+//
+//                    targetSafeZone = maxWoundedSafeZone;
+//                    targetPatient = targetSafeZone.getPatient(Patient.Status.Wounded);
+//                    maxWoundedSafeZone.leavePatient(targetPatient);
+//                }
+//            } else {
+//                if (targetSafeZone == null) {
+//                    targetSafeZone = maxSeriousSafeZone;
+//                    targetPatient = targetSafeZone.getPatient(Patient.Status.Serious);
+//                    maxSeriousSafeZone.leavePatient(targetPatient);
+//                }
+//            }
         }
     }
 
@@ -116,6 +122,7 @@ public class Ambulance extends CS{
     }
 
     private final ArrayList<Msg> receivedMsgFromHospital = new ArrayList<>();
+    private final ArrayList<Msg> receivedMsgFromSafeZone = new ArrayList<>();
     @Override
     public void recvMsg(Msg msg) {
         if(msg.from.startsWith("Hospital")) {
@@ -135,6 +142,32 @@ public class Ambulance extends CS{
                         .setTitle("reserve")
                         .setData(targetPatient));
                 receivedMsgFromHospital.clear();
+            }
+        } else if(msg.from.startsWith("SafeZone")) {
+            if(msg.title == "weight") {
+                receivedMsgFromSafeZone.add(msg);
+                if(receivedMsgFromSafeZone.size() == World.maxSafeZone) {
+                    Msg maxMsg = null;
+                    for(Msg respond: receivedMsgFromSafeZone) {
+                        if(maxMsg == null) {
+                            maxMsg = respond;
+                        } else if((int)maxMsg.data < (int)respond.data) {
+                            maxMsg = respond;
+                        }
+                    }
+
+                    targetSafeZone = (SafeZone)world.findObject(maxMsg.from);
+
+                    router.route(new Msg()
+                            .setFrom(name)
+                            .setTo(targetSafeZone.name)
+                            .setTitle("get patient"));
+
+                    receivedMsgFromSafeZone.clear();
+                }
+            } else if(msg.title == "patient") {
+                targetPatient = (Patient)msg.data;
+                targetSafeZone.leavePatient(targetPatient);
             }
         }
     }

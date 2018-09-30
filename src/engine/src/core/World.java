@@ -253,7 +253,7 @@ public class World extends SoSObject{
     public void clear() {
         long nano = System.currentTimeMillis();
         String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        try (OutputStream fileOut = new FileOutputStream(date +".xlsx")) {
+        try (OutputStream fileOut = new FileOutputStream("log/" + date +".xlsx")) {
             workbook.write(fileOut);
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,8 +1,6 @@
 package agents;
 
-import core.ImageObject;
-import core.TextObject;
-import core.World;
+import core.*;
 import misc.Position;
 
 import java.awt.*;
@@ -12,6 +10,7 @@ public class SafeZone extends CS {
 
     private ArrayList<Patient> patients = new ArrayList<>();
 
+    private MsgRouter router = world.router;
 
     private TextObject textObject = new TextObject();
     private int scale = 5;
@@ -66,5 +65,41 @@ public class SafeZone extends CS {
             }
         }
         return count;
+    }
+
+    private int getWeight() {
+        int weight = 0;
+        for(Patient patient: patients) {
+            if(patient.getStatus() == Patient.Status.Serious) {
+                weight += 2;
+            } else {
+                weight += 1;
+            }
+        }
+        return weight;
+    }
+
+    private Patient getPriorityPatient() {
+        Patient patient = getPatient(Patient.Status.Serious);
+        if(patient == null) {
+            patient = getPatient(Patient.Status.Wounded);
+        }
+        return patient;
+    }
+
+    public void recvMsg(Msg msg) {
+        if(msg.title == "get weight") {
+            router.route(new Msg()
+                    .setFrom(name)
+                    .setTo(msg.from)
+                    .setTitle("weight")
+                    .setData(getWeight()));
+        } else if(msg.title == "get patient") {
+            router.route(new Msg()
+                    .setFrom(name)
+                    .setTo(msg.from)
+                    .setTitle("patient")
+                    .setData(getPriorityPatient()));
+        }
     }
 }
