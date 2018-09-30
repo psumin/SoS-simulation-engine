@@ -188,7 +188,7 @@ public abstract class SoSObject {
             if(minObject == null) {
                 minObject = object;
             } else {
-                if(distanceBetween(from, minObject) > distanceBetween(from, object)) {
+                if(distanceBetween(from, minObject) >= distanceBetween(from, object)) {
                     minObject = object;
                 }
             }

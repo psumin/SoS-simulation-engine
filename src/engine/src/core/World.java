@@ -13,6 +13,7 @@ import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class World extends SoSObject{
@@ -250,7 +251,9 @@ public class World extends SoSObject{
 
     @Override
     public void clear() {
-        try (OutputStream fileOut = new FileOutputStream("simulator.xlsx")) {
+        long nano = System.currentTimeMillis();
+        String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
+        try (OutputStream fileOut = new FileOutputStream(date +".xlsx")) {
             workbook.write(fileOut);
         } catch (IOException e) {
             e.printStackTrace();
