@@ -35,4 +35,12 @@ public class Position {
         x += offset.x;
         y += offset.y;
     }
+
+    @Override
+    public String toString() {
+        String value = "";
+        value += x + ", ";
+        value += y;
+        return value;
+    }
 }

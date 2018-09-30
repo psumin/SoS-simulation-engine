@@ -2,15 +2,11 @@ package core;
 
 import agents.*;
 import misc.Position;
-import java.io.File;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.awt.*;
@@ -34,14 +30,10 @@ public class World extends SoSObject{
     public ArrayList<SafeZone> safeZones = new ArrayList<>(maxSafeZone);
     public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);
 
-
-    Workbook workbook = new XSSFWorkbook();
-    Sheet savedPatientSheet = workbook.createSheet("patients");
-
     public World() {
 
 //        workbook = new XSSFWorkbook();
-//        savedPatientSheet = workbook.createSheet("patients");
+//        patientSheet = workbook.createSheet("patients");
 
         map = new Map();
         addChild(map);
@@ -143,12 +135,8 @@ public class World extends SoSObject{
     @Override
     public void onUpdate() {
 
-        Row row = savedPatientSheet.createRow(frameCount);
-        Cell frameCountCell = row.createCell(0);
-        Cell savedPatientCell = row.createCell(1);
-        frameCountCell.setCellValue(frameCount);
-        savedPatientCell.setCellValue(savedPatientCount);
-
+        printPatientLog();
+        printFireFighetrLog();
 
         if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
             canUpdate(false);
@@ -156,6 +144,33 @@ public class World extends SoSObject{
         }
         frameCount++;
         System.out.println("FrameCount: " + frameCount);
+    }
+
+    Workbook workbook = new XSSFWorkbook();
+    Sheet patientSheet = workbook.createSheet("patients");
+    private void printPatientLog() {
+        Row row = patientSheet.createRow(frameCount);
+        Cell frameCountCell = row.createCell(0);
+        Cell savedPatientCell = row.createCell(1);
+        frameCountCell.setCellValue(frameCount);
+        savedPatientCell.setCellValue(savedPatientCount);
+    }
+
+    Sheet fireFighterSheet = workbook.createSheet("fire fighters");
+
+    private void printFireFighetrLog() {
+        Row row = fireFighterSheet.createRow(frameCount);
+        Cell frameCountCell = row.createCell(0);
+        frameCountCell.setCellValue(frameCount);
+        Cell[] positionCells = new Cell[maxFireFighter];
+
+        for(int i = 0; i < maxFireFighter; ++i) {
+            Cell currentCell = row.createCell(i + 1);
+            positionCells[i] = currentCell;
+
+            String position = fireFighters.get(i).position.toString();
+            positionCells[i].setCellValue(position);
+        }
     }
 
     @Override
