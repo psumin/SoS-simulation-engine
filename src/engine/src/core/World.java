@@ -40,7 +40,7 @@ public class World extends SoSObject{
 
         // 맵 생성 후에 라우터 생성해야함
         // 안그러면 널 에러
-        router = new MsgRouter(this);
+        router = new MsgRouter(this, workbook);
 
         createHospitals();
         createSafeZones();

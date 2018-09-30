@@ -62,8 +62,8 @@ public class Patient extends CS {
     }
 
     private Hospital currentHospital = null;
-    private int seriousTreatmentTime = 50;
-    private int woundedTreatmentTime = 50;
+    private int seriousTreatmentTime = 100;
+    private int woundedTreatmentTime = 100;
     private boolean isTreatmenting = false;
     private int counter = 0;
     public void treatmentStart(Hospital hospital) {

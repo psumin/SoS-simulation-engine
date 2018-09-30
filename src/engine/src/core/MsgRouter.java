@@ -3,6 +3,10 @@ package core;
 import agents.FireFighter;
 import misc.Position;
 import misc.Time;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import java.util.ArrayList;
 
@@ -11,9 +15,22 @@ public class MsgRouter extends SoSObject {
     World world;
     Map worldMap;
 
-    public MsgRouter(World world) {
+    private Workbook workbook;
+    private Sheet sheet;
+    private int rowNum = 0;
+
+    public MsgRouter(World world, Workbook workbook) {
         this.world = world;
         worldMap = world.getMap();
+
+        this.workbook = workbook;
+        this.sheet = workbook.createSheet("communications");;
+
+        Row row = sheet.createRow(rowNum++);
+        row.createCell(0).setCellValue("frame count");
+        row.createCell(1).setCellValue("from");
+        row.createCell(2).setCellValue("to");
+        row.createCell(3).setCellValue("title");
     }
 
     @Override
@@ -22,6 +39,13 @@ public class MsgRouter extends SoSObject {
     }
 
     public void route(Msg msg) {
+
+        Row row = sheet.createRow(rowNum++);
+        row.createCell(0).setCellValue(Time.getFrameCount());
+        row.createCell(1).setCellValue(msg.from);
+        row.createCell(2).setCellValue(msg.to);
+        row.createCell(3).setCellValue(msg.title);
+
         SoSObject target = world.findObject(msg.to);
         if(target != null) {
             target.recvMsg(msg);
