@@ -42,6 +42,12 @@ public class SafeZone extends CS {
     public void arrivedPatient(Patient patient) {
         patient.position.set(position);
         patients.add(patient);
+
+        router.route(new Msg()
+                .setFrom(name)
+                .setTo("Organization")
+                .setTitle("patient arrived")
+                .setData(this));
     }
     public void leavePatient(Patient patient) {
         patients.remove(patient);

@@ -19,7 +19,7 @@ public class FireFighter extends CS {
     public Queue<Tile> unvisitedTiles;
     public final ArrayList<Patient> patientsMemory = new ArrayList<>();
 
-    public Action currentAction;
+
 
     public ImageObject transferImage;
     public ImageObject defaultImage;
@@ -50,14 +50,7 @@ public class FireFighter extends CS {
         currentAction = new FireFighterSearch(this);
     }
 
-    boolean isFirstUpdate = true;
-    @Override
-    public void onUpdate() {
-        if(isFirstUpdate) {
-            isFirstUpdate = false;
-            currentAction.start();
-        }
-    }
+
 
     @Override
     public void setPosition(int x, int y) {
@@ -82,12 +75,7 @@ public class FireFighter extends CS {
     public World getWorld() {
         return world;
     }
-    public void changeAction(FireFighterAction action) {
-        currentAction.stop();
-        currentAction = action;
-        currentAction.start();
-        currentAction.update();
-    }
+
 
     @Override
     public void onRender(Graphics2D graphics2D) {
@@ -96,10 +84,7 @@ public class FireFighter extends CS {
         graphics2D.drawChars(name.toCharArray(), 0, name.length(), 0, 0);
     }
 
-    @Override
-    public void recvMsg(Msg msg) {
-        currentAction.recvMsg(msg);
-    }
+
 
     public ArrayList<Patient> observe() {
         ArrayList<Patient> foundPatient = new ArrayList<>();
@@ -127,20 +112,6 @@ public class FireFighter extends CS {
         }
     }
 
-    int moveDelay = 0;
-    int frameCounter = moveDelay;
-    public void moveTo(Position destination) {
-        if(frameCounter <= 0){
-            frameCounter = moveDelay;
-
-            Position nextPosition = nextPosition(destination);
-            if(nextPosition != null) {
-                setPosition(nextPosition);
-            }
-        }
-        frameCounter--;
-    }
-
     public Patient selectTargetPatient(ArrayList<Patient> pateints) {
         // if exist patient in memory:
         //      changeAction( move to patient )
@@ -160,9 +131,5 @@ public class FireFighter extends CS {
             return targetPatient;
         }
         return null;
-    }
-
-    public boolean isArrivedAt(Position position) {
-        return this.position.x == position.x && this.position.y == position.y;
     }
 }

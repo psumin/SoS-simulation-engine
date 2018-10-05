@@ -48,6 +48,7 @@ public class FireFighterSelectTransferDestination extends FireFighterAction {
                 fireFighter.changeAction(new FireFighterTransferToHospital(fireFighter, nearestHospital, targetPatient));
             } else {
                 fireFighter.changeAction(new FireFighterTransferToSafeZone(fireFighter, nearestSafeZone, targetPatient));
+                //fireFighter.changeAction(new FireFighterTransferToHospital(fireFighter, nearestHospital, targetPatient));
             }
         }
     }

@@ -37,6 +37,8 @@ public class Hospital extends CS {
         //patient.setPosition(position);
         patient.treatmentStart(this);
         patients.add(patient);
+
+        world.addChild(patient);
     }
 
     // 환자 퇴원

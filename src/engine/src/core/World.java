@@ -50,7 +50,7 @@ public class World extends SoSObject{
         //createFireFighters();
         //createPatients();
 
-        Test();
+        createObjects();
 //        createHospitals();
 //        createSafeZones();
 //        createPatients();
@@ -58,21 +58,13 @@ public class World extends SoSObject{
 //        createAmbulances();
     }
 
-    private void Test() {
+    private void createObjects() {
         createOrganization();
         createSafeZones();
         createHospitals();
-
-//        FireFighter fireFighter = new FireFighter(this, "FireFighter");
-//        fireFighter.setPosition(0, 0);;
-//        addChild(fireFighter);
         createFireFighters();
         createPatients();
-
-
-//        Patient patient = new Patient(this, "Patient");
-//        patient.setPosition(1, 1);
-//        addChild(patient);
+        createAmbulances();
     }
 
     private void createPatients() {

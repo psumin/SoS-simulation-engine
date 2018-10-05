@@ -24,7 +24,7 @@ public class FireFighterTransferToHospital extends FireFighterAction {
         fireFighter.markVisitedTiles();
         if(fireFighter.isArrivedAt(hospital.position)) {
             hospital.hospitalize(targetPatient);
-            world.addChild(targetPatient);
+            //world.addChild(targetPatient);
             fireFighter.changeAction(new FireFighterSearch(fireFighter));
         }
     }
