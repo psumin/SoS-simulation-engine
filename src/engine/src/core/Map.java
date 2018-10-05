@@ -1,5 +1,6 @@
 package core;
 
+import agents.FireFighter;
 import agents.Patient;
 import misc.Position;
 import misc.Size;
@@ -30,7 +31,12 @@ public class Map extends SoSObject {
     public void visited(int x, int y, boolean _visited) {
         Tile tile = getTile(x, y);
         if(tile != null) {
+            boolean prev =  tile._visited;
             tile.visited(_visited);
+            if(prev != _visited) {
+                if(_visited) unvisitedTileCount--;
+                else unvisitedTileCount++;
+            }
         }
     }
 
@@ -44,38 +50,39 @@ public class Map extends SoSObject {
         return tiles;
     }
 
-    public void addObject(int x, int y, SoSObject object) {
-        Tile tile = getTile(x, y);
+    public void add(FireFighter fireFighter) {
+        Tile tile = getTile(fireFighter.position.x, fireFighter.position.y);
         if(tile != null) {
-            tile.add(object);
+            tile.remove(fireFighter);
+            tile.add(fireFighter);
         }
     }
-    public void removeObject(int x, int y, SoSObject object) {
-        Tile tile = getTile(x, y);
+    public void add(Patient patient) {
+        Tile tile = getTile(patient.position.x, patient.position.y);
         if(tile != null) {
-            tile.remove(object);
+            tile.remove(patient);
+            tile.add(patient);
         }
     }
 
+    public void remove(FireFighter fireFighter) {
+        Tile tile = getTile(fireFighter.position.x, fireFighter.position.y);
+        if(tile != null) {
+            tile.remove(fireFighter);
+        }
+    }
+    public void remove(Patient patient) {
+        if(patient != null) {
+            Tile tile = getTile(patient.position.x, patient.position.y);
+            if(tile != null) {
+                tile.remove(patient);
+            }
+        }
+    }
+
+
+    int unvisitedTileCount = mapSize.width * mapSize.height;
     public int getUnvisitedTileCount() {
-        int count = 0;
-        for(Tile tile: tiles) {
-            if(tile.isVisited() == false) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public int getPatientCount() {
-        int count = 0;
-        for(Tile tile: tiles) {
-            for(SoSObject object: tile.getObjects()) {
-                if(object instanceof Patient) {
-                    count++;
-                }
-            }
-        }
-        return count;
+        return unvisitedTileCount;
     }
 }

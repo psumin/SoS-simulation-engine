@@ -10,8 +10,6 @@ public class SafeZone extends CS {
 
     private ArrayList<Patient> patients = new ArrayList<>();
 
-    private MsgRouter router = world.router;
-
     private TextObject textObject = new TextObject();
     private int scale = 5;
     public SafeZone(World world, String name) {
@@ -42,6 +40,7 @@ public class SafeZone extends CS {
     }
 
     public void arrivedPatient(Patient patient) {
+        patient.position.set(position);
         patients.add(patient);
     }
     public void leavePatient(Patient patient) {

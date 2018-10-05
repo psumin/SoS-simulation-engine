@@ -182,17 +182,31 @@ public abstract class SoSObject {
         return Math.abs(left.position.x - right.position.x) + Math.abs(left.position.y - right.position.y);
     }
 
-    public static SoSObject minDistantObject(SoSObject from, ArrayList<SoSObject> targets) {
+    public SoSObject nearestObject(ArrayList<SoSObject> targets) {
         SoSObject minObject = null;
         for(SoSObject object: targets) {
             if(minObject == null) {
                 minObject = object;
             } else {
-                if(distanceBetween(from, minObject) >= distanceBetween(from, object)) {
+                if(distanceBetween(this, minObject) >= distanceBetween(this, object)) {
                     minObject = object;
                 }
             }
         }
         return minObject;
     }
+
+//    public static SoSObject nearestObject(SoSObject from, ArrayList<SoSObject> targets) {
+//        SoSObject minObject = null;
+//        for(SoSObject object: targets) {
+//            if(minObject == null) {
+//                minObject = object;
+//            } else {
+//                if(distanceBetween(from, minObject) >= distanceBetween(from, object)) {
+//                    minObject = object;
+//                }
+//            }
+//        }
+//        return minObject;
+//    }
 }

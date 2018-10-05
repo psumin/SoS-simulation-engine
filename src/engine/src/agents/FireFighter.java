@@ -3,8 +3,10 @@ package agents;
 import action.Action;
 import action.firefighteraction.FireFighterCollaborativeAction;
 import action.firefighteraction.FireFighterAction;
+import action.firefighteraction.FireFighterSearch;
 import core.*;
 import core.Map;
+import misc.Position;
 
 import java.awt.*;
 import java.util.*;
@@ -44,7 +46,8 @@ public class FireFighter extends CS {
         Collections.shuffle(temp);
 
         unvisitedTiles = temp;
-        currentAction = new FireFighterCollaborativeAction(this);
+        //currentAction = new FireFighterCollaborativeAction(this);
+        currentAction = new FireFighterSearch(this);
     }
 
     boolean isFirstUpdate = true;
@@ -54,6 +57,19 @@ public class FireFighter extends CS {
             isFirstUpdate = false;
             currentAction.start();
         }
+    }
+
+    @Override
+    public void setPosition(int x, int y) {
+        worldMap.remove(this);
+        super.setPosition(x, y);
+        worldMap.add(this);
+    }
+    @Override
+    public void setPosition(Position position) {
+        worldMap.remove(this);
+        super.setPosition(position);
+        worldMap.add(this);
     }
 
     @Override
@@ -80,20 +96,73 @@ public class FireFighter extends CS {
         graphics2D.drawChars(name.toCharArray(), 0, name.length(), 0, 0);
     }
 
-    public void removeFromTile() {
-        world.getMap().removeObject(position.x, position.y, this);
-    }
-    public void addToTile() {
-        world.getMap().addObject(position.x, position.y, this);
-    }
-
     @Override
     public void recvMsg(Msg msg) {
         currentAction.recvMsg(msg);
     }
 
-    public FireFighterCollaborativeAction.State getState() {
-        FireFighterCollaborativeAction action = (FireFighterCollaborativeAction)currentAction;
-        return action.getState();
+    public ArrayList<Patient> observe() {
+        ArrayList<Patient> foundPatient = new ArrayList<>();
+
+        for(int y = position.y - sightRange / 2; y <= position.y + sightRange / 2; ++y) {
+            for(int x = position.x - sightRange / 2; x <= position.x + sightRange / 2; ++x) {
+                Tile worldTile = worldMap.getTile(x, y);
+                if(worldTile != null) {
+                    foundPatient.addAll(worldTile.patients);
+                }
+            }
+        }
+
+        foundPatient.removeAll(patientsMemory);
+        patientsMemory.addAll(foundPatient);
+        return foundPatient;
+    }
+
+    public void markVisitedTiles() {
+        for(int y = position.y - sightRange / 2; y <= position.y + sightRange / 2; ++y) {
+            for(int x = position.x - sightRange / 2; x <= position.x + sightRange / 2; ++x) {
+                worldMap.visited(x, y, true);
+                individualMap.visited(x, y, true);
+            }
+        }
+    }
+
+    int moveDelay = 0;
+    int frameCounter = moveDelay;
+    public void moveTo(Position destination) {
+        if(frameCounter <= 0){
+            frameCounter = moveDelay;
+
+            Position nextPosition = nextPosition(destination);
+            if(nextPosition != null) {
+                setPosition(nextPosition);
+            }
+        }
+        frameCounter--;
+    }
+
+    public Patient selectTargetPatient(ArrayList<Patient> pateints) {
+        // if exist patient in memory:
+        //      changeAction( move to patient )
+        if(!pateints.isEmpty()) {
+            // TODO: 가깝고 위급한 환자부터 구하러 가도록 해야함
+            Patient targetPatient = null;
+            for(Patient patient: pateints) {
+                if(patient.isSerious()) {
+                    targetPatient = patient;
+                    break;
+                }
+            }
+
+            if(targetPatient == null) {
+                targetPatient = pateints.get(0);
+            }
+            return targetPatient;
+        }
+        return null;
+    }
+
+    public boolean isArrivedAt(Position position) {
+        return this.position.x == position.x && this.position.y == position.y;
     }
 }

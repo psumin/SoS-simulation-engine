@@ -12,7 +12,6 @@ public class Hospital extends CS {
 
     private int capacity = 5;
     private final ArrayList<Patient> patients = new ArrayList<>();
-    private MsgRouter router;
 
     public Hospital(World world, String name) {
         super(world, name);
@@ -34,6 +33,8 @@ public class Hospital extends CS {
     // 환자 입원
     public void hospitalize(Patient patient) {
         patients.remove(patient);
+        patient.position.set(position);
+        //patient.setPosition(position);
         patient.treatmentStart(this);
         patients.add(patient);
     }

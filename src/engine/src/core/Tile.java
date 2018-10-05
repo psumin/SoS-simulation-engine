@@ -1,5 +1,7 @@
 package core;
 
+import agents.FireFighter;
+import agents.Patient;
 import misc.Position;
 import misc.Size;
 
@@ -10,7 +12,9 @@ public class Tile extends SoSObject {
     SoSObject light;
     SoSObject dark;
 
-    ArrayList<SoSObject> objects = new ArrayList<>();
+    public final ArrayList<Patient> patients = new ArrayList<>();
+    public final ArrayList<FireFighter> fireFighters = new ArrayList<>();
+    //ArrayList<SoSObject> objects = new ArrayList<>();
 
     boolean _visited = false;
     public void visited(boolean _visited) {
@@ -35,24 +39,33 @@ public class Tile extends SoSObject {
     }
 
 
-    public void add(SoSObject object) {
-        objects.remove(object);
-        objects.add(object);
+    public void add(Patient patient) {
+
+        patients.remove(patient);
+        patients.add(patient);
+        //objects.remove(object);
+        //objects.add(object);
     }
-    public void remove(SoSObject object) {
-        objects.remove(object);
+    public void add(FireFighter fireFighter) {
+
+        fireFighters.remove(fireFighter);
+        fireFighters.add(fireFighter);
     }
 
-    public boolean contain(SoSObject object) {
-        for(SoSObject obj: objects) {
-            if(obj == object) {
+    public void remove(Patient patient)  {
+
+        patients.remove(patient);
+    }
+    public void remove(FireFighter fireFighter) {
+        fireFighters.remove(fireFighter);
+    }
+
+    public boolean contain(Patient patient) {
+        for(Patient element: patients) {
+            if(element == patient) {
                 return true;
             }
         }
         return false;
-    }
-
-    public ArrayList<SoSObject> getObjects() {
-        return objects;
     }
 }

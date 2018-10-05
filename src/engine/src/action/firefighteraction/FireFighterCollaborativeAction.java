@@ -195,7 +195,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
         if(transferDestination == null) {
             ArrayList<SoSObject> safeZoneAndHospitals = new ArrayList(world.safeZones);
             safeZoneAndHospitals.addAll(world.hospitals);
-            SoSObject minDistance = minDistantObject(fireFighter, safeZoneAndHospitals);
+            SoSObject minDistance = fireFighter.nearestObject(safeZoneAndHospitals);
             if(minDistance instanceof SafeZone) {
                 transferDestination = minDistance;
             } else {
@@ -288,12 +288,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
 
                 if(isSafeZone == false) {
                     if (worldTile != null && individualTile.isVisited() == false) {
-                        ArrayList<SoSObject> objects = worldTile.getObjects();
-                        objects.forEach(obj -> {
-                            if (obj instanceof Patient) {
-                                foundPatients.add((Patient) obj);
-                            }
-                        });
+                        worldTile.patients.forEach(patient -> foundPatients.add(patient));
                     }
                     individualMap.visited(x, y, true);
                     worldMap.visited(x, y, true);
@@ -411,7 +406,7 @@ public class FireFighterCollaborativeAction extends FireFighterAction {
                         safeZoneAndHospitals.add((SoSObject)respond.data);
                     }
                 }
-                transferDestination = minDistantObject(fireFighter, safeZoneAndHospitals);
+                transferDestination = fireFighter.nearestObject(safeZoneAndHospitals);
                 if(transferDestination instanceof Hospital) {
                     router.route(new Msg()
                             .setFrom(fireFighter.name)

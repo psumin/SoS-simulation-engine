@@ -24,7 +24,7 @@ public class World extends SoSObject{
     public static final int maxAmbulance = 4;
     public static final int maxSafeZone = 4;
 
-    Map map;
+    public Map map;
     public MsgRouter router;
     public ArrayList<FireFighter> fireFighters = new ArrayList<FireFighter>(maxFireFighter);
     public ArrayList<Hospital> hospitals = new ArrayList<Hospital>(maxHospital);
@@ -38,17 +38,38 @@ public class World extends SoSObject{
 
         map = new Map();
         addChild(map);
+        map.canUpdate(false);
 
         // 맵 생성 후에 라우터 생성해야함
         // 안그러면 널 에러
         router = new MsgRouter(this, workbook);
         addChild(router);
 
-        createHospitals();
+        //createFireFighters();
+        //createPatients();
+
+        Test();
+//        createHospitals();
+//        createSafeZones();
+//        createPatients();
+//        createFireFighters();
+//        createAmbulances();
+    }
+
+    private void Test() {
         createSafeZones();
+        createHospitals();
+
+        FireFighter fireFighter = new FireFighter(this, "FireFighter");
+        fireFighter.setPosition(0, 0);;
+        addChild(fireFighter);
+        //createFireFighters();
         createPatients();
-        createFireFighters();
-        createAmbulances();
+
+
+//        Patient patient = new Patient(this, "Patient");
+//        patient.setPosition(1, 1);
+//        addChild(patient);
     }
 
     private void createPatients() {
@@ -68,9 +89,8 @@ public class World extends SoSObject{
                 }
                 if(isSafeZone == false) break;
             }
-            patient.position.set(randomPosition.x, randomPosition.y);
-            addChild(patient);
-            map.addObject(randomPosition.x, randomPosition.y, patient);
+            patient.setPosition(randomPosition);
+            this.addChild(patient);
         }
     }
 
@@ -139,12 +159,12 @@ public class World extends SoSObject{
 
         if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
             canUpdate(false);
-            printPatientLog(true);
-            printFireFighetrLog(true);
+            //printPatientLog(true);
+            //printFireFighetrLog(true);
             return;
         } else {
-            printPatientLog(false);
-            printFireFighetrLog(false);
+            //printPatientLog(false);
+            //printFireFighetrLog(false);
             frameCount++;
             System.out.println("FrameCount: " + frameCount);
         }
@@ -205,7 +225,8 @@ public class World extends SoSObject{
             currentCell.setCellValue(position);
 
             currentCell = row.createCell(  i * 2 + 2);
-            currentCell.setCellValue(fireFighters.get(i).getState().toString());
+            currentCell.setCellValue(fireFighters.get(i).currentAction.name);
+            //currentCell.setCellValue(fireFighters.get(i).getState().toString());
         }
 
         if(isFinish) {

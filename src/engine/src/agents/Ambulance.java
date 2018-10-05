@@ -9,7 +9,6 @@ public class Ambulance extends CS{
     private SafeZone targetSafeZone;
     private Patient targetPatient;
     private Patient onBoardPatient;
-    private MsgRouter router;
     public Ambulance(World world, String name) {
         super(world, name);
         router = world.router;
@@ -122,7 +121,7 @@ public class Ambulance extends CS{
                         hospitals.add((SoSObject) respond.data);
                     }
                 }
-                targetHospital = (Hospital) minDistantObject(this, hospitals);
+                targetHospital = (Hospital) nearestObject(hospitals);
                 router.route(new Msg()
                         .setFrom(name)
                         .setTo(targetHospital.name)

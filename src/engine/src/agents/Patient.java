@@ -1,6 +1,7 @@
 package agents;
 
 import core.*;
+import misc.Position;
 import misc.Time;
 
 public class Patient extends CS {
@@ -43,6 +44,12 @@ public class Patient extends CS {
                 break;
         }
     }
+    public boolean isSerious() {
+        return status == Status.Serious;
+    }
+    public boolean isWounded() {
+        return status == Status.Wounded;
+    }
 
     SoSObject serious;
     SoSObject wounded;
@@ -57,7 +64,6 @@ public class Patient extends CS {
 
     @Override
     public void remove() {
-        removeFromTile();
         super.remove();
     }
 
@@ -89,5 +95,19 @@ public class Patient extends CS {
                 world.savedPatientCount++;
             }
         }
+    }
+
+    @Override
+    public void setPosition(int x, int y) {
+        worldMap.remove(this);
+        super.setPosition(x, y);
+        worldMap.add(this);
+    }
+
+    @Override
+    public void setPosition(Position position) {
+        worldMap.remove(this);
+        super.setPosition(position);
+        worldMap.add(this);
     }
 }

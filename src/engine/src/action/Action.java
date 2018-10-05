@@ -2,15 +2,18 @@ package action;
 
 import agents.CS;
 import core.SoSObject;
+import core.World;
 
 public class Action extends SoSObject {
 
-    CS target;
-    Action parentAction;
+    protected World world;
+    protected CS target;
+    protected Action parentAction;
     public Func onComplete;
 
     public Action(CS target) {
         this.target = target;
+        world = target.world;
     }
 
     public void setParentAction(Action parentAction) {
