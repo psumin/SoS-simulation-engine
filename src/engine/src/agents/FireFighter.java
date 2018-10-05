@@ -100,6 +100,7 @@ public class FireFighter extends CS {
 
         foundPatient.removeAll(patientsMemory);
         patientsMemory.addAll(foundPatient);
+
         return foundPatient;
     }
 
@@ -112,24 +113,20 @@ public class FireFighter extends CS {
         }
     }
 
-    public Patient selectTargetPatient(ArrayList<Patient> pateints) {
-        // if exist patient in memory:
-        //      changeAction( move to patient )
-        if(!pateints.isEmpty()) {
-            // TODO: 가깝고 위급한 환자부터 구하러 가도록 해야함
-            Patient targetPatient = null;
-            for(Patient patient: pateints) {
-                if(patient.isSerious()) {
-                    targetPatient = patient;
-                    break;
-                }
-            }
+    public Patient selectTargetPatient(ArrayList<Patient> patients) {
 
-            if(targetPatient == null) {
-                targetPatient = pateints.get(0);
+        ArrayList<SoSObject> seriousPatients = new ArrayList<>();
+        patients.forEach(patient -> {
+            if(patient.isSerious()) {
+                seriousPatients.add(patient);
             }
-            return targetPatient;
+        });
+        if(!seriousPatients.isEmpty()) {
+            Patient patient = (Patient)nearestObject(seriousPatients);
+            return patient;
+        } else {
+            Patient patient = (Patient)nearestObject(new ArrayList<>(patients));
+            return patient;
         }
-        return null;
     }
 }

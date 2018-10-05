@@ -16,6 +16,7 @@ public class FireFighterMoveToPatient extends FireFighterAction {
         name = "MoveToPatient";
 
         this.targetPatient = targetPatient;
+        world.map.remove(targetPatient);
         patientsMemory = fireFighter.patientsMemory;
     }
 
@@ -23,6 +24,25 @@ public class FireFighterMoveToPatient extends FireFighterAction {
     public void onUpdate() {
 
         if(targetPatient != null) {
+            ArrayList<Patient> foundPatient = fireFighter.observe();
+
+            Patient patient = fireFighter.selectTargetPatient(foundPatient);
+            if(patient != null) {
+                if (patient.isSerious()) {
+                    if (distantTo(targetPatient) > distantTo(patient)) {
+                        world.map.add(targetPatient);
+                        fireFighter.changeAction(new FireFighterMoveToPatient(fireFighter, patient));
+                    }
+                } else {
+                    if (targetPatient.isWounded()) {
+                        if (distantTo(targetPatient) > distantTo(patient)) {
+                            world.map.add(targetPatient);
+                            fireFighter.changeAction(new FireFighterMoveToPatient(fireFighter, patient));
+                        }
+                    }
+                }
+            }
+
             fireFighter.moveTo(targetPatient.position);
             fireFighter.markVisitedTiles();
 

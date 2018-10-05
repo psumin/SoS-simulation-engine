@@ -17,10 +17,6 @@ public class Organization extends CS {
         super(world, name);
     }
 
-    @Override
-    public void onUpdate() {
-    }
-
     private void ambulanceFreeStateStart(Msg msg) {
         if(targetSafeZones.isEmpty()) {
             freeStateAmbulances.add((Ambulance) msg.data);

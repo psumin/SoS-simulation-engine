@@ -28,13 +28,13 @@ public class FireFighterSearch extends FireFighterAction {
     @Override
     public void onUpdate() {
         //------------------------------------- observe environment
-        ArrayList<Patient> foundPatient = fireFighter.observe();
+        fireFighter.observe();
+        //ArrayList<Patient> foundPatient = fireFighter.observe();
         //patientsMemory.addAll(foundPatient);
 
         //------------------------------------- 타겟 환자 선택
         Patient targetPatient = fireFighter.selectTargetPatient(patientsMemory);
         patientsMemory.remove(targetPatient);
-        world.map.remove(targetPatient);
 
         if(targetPatient != null) {
             fireFighter.changeAction(new FireFighterMoveToPatient(fireFighter, targetPatient));
