@@ -31,6 +31,8 @@ public class World extends SoSObject{
     public ArrayList<SafeZone> safeZones = new ArrayList<>(maxSafeZone);
     public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);
 
+    public static final String fireFighterPrefix = "FF";
+
     public World() {
 
 //        workbook = new XSSFWorkbook();
@@ -57,13 +59,14 @@ public class World extends SoSObject{
     }
 
     private void Test() {
+        createOrganization();
         createSafeZones();
         createHospitals();
 
-        FireFighter fireFighter = new FireFighter(this, "FireFighter");
-        fireFighter.setPosition(0, 0);;
-        addChild(fireFighter);
-        //createFireFighters();
+//        FireFighter fireFighter = new FireFighter(this, "FireFighter");
+//        fireFighter.setPosition(0, 0);;
+//        addChild(fireFighter);
+        createFireFighters();
         createPatients();
 
 
@@ -103,7 +106,7 @@ public class World extends SoSObject{
         };
         int factor = maxFireFighter / 4;
         for (int i = 0; i < maxFireFighter; i++) {
-            FireFighter ff = new FireFighter(this, "FF" + (i + 1));
+            FireFighter ff = new FireFighter(this, fireFighterPrefix + (i + 1));
             ff.setPosition(0, 0);
             fireFighters.add(ff);
 
@@ -150,6 +153,11 @@ public class World extends SoSObject{
             ambulances.add(ambulance);
             addChild(ambulance);
         }
+    }
+
+    private void createOrganization() {
+        Organization organization = new Organization(this, "Organization");
+        addChild(organization);
     }
 
     int frameCount = 0;

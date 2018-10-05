@@ -178,6 +178,10 @@ public abstract class SoSObject {
         
     }
 
+    public int distantTo(SoSObject target) {
+        return Math.abs(position.x - target.position.x) + Math.abs(position.y - target.position.y);
+    }
+
     public static int distanceBetween(SoSObject left, SoSObject right) {
         return Math.abs(left.position.x - right.position.x) + Math.abs(left.position.y - right.position.y);
     }
