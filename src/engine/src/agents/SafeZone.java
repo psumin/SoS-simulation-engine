@@ -40,6 +40,12 @@ public class SafeZone extends CS {
     }
 
     public void arrivedPatient(Patient patient) {
+
+        for(Patient p: patients) {
+            if(p == patient) return;
+        }
+
+        world.addChild(patient);
         patient.position.set(position);
         patients.add(patient);
 
@@ -57,6 +63,7 @@ public class SafeZone extends CS {
                 .setData(this));
     }
     public void leavePatient(Patient patient) {
+        world.removeChild(patient);
         patients.remove(patient);
     }
 

@@ -138,7 +138,7 @@ public class MsgRouter extends SoSObject {
 
         SoSObject target = world.findObject(msg.to);
 
-        boolean isDelayed = true;
+        boolean isDelayed = false;
         if(isDelayed) {
             delayedMsgs.add(new DelayedMsg(msg, delay + Time.getFrameCount()));
             return;

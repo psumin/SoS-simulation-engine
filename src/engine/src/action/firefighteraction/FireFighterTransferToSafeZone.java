@@ -29,7 +29,7 @@ public class FireFighterTransferToSafeZone extends FireFighterAction {
         fireFighter.markVisitedTiles();
         if(fireFighter.isArrivedAt(safeZone.position)) {
             safeZone.arrivedPatient(targetPatient);
-            world.addChild(targetPatient);
+
 
             fireFighter.transferImage.visible(false);
             fireFighter.defaultImage.visible(true);

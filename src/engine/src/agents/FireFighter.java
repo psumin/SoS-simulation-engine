@@ -23,22 +23,25 @@ public class FireFighter extends CS {
 
     public ImageObject transferImage;
     public ImageObject defaultImage;
-
+    public ImageObject moveToPatient;
     public int totalDistance = 0;
 
-    int sightRange = 5;
+    public int sightRange = 11;
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;
 
         transferImage = new ImageObject("src/engine/resources/transfer.png");
         defaultImage = new ImageObject("src/engine/resources/ff30x30.png");
+        moveToPatient = new ImageObject("src/engine/resources/moveToPatient.png");
 
         transferImage.visible(false);
         defaultImage.visible(true);
+        moveToPatient.visible(false);
 
         addChild(transferImage);
         addChild(defaultImage);
+        addChild(moveToPatient);
 
         individualMap = new Map();
         LinkedList<Tile> temp = new LinkedList<>(individualMap.getTiles());
@@ -89,8 +92,8 @@ public class FireFighter extends CS {
     public ArrayList<Patient> observe() {
         ArrayList<Patient> foundPatient = new ArrayList<>();
 
-        for(int y = position.y - sightRange / 2; y <= position.y + sightRange / 2; ++y) {
-            for(int x = position.x - sightRange / 2; x <= position.x + sightRange / 2; ++x) {
+        for(int y = position.y - (sightRange / 2); y <= position.y + (sightRange / 2); ++y) {
+            for(int x = position.x - (sightRange / 2); x <= position.x + (sightRange / 2); ++x) {
                 Tile worldTile = worldMap.getTile(x, y);
                 if(worldTile != null) {
                     foundPatient.addAll(worldTile.patients);
@@ -105,8 +108,8 @@ public class FireFighter extends CS {
     }
 
     public void markVisitedTiles() {
-        for(int y = position.y - sightRange / 2; y <= position.y + sightRange / 2; ++y) {
-            for(int x = position.x - sightRange / 2; x <= position.x + sightRange / 2; ++x) {
+        for(int y = position.y - (sightRange / 2); y <= position.y + (sightRange / 2); ++y) {
+            for(int x = position.x - (sightRange / 2); x <= position.x + (sightRange / 2); ++x) {
                 worldMap.visited(x, y, true);
                 individualMap.visited(x, y, true);
             }

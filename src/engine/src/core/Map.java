@@ -46,6 +46,10 @@ public class Map extends SoSObject {
         return tiles.get(x + y * mapSize.width);
     }
 
+    public Tile getTile(Position position) {
+        return getTile(position.x, position.y);
+    }
+
     public ArrayList<Tile> getTiles() {
         return tiles;
     }

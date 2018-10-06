@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class World extends SoSObject{
 
-    public static final int maxPatient = 70;
+    public static final int maxPatient = 200;
     public static final int maxFireFighter = 12;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 4;
@@ -280,5 +280,10 @@ public class World extends SoSObject{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public boolean contains(SoSObject object) {
+        return children.contains(object);
     }
 }

@@ -29,12 +29,13 @@ public class FireFighterSearch extends FireFighterAction {
     public void onUpdate() {
         //------------------------------------- observe environment
         fireFighter.observe();
+        fireFighter.markVisitedTiles();
         //ArrayList<Patient> foundPatient = fireFighter.observe();
         //patientsMemory.addAll(foundPatient);
 
         //------------------------------------- 타겟 환자 선택
         Patient targetPatient = fireFighter.selectTargetPatient(patientsMemory);
-        patientsMemory.remove(targetPatient);
+        //patientsMemory.remove(targetPatient);
 
         if(targetPatient != null) {
             fireFighter.changeAction(new FireFighterMoveToPatient(fireFighter, targetPatient));
@@ -47,7 +48,7 @@ public class FireFighterSearch extends FireFighterAction {
             // move to unvisited tile (1 tile per 3 frame)
             if(unvisitedTile != null) {
                 fireFighter.moveTo(unvisitedTile.position);
-                fireFighter.markVisitedTiles();
+                //fireFighter.markVisitedTiles();
             }
 
             if(fireFighter.isArrivedAt(unvisitedTile.position)) {

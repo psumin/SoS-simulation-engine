@@ -61,11 +61,12 @@ public class Tile extends SoSObject {
     }
 
     public boolean contain(Patient patient) {
-        for(Patient element: patients) {
-            if(element == patient) {
-                return true;
-            }
-        }
-        return false;
+        return patients.contains(patient);
+//        for(Patient element: patients) {
+//            if(element == patient) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 }
