@@ -43,10 +43,17 @@ public class SafeZone extends CS {
         patient.position.set(position);
         patients.add(patient);
 
+        String title = "";
+        if(patient.isSerious()) {
+            title = "serious patient arrived";
+        } else {
+            title = "wounded patient arrived";
+        }
+
         router.route(new Msg()
                 .setFrom(name)
                 .setTo("Organization")
-                .setTitle("patient arrived")
+                .setTitle(title)
                 .setData(this));
     }
     public void leavePatient(Patient patient) {

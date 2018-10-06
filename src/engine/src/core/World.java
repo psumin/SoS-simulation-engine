@@ -59,8 +59,8 @@ public class World extends SoSObject{
     }
 
     private void createObjects() {
-        createOrganization();
         createSafeZones();
+        createOrganization();
         createHospitals();
         createFireFighters();
         createPatients();

@@ -5,25 +5,47 @@ import core.World;
 import misc.Time;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import static core.World.fireFighterPrefix;
 
 public class Organization extends CS {
 
+    private final int seriousPatientWeight = 10;
+
     private final ArrayList<Ambulance> freeStateAmbulances = new ArrayList<>();
-    private final ArrayList<SafeZone> targetSafeZones = new ArrayList<>();
+    private final ArrayList<Msg> msgsFromSafeZone = new ArrayList<>();
+    //private final ArrayList<SafeZone> targetSafeZones = new ArrayList<>();
 
     public Organization(World world, String name) {
         super(world, name);
     }
 
     private void ambulanceFreeStateStart(Msg msg) {
-        if(targetSafeZones.isEmpty()) {
+        if(msgsFromSafeZone.isEmpty()) {
             freeStateAmbulances.add((Ambulance) msg.data);
-        } else if(!targetSafeZones.isEmpty()) {
+        } else {
             Ambulance ambulance = (Ambulance)msg.data;
-            SafeZone safeZone = targetSafeZones.get(0);
-            targetSafeZones.remove(0);
+
+            Msg seriousMsg = null;
+            for(Msg msgFromSafeZone: msgsFromSafeZone) {
+                if(msgFromSafeZone.title == "serious patient arrived") {
+                    seriousMsg = msgFromSafeZone;
+                    break;
+                }
+            }
+
+            SafeZone safeZone = null;
+            if(seriousMsg != null) {
+                msgsFromSafeZone.remove(seriousMsg);
+                safeZone = (SafeZone)seriousMsg.data;
+            } else {
+                Msg first = msgsFromSafeZone.get(0);
+                msgsFromSafeZone.remove(0);
+                safeZone = (SafeZone)first.data;
+            }
 
             router.route(new Msg()
                     .setFrom(name)
@@ -35,7 +57,7 @@ public class Organization extends CS {
 
     private void patientArrivedAtSafeZone(Msg msg) {
         if(freeStateAmbulances.isEmpty()) {
-            targetSafeZones.add((SafeZone)msg.data);
+            msgsFromSafeZone.add(msg);
         } else {
             Ambulance ambulance = freeStateAmbulances.get(0);
             freeStateAmbulances.remove(0);
@@ -64,9 +86,12 @@ public class Organization extends CS {
                         .setData(nearestHospital));
             }
         } else if(msg.from.startsWith("SafeZone")) {
-            if(msg.title == "patient arrived") {
-                patientArrivedAtSafeZone(msg);
-            }
+            patientArrivedAtSafeZone(msg);
+//            if(msg.title == "serious patient arrived") {
+//                patientArrivedAtSafeZone(msg);
+//            } else if(msg.title == "wounded patient arrived") {
+//                patientArrivedAtSafeZone(msg);
+//            }
         } else if(msg.from.startsWith("Ambulance")) {
             if(msg.title == "free state start") {
                 ambulanceFreeStateStart(msg);
