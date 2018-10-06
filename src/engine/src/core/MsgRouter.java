@@ -15,8 +15,7 @@ import java.util.Queue;
 
 public class MsgRouter extends SoSObject {
 
-    public int delay = 5;
-    public boolean isDelayed = false;
+    public int delay = 0;
 
     private class DelayedMsg {
         public Msg source;
@@ -143,13 +142,14 @@ public class MsgRouter extends SoSObject {
         SoSObject target = world.findObject(msg.to);
 
 
-        if(isDelayed) {
+        if(delay > 0) {
             delayedMsgs.add(new DelayedMsg(msg, delay + Time.getFrameCount()));
             return;
         }
 
         _route(msg);
     }
+
 
     // 그 범위 내의 소방관에게만 브로드캐스팅
     public void broadcast(SoSObject sender,  Msg msg, Position center, int range) {

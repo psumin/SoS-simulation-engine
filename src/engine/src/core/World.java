@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import stimulus.Scenario;
 
 import java.awt.*;
 import java.io.FileOutputStream;
@@ -23,7 +24,7 @@ public class World extends SoSObject{
     private final ArrayList<Scenario> scenarios = new ArrayList<>();
 
     public static final int maxPatient = 20;
-    public static final int maxFireFighter = 5;
+    public static final int maxFireFighter = 3;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 4;
     public static final int maxSafeZone = 4;
@@ -52,8 +53,6 @@ public class World extends SoSObject{
         addChild(router);
 
         createObjects();
-
-
         writeScenario();
     }
 
@@ -302,115 +301,129 @@ public class World extends SoSObject{
     }
 
 
-    private abstract class Scenario {
-        public int frame;
-        public Scenario(int frame) {
-            this.frame = frame;
-        }
-        public abstract void execute();
-    }
 
 
-    private class SetSightRange extends Scenario {
 
-        FireFighter target;
-        int value;
-        public SetSightRange(FireFighter target, int frame, int value) {
-            super(frame);
-            this.target = target;
-            this.value = value;
-        }
 
-        public SetSightRange(int frame, int value) {
-            super(frame);
-            this.value = value;
-        }
-        @Override
-        public void execute() {
-            if(target != null) {
-                target.defaultSightRange = value;
-            } else {
-                fireFighters.forEach(fireFighter -> fireFighter.defaultSightRange = value);
-            }
-        }
-    }
 
-    private class AddFireFighter extends Scenario {
-        public AddFireFighter(int frame) {
-            super(frame);
-        }
-
-        @Override
-        public void execute() {
-            FireFighter ff = new FireFighter(World.this, fireFighterPrefix + (fireFighters.size() + 1));
-            fireFighters.add(ff);
-            ff.sightRange = 100;
-            ff.setPosition(34, 33);
-            addChild(ff);
-        }
-    }
-
-    private class SetTileMoveDelay extends Scenario {
-
-        Range range;
-        float factor;
-
-        public SetTileMoveDelay(int frame, Range range, int factor) {
-            super(frame);
-            this.range = range;
-            this.factor = factor;
-        }
-
-        @Override
-        public void execute() {
-            for(int y = range.left; y <= range.right; ++y) {
-                for(int x = range.top; x <= range.bottom; ++x) {
-                    map.getTile(x, y).moveDelayFactor = factor;
-                }
-            }
-        }
-    }
-
-    private class SetTileSightRange extends Scenario {
-
-        Range range;
-        float factor;
-
-        public SetTileSightRange(int frame, Range range, float factor) {
-            super(frame);
-            this.range = range;
-            this.factor = factor;
-        }
-
-        @Override
-        public void execute() {
-            for(int y = range.left; y <= range.right; ++y) {
-                for(int x = range.top; x <= range.bottom; ++x) {
-                    map.getTile(x, y).sightRangeFactor = factor;
-//                    map.getTile(x, y).applySightRange = true;
-//                    map.getTile(x, y).sightRange = value;
-                }
-            }
-        }
-    }
+//    private class SetSightRange extends Scenario {
+//
+//        FireFighter target;
+//        int value;
+//        public SetSightRange(FireFighter target, int frame, int value) {
+//            super(frame);
+//            this.target = target;
+//            this.value = value;
+//        }
+//
+//        public SetSightRange(int frame, int value) {
+//            super(frame);
+//            this.value = value;
+//        }
+//        @Override
+//        public void execute() {
+//            if(target != null) {
+//                target.defaultSightRange = value;
+//            } else {
+//                fireFighters.forEach(fireFighter -> fireFighter.defaultSightRange = value);
+//            }
+//        }
+//    }
+//
+//    private class AddFireFighter extends Scenario {
+//        public AddFireFighter(int frame) {
+//            super(frame);
+//        }
+//
+//        @Override
+//        public void execute() {
+//            FireFighter ff = new FireFighter(World.this, fireFighterPrefix + (fireFighters.size() + 1));
+//            fireFighters.add(ff);
+//            ff.sightRange = 100;
+//            ff.setPosition(34, 33);
+//            addChild(ff);
+//        }
+//    }
+//
+//    private class SetTileMoveDelay extends Scenario {
+//
+//        Range range;
+//        float factor;
+//
+//        public SetTileMoveDelay(int frame, Range range, int factor) {
+//            super(frame);
+//            this.range = range;
+//            this.factor = factor;
+//        }
+//
+//        @Override
+//        public void execute() {
+//            for(int y = range.left; y <= range.right; ++y) {
+//                for(int x = range.top; x <= range.bottom; ++x) {
+//                    map.getTile(x, y).moveDelayFactor = factor;
+//                }
+//            }
+//        }
+//    }
+//
+//    private class SetTileSightRange extends Scenario {
+//
+//        Range range;
+//        float factor;
+//
+//        public SetTileSightRange(int frame, Range range, float factor) {
+//            super(frame);
+//            this.range = range;
+//            this.factor = factor;
+//        }
+//
+//        @Override
+//        public void execute() {
+//            for(int y = range.left; y <= range.right; ++y) {
+//                for(int x = range.top; x <= range.bottom; ++x) {
+//                    map.getTile(x, y).sightRangeFactor = factor;
+////                    map.getTile(x, y).applySightRange = true;
+////                    map.getTile(x, y).sightRange = value;
+//                }
+//            }
+//        }
+//    }
 
 
     private void writeScenario() {
 
-        scenarios.add(new SetTileMoveDelay(1, new Range(10, 10, 55, 55), 2));
-        scenarios.add(new SetTileMoveDelay(1, new Range(30, 30, 40, 40), 3));
+        ArrayList<String> firefighterNames = new ArrayList<>();
+        for(int i = 0; i < maxFireFighter; ++i) {
+            firefighterNames.add(fireFighterPrefix + (i + 1));
+        }
 
-        scenarios.add(new SetTileSightRange(1, new Range(24, 24, 40, 40), 0.1f));
+        // TODO: moveDelay
+        //scenarios.add(new Scenario(this, 100, "FF1", "moveDelay", 30));
+        //scenarios.add(new Scenario(this, 100, firefighterNames, "moveDelay", 30));
 
-        scenarios.add(new SetSightRange(100, 9));
-        scenarios.add(new SetSightRange(200, 7));
-        scenarios.add(new SetSightRange(300, 5));
-        scenarios.add(new SetSightRange(400, 3));
-
-        scenarios.add(new SetSightRange(1000, 11));
+        // TODO: sightRange
+        //scenarios.add(new Scenario(this, 100, "FF1", "defaultSightRange", 30));
+        //scenarios.add(new Scenario(this, 100, firefighterNames, "defaultSightRange", 30));
+        //scenarios.add(new Scenario(this, 10, new Range(0, 0, 10, 10), "sightRangeFactor", 100.0f));
 
 
-        scenarios.add(new AddFireFighter(50));
+        scenarios.add(new Scenario(this, 10, router, "delay", 130));
+        scenarios.add(new Scenario(this, 200, router, "delay", 0));
+
+//        scenarios.add(new SetTileMoveDelay(1, new Range(10, 10, 55, 55), 2));
+//        scenarios.add(new SetTileMoveDelay(1, new Range(30, 30, 40, 40), 3));
+//
+//        scenarios.add(new SetTileSightRange(1, new Range(24, 24, 40, 40), 0.1f));
+//
+//        scenarios.add(new SetSightRange(100, 9));
+//        scenarios.add(new SetSightRange(200, 7));
+//        scenarios.add(new SetSightRange(300, 5));
+//        scenarios.add(new SetSightRange(400, 3));
+//
+//        scenarios.add(new SetSightRange(1000, 11));
+//
+//
+//        scenarios.add(new AddFireFighter(50));
 
 //        scenarios.add(new SetSightRange( fireFighters.get(0), 200, 5));
 //        scenarios.add(new SetSightRange( fireFighters.get(0), 500, 11));
@@ -418,4 +431,8 @@ public class World extends SoSObject{
 //        scenarios.add(new SetSightRange(200, 5));
 //        scenarios.add(new SetSightRange(500, 11));
     }
+
+
+
+
 }

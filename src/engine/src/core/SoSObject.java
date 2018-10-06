@@ -159,7 +159,8 @@ public abstract class SoSObject {
     public String name = "";
 
     public SoSObject findObject(String targetName) {
-        if(name == targetName) {
+        if(name.equalsIgnoreCase(targetName)) {
+//        if(name == targetName) {
             return this;
         } else {
             for (SoSObject child : children) {
