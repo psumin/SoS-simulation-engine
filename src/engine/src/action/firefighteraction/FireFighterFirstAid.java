@@ -20,6 +20,7 @@ public class FireFighterFirstAid extends FireFighterAction {
         if(targetPatient.assignedFireFighter == null) {
             targetPatient.assignedFireFighter = fireFighter;
         }
+        targetPatient.isSaved = true;
     }
 
     @Override

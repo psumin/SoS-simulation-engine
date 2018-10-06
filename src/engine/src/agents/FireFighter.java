@@ -20,15 +20,13 @@ public class FireFighter extends CS {
     public Queue<Tile> unvisitedTiles;
     public final ArrayList<Patient> patientsMemory = new ArrayList<>();
 
-
-
     public ImageObject transferImage;
     public ImageObject defaultImage;
     public ImageObject moveToPatient;
     public int totalDistance = 0;
 
     public int sightRange = 11;
-    public int communicationRange = sightRange;
+    public int communicationRange = 2;
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;
@@ -186,10 +184,10 @@ public class FireFighter extends CS {
                 patientsMemory.removeAll(othersMemory);
                 othersMemory.forEach(patient -> {
 
-                    patientsMemory.add(patient);
-//                    if(patient.isSaved == false) {
-//                        patientsMemory.add(patient);
-//                    }
+//                    patientsMemory.add(patient);
+                    if(patient.isSaved == false) {
+                        patientsMemory.add(patient);
+                    }
                 });
             }
         }

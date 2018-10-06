@@ -35,6 +35,7 @@ public class FireFighterMoveToPatient extends FireFighterAction {
     public void onUpdate() {
 
         if(targetPatient != null) {
+            fireFighter.observe();
             //ArrayList<Patient> foundPatient = fireFighter.observe();
             //Patient newPatient = fireFighter.selectTargetPatient(foundPatient);
 
