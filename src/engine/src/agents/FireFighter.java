@@ -7,6 +7,7 @@ import action.firefighteraction.FireFighterSearch;
 import core.*;
 import core.Map;
 import misc.Position;
+import misc.Time;
 
 import java.awt.*;
 import java.util.*;
@@ -27,6 +28,7 @@ public class FireFighter extends CS {
     public int totalDistance = 0;
 
     public int sightRange = 11;
+    public int communicationRange = sightRange;
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;
@@ -87,7 +89,24 @@ public class FireFighter extends CS {
         graphics2D.drawChars(name.toCharArray(), 0, name.length(), 0, 0);
     }
 
-
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+        router.broadcast(this,
+                new Msg()
+                        .setFrom(name)
+                        .setTitle("individual map")
+                        .setTo("broadcast")
+                        .setData(individualMap),
+                position, communicationRange);
+        router.broadcast(this,
+                new Msg()
+                        .setFrom(name)
+                        .setTitle("patientsMemory")
+                        .setTo("broadcast")
+                        .setData(patientsMemory),
+                position, communicationRange);
+    }
 
     public ArrayList<Patient> observe() {
         ArrayList<Patient> foundPatient = new ArrayList<>();
@@ -125,11 +144,10 @@ public class FireFighter extends CS {
             }
         });
         if(!seriousPatients.isEmpty()) {
-            Patient patient = (Patient)nearestObject(seriousPatients);
-            return patient;
+            return (Patient)nearestObject(seriousPatients);
+
         } else {
-            Patient patient = (Patient)nearestObject(new ArrayList<>(patients));
-            return patient;
+            return (Patient)nearestObject(new ArrayList<>(patients));
         }
     }
 
@@ -145,5 +163,36 @@ public class FireFighter extends CS {
             }
         }
         frameCounter--;
+    }
+
+    @Override
+    public void recvMsg(Msg msg) {
+        if(msg.from.startsWith(World.fireFighterPrefix)) {
+            if(msg.title == "individual map") {
+                Map othersMap = (Map)msg.data;
+
+                // 방문 정보 업데이트
+                othersMap.getTiles().forEach(tile -> {
+                    if(tile.isVisited()) {
+                        individualMap.getTile(tile.position.x, tile.position.y).visited(true);
+                    }
+                });
+            }
+            else if(msg.title == "patientsMemory") {
+                ArrayList<Patient> othersMemory = (ArrayList<Patient>)msg.data;
+                if(Time.getFrameCount() > 400) {
+                    int a = 10;
+                }
+                patientsMemory.removeAll(othersMemory);
+                othersMemory.forEach(patient -> {
+
+                    patientsMemory.add(patient);
+//                    if(patient.isSaved == false) {
+//                        patientsMemory.add(patient);
+//                    }
+                });
+            }
+        }
+        super.recvMsg(msg);
     }
 }

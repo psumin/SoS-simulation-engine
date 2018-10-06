@@ -59,10 +59,10 @@ public class World extends SoSObject{
     }
 
     private void createObjects() {
+        createFireFighters();
         createSafeZones();
         createOrganization();
         createHospitals();
-        createFireFighters();
         createPatients();
         createAmbulances();
     }
@@ -99,10 +99,13 @@ public class World extends SoSObject{
         int factor = maxFireFighter / 4;
         for (int i = 0; i < maxFireFighter; i++) {
             FireFighter ff = new FireFighter(this, fireFighterPrefix + (i + 1));
-            ff.setPosition(0, 0);
+            //ff.setPosition(0, 0);
             fireFighters.add(ff);
 
             ff.setPosition(positions[i / factor]);
+            if(i == 0) {
+                addChild(ff.individualMap);
+            }
             addChild(ff);
         }
     }

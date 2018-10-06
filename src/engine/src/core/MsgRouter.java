@@ -167,7 +167,11 @@ public class MsgRouter extends SoSObject {
         }
 
         for(Tile tile: tiles) {
-            tile.fireFighters.forEach(fireFighter -> fireFighter.recvMsg(msg));
+            tile.fireFighters.forEach(fireFighter -> {
+                if(fireFighter != sender) {
+                    fireFighter.recvMsg(msg);
+                }
+            });
         }
     }
 }

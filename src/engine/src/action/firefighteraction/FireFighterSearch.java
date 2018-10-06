@@ -51,7 +51,7 @@ public class FireFighterSearch extends FireFighterAction {
                 //fireFighter.markVisitedTiles();
             }
 
-            if(fireFighter.isArrivedAt(unvisitedTile.position)) {
+            if(unvisitedTile != null && fireFighter.isArrivedAt(unvisitedTile.position)) {
                 unvisitedTile = null;
             }
         }
