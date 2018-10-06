@@ -15,6 +15,9 @@ import java.util.Queue;
 
 public class MsgRouter extends SoSObject {
 
+    public int delay = 5;
+    public boolean isDelayed = false;
+
     private class DelayedMsg {
         public Msg source;
         public int delayedTime;
@@ -27,8 +30,9 @@ public class MsgRouter extends SoSObject {
             this.delayedTime = delayedTime;
         }
     }
-    private int delay = 5;
+
     private final Queue<DelayedMsg> delayedMsgs = new LinkedList<>();
+
 
     World world;
     Map worldMap;
@@ -138,7 +142,7 @@ public class MsgRouter extends SoSObject {
 
         SoSObject target = world.findObject(msg.to);
 
-        boolean isDelayed = false;
+
         if(isDelayed) {
             delayedMsgs.add(new DelayedMsg(msg, delay + Time.getFrameCount()));
             return;

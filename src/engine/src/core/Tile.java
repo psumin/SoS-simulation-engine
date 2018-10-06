@@ -12,6 +12,10 @@ public class Tile extends SoSObject {
     SoSObject light;
     SoSObject dark;
 
+    public float moveDelayFactor = 1;
+    public float sightRangeFactor = 1;
+    public float communicationRangeFactor = 1;
+
     public final ArrayList<Patient> patients = new ArrayList<>();
     public final ArrayList<FireFighter> fireFighters = new ArrayList<>();
     //ArrayList<SoSObject> objects = new ArrayList<>();

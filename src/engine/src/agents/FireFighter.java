@@ -14,6 +14,8 @@ import java.util.*;
 
 public class FireFighter extends CS {
 
+
+
     public World world;
     public Map individualMap;
 
@@ -25,7 +27,8 @@ public class FireFighter extends CS {
     public ImageObject moveToPatient;
     public int totalDistance = 0;
 
-    public int sightRange = 11;
+    public int defaultSightRange = 11;
+    public int sightRange = defaultSightRange;
     public int communicationRange = 2;
     public FireFighter(World world, String name) {
         super(world, name);
@@ -96,17 +99,26 @@ public class FireFighter extends CS {
                         .setTitle("individual map")
                         .setTo("broadcast")
                         .setData(individualMap),
-                position, communicationRange);
+                position, (int)(communicationRange * worldMap.getTile(position).communicationRangeFactor));
         router.broadcast(this,
                 new Msg()
                         .setFrom(name)
                         .setTitle("patientsMemory")
                         .setTo("broadcast")
                         .setData(patientsMemory),
-                position, communicationRange);
+                position, (int)(communicationRange * worldMap.getTile(position).communicationRangeFactor));
+
+
     }
 
     public ArrayList<Patient> observe() {
+        sightRange = (int)(worldMap.getTile(position).sightRangeFactor * defaultSightRange);
+//        if(worldMap.getTile(position).applySightRange) {
+//            sightRange = worldMap.getTile(position).sightRange;
+//        } else {
+//            sightRange = defaultSightRange;
+//        }
+
         ArrayList<Patient> foundPatient = new ArrayList<>();
 
         for(int y = position.y - (sightRange / 2); y <= position.y + (sightRange / 2); ++y) {
@@ -158,6 +170,8 @@ public class FireFighter extends CS {
             Position nextPosition = nextPosition(destination);
             if(nextPosition != null) {
                 setPosition(nextPosition);
+
+                frameCounter = (int)(moveDelay * worldMap.getTile(position).moveDelayFactor);
             }
         }
         frameCounter--;

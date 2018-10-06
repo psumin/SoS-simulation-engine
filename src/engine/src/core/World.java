@@ -3,6 +3,8 @@ package core;
 import agents.*;
 import misc.Position;
 
+import misc.Range;
+import misc.Time;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -18,8 +20,10 @@ import java.util.ArrayList;
 
 public class World extends SoSObject{
 
-    public static final int maxPatient = 200;
-    public static final int maxFireFighter = 12;
+    private final ArrayList<Scenario> scenarios = new ArrayList<>();
+
+    public static final int maxPatient = 20;
+    public static final int maxFireFighter = 5;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 4;
     public static final int maxSafeZone = 4;
@@ -47,15 +51,10 @@ public class World extends SoSObject{
         router = new MsgRouter(this, workbook);
         addChild(router);
 
-        //createFireFighters();
-        //createPatients();
-
         createObjects();
-//        createHospitals();
-//        createSafeZones();
-//        createPatients();
-//        createFireFighters();
-//        createAmbulances();
+
+
+        writeScenario();
     }
 
     private void createObjects() {
@@ -96,16 +95,18 @@ public class World extends SoSObject{
                 new Position(Map.mapSize.width - 1, Map.mapSize.height - 1),
                 new Position(0, Map.mapSize.height - 1)
         };
-        int factor = maxFireFighter / 4;
+        int positionIndex = 0;
         for (int i = 0; i < maxFireFighter; i++) {
             FireFighter ff = new FireFighter(this, fireFighterPrefix + (i + 1));
             //ff.setPosition(0, 0);
             fireFighters.add(ff);
 
-            ff.setPosition(positions[i / factor]);
-            if(i == 0) {
-                addChild(ff.individualMap);
-            }
+            ff.setPosition(positions[positionIndex++]);
+            if(positionIndex >= 4)
+                positionIndex = 0;
+//            if(i == 0) {
+//                addChild(ff.individualMap);
+//            }
             addChild(ff);
         }
     }
@@ -171,6 +172,16 @@ public class World extends SoSObject{
             frameCount++;
             System.out.println("FrameCount: " + frameCount);
         }
+
+        ArrayList<Scenario> mustRemove = new ArrayList<>();
+        for(Scenario scenario: scenarios) {
+            if(scenario.frame == Time.getFrameCount()) {
+                scenario.execute();
+                mustRemove.add(scenario);
+            }
+        }
+        scenarios.removeAll(mustRemove);
+
     }
 
     Workbook workbook = new XSSFWorkbook();
@@ -288,5 +299,123 @@ public class World extends SoSObject{
 
     public boolean contains(SoSObject object) {
         return children.contains(object);
+    }
+
+
+    private abstract class Scenario {
+        public int frame;
+        public Scenario(int frame) {
+            this.frame = frame;
+        }
+        public abstract void execute();
+    }
+
+
+    private class SetSightRange extends Scenario {
+
+        FireFighter target;
+        int value;
+        public SetSightRange(FireFighter target, int frame, int value) {
+            super(frame);
+            this.target = target;
+            this.value = value;
+        }
+
+        public SetSightRange(int frame, int value) {
+            super(frame);
+            this.value = value;
+        }
+        @Override
+        public void execute() {
+            if(target != null) {
+                target.defaultSightRange = value;
+            } else {
+                fireFighters.forEach(fireFighter -> fireFighter.defaultSightRange = value);
+            }
+        }
+    }
+
+    private class AddFireFighter extends Scenario {
+        public AddFireFighter(int frame) {
+            super(frame);
+        }
+
+        @Override
+        public void execute() {
+            FireFighter ff = new FireFighter(World.this, fireFighterPrefix + (fireFighters.size() + 1));
+            fireFighters.add(ff);
+            ff.sightRange = 100;
+            ff.setPosition(34, 33);
+            addChild(ff);
+        }
+    }
+
+    private class SetTileMoveDelay extends Scenario {
+
+        Range range;
+        float factor;
+
+        public SetTileMoveDelay(int frame, Range range, int factor) {
+            super(frame);
+            this.range = range;
+            this.factor = factor;
+        }
+
+        @Override
+        public void execute() {
+            for(int y = range.left; y <= range.right; ++y) {
+                for(int x = range.top; x <= range.bottom; ++x) {
+                    map.getTile(x, y).moveDelayFactor = factor;
+                }
+            }
+        }
+    }
+
+    private class SetTileSightRange extends Scenario {
+
+        Range range;
+        float factor;
+
+        public SetTileSightRange(int frame, Range range, float factor) {
+            super(frame);
+            this.range = range;
+            this.factor = factor;
+        }
+
+        @Override
+        public void execute() {
+            for(int y = range.left; y <= range.right; ++y) {
+                for(int x = range.top; x <= range.bottom; ++x) {
+                    map.getTile(x, y).sightRangeFactor = factor;
+//                    map.getTile(x, y).applySightRange = true;
+//                    map.getTile(x, y).sightRange = value;
+                }
+            }
+        }
+    }
+
+
+    private void writeScenario() {
+
+        scenarios.add(new SetTileMoveDelay(1, new Range(10, 10, 55, 55), 2));
+        scenarios.add(new SetTileMoveDelay(1, new Range(30, 30, 40, 40), 3));
+
+        scenarios.add(new SetTileSightRange(1, new Range(24, 24, 40, 40), 0.1f));
+
+        scenarios.add(new SetSightRange(100, 9));
+        scenarios.add(new SetSightRange(200, 7));
+        scenarios.add(new SetSightRange(300, 5));
+        scenarios.add(new SetSightRange(400, 3));
+
+        scenarios.add(new SetSightRange(1000, 11));
+
+
+        scenarios.add(new AddFireFighter(50));
+
+//        scenarios.add(new SetSightRange( fireFighters.get(0), 200, 5));
+//        scenarios.add(new SetSightRange( fireFighters.get(0), 500, 11));
+
+//        scenarios.add(new SetSightRange(200, 5));
+//        scenarios.add(new SetSightRange(500, 11));
     }
 }
