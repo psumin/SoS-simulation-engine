@@ -42,18 +42,11 @@ public class CS extends SoSObject {
         }
     }
 
-    int moveDelay = 0;
-    int frameCounter = moveDelay;
     public void moveTo(Position destination) {
-        if(frameCounter <= 0){
-            frameCounter = moveDelay;
-
-            Position nextPosition = nextPosition(destination);
-            if(nextPosition != null) {
-                setPosition(nextPosition);
-            }
+        Position nextPosition = nextPosition(destination);
+        if(nextPosition != null) {
+            setPosition(nextPosition);
         }
-        frameCounter--;
     }
 
     public boolean isArrivedAt(Position position) {

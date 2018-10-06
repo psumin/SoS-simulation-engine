@@ -129,4 +129,18 @@ public class FireFighter extends CS {
             return patient;
         }
     }
+
+    int moveDelay = 3;
+    int frameCounter = moveDelay;
+    @Override
+    public void moveTo(Position destination) {
+        if(frameCounter <= 0) {
+            frameCounter = moveDelay;
+            Position nextPosition = nextPosition(destination);
+            if(nextPosition != null) {
+                setPosition(nextPosition);
+            }
+        }
+        frameCounter--;
+    }
 }

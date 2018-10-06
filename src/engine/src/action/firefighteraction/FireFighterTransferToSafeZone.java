@@ -17,6 +17,9 @@ public class FireFighterTransferToSafeZone extends FireFighterAction {
 
         this.safeZone = safeZone;
         this.targetPatient = targetPatient;
+
+        fireFighter.transferImage.visible(true);
+        fireFighter.defaultImage.visible(false);
     }
 
     @Override
@@ -27,6 +30,10 @@ public class FireFighterTransferToSafeZone extends FireFighterAction {
         if(fireFighter.isArrivedAt(safeZone.position)) {
             safeZone.arrivedPatient(targetPatient);
             world.addChild(targetPatient);
+
+            fireFighter.transferImage.visible(false);
+            fireFighter.defaultImage.visible(true);
+
             fireFighter.changeAction(new FireFighterSearch(fireFighter));
         }
     }
