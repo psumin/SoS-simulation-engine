@@ -27,7 +27,7 @@ public class FireFighter extends CS {
     public ImageObject moveToPatient;
     public int totalDistance = 0;
 
-    public int defaultSightRange = 11;
+    public int defaultSightRange = 7;
     public int sightRange = defaultSightRange;
     public int communicationRange = 11;
     public FireFighter(World world, String name) {

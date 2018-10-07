@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import stimulus.Scenario;
+import stimulus.*;
 
 import java.awt.*;
 import java.io.FileOutputStream;
@@ -23,14 +23,15 @@ public class World extends SoSObject{
 
     private final ArrayList<Scenario> scenarios = new ArrayList<>();
 
-    public static final int maxPatient = 20;
-    public static final int maxFireFighter = 12;
+    public static int maxPatient = 100;
+    public static int maxFireFighter = 8;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 4;
     public static final int maxSafeZone = 4;
 
     public Map map;
     public MsgRouter router;
+    public ArrayList<Patient> patients = new ArrayList<>(maxPatient);
     public ArrayList<FireFighter> fireFighters = new ArrayList<FireFighter>(maxFireFighter);
     public ArrayList<Hospital> hospitals = new ArrayList<Hospital>(maxHospital);
     public ArrayList<SafeZone> safeZones = new ArrayList<>(maxSafeZone);
@@ -68,6 +69,7 @@ public class World extends SoSObject{
     private void createPatients() {
         for (int i = 0; i < maxPatient; i++) {
             Patient patient = new Patient(this, "Patient" + (i + 1));
+            patients.add(patient);
             patient.setStatus(Patient.Status.random());
             Position randomPosition = null;
 
@@ -94,7 +96,6 @@ public class World extends SoSObject{
                 new Position(Map.mapSize.width - 1, Map.mapSize.height - 1),
                 new Position(0, Map.mapSize.height - 1)
         };
-        int positionIndex = 0;
         for (int i = 0; i < maxFireFighter; i++) {
             FireFighter ff = new FireFighter(this, fireFighterPrefix + (i + 1));
             //ff.setPosition(0, 0);
@@ -300,6 +301,65 @@ public class World extends SoSObject{
         return children.contains(object);
     }
 
+    int positionIndex = 0;
+    void addFireFighter() {
+        maxFireFighter++;
+        Position[] positions = new Position[]{
+                new Position(0, 0),
+                new Position(Map.mapSize.width - 1, 0),
+                new Position(Map.mapSize.width - 1, Map.mapSize.height - 1),
+                new Position(0, Map.mapSize.height - 1)
+        };
+
+        FireFighter ff = new FireFighter(this, fireFighterPrefix + (fireFighters.size() + 1));
+        fireFighters.add(ff);
+
+        ff.setPosition(positions[positionIndex++]);
+        if (positionIndex >= 4)
+            positionIndex = 0;
+        addChild(ff);
+    }
+
+    public void addPatient(Position position) {
+        maxPatient++;
+        Patient patient = new Patient(this, "Patient" + (patients.size() + 1));
+        patients.add(patient);
+        patient.setStatus(Patient.Status.random());
+        if(position == null) {
+            Position randomPosition = null;
+
+            while (true) {
+                randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
+                boolean isSafeZone = false;
+                for (SafeZone zone : safeZones) {
+                    if (zone.isSafeZone(randomPosition)) {
+                        isSafeZone = true;
+                        break;
+                    }
+                }
+                if (isSafeZone == false) break;
+            }
+
+            patient.setPosition(randomPosition);
+        } else {
+            patient.setPosition(position);
+        }
+        this.addChild(patient);
+
+        ArrayList<Patient> data = new ArrayList<>();
+        data.add(patient);
+
+
+        for(FireFighter fireFighter: fireFighters) {
+            Msg msg = new Msg()
+                    .setFrom(fireFighterPrefix)
+                    .setTo(fireFighter.name)
+                    .setTitle("patientsMemory")
+                    .setData(data);
+            router.route(msg);
+        }
+    }
+
 
 
 
@@ -407,44 +467,57 @@ public class World extends SoSObject{
         //scenarios.add(new Scenario(this, 10, new Range(0, 0, 10, 10), "moveDelayFactor", 10.0f));             // 특정 frame count 이후 특정 구역에서의 move speed 변경
         //scenarios.add(new Scenario(this, 100, AmbulanceNames, "moveDelay", 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
 
+//        scenarios.add(new MoveDelayScenario(this, 100, "FF1", 30));
+//        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 30));
+//        scenarios.add(new MoveDelayScenario(this, 100, new Range(0, 0, 10, 10), 10.0f));
+//        scenarios.add(new MoveDelayScenario(this, 100, AmbulanceNames, 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
+
         // TODO: sightRange
         //scenarios.add(new Scenario(this, 100, "FF1", "defaultSightRange", 30));                               // 특정 frame count 이후 특정 FF의 sight range 변화
         //scenarios.add(new Scenario(this, 100, firefighterNames, "defaultSightRange", 30));                    // 특정 frame count 이후 전체 FF의 sight range 변화
         //scenarios.add(new Scenario(this, 10, new Range(0, 0, 10, 10), "sightRangeFactor", 100.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
 
-        // TODO: communication (1 to 1 casting)
-//        scenarios.add(new Scenario(this, 10, router, "ALL_DELAY", 300));
-//        scenarios.add(new Scenario(this, 500, router, "ALL_DELAY", 0));
+//        scenarios.add(new SightRangeScenario(this, 100, "FF1", 30));                               // 특정 frame count 이후 특정 FF의 sight range 변화
+//        scenarios.add(new SightRangeScenario(this, 100, firefighterNames, 30));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+//        scenarios.add(new SightRangeScenario(this, 10, new Range(0, 0, 10, 10), 100.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
 
-//        scenarios.add(new Scenario(this, 10, router, "TO_ORG_DELAY", 130));
-//        scenarios.add(new Scenario(this, 200, router, "TO_ORG_DELAY", 0));
+//        // TODO: communication (1 to 1 casting)
+//        scenarios.add(new CommunicationScenario(this, 10, "ALL_DELAY", 300));
+//        scenarios.add(new CommunicationScenario(this, 500,  "ALL_DELAY", 0));
+//
+//        scenarios.add(new CommunicationScenario(this, 10, "TO_ORG_DELAY", 130));
+//        scenarios.add(new CommunicationScenario(this, 200,  "TO_ORG_DELAY", 0));
+//
+//        scenarios.add(new CommunicationScenario(this, 10, "FROM_ORG_DELAY", 130));
+//        scenarios.add(new CommunicationScenario(this, 200,  "FROM_ORG_DELAY", 0));
+//
+//        scenarios.add(new CommunicationScenario(this, 10, "FF_TO_ORG_DELAY", 130));
+//        scenarios.add(new CommunicationScenario(this, 200,  "FF_TO_ORG_DELAY", 0));
+//
+//        scenarios.add(new CommunicationScenario(this, 10, "ORG_TO_FF_DELAY", 130));
+//        scenarios.add(new CommunicationScenario(this, 200,  "ORG_TO_FF_DELAY", 0));
+//
+//        scenarios.add(new CommunicationScenario(this, 10, "AMB_TO_ORG_DELAY", 300));
+//        scenarios.add(new CommunicationScenario(this, 500,  "AMB_TO_ORG_DELAY", 0));
+//
+//        scenarios.add(new CommunicationScenario(this, 10, "ORG_TO_AMB_DELAY", 130));
+//        scenarios.add(new CommunicationScenario(this, 200,  "ORG_TO_AMB_DELAY", 0));
+//
+//        scenarios.add(new CommunicationScenario(this, 10, "SZ_TO_ORG_DELAY", 130));
+//        scenarios.add(new CommunicationScenario(this, 200,  "SZ_TO_ORG_DELAY", 0));
+//
+//        scenarios.add(new CommunicationScenario(this, 10, "ORG_TO_SZ_DELAY", 130));
+//        scenarios.add(new CommunicationScenario(this, 200,  "ORG_TO_SZ_DELAY", 0));
+//
+//        scenarios.add(new CommunicationScenario(this, 10, "FF_RANGECAST_DELAY", 130));
+//        scenarios.add(new CommunicationScenario(this, 200,  "FF_RANGECAST_DELAY", 0));
 
-//        scenarios.add(new Scenario(this, 10, router, "FROM_ORG_DELAY", 130));
-//        scenarios.add(new Scenario(this, 200, router, "FROM_ORG_DELAY", 0));
-//
-//        scenarios.add(new Scenario(this, 10, router, "FF_TO_ORG_DELAY", 130));
-//        scenarios.add(new Scenario(this, 200, router, "FF_TO_ORG_DELAY", 0));
-//
-//        scenarios.add(new Scenario(this, 10, router, "ORG_TO_FF_DELAY", 130));
-//        scenarios.add(new Scenario(this, 200, router, "ORG_TO_FF_DELAY", 0));
-//
-//        scenarios.add(new Scenario(this, 10, router, "AMB_TO_ORG_DELAY", 300));
-//        scenarios.add(new Scenario(this, 500, router, "AMB_TO_ORG_DELAY", 0));
-//
-//        scenarios.add(new Scenario(this, 10, router, "ORG_TO_AMB_DELAY", 130));
-//        scenarios.add(new Scenario(this, 200, router, "ORG_TO_AMB_DELAY", 0));
-//
-//        scenarios.add(new Scenario(this, 10, router, "SZ_TO_ORG_DELAY", 130));
-//        scenarios.add(new Scenario(this, 200, router, "SZ_TO_ORG_DELAY", 0));
-//
-//        scenarios.add(new Scenario(this, 10, router, "ORG_TO_SZ_DELAY", 130));
-//        scenarios.add(new Scenario(this, 200, router, "ORG_TO_SZ_DELAY", 0));
-//
-        scenarios.add(new Scenario(this, 10, router, "FF_RANGECAST_DELAY", 130));
-        scenarios.add(new Scenario(this, 200, router, "FF_RANGECAST_DELAY", 0));
 
+        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF1"));
 
-//        scenarios.add(new AddFireFighter(50));
-
+        scenarios.add(new LambdaScenario(this, 100, this::addFireFighter));
     }
+
+
+
 }
