@@ -15,7 +15,26 @@ import java.util.Queue;
 
 public class MsgRouter extends SoSObject {
 
-    public int delay = 0;
+    // 전체 딜레이
+    private int ALL_DELAY = 0;
+
+    // TO: Org 딜레이
+    private int TO_ORG_DELAY = 0;
+
+    // FROM: Org 딜레이
+    private int FROM_ORG_DELAY = 0;
+
+    // FF <-> Organization
+    private int FF_TO_ORG_DELAY = 0;
+    private int ORG_TO_FF_DELAY = 0;
+
+    // Ambulance <-> Organization
+    private int AMB_TO_ORG_DELAY = 0;
+    private int ORG_TO_AMB_DELAY = 0;
+
+    // SafeZone <-> Organization
+    private int SZ_TO_ORG_DELAY = 0;
+    private int ORG_TO_SZ_DELAY = 0;
 
     private class DelayedMsg {
         public Msg source;
@@ -142,8 +161,50 @@ public class MsgRouter extends SoSObject {
         SoSObject target = world.findObject(msg.to);
 
 
-        if(delay > 0) {
-            delayedMsgs.add(new DelayedMsg(msg, delay + Time.getFrameCount()));
+
+        // FF <-> Org
+        if(FF_TO_ORG_DELAY > 0 && msg.from.startsWith(World.fireFighterPrefix) && msg.to.startsWith("Org")) {
+            delayedMsgs.add(new DelayedMsg(msg, FF_TO_ORG_DELAY + Time.getFrameCount()));
+            return;
+        }
+        if(ORG_TO_FF_DELAY > 0 && msg.from.startsWith("Org") && msg.to.startsWith(World.fireFighterPrefix)) {
+            delayedMsgs.add(new DelayedMsg(msg, ORG_TO_FF_DELAY + Time.getFrameCount()));
+            return;
+        }
+
+        // Ambulance <-> Org
+        if(AMB_TO_ORG_DELAY > 0 && msg.from.startsWith("Amb") && msg.to.startsWith("Org")) {
+            delayedMsgs.add(new DelayedMsg(msg, AMB_TO_ORG_DELAY + Time.getFrameCount()));
+            return;
+        }
+        if(ORG_TO_AMB_DELAY > 0 && msg.from.startsWith("Org") && msg.to.startsWith("Amb")) {
+            delayedMsgs.add(new DelayedMsg(msg, ORG_TO_AMB_DELAY + Time.getFrameCount()));
+            return;
+        }
+
+        // SafeZone <-> Org
+        if(SZ_TO_ORG_DELAY > 0 && msg.from.startsWith("SafeZone") && msg.to.startsWith("Org")) {
+            delayedMsgs.add(new DelayedMsg(msg, SZ_TO_ORG_DELAY + Time.getFrameCount()));
+            return;
+        }
+        if(ORG_TO_SZ_DELAY > 0 && msg.from.startsWith("Org") && msg.to.startsWith("SafeZone")) {
+            delayedMsgs.add(new DelayedMsg(msg, ORG_TO_SZ_DELAY + Time.getFrameCount()));
+            return;
+        }
+
+        if(TO_ORG_DELAY > 0 && msg.to.startsWith("Org")) {
+            delayedMsgs.add(new DelayedMsg(msg, TO_ORG_DELAY + Time.getFrameCount()));
+            return;
+        }
+
+        if(FROM_ORG_DELAY > 0 && msg.from.startsWith("Org")) {
+            delayedMsgs.add(new DelayedMsg(msg, FROM_ORG_DELAY + Time.getFrameCount()));
+            return;
+        }
+
+        // All Delay
+        if(ALL_DELAY > 0) {
+            delayedMsgs.add(new DelayedMsg(msg, ALL_DELAY + Time.getFrameCount()));
             return;
         }
 
