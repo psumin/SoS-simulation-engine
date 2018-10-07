@@ -29,7 +29,7 @@ public class FireFighter extends CS {
 
     public int defaultSightRange = 11;
     public int sightRange = defaultSightRange;
-    public int communicationRange = 2;
+    public int communicationRange = 11;
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;

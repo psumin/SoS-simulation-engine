@@ -15,7 +15,7 @@ public class MsgRouter extends SoSObject {
     private int ALL_DELAY = 0;
 
     // TO: Org 딜레이
-    private int ALL_DELAY2 = 0;
+    private int TO_ORG_DELAY = 0;
 
     // FROM: Org 딜레이
     private int FROM_ORG_DELAY = 0;
@@ -158,14 +158,6 @@ public class MsgRouter extends SoSObject {
 
         SoSObject target = world.findObject(msg.to);
 
-        if(msg.from.startsWith("Ambul") && msg.to.startsWith("Org")) {
-            int a = 10;
-        }
-
-        if(ALL_DELAY2 > 100) {
-            int a = 10;
-        }
-
         // FF <-> Org
         if(FF_TO_ORG_DELAY > 0 && msg.from.startsWith(World.fireFighterPrefix) && msg.to.startsWith("Org")) {
             delayedMsgs.add(new DelayedMsg(msg, FF_TO_ORG_DELAY + Time.getFrameCount()));
@@ -196,8 +188,8 @@ public class MsgRouter extends SoSObject {
             return;
         }
 
-        if(ALL_DELAY2 > 0 && msg.to.startsWith("Org")) {
-            delayedMsgs.add(new DelayedMsg(msg, ALL_DELAY2 + Time.getFrameCount()));
+        if(TO_ORG_DELAY > 0 && msg.to.startsWith("Org")) {
+            delayedMsgs.add(new DelayedMsg(msg, TO_ORG_DELAY + Time.getFrameCount()));
             return;
         }
 
@@ -243,10 +235,16 @@ public class MsgRouter extends SoSObject {
         for(Tile tile: tiles) {
             tile.fireFighters.forEach(fireFighter -> {
                 if(fireFighter != sender) {
-                    msg.to = fireFighter.name;
-                    route(msg);
+
+                    Msg copiedMsg = new Msg()
+                            .setFrom(msg.from)
+                            .setTo(fireFighter.name)
+                            .setTitle(msg.title)
+                            .setData(msg.data);
+
+                    route(copiedMsg);
                     //
-                    fireFighter.recvMsg(msg);
+                    //fireFighter.recvMsg(msg);
                 }
             });
         }
