@@ -15,5 +15,6 @@ public class Ambulance extends CS{
         currentAction = new AmbulanceFree(this);
 
         moveDelay = 0;
+        frameCounter = moveDelay;
     }
 }

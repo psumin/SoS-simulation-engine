@@ -56,6 +56,7 @@ public class FireFighter extends CS {
         currentAction = new FireFighterSearch(this);
 
         moveDelay = 3;
+        frameCounter = moveDelay;
     }
 
 

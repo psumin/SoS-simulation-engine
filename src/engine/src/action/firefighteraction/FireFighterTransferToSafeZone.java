@@ -10,6 +10,8 @@ public class FireFighterTransferToSafeZone extends FireFighterAction {
     SafeZone safeZone;
     Patient targetPatient;
 
+    int prevMoveDelay;
+
     public FireFighterTransferToSafeZone(FireFighter target, SafeZone safeZone, Patient targetPatient) {
         super(target);
 
@@ -20,6 +22,9 @@ public class FireFighterTransferToSafeZone extends FireFighterAction {
 
         fireFighter.transferImage.visible(true);
         fireFighter.defaultImage.visible(false);
+
+        prevMoveDelay = fireFighter.moveDelay;
+        fireFighter.moveDelay = prevMoveDelay * 2;
     }
 
     @Override
@@ -34,6 +39,7 @@ public class FireFighterTransferToSafeZone extends FireFighterAction {
             fireFighter.transferImage.visible(false);
             fireFighter.defaultImage.visible(true);
 
+            fireFighter.moveDelay = prevMoveDelay;
             fireFighter.changeAction(new FireFighterSearch(fireFighter));
         }
     }

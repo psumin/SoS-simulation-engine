@@ -49,8 +49,8 @@ public class CS extends SoSObject {
 //        }
 //    }
 
-    int moveDelay = 0;
-    int frameCounter = moveDelay;
+    public int moveDelay = 0;
+    int frameCounter;
 
     public void moveTo(Position destination) {
         if(frameCounter <= 0) {
