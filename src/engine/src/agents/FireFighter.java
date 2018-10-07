@@ -99,14 +99,14 @@ public class FireFighter extends CS {
                 new Msg()
                         .setFrom(name)
                         .setTitle("individual map")
-                        .setTo("broadcast")
+                        .setTo("broadcast in range")
                         .setData(individualMap),
                 position, (int)(communicationRange * worldMap.getTile(position).communicationRangeFactor));
         router.broadcast(this,
                 new Msg()
                         .setFrom(name)
                         .setTitle("patientsMemory")
-                        .setTo("broadcast")
+                        .setTo("broadcast in range")
                         .setData(patientsMemory),
                 position, (int)(communicationRange * worldMap.getTile(position).communicationRangeFactor));
 

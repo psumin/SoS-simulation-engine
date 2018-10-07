@@ -40,7 +40,7 @@ public class World extends SoSObject{
 
     public World() {
 
-//        workbook = new XSSFWorkbook();
+        workbook = new XSSFWorkbook();
 //        patientSheet = workbook.createSheet("patients");
 
         map = new Map();
@@ -412,11 +412,36 @@ public class World extends SoSObject{
         //scenarios.add(new Scenario(this, 100, firefighterNames, "defaultSightRange", 30));                    // 특정 frame count 이후 전체 FF의 sight range 변화
         //scenarios.add(new Scenario(this, 10, new Range(0, 0, 10, 10), "sightRangeFactor", 100.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
 
-        // TODO: communication 1  --> FF의 delay 포함 안함
-        //scenarios.add(new Scenario(this, 10, router, "delay", 130));                                          // 특정 frame count 이후 communication delay
-        //scenarios.add(new Scenario(this, 200, router, "delay", 0));                                           // 특정 frame count 이후 communication delay 복구
+        // TODO: communication (1 to 1 casting)
+        scenarios.add(new Scenario(this, 10, router, "ALL_DELAY", 300));
+//        scenarios.add(new Scenario(this, 500, router, "ALL_DELAY", 0));
 
+        scenarios.add(new Scenario(this, 10, router, "ALL_DELAY2 ", 130));
+        //scenarios.add(new Scenario(this, 200, router, "TO_ORG_DELAY ", 0));
 
+        //scenarios.add(new Scenario(this, 10, router, "FROM_ORG_DELAY ", 130));
+        //scenarios.add(new Scenario(this, 200, router, "FROM_ORG_DELAY ", 0));
+
+        //scenarios.add(new Scenario(this, 10, router, "FF_TO_ORG_DELAY ", 130));
+        //scenarios.add(new Scenario(this, 200, router, "FF_TO_ORG_DELAY ", 0));
+
+        //scenarios.add(new Scenario(this, 10, router, "ORG_TO_FF_DELAY ", 130));
+        //scenarios.add(new Scenario(this, 200, router, "ORG_TO_FF_DELAY ", 0));
+
+        //scenarios.add(new Scenario(this, 10, router, "AMB_TO_ORG_DELAY ", 130));
+        //scenarios.add(new Scenario(this, 200, router, "AMB_TO_ORG_DELAY ", 0));
+
+        //scenarios.add(new Scenario(this, 10, router, "ORG_TO_AMB_DELAY ", 130));
+        //scenarios.add(new Scenario(this, 200, router, "ORG_TO_AMB_DELAY ", 0));
+
+        //scenarios.add(new Scenario(this, 10, router, "SZ_TO_ORG_DELAY ", 130));
+        //scenarios.add(new Scenario(this, 200, router, "SZ_TO_ORG_DELAY ", 0));
+
+        //scenarios.add(new Scenario(this, 10, router, "ORG_TO_SZ_DELAY ", 130));
+        //scenarios.add(new Scenario(this, 200, router, "ORG_TO_SZ_DELAY ", 0));
+
+        //scenarios.add(new Scenario(this, 10, router, "FF_RANGECAST_DELAY ", 130));
+        //scenarios.add(new Scenario(this, 200, router, "FF_RANGECAST_DELAY ", 0));
 
 
 //        scenarios.add(new AddFireFighter(50));

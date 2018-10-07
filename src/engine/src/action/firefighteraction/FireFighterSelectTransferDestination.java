@@ -25,13 +25,13 @@ public class FireFighterSelectTransferDestination extends FireFighterAction {
     @Override
     public void onUpdate() {
 
-        router.route(new Msg()
-                .setFrom(fireFighter.name)
-                .setTo("Organization")
-                .setTitle("nearest hospital")
-                .setData(fireFighter));
-
-        if(frameCounter <= 0) {
+        if(frameCounter == timeout) {
+            router.route(new Msg()
+                    .setFrom(fireFighter.name)
+                    .setTo("Organization")
+                    .setTitle("nearest hospital")
+                    .setData(fireFighter));
+        } else if(frameCounter <= 0) {
             SafeZone nearestSafeZone = (SafeZone)fireFighter.nearestObject(new ArrayList<>(world.safeZones));
             fireFighter.changeAction(new FireFighterTransferToSafeZone(fireFighter, nearestSafeZone, targetPatient));
         }

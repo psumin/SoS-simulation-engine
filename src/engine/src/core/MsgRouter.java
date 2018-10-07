@@ -1,13 +1,9 @@
 package core;
 
-import agents.FireFighter;
 import misc.Position;
 import misc.Time;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -19,7 +15,7 @@ public class MsgRouter extends SoSObject {
     private int ALL_DELAY = 0;
 
     // TO: Org 딜레이
-    private int TO_ORG_DELAY = 0;
+    private int ALL_DELAY2 = 0;
 
     // FROM: Org 딜레이
     private int FROM_ORG_DELAY = 0;
@@ -35,6 +31,8 @@ public class MsgRouter extends SoSObject {
     // SafeZone <-> Organization
     private int SZ_TO_ORG_DELAY = 0;
     private int ORG_TO_SZ_DELAY = 0;
+
+    private int FF_RANGECAST_DELAY = 0;
 
     private class DelayedMsg {
         public Msg source;
@@ -160,7 +158,13 @@ public class MsgRouter extends SoSObject {
 
         SoSObject target = world.findObject(msg.to);
 
+        if(msg.from.startsWith("Ambul") && msg.to.startsWith("Org")) {
+            int a = 10;
+        }
 
+        if(ALL_DELAY2 > 100) {
+            int a = 10;
+        }
 
         // FF <-> Org
         if(FF_TO_ORG_DELAY > 0 && msg.from.startsWith(World.fireFighterPrefix) && msg.to.startsWith("Org")) {
@@ -192,13 +196,19 @@ public class MsgRouter extends SoSObject {
             return;
         }
 
-        if(TO_ORG_DELAY > 0 && msg.to.startsWith("Org")) {
-            delayedMsgs.add(new DelayedMsg(msg, TO_ORG_DELAY + Time.getFrameCount()));
+        if(ALL_DELAY2 > 0 && msg.to.startsWith("Org")) {
+            delayedMsgs.add(new DelayedMsg(msg, ALL_DELAY2 + Time.getFrameCount()));
             return;
         }
 
         if(FROM_ORG_DELAY > 0 && msg.from.startsWith("Org")) {
             delayedMsgs.add(new DelayedMsg(msg, FROM_ORG_DELAY + Time.getFrameCount()));
+            return;
+        }
+
+        // 얘는 조금 겁나네
+        if(FF_RANGECAST_DELAY > 0 && msg.from.startsWith(World.fireFighterPrefix) && msg.to.startsWith(World.fireFighterPrefix)) {
+            delayedMsgs.add(new DelayedMsg(msg, FF_RANGECAST_DELAY + Time.getFrameCount()));
             return;
         }
 
@@ -210,7 +220,6 @@ public class MsgRouter extends SoSObject {
 
         _route(msg);
     }
-
 
     // 그 범위 내의 소방관에게만 브로드캐스팅
     public void broadcast(SoSObject sender,  Msg msg, Position center, int range) {
@@ -234,6 +243,9 @@ public class MsgRouter extends SoSObject {
         for(Tile tile: tiles) {
             tile.fireFighters.forEach(fireFighter -> {
                 if(fireFighter != sender) {
+                    msg.to = fireFighter.name;
+                    route(msg);
+                    //
                     fireFighter.recvMsg(msg);
                 }
             });
