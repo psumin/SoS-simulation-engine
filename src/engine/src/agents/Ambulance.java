@@ -13,5 +13,7 @@ public class Ambulance extends CS{
         addChild(new ImageObject("src/engine/resources/ambulance.png"));
 
         currentAction = new AmbulanceFree(this);
+
+        moveDelay = 0;
     }
 }

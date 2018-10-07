@@ -389,7 +389,6 @@ public class World extends SoSObject{
 //        }
 //    }
 
-
     private void writeScenario() {
 
         ArrayList<String> firefighterNames = new ArrayList<>();
@@ -397,42 +396,30 @@ public class World extends SoSObject{
             firefighterNames.add(fireFighterPrefix + (i + 1));
         }
 
+        ArrayList<String> AmbulanceNames = new ArrayList<>();
+        for(int i = 0; i < maxAmbulance; ++i) {
+            firefighterNames.add("Ambulance" + (i + 1));
+        }
+
         // TODO: moveDelay
-        //scenarios.add(new Scenario(this, 100, "FF1", "moveDelay", 30));
-        //scenarios.add(new Scenario(this, 100, firefighterNames, "moveDelay", 30));
+        //scenarios.add(new Scenario(this, 100, "FF1", "moveDelay", 30));                                       // 특정 frame count 이후 특정 FF의 move speed 변경
+        //scenarios.add(new Scenario(this, 100, firefighterNames, "moveDelay", 10));                            // 특정 frame count 이후 전체 FF의 move speed 변경
+        //scenarios.add(new Scenario(this, 10, new Range(0, 0, 10, 10), "moveDelayFactor", 10.0f));             // 특정 frame count 이후 특정 구역에서의 move speed 변경
+        //scenarios.add(new Scenario(this, 100, AmbulanceNames, "moveDelay", 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
 
         // TODO: sightRange
-        //scenarios.add(new Scenario(this, 100, "FF1", "defaultSightRange", 30));
-        //scenarios.add(new Scenario(this, 100, firefighterNames, "defaultSightRange", 30));
-        //scenarios.add(new Scenario(this, 10, new Range(0, 0, 10, 10), "sightRangeFactor", 100.0f));
+        //scenarios.add(new Scenario(this, 100, "FF1", "defaultSightRange", 30));                               // 특정 frame count 이후 특정 FF의 sight range 변화
+        //scenarios.add(new Scenario(this, 100, firefighterNames, "defaultSightRange", 30));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+        //scenarios.add(new Scenario(this, 10, new Range(0, 0, 10, 10), "sightRangeFactor", 100.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
+
+        // TODO: communication 1  --> FF의 delay 포함 안함
+        //scenarios.add(new Scenario(this, 10, router, "delay", 130));                                          // 특정 frame count 이후 communication delay
+        //scenarios.add(new Scenario(this, 200, router, "delay", 0));                                           // 특정 frame count 이후 communication delay 복구
 
 
-        scenarios.add(new Scenario(this, 10, router, "delay", 130));
-        scenarios.add(new Scenario(this, 200, router, "delay", 0));
 
-//        scenarios.add(new SetTileMoveDelay(1, new Range(10, 10, 55, 55), 2));
-//        scenarios.add(new SetTileMoveDelay(1, new Range(30, 30, 40, 40), 3));
-//
-//        scenarios.add(new SetTileSightRange(1, new Range(24, 24, 40, 40), 0.1f));
-//
-//        scenarios.add(new SetSightRange(100, 9));
-//        scenarios.add(new SetSightRange(200, 7));
-//        scenarios.add(new SetSightRange(300, 5));
-//        scenarios.add(new SetSightRange(400, 3));
-//
-//        scenarios.add(new SetSightRange(1000, 11));
-//
-//
+
 //        scenarios.add(new AddFireFighter(50));
 
-//        scenarios.add(new SetSightRange( fireFighters.get(0), 200, 5));
-//        scenarios.add(new SetSightRange( fireFighters.get(0), 500, 11));
-
-//        scenarios.add(new SetSightRange(200, 5));
-//        scenarios.add(new SetSightRange(500, 11));
     }
-
-
-
-
 }

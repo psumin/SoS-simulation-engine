@@ -20,6 +20,7 @@ public class Scenario {
     private String fieldName;
     private Object value;
 
+    //
     public Scenario(World world, int frame, Object targetObject, String fieldName, Object value) {
         this.world = world;
         this.frame = frame;
@@ -29,6 +30,7 @@ public class Scenario {
         this.value = value;
     }
 
+    // Tile 범위 설정
     public Scenario(World world, int frame, Range tileRange, String fieldName, Object value) {
         this.world = world;
         this.frame = frame;
@@ -38,6 +40,7 @@ public class Scenario {
         this.value = value;
     }
 
+    // CS 전체
     public Scenario(World world, int frame, ArrayList<String> targetNames, String fieldName, Object value) {
         this.world = world;
         this.frame = frame;

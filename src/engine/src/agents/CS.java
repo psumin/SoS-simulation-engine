@@ -42,11 +42,27 @@ public class CS extends SoSObject {
         }
     }
 
+//    public void moveTo(Position destination) {
+//        Position nextPosition = nextPosition(destination);
+//        if(nextPosition != null) {
+//            setPosition(nextPosition);
+//        }
+//    }
+
+    int moveDelay = 0;
+    int frameCounter = moveDelay;
+
     public void moveTo(Position destination) {
-        Position nextPosition = nextPosition(destination);
-        if(nextPosition != null) {
-            setPosition(nextPosition);
+        if(frameCounter <= 0) {
+            frameCounter = moveDelay;
+            Position nextPosition = nextPosition(destination);
+            if(nextPosition != null) {
+                setPosition(nextPosition);
+
+                frameCounter = (int)(moveDelay * worldMap.getTile(position).moveDelayFactor);
+            }
         }
+        frameCounter--;
     }
 
     public boolean isArrivedAt(Position position) {

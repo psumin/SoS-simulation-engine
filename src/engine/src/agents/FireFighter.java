@@ -54,6 +54,8 @@ public class FireFighter extends CS {
         unvisitedTiles = temp;
         //currentAction = new FireFighterCollaborativeAction(this);
         currentAction = new FireFighterSearch(this);
+
+        moveDelay = 3;
     }
 
 
@@ -161,21 +163,21 @@ public class FireFighter extends CS {
         }
     }
 
-    int moveDelay = 3;
-    int frameCounter = moveDelay;
-    @Override
-    public void moveTo(Position destination) {
-        if(frameCounter <= 0) {
-            frameCounter = moveDelay;
-            Position nextPosition = nextPosition(destination);
-            if(nextPosition != null) {
-                setPosition(nextPosition);
-
-                frameCounter = (int)(moveDelay * worldMap.getTile(position).moveDelayFactor);
-            }
-        }
-        frameCounter--;
-    }
+//    int moveDelay = 3;
+//    int frameCounter = moveDelay;
+//    @Override
+//    public void moveTo(Position destination) {
+//        if(frameCounter <= 0) {
+//            frameCounter = moveDelay;
+//            Position nextPosition = nextPosition(destination);
+//            if(nextPosition != null) {
+//                setPosition(nextPosition);
+//
+//                frameCounter = (int)(moveDelay * worldMap.getTile(position).moveDelayFactor);
+//            }
+//        }
+//        frameCounter--;
+//    }
 
     @Override
     public void recvMsg(Msg msg) {
