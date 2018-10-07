@@ -3,9 +3,19 @@ package stimulus;
 import action.Func;
 import core.World;
 
+import java.util.function.Consumer;
+
 public class LambdaScenario extends Scenario {
 
     private Func onExecute;
+    private Consumer<String> onExecute1;
+    private String param1;
+
+    public LambdaScenario(World world, int frame, String param1, Consumer<String> function) {
+        super(world, frame);
+        onExecute1 = function;
+        this.param1 = param1;
+    }
 
     public LambdaScenario(World world, int frame, Func function) {
         super(world, frame);
@@ -14,6 +24,13 @@ public class LambdaScenario extends Scenario {
 
     @Override
     public void execute() {
-        onExecute.invoke();
+        if(onExecute != null) {
+            onExecute.invoke();
+            return;
+        }
+
+        if(onExecute1 != null) {
+            onExecute1.accept(param1);
+        }
     }
 }

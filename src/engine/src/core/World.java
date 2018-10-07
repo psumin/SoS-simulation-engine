@@ -23,8 +23,12 @@ public class World extends SoSObject{
 
     private final ArrayList<Scenario> scenarios = new ArrayList<>();
 
-    public static int maxPatient = 100;
-    public static int maxFireFighter = 8;
+    int patientCounter = 0;
+    int fireFighterCounter = 0;
+    int ambulanceCounter = 0;
+
+    public static final int maxPatient = 100;
+    public static final int maxFireFighter = 8;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 4;
     public static final int maxSafeZone = 4;
@@ -32,8 +36,8 @@ public class World extends SoSObject{
     public Map map;
     public MsgRouter router;
     public ArrayList<Patient> patients = new ArrayList<>(maxPatient);
-    public ArrayList<FireFighter> fireFighters = new ArrayList<FireFighter>(maxFireFighter);
-    public ArrayList<Hospital> hospitals = new ArrayList<Hospital>(maxHospital);
+    public ArrayList<FireFighter> fireFighters = new ArrayList<>(maxFireFighter);
+    public ArrayList<Hospital> hospitals = new ArrayList<>(maxHospital);
     public ArrayList<SafeZone> safeZones = new ArrayList<>(maxSafeZone);
     public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);
 
@@ -68,7 +72,7 @@ public class World extends SoSObject{
 
     private void createPatients() {
         for (int i = 0; i < maxPatient; i++) {
-            Patient patient = new Patient(this, "Patient" + (i + 1));
+            Patient patient = new Patient(this, "Patient" + ++patientCounter);
             patients.add(patient);
             patient.setStatus(Patient.Status.random());
             Position randomPosition = null;
@@ -97,7 +101,7 @@ public class World extends SoSObject{
                 new Position(0, Map.mapSize.height - 1)
         };
         for (int i = 0; i < maxFireFighter; i++) {
-            FireFighter ff = new FireFighter(this, fireFighterPrefix + (i + 1));
+            FireFighter ff = new FireFighter(this, fireFighterPrefix + ++fireFighterCounter);
             //ff.setPosition(0, 0);
             fireFighters.add(ff);
 
@@ -145,7 +149,7 @@ public class World extends SoSObject{
 
     private void createAmbulances() {
         for(int i = 0; i < maxAmbulance; ++i) {
-            Ambulance ambulance = new Ambulance(this, "Ambulance" + (i + 1));
+            Ambulance ambulance = new Ambulance(this, "Ambulance" + ++ambulanceCounter);
             ambulances.add(ambulance);
             addChild(ambulance);
         }
@@ -303,7 +307,6 @@ public class World extends SoSObject{
 
     int positionIndex = 0;
     void addFireFighter() {
-        maxFireFighter++;
         Position[] positions = new Position[]{
                 new Position(0, 0),
                 new Position(Map.mapSize.width - 1, 0),
@@ -311,7 +314,7 @@ public class World extends SoSObject{
                 new Position(0, Map.mapSize.height - 1)
         };
 
-        FireFighter ff = new FireFighter(this, fireFighterPrefix + (fireFighters.size() + 1));
+        FireFighter ff = new FireFighter(this, fireFighterPrefix + ++fireFighterCounter);
         fireFighters.add(ff);
 
         ff.setPosition(positions[positionIndex++]);
@@ -321,8 +324,7 @@ public class World extends SoSObject{
     }
 
     public void addPatient(Position position) {
-        maxPatient++;
-        Patient patient = new Patient(this, "Patient" + (patients.size() + 1));
+        Patient patient = new Patient(this, "Patient" + ++patientCounter);
         patients.add(patient);
         patient.setStatus(Patient.Status.random());
         if(position == null) {
@@ -360,94 +362,11 @@ public class World extends SoSObject{
         }
     }
 
-
-
-
-
-
-
-//    private class SetSightRange extends Scenario {
-//
-//        FireFighter target;
-//        int value;
-//        public SetSightRange(FireFighter target, int frame, int value) {
-//            super(frame);
-//            this.target = target;
-//            this.value = value;
-//        }
-//
-//        public SetSightRange(int frame, int value) {
-//            super(frame);
-//            this.value = value;
-//        }
-//        @Override
-//        public void execute() {
-//            if(target != null) {
-//                target.defaultSightRange = value;
-//            } else {
-//                fireFighters.forEach(fireFighter -> fireFighter.defaultSightRange = value);
-//            }
-//        }
-//    }
-//
-//    private class AddFireFighter extends Scenario {
-//        public AddFireFighter(int frame) {
-//            super(frame);
-//        }
-//
-//        @Override
-//        public void execute() {
-//            FireFighter ff = new FireFighter(World.this, fireFighterPrefix + (fireFighters.size() + 1));
-//            fireFighters.add(ff);
-//            ff.sightRange = 100;
-//            ff.setPosition(34, 33);
-//            addChild(ff);
-//        }
-//    }
-//
-//    private class SetTileMoveDelay extends Scenario {
-//
-//        Range range;
-//        float factor;
-//
-//        public SetTileMoveDelay(int frame, Range range, int factor) {
-//            super(frame);
-//            this.range = range;
-//            this.factor = factor;
-//        }
-//
-//        @Override
-//        public void execute() {
-//            for(int y = range.left; y <= range.right; ++y) {
-//                for(int x = range.top; x <= range.bottom; ++x) {
-//                    map.getTile(x, y).moveDelayFactor = factor;
-//                }
-//            }
-//        }
-//    }
-//
-//    private class SetTileSightRange extends Scenario {
-//
-//        Range range;
-//        float factor;
-//
-//        public SetTileSightRange(int frame, Range range, float factor) {
-//            super(frame);
-//            this.range = range;
-//            this.factor = factor;
-//        }
-//
-//        @Override
-//        public void execute() {
-//            for(int y = range.left; y <= range.right; ++y) {
-//                for(int x = range.top; x <= range.bottom; ++x) {
-//                    map.getTile(x, y).sightRangeFactor = factor;
-////                    map.getTile(x, y).applySightRange = true;
-////                    map.getTile(x, y).sightRange = value;
-//                }
-//            }
-//        }
-//    }
+    private void addAmbulance() {
+        Ambulance ambulance = new Ambulance(this, "Ambulance" + ++ambulanceCounter);
+        ambulances.add(ambulance);
+        addChild(ambulance);
+    }
 
     private void writeScenario() {
 
@@ -513,11 +432,25 @@ public class World extends SoSObject{
 //        scenarios.add(new CommunicationScenario(this, 200,  "FF_RANGECAST_DELAY", 0));
 
 
-        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF1"));
+        //scenarios.add(new FireFighterToPatientScenario(this, 100, "FF1"));
 
-        scenarios.add(new LambdaScenario(this, 100, this::addFireFighter));
+        scenarios.add(new LambdaScenario(this, 100, "FF1", this::removeCS));
+
+        scenarios.add(new LambdaScenario(this, 500, "Ambulance1", this::removeCS));
+        scenarios.add(new LambdaScenario(this, 105, this::addFireFighter));
+        scenarios.add(new LambdaScenario(this, 100, this::addAmbulance));
     }
 
+    void removeCS(String csName) {
+        SoSObject obj = findObject(csName);
+        if(obj == null) return;
 
-
+        if(obj instanceof FireFighter) {
+            map.remove((FireFighter)obj);
+            fireFighters.remove(obj);
+        } else if(obj instanceof Ambulance) {
+            ambulances.remove(obj);
+        }
+        removeChild(obj);
+    }
 }
