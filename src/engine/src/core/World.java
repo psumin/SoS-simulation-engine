@@ -147,11 +147,22 @@ public class World extends SoSObject{
         safeZones.get(3).setPosition(new Position(Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
     }
 
+    int ambulancePositionIndex = 0;
     private void createAmbulances() {
+        Position[] positions = new Position[] {
+                new Position(0, 0),
+                new Position(Map.mapSize.width - 1, 0),
+                new Position(Map.mapSize.width - 1, Map.mapSize.height - 1),
+                new Position(0, Map.mapSize.height - 1)
+        };
         for(int i = 0; i < maxAmbulance; ++i) {
             Ambulance ambulance = new Ambulance(this, "Ambulance" + ++ambulanceCounter);
             ambulances.add(ambulance);
             addChild(ambulance);
+            ambulance.setPosition(positions[ambulancePositionIndex++]);
+            if(ambulancePositionIndex >= 4) {
+                ambulancePositionIndex = 0;
+            }
         }
     }
 
@@ -381,8 +392,8 @@ public class World extends SoSObject{
         }
 
         // TODO: Late Rescue Start
-        scenarios.add(new MoveDelayScenario(this, 1, firefighterNames, 100));
-        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 3));
+//        scenarios.add(new MoveDelayScenario(this, 1, firefighterNames, 100));
+//        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 3));
 
 //        scenarios.add(new MoveDelayScenario(this, 100, AmbulanceNames, 300));
 //        scenarios.add(new MoveDelayScenario(this, 400, AmbulanceNames, 0));

@@ -27,6 +27,11 @@ public class AmbulanceMoveToSafeZone extends AmbulanceAction {
             if(patient == null) {
                 patient = safeZone.getPatient(Patient.Status.Wounded);
             }
+            if(patient == null) {
+                ambulance.changeAction(new AmbulanceFree(ambulance));
+                return;
+            }
+
             safeZone.leavePatient(patient);
 
             ambulance.changeAction(new AmbulanceTransferToHospital(ambulance, nearestHospital, patient));

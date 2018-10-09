@@ -1,6 +1,7 @@
 package agents;
 
 import core.Msg;
+import core.SoSObject;
 import core.World;
 import misc.Time;
 
@@ -59,17 +60,19 @@ public class Organization extends CS {
         if(freeStateAmbulances.isEmpty()) {
             msgsFromSafeZone.add(msg);
         } else {
-            Ambulance ambulance = freeStateAmbulances.get(0);
-            freeStateAmbulances.remove(0);
+            SafeZone safeZone = (SafeZone)msg.data;
 
-//            SafeZone safeZone = targetSafeZones.get(0);
-//            targetSafeZones.remove(0);
+            Ambulance ambulance = (Ambulance)safeZone.nearestObject(new ArrayList<SoSObject>(freeStateAmbulances));
+            freeStateAmbulances.remove(ambulance);
+
+            //Ambulance ambulance = freeStateAmbulances.get(0);
+            //freeStateAmbulances.remove(0);
 
             router.route(new Msg()
                     .setFrom(name)
                     .setTo(ambulance.name)
                     .setTitle("move to safezone")
-                    .setData(msg.data));
+                    .setData(safeZone));
         }
     }
 

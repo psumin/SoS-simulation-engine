@@ -6,12 +6,19 @@ import core.Msg;
 
 public class AmbulanceFree extends AmbulanceAction {
 
-    boolean isWaiting = false;
     public AmbulanceFree(Ambulance target) {
         super(target);
     }
 
     boolean isFirstUpdate = true;
+
+    int timeout = 5;
+    int frameCounter = timeout;
+
+    int maxTimeout = 3;
+    // timeoutCounter 횟수 카운팅
+    int timeoutCounter = maxTimeout;
+
 
     @Override
     public void onUpdate() {
@@ -23,6 +30,16 @@ public class AmbulanceFree extends AmbulanceAction {
                     .setTitle("free state start")
                     .setData(ambulance));
         }
+        if(frameCounter <= 0) {
+            frameCounter = timeout;
+            if(timeoutCounter <= 0) {
+                timeoutCounter = maxTimeout;
+                // 서치
+                ambulance.changeAction(new AmbulanceSearch(ambulance));
+            }
+            timeoutCounter--;
+        }
+        frameCounter--;
     }
 
     @Override
