@@ -17,6 +17,8 @@ public class AmbulanceSearch extends AmbulanceAction {
         super(target);
 
         safeZones = target.world.safeZones;
+
+        name = "Search";
     }
 
     @Override

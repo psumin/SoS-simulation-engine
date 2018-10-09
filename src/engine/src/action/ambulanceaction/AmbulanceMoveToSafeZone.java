@@ -15,6 +15,7 @@ public class AmbulanceMoveToSafeZone extends AmbulanceAction {
         super(target);
 
         this.safeZone = safeZone;
+        name = "Move To SafeZone";
     }
 
     @Override

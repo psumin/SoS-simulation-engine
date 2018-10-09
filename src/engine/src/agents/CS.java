@@ -13,6 +13,8 @@ public class CS extends SoSObject {
 
     public Action currentAction;
 
+    public int totalDistance = 0;
+
     public CS(World world, String name) {
         this.world = world;
         worldMap = world.getMap();
@@ -57,6 +59,9 @@ public class CS extends SoSObject {
             frameCounter = moveDelay;
             Position nextPosition = nextPosition(destination);
             if(nextPosition != null) {
+                if(!isArrivedAt(nextPosition)) {
+                    totalDistance++;
+                }
                 setPosition(nextPosition);
 
                 frameCounter = (int)(moveDelay * worldMap.getTile(position).moveDelayFactor);

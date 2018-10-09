@@ -8,6 +8,7 @@ public class AmbulanceFree extends AmbulanceAction {
 
     public AmbulanceFree(Ambulance target) {
         super(target);
+        name = "Free";
     }
 
     boolean isFirstUpdate = true;

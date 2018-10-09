@@ -3,7 +3,6 @@ package core;
 import agents.*;
 import misc.Position;
 
-import misc.Range;
 import misc.Time;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -45,7 +44,7 @@ public class World extends SoSObject{
 
     public World() {
 
-        workbook = new XSSFWorkbook();
+//        workbook = new XSSFWorkbook();
 //        patientSheet = workbook.createSheet("patients");
 
         map = new Map();
@@ -178,12 +177,13 @@ public class World extends SoSObject{
 
         if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
             canUpdate(false);
-            //printPatientLog(true);
-            //printFireFighetrLog(true);
+//            printPatientLog(true);
+//            printFireFighterLog(true);
             return;
         } else {
-            //printPatientLog(false);
-            //printFireFighetrLog(false);
+            printPatientLog(false);
+            printFireFighterLog(false);
+            printAmbulanceLog(false);
             frameCount++;
             System.out.println("FrameCount: " + frameCount);
         }
@@ -221,7 +221,7 @@ public class World extends SoSObject{
     }
 
     Sheet fireFighterSheet = workbook.createSheet("fire fighters");
-    private void printFireFighetrLog(boolean isFinish) {
+    private void printFireFighterLog(boolean isFinish) {
 
         // i * 2
         // i * 2 + 1
@@ -273,6 +273,55 @@ public class World extends SoSObject{
         }
     }
 
+    Sheet ambulanceSheet = workbook.createSheet("Ambulances");
+    private void printAmbulanceLog(boolean isFinish) {
+        if(frameCount == 0) {
+            Row row = ambulanceSheet.createRow(frameCount);
+            Cell frameCountCell = row.createCell(0);
+            frameCountCell.setCellValue("frame count");
+            Cell[] positionCells = new Cell[maxAmbulance];
+
+            for(int i = 0; i < maxAmbulance; ++i) {
+                Cell currentCell = row.createCell(i * 2 + 1);
+                String position = ambulances.get(i).position.toString();
+                currentCell.setCellValue("Amb" + (i + 1) + " pos");
+
+                currentCell = row.createCell(  i * 2 + 2);
+                currentCell.setCellValue("Amb" + (i + 1) + " Status");
+            }
+        }
+
+        Row row = ambulanceSheet.createRow(frameCount + 1);
+        Cell frameCountCell = row.createCell(0);
+        frameCountCell.setCellValue(frameCount);
+        Cell[] positionCells = new Cell[maxAmbulance];
+
+        for(int i = 0; i < maxAmbulance; ++i) {
+            Cell currentCell = row.createCell(i * 2 + 1);
+
+            String position = ambulances.get(i).position.toString();
+            currentCell.setCellValue(position);
+
+            currentCell = row.createCell(  i * 2 + 2);
+            currentCell.setCellValue(ambulances.get(i).currentAction.name);
+            //currentCell.setCellValue(fireFighters.get(i).getState().toString());
+        }
+
+        if(isFinish) {
+            row = ambulanceSheet.createRow(frameCount + 2);
+            frameCountCell = row.createCell(0);
+            frameCountCell.setCellValue("total distance");
+            positionCells = new Cell[maxAmbulance];
+
+            for(int i = 0; i < maxAmbulance; ++i) {
+                Cell currentCell = row.createCell(i * 2 + 1);
+                positionCells[i] = currentCell;
+
+                positionCells[i].setCellValue(ambulances.get(i).totalDistance);
+            }
+        }
+    }
+
     @Override
     public void onRender(Graphics2D g) {
         Rectangle rect = g.getDeviceConfiguration().getBounds();
@@ -302,6 +351,10 @@ public class World extends SoSObject{
 
     @Override
     public void clear() {
+        printPatientLog(true);
+        printFireFighterLog(true);
+        printAmbulanceLog(true);
+
         long nano = System.currentTimeMillis();
         String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
         try (OutputStream fileOut = new FileOutputStream("log/" + date +".xlsx")) {

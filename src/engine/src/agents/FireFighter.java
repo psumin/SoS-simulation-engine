@@ -25,7 +25,7 @@ public class FireFighter extends CS {
     public ImageObject transferImage;
     public ImageObject defaultImage;
     public ImageObject moveToPatient;
-    public int totalDistance = 0;
+
 
     public int defaultSightRange = 7;
     public int sightRange = defaultSightRange;
