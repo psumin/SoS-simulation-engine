@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import stimulus.*;
 
@@ -52,7 +53,7 @@ public class World extends SoSObject{
     public static final String fireFighterPrefix = "FF";
     //public static final String ambulancePrefix = "AM";
 
-    Workbook workbook = new XSSFWorkbook();
+    Workbook workbook = new SXSSFWorkbook();
     Sheet statisticsSheet = workbook.createSheet("statistics");
     Sheet hospitalSheet = workbook.createSheet("hospitals");
     long startTime;
@@ -227,7 +228,7 @@ public class World extends SoSObject{
     private void printPatientLog(boolean isFinish) {
 
         if(frameCount == 0) {
-            Row row = patientSheet.createRow(frameCount);
+            Row row = patientSheet.createRow(patientSheet.getPhysicalNumberOfRows());
             Cell frameCountCell = row.createCell(0);
             Cell savedPatientCell = row.createCell(1);
 
@@ -235,7 +236,7 @@ public class World extends SoSObject{
             savedPatientCell.setCellValue("number of rescued patients");
         }
 
-        Row row = patientSheet.createRow(frameCount + 1);
+        Row row = patientSheet.createRow(patientSheet.getPhysicalNumberOfRows());
         Cell frameCountCell = row.createCell(0);
         Cell savedPatientCell = row.createCell(1);
 
@@ -250,7 +251,7 @@ public class World extends SoSObject{
         // i * 2 + 1
 
         if(frameCount == 0) {
-            Row row = fireFighterSheet.createRow(frameCount);
+            Row row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
             Cell frameCountCell = row.createCell(0);
             frameCountCell.setCellValue("frame count");
             Cell[] positionCells = new Cell[maxFireFighter];
@@ -265,7 +266,7 @@ public class World extends SoSObject{
             }
         }
 
-        Row row = fireFighterSheet.createRow(frameCount + 1);
+        Row row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
         Cell frameCountCell = row.createCell(0);
         frameCountCell.setCellValue(frameCount);
         Cell[] positionCells = new Cell[maxFireFighter];
@@ -282,7 +283,7 @@ public class World extends SoSObject{
         }
 
         if(isFinish) {
-            row = fireFighterSheet.createRow(frameCount + 2);
+            row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
             frameCountCell = row.createCell(0);
             frameCountCell.setCellValue("total distance");
             positionCells = new Cell[maxFireFighter];
@@ -299,7 +300,7 @@ public class World extends SoSObject{
     Sheet ambulanceSheet = workbook.createSheet("Ambulances");
     private void printAmbulanceLog(boolean isFinish) {
         if(frameCount == 0) {
-            Row row = ambulanceSheet.createRow(frameCount);
+            Row row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
             Cell frameCountCell = row.createCell(0);
             frameCountCell.setCellValue("frame count");
             Cell[] positionCells = new Cell[maxAmbulance];
@@ -314,7 +315,7 @@ public class World extends SoSObject{
             }
         }
 
-        Row row = ambulanceSheet.createRow(frameCount + 1);
+        Row row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
         Cell frameCountCell = row.createCell(0);
         frameCountCell.setCellValue(frameCount);
         Cell[] positionCells = new Cell[maxAmbulance];
@@ -331,7 +332,7 @@ public class World extends SoSObject{
         }
 
         if(isFinish) {
-            row = ambulanceSheet.createRow(frameCount + 2);
+            row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
             frameCountCell = row.createCell(0);
             frameCountCell.setCellValue("total distance");
             positionCells = new Cell[maxAmbulance];
