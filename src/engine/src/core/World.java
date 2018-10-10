@@ -3,6 +3,7 @@ package core;
 import agents.*;
 import misc.Position;
 
+import misc.Range;
 import misc.Time;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -462,20 +463,20 @@ public class World extends SoSObject{
         scenarios.add(new MoveDelayScenario(this, 400, AmbulanceNames, 0));
 
         // TODO: moveDelay
-        scenarios.add(new MoveDelayScenario(this, 100, "FF1", 30));                           // 100 frame 부터 FF1의 이동 속도 30 frame 당 1칸 이동 ==> 이속 감소
-        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 30));                // 100 frame 부터 전체 FF의 이동소도 감소
+        scenarios.add(new MoveDelayScenario(this, 100, "FF1", 3));                           // 100 frame 부터 FF1의 이동 속도 30 frame 당 1칸 이동 ==> 이속 감소
+        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 3));                // 100 frame 부터 전체 FF의 이동소도 감소
         scenarios.add(new MoveDelayScenario(this, 100, new Range(0, 0, 10, 10), 10.0f));      // 100 frame 부터 0, 0, 10, 10 위치에서 이속 감소 (10배 감소)
-        scenarios.add(new MoveDelayScenario(this, 100, AmbulanceNames, 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
+        scenarios.add(new MoveDelayScenario(this, 100, AmbulanceNames, 100));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
 
         // TODO: sightRange
-        scenarios.add(new SightRangeScenario(this, 100, "FF1", 30));                               // 특정 frame count 이후 FF1의 sight range 변화
-        scenarios.add(new SightRangeScenario(this, 100, firefighterNames, 30));                    // 특정 frame count 이후 전체 FF의 sight range 변화
-        scenarios.add(new SightRangeScenario(this, 10, new Range(0, 0, 10, 10), 100.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
+        scenarios.add(new SightRangeScenario(this, 100, "FF1", 5));                               // 특정 frame count 이후 FF1의 sight range 변화
+        scenarios.add(new SightRangeScenario(this, 100, firefighterNames, 9));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+        scenarios.add(new SightRangeScenario(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
 
         // TODO: communicationRange (FF 관련)
-        scenarios.add(new CommunicationRangeScenario(this, 100, "FF1", 30));                               // 특정 frame count 이후 FF1의 communication range 변화
-        scenarios.add(new CommunicationRangeScenario(this, 100, firefighterNames, 30));                    // 특정 frame count 이후 전체 FF의 communication range 변화
-        scenarios.add(new CommunicationRangeScenario(this, 10, new Range(0, 0, 10, 10), 100.0f));           // 특정 frame count 이후 특정 구역의 communication range 변화
+        scenarios.add(new CommunicationRangeScenario(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
+        scenarios.add(new CommunicationRangeScenario(this, 100, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+        scenarios.add(new CommunicationRangeScenario(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 communication range 변화
 
         // TODO: communication (1 to 1 casting), FF 제외?  FF가 org로 보내는 message는 포함
         scenarios.add(new CommunicationDelayScenario(this, 10, "ALL_DELAY", 300));            //
