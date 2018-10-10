@@ -13,7 +13,7 @@ public class AmbulanceFree extends AmbulanceAction {
 
     boolean isFirstUpdate = true;
 
-    int timeout = 5;
+    int timeout = 10;
     int frameCounter = timeout;
 
     int maxTimeout = 3;

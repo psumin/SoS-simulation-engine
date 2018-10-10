@@ -18,6 +18,9 @@ public class FireFighterTransferToHospital extends FireFighterAction {
         this.hospital = hospital;
         this.targetPatient = targetPatient;
 
+        fireFighter.transferImage.visible(true);
+        fireFighter.defaultImage.visible(false);
+
         prevMoveDelay = fireFighter.moveDelay;
         fireFighter.moveDelay = prevMoveDelay * 2;
     }
@@ -30,6 +33,10 @@ public class FireFighterTransferToHospital extends FireFighterAction {
         if(fireFighter.isArrivedAt(hospital.position)) {
             hospital.hospitalize(targetPatient);
             //world.addChild(targetPatient);
+
+            fireFighter.transferImage.visible(false);
+            fireFighter.defaultImage.visible(true);
+
             fireFighter.moveDelay = prevMoveDelay;
             fireFighter.changeAction(new FireFighterSearch(fireFighter));
         }
