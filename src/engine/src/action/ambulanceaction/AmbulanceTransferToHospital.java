@@ -22,6 +22,8 @@ public class AmbulanceTransferToHospital extends AmbulanceAction {
         this.hospital = hospital;
         this.patient = targetPatient;
         name = "Transfer To Hospital";
+        ambulance.transferImage.visible(true);
+        ambulance.defaultImage.visible(false);
     }
 
     @Override
@@ -30,6 +32,8 @@ public class AmbulanceTransferToHospital extends AmbulanceAction {
         ambulance.moveTo(hospital.position);
         if(ambulance.isArrivedAt(hospital.position)) {
             hospital.hospitalize(patient);
+            ambulance.transferImage.visible(false);
+            ambulance.defaultImage.visible(true);
             ambulance.changeAction(new AmbulanceFree(ambulance));       // After transfer, change the action to "Free"
         }
     }

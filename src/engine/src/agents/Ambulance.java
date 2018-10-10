@@ -15,10 +15,21 @@ import java.util.ArrayList;
  */
 
 public class Ambulance extends CS{
+    public ImageObject transferImage;
+    public ImageObject defaultImage;
     public Ambulance(World world, String name) {
         super(world, name);
         router = world.router;
-        addChild(new ImageObject("src/engine/resources/ambulance.png"));
+        transferImage = new ImageObject("src/engine/resources/transfer.png");
+        defaultImage = new ImageObject("src/engine/resources/ambulance.png");
+
+//        addChild(new ImageObject("src/engine/resources/ambulance.png"));
+
+        transferImage.visible(false);
+        defaultImage.visible(true);
+
+        addChild(transferImage);
+        addChild(defaultImage);
 
         currentAction = new AmbulanceFree(this);        // Start action
 
