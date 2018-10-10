@@ -52,7 +52,13 @@ public class World extends SoSObject{
     public static final String fireFighterPrefix = "FF";
     //public static final String ambulancePrefix = "AM";
 
+    Workbook workbook = new XSSFWorkbook();
+    Sheet statisticsSheet = workbook.createSheet("statistics");
+    Sheet hospitalSheet = workbook.createSheet("hospitals");
+    long startTime;
+
     public World() {
+        startTime = System.currentTimeMillis();
 
 //        workbook = new XSSFWorkbook();
 //        patientSheet = workbook.createSheet("patients");
@@ -125,8 +131,14 @@ public class World extends SoSObject{
     }
 
     private void createHospitals() {                 // Create Hospital at the edge position
+        Row row = hospitalSheet.createRow(0);
+        row.createCell(0).setCellValue("frame count");
+        row.createCell(1).setCellValue("hospital name");
+        row.createCell(2).setCellValue("paitent count");
+        row.createCell(3).setCellValue("hospitalize");;
+        row.createCell(4).setCellValue("leave");
         for(int i = 0; i < maxHospital; ++i) {
-            Hospital hospital = new Hospital(this, "Hospital" + (i + 1));
+            Hospital hospital = new Hospital(this, "Hospital" + (i + 1), hospitalSheet);
             hospitals.add(hospital);
             addChild(hospital);
 
@@ -185,7 +197,8 @@ public class World extends SoSObject{
     @Override
     public void onUpdate() {
 
-        if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
+        //if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
+        if(patients.size() == savedPatientCount && map.getUnvisitedTileCount() == 0) {
             canUpdate(false);
 //            printPatientLog(true);
 //            printFireFighterLog(true);
@@ -209,7 +222,7 @@ public class World extends SoSObject{
 
     }
 
-    Workbook workbook = new XSSFWorkbook();
+
     Sheet patientSheet = workbook.createSheet("patients");
     private void printPatientLog(boolean isFinish) {
 
@@ -361,6 +374,16 @@ public class World extends SoSObject{
 
     @Override
     public void clear() {
+
+        long endTime = System.currentTimeMillis();
+
+        Row row = statisticsSheet.createRow(0);
+        Cell header = row.createCell(0);
+        Cell body = row.createCell(1);
+        header.setCellValue("Total RunTime");
+        body.setCellValue((endTime - startTime / 1000) + " s");
+
+
         printPatientLog(true);
         printFireFighterLog(true);
         printAmbulanceLog(true);

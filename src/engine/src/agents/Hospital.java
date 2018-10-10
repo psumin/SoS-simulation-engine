@@ -4,6 +4,9 @@ import core.ImageObject;
 import core.Msg;
 import core.MsgRouter;
 import core.World;
+import misc.Time;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.ArrayList;
 
@@ -18,11 +21,15 @@ public class Hospital extends CS {
 
     private int capacity = 5;
     private final ArrayList<Patient> patients = new ArrayList<>();
+    private Sheet sheet;
+    private Row row;
 
-    public Hospital(World world, String name) {
+    public Hospital(World world, String name, Sheet sheet) {
         super(world, name);
         router = world.router;
         addChild(new ImageObject("src/engine/resources/hospital.png"));
+
+        this.sheet = sheet;
     }
 
     // 환자 수용 공간이 남아있는지
@@ -36,6 +43,14 @@ public class Hospital extends CS {
         patients.add(patient);
     }
 
+    @Override
+    public void onUpdate() {
+        row = sheet.createRow(sheet.getPhysicalNumberOfRows());
+        row.createCell(0).setCellValue(Time.getFrameCount());
+        row.createCell(1).setCellValue(name);
+        row.createCell(2).setCellValue(patients.size());
+    }
+
     // 환자 입원
     public void hospitalize(Patient patient) {
         patients.remove(patient);
@@ -45,11 +60,14 @@ public class Hospital extends CS {
         patients.add(patient);
 
         world.addChild(patient);
+
+        row.createCell(3).setCellValue("hospitalize");
     }
 
     // 환자 퇴원
     public void leavePatient(Patient patient) {
         patients.remove(patient);
+        row.createCell(4).setCellValue("leave");
     }
 
     public void setCapacity(int capacity) {
