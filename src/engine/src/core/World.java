@@ -135,9 +135,10 @@ public class World extends SoSObject{
         Row row = hospitalSheet.createRow(0);
         row.createCell(0).setCellValue("frame count");
         row.createCell(1).setCellValue("hospital name");
-        row.createCell(2).setCellValue("paitent count");
-        row.createCell(3).setCellValue("hospitalize");;
-        row.createCell(4).setCellValue("leave");
+        row.createCell(2).setCellValue("treatment patient count");
+        row.createCell(3).setCellValue("wait patient count");
+        row.createCell(4).setCellValue("hospitalize");;
+        row.createCell(5).setCellValue("leave");
         for(int i = 0; i < maxHospital; ++i) {
             Hospital hospital = new Hospital(this, "Hospital" + (i + 1), hospitalSheet);
             hospitals.add(hospital);
