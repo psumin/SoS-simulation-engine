@@ -50,7 +50,7 @@ public class World extends SoSObject{
     public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);
 
     public static final String fireFighterPrefix = "FF";
-    public static final String ambulancePrefix = "AM";
+    //public static final String ambulancePrefix = "AM";
 
     public World() {
 
@@ -165,7 +165,7 @@ public class World extends SoSObject{
                 new Position(0, Map.mapSize.height - 1)
         };
         for(int i = 0; i < maxAmbulance; ++i) {
-            Ambulance ambulance = new Ambulance(this, ambulancePrefix + ++ambulanceCounter);
+            Ambulance ambulance = new Ambulance(this, "Ambulance" + ++ambulanceCounter);
             ambulances.add(ambulance);
             addChild(ambulance);
             ambulance.setPosition(positions[ambulancePositionIndex++]);
@@ -437,7 +437,7 @@ public class World extends SoSObject{
     }
 
     private void addAmbulance() {
-        Ambulance ambulance = new Ambulance(this, ambulancePrefix + ++ambulanceCounter);
+        Ambulance ambulance = new Ambulance(this, "Ambulance" + ++ambulanceCounter);
         ambulances.add(ambulance);
         addChild(ambulance);
     }
@@ -451,7 +451,7 @@ public class World extends SoSObject{
 
         ArrayList<String> AmbulanceNames = new ArrayList<>();
         for(int i = 0; i < maxAmbulance; ++i) {
-            AmbulanceNames.add(ambulancePrefix + (i + 1));
+            AmbulanceNames.add("Ambulance" + (i + 1));
         }
 
         // Stimulus types
@@ -518,10 +518,10 @@ public class World extends SoSObject{
 //        scenarios.add(new LambdaScenario(this, 100, "FF1", this::removeCS));
 //
         // TODO: remove Ambulance1
-        scenarios.add(new LambdaScenario(this, 1000, "AM1", this::removeCS));
-        scenarios.add(new LambdaScenario(this, 1100, "AM2", this::removeCS));
-        scenarios.add(new LambdaScenario(this, 1200, "AM8", this::removeCS));
-        scenarios.add(new LambdaScenario(this, 1300, "AM6", this::removeCS));
+        scenarios.add(new LambdaScenario(this, 1000, "Ambulance1", this::removeCS));
+        scenarios.add(new LambdaScenario(this, 1100, "Ambulance2", this::removeCS));
+        scenarios.add(new LambdaScenario(this, 1200, "Ambulance8", this::removeCS));
+        scenarios.add(new LambdaScenario(this, 1300, "Ambulance6", this::removeCS));
 //
 //        // TODO: add FireFighter
 //        scenarios.add(new LambdaScenario(this, 105, this::addFireFighter));
