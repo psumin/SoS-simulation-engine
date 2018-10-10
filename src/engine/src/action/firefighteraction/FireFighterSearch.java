@@ -30,25 +30,25 @@ public class FireFighterSearch extends FireFighterAction {
 
     @Override
     public void onUpdate() {
-        //------------------------------------- observe environment
+        // Observe environment
         fireFighter.observe();
         fireFighter.markVisitedTiles();
         //ArrayList<Patient> foundPatient = fireFighter.observe();
         //patientsMemory.addAll(foundPatient);
 
-        //------------------------------------- 타겟 환자 선택
+        // Select target patient
         Patient targetPatient = fireFighter.selectTargetPatient(patientsMemory);
         //patientsMemory.remove(targetPatient);
 
         if(targetPatient != null) {
             fireFighter.changeAction(new FireFighterMoveToPatient(fireFighter, targetPatient));
         } else {
-            //------------------------------------- 타겟 환자가 존재하지 않을 때, 방문하지 않은 타일로 이동
-            // select unvisited tile
+            // If there is no target patient, move to the unvisited tile
+            // Select unvisited tile
             if(unvisitedTile == null) {
                 unvisitedTile = selectUnvisitedTile();
             }
-            // move to unvisited tile (1 tile per 3 frame)
+            // Move to unvisited tile
             if(unvisitedTile != null) {
                 fireFighter.moveTo(unvisitedTile.position);
                 //fireFighter.markVisitedTiles();
@@ -61,12 +61,11 @@ public class FireFighterSearch extends FireFighterAction {
 
         //-------------------------------------
         // TODO: 소방관 사이의 통신
-        // if exist other firefighters in sight range
-        //      send msg( patient memory ) to other firefighters
+        // Implemented at Firefighter.java
     }
 
 
-
+    // Select the unvisited tile randomly
     private Tile selectUnvisitedTile() {
         while(unvisitedTiles.isEmpty() == false) {
             Tile tile = unvisitedTiles.poll();

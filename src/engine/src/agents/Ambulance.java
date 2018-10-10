@@ -19,7 +19,7 @@ public class Ambulance extends CS{
         router = world.router;
         addChild(new ImageObject("src/engine/resources/ambulance.png"));
 
-        currentAction = new AmbulanceFree(this);
+        currentAction = new AmbulanceFree(this);        // Start action
 
         moveDelay = 0;
         frameCounter = moveDelay;

@@ -25,11 +25,12 @@ public class AmbulanceTransferToHospital extends AmbulanceAction {
     }
 
     @Override
+    // Transfer the patient to the hospital
     public void onUpdate() {
         ambulance.moveTo(hospital.position);
         if(ambulance.isArrivedAt(hospital.position)) {
             hospital.hospitalize(patient);
-            ambulance.changeAction(new AmbulanceFree(ambulance));
+            ambulance.changeAction(new AmbulanceFree(ambulance));       // After transfer, change the action to "Free"
         }
     }
 }

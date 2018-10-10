@@ -31,9 +31,9 @@ public class FireFighter extends CS {
     public ImageObject moveToPatient;
 
 
-    public int defaultSightRange = 7;
+    public int defaultSightRange = 7;               // Fire fighter's sight range
     public int sightRange = defaultSightRange;
-    public int communicationRange = 11;
+    public int communicationRange = 11;             // Communication range between firefighters
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;
@@ -57,7 +57,7 @@ public class FireFighter extends CS {
 
         unvisitedTiles = temp;
         //currentAction = new FireFighterCollaborativeAction(this);
-        currentAction = new FireFighterSearch(this);
+        currentAction = new FireFighterSearch(this);        // Start action
 
         moveDelay = 3;
         frameCounter = moveDelay;

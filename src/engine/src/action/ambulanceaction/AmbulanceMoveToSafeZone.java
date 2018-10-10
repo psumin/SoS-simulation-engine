@@ -26,23 +26,24 @@ public class AmbulanceMoveToSafeZone extends AmbulanceAction {
     }
 
     @Override
+    // Move to the Safe Zone
     public void onUpdate() {
         ambulance.moveTo(safeZone.position);
         if(ambulance.isArrivedAt(safeZone.position)) {
 
             Hospital nearestHospital = (Hospital)ambulance.nearestObject(new ArrayList<>(world.hospitals));
-            Patient patient = safeZone.getPatient(Patient.Status.Serious);
+            Patient patient = safeZone.getPatient(Patient.Status.Serious);          // Serious patient first
             if(patient == null) {
-                patient = safeZone.getPatient(Patient.Status.Wounded);
+                patient = safeZone.getPatient(Patient.Status.Wounded);              // Wounded patient next
             }
             if(patient == null) {
-                ambulance.changeAction(new AmbulanceFree(ambulance));
+                ambulance.changeAction(new AmbulanceFree(ambulance));               // When there is no patient, "Free"
                 return;
             }
 
-            safeZone.leavePatient(patient);
+            safeZone.leavePatient(patient);                                           // Select the patient at the Safe Zone
 
-            ambulance.changeAction(new AmbulanceTransferToHospital(ambulance, nearestHospital, patient));
+            ambulance.changeAction(new AmbulanceTransferToHospital(ambulance, nearestHospital, patient));       // Transfer the patient to the hospital
         }
     }
 }

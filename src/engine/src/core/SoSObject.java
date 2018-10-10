@@ -51,7 +51,6 @@ public abstract class SoSObject {
     public Position getPosition() {
         return position;
     }
-    // << Field: position >>
 
 
     // << Field: currentImage >>
@@ -59,40 +58,33 @@ public abstract class SoSObject {
     public void setCurrentImage(SoSImage currentImage) {
         this.currentImage = currentImage;
     }
-
     public SoSImage getCurrentImage() {
         return currentImage;
     }
-    // << Field: currentImage >>
-
 
     // << Field: canUpdate >>
-    // 이 필드가 true일 때만 SoSObject Update
+    // SoSObject Update when the field value is true
     boolean _canUpdate = true;
     public void canUpdate(boolean _canUpdate) {
         this._canUpdate = _canUpdate;
     }
-    // << Field: canUpdate >>
 
 
     // << Field: canRender >>
-    // 이 필드가 true일 때만 SoSObject render
+    // SoSObject Render when the field value is true
     boolean _visible = true;
     public void visible(boolean _visible) {
         this._visible = _visible;
     }
-    // << Field: canRender >>
-
 
     // << Method: start >>
     // 초기화 이후(init) update 이전 동작 코드 작성
     public void start() { }
-    // << Method: start >>
 
 
     // << Method: update >>
-    // 매 프레임마다 호출
-    // 상속 불가능. 외부용
+    // Call this method for every frames
+    // No inheritance allowed. For external use
     public final void update() {
         if(_canUpdate) {
             onUpdate();
@@ -107,16 +99,14 @@ public abstract class SoSObject {
         }
     }
 
-    // 상속 가능, 내부용
+    // Inheritable. For internal use
     protected void onUpdate() {
 
     }
-    // << Method: update >>
-
 
     // << Method: render >>
-    // 매 프레임마다 호출
-    // 상속 불가능. 외부용
+    // Call this method for every frames
+    // No inheritance allowed. For external use
     public final void render(Graphics2D g) {
         if(_visible) {
 
@@ -134,14 +124,12 @@ public abstract class SoSObject {
         }
     }
 
-    // 상속 가능, 내부용
+    // Inheritable. For internal use
     protected void onRender(Graphics2D g) {
     }
-    // << Method: render >>
 
 
     // << Method: clear >>
-    // 정리 코드 작성
     public void clear() {
         if(parent != null) {
             parent.removeChild(this);
@@ -153,10 +141,9 @@ public abstract class SoSObject {
             }
         });
     }
-    // << Method: clear >>
 
 
-    // 자기 자신 삭제
+    // Remove itself
     public void remove() {
         clear();
     }
@@ -185,14 +172,17 @@ public abstract class SoSObject {
         
     }
 
+    // Calculate the distance
     public int distantTo(SoSObject target) {
         return Math.abs(position.x - target.position.x) + Math.abs(position.y - target.position.y);
     }
 
+    // Calculate the distance
     public static int distanceBetween(SoSObject left, SoSObject right) {
         return Math.abs(left.position.x - right.position.x) + Math.abs(left.position.y - right.position.y);
     }
 
+    // Get nearest Object
     public SoSObject nearestObject(ArrayList<SoSObject> targets) {
         SoSObject minObject = null;
         for(SoSObject object: targets) {

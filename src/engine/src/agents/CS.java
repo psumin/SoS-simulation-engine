@@ -29,7 +29,7 @@ public class CS extends SoSObject {
         this.name = name;
     }
 
-    public int getDistanceTo(CS other) {
+    public int getDistanceTo(CS other) {                        // Calculate the distance
         return Math.abs(other.position.x - position.x)
                 + Math.abs(other.position.y - position.y);
     }

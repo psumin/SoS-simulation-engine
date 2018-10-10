@@ -22,30 +22,29 @@ public class AmbulanceSearch extends AmbulanceAction {
 
     public AmbulanceSearch(Ambulance target) {
         super(target);
-
         safeZones = target.world.safeZones;
-
         name = "Search";
     }
 
     @Override
+    // When timeout occurred, ambulance change the action to "Search"
     public void onUpdate() {
-        SafeZone targetSafeZone = safeZones.get(destinationIndex);
+        SafeZone targetSafeZone = safeZones.get(destinationIndex);      // The nearest Safe Zone
 
         ambulance.moveTo(targetSafeZone.position);
         if(ambulance.isArrivedAt(targetSafeZone.position)) {
 
             Hospital nearestHospital = (Hospital)ambulance.nearestObject(new ArrayList<>(world.hospitals));
-            Patient patient = targetSafeZone.getPatient(Patient.Status.Serious);
+            Patient patient = targetSafeZone.getPatient(Patient.Status.Serious);          // Serious patient first
             if(patient == null) {
-                patient = targetSafeZone.getPatient(Patient.Status.Wounded);
+                patient = targetSafeZone.getPatient(Patient.Status.Wounded);              // Wounded patient next
             }
             if(patient == null) {
-                destinationIndex = (destinationIndex + 1) % safeZones.size();
+                destinationIndex = (destinationIndex + 1) % safeZones.size();               // Move to the another Safe Zone
                 return;
             }
-            targetSafeZone.leavePatient(patient);
-            ambulance.changeAction(new AmbulanceTransferToHospital(ambulance, nearestHospital, patient));
+            targetSafeZone.leavePatient(patient);                                           // Select the patient at the Safe Zone
+            ambulance.changeAction(new AmbulanceTransferToHospital(ambulance, nearestHospital, patient));       // Transfer the patient to the hospital
         }
     }
 

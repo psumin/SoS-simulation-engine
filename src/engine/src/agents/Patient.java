@@ -19,7 +19,7 @@ public class Patient extends CS {
        public static Status random() {
            Status[] values = Status.values();
            int index = GlobalRandom.nextInt(1000);
-           if (index >= 100)
+           if (index >= 100)                                    // Ratio for Serious patient
                index = 0;
            else
                index = 1;
@@ -39,15 +39,15 @@ public class Patient extends CS {
         this.status = status;
 
         switch (status) {
-            case Wounded:
+            case Wounded:                                       // Blue dot
                 serious.visible(false);
                 wounded.visible(true);
                 break;
-            case Serious:
+            case Serious:                                       // Red dot
                 wounded.visible(false);
                 serious.visible(true);
                 break;
-            case Dead:
+            case Dead:                                          // TODO: To be implemented
                 break;
         }
     }
@@ -63,8 +63,8 @@ public class Patient extends CS {
 
     public Patient(World world, String name) {
         super(world, name);
-        serious = new ImageObject("src/engine/resources/patient_serious.png");
-        wounded = new ImageObject("src/engine/resources/patient_wounded.png");
+        serious = new ImageObject("src/engine/resources/patient_serious.png");              // Red dot
+        wounded = new ImageObject("src/engine/resources/patient_wounded.png");              // Blue dot
         addChild(serious);
         addChild(wounded);
     }
@@ -75,8 +75,8 @@ public class Patient extends CS {
     }
 
     private Hospital currentHospital = null;
-    private int seriousTreatmentTime = 50;
-    private int woundedTreatmentTime = 50;
+    private int seriousTreatmentTime = 100;                              // Hospital's treatment time for Serious patient
+    private int woundedTreatmentTime = 50;                               // Hospital's treatment time for Wounded patient
     private boolean isTreatmenting = false;
     private int counter = 0;
     public void treatmentStart(Hospital hospital) {
@@ -96,10 +96,10 @@ public class Patient extends CS {
             if(counter <= 0) {
                 // TODO: 치료 완료
                 assert currentHospital != null: "이러면 안된다";
-                currentHospital.leavePatient(this);
+                currentHospital.leavePatient(this);                         // Leave patient after treatment
                 currentHospital = null;
                 world.removeChild(this);
-                world.savedPatientCount++;
+                world.savedPatientCount++;                                  // Number of Saved patients
             }
         }
     }

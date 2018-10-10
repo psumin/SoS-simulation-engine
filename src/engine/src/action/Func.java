@@ -7,6 +7,7 @@ package action;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
+// To use Lambda function
 @FunctionalInterface
 public interface Func {
     void invoke();

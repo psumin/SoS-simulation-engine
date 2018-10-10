@@ -29,6 +29,7 @@ public class ImageObject extends SoSObject {
     }
 
     @Override
+    // Change the scale of the image
     protected void onRender(Graphics2D g) {
         BufferedImage bufImage = image.getImage();
         g.translate((int)(-scale / 2) * Map.tileSize.width, (int)(-scale / 2) * Map.tileSize.height);

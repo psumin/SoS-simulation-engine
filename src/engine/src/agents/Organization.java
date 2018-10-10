@@ -31,6 +31,7 @@ public class Organization extends CS {
         super(world, name);
     }
 
+    // Serious patient priority
     private void ambulanceFreeStateStart(Msg msg) {
         if(msgsFromSafeZone.isEmpty()) {
             freeStateAmbulances.add((Ambulance) msg.data);
@@ -46,11 +47,11 @@ public class Organization extends CS {
             }
 
             SafeZone safeZone = null;
-            if(seriousMsg != null) {
+            if(seriousMsg != null) {                    // Serious patient first
                 msgsFromSafeZone.remove(seriousMsg);
                 safeZone = (SafeZone)seriousMsg.data;
             } else {
-                Msg first = msgsFromSafeZone.get(0);
+                Msg first = msgsFromSafeZone.get(0);    // Wounded patient next
                 msgsFromSafeZone.remove(0);
                 safeZone = (SafeZone)first.data;
             }
@@ -86,23 +87,23 @@ public class Organization extends CS {
     @Override
     public void recvMsg(Msg msg) {
         if(msg.from.startsWith(fireFighterPrefix)) {
-            if(msg.title == "nearest hospital") {
+            if(msg.title == "nearest hospital") {                                                                       // Message from the Fire fighter when the firefighter's target patient is Serious patient
                 FireFighter fireFighter = (FireFighter)msg.data;
-                Hospital nearestHospital = (Hospital)fireFighter.nearestObject(new ArrayList<>(world.hospitals));
+                Hospital nearestHospital = (Hospital)fireFighter.nearestObject(new ArrayList<>(world.hospitals));       // Check the nearest hospital from the Fire fighter's position
                 router.route(new Msg()
                         .setFrom(name)
                         .setTo(fireFighter.name)
                         .setTitle("nearest hospital")
                         .setData(nearestHospital));
             }
-        } else if(msg.from.startsWith("SafeZone")) {
+        } else if(msg.from.startsWith("SafeZone")) {                                                                    // Message from Safe Zone. Information about the arrived patient
             patientArrivedAtSafeZone(msg);
 //            if(msg.title == "serious patient arrived") {
 //                patientArrivedAtSafeZone(msg);
 //            } else if(msg.title == "wounded patient arrived") {
 //                patientArrivedAtSafeZone(msg);
 //            }
-        } else if(msg.from.startsWith("Ambulance")) {
+        } else if(msg.from.startsWith("Ambulance")) {                                                                   // Message from the Ambulance, when Free state
             if(msg.title == "free state start") {
                 ambulanceFreeStateStart(msg);
             }

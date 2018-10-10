@@ -29,23 +29,23 @@ public class FireFighterTransferToHospital extends FireFighterAction {
         fireFighter.defaultImage.visible(false);
 
         prevMoveDelay = fireFighter.moveDelay;
-        fireFighter.moveDelay = prevMoveDelay * 2;
+        fireFighter.moveDelay = prevMoveDelay * 2;          // Reduce the speed while transferring the patient
     }
 
     @Override
     public void onUpdate() {
         fireFighter.observe();
-        fireFighter.moveTo(hospital.position);
+        fireFighter.moveTo(hospital.position);              // Transfer the patient to the hospital
         fireFighter.markVisitedTiles();
-        if(fireFighter.isArrivedAt(hospital.position)) {
-            hospital.hospitalize(targetPatient);
+        if(fireFighter.isArrivedAt(hospital.position)) {    // When the Firefighter arrived at the hospital
+            hospital.hospitalize(targetPatient);            // Patient is hospitalized at the hospital
             //world.addChild(targetPatient);
 
             fireFighter.transferImage.visible(false);
             fireFighter.defaultImage.visible(true);
 
             fireFighter.moveDelay = prevMoveDelay;
-            fireFighter.changeAction(new FireFighterSearch(fireFighter));
+            fireFighter.changeAction(new FireFighterSearch(fireFighter));       // Change the Firefighter's action to "Search"
         }
     }
 }

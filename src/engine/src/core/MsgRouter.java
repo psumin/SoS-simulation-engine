@@ -17,28 +17,29 @@ import java.util.Queue;
  */
 
 public class MsgRouter extends SoSObject {
-
-    // 전체 딜레이
+    // For the Simulation
+    // All delay
     private int ALL_DELAY = 0;
 
-    // TO: Org 딜레이
+    // TO: Org delay
     private int TO_ORG_DELAY = 0;
 
-    // FROM: Org 딜레이
+    // FROM: Org delay
     private int FROM_ORG_DELAY = 0;
 
-    // FF <-> Organization
+    // FF <-> Organization delay
     private int FF_TO_ORG_DELAY = 0;
     private int ORG_TO_FF_DELAY = 0;
 
-    // Ambulance <-> Organization
+    // Ambulance <-> Organization delay
     private int AMB_TO_ORG_DELAY = 0;
     private int ORG_TO_AMB_DELAY = 0;
 
-    // SafeZone <-> Organization
+    // SafeZone <-> Organization delay
     private int SZ_TO_ORG_DELAY = 0;
     private int ORG_TO_SZ_DELAY = 0;
 
+    // FF <-> FF message delay at the communication range
     private int FF_RANGECAST_DELAY = 0;
 
     private class DelayedMsg {
@@ -64,6 +65,7 @@ public class MsgRouter extends SoSObject {
     private Sheet sheet;
     private int rowNum = 0;
 
+    // For the log. Save at the Excel
     public MsgRouter(World world, Workbook workbook) {
         CellStyle centerAlignmentStyle = workbook.createCellStyle();
         centerAlignmentStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -205,7 +207,6 @@ public class MsgRouter extends SoSObject {
             return;
         }
 
-        // 얘는 조금 겁나네
         if(FF_RANGECAST_DELAY > 0 && msg.from.startsWith(World.fireFighterPrefix) && msg.to.startsWith(World.fireFighterPrefix)) {
             delayedMsgs.add(new DelayedMsg(msg, FF_RANGECAST_DELAY + Time.getFrameCount()));
             return;
@@ -220,7 +221,7 @@ public class MsgRouter extends SoSObject {
         _route(msg);
     }
 
-    // 그 범위 내의 소방관에게만 브로드캐스팅
+    // Broadcast the message only for the firefighter. (share the local map and the knowledge about the patients)
     public void broadcast(SoSObject sender,  Msg msg, Position center, int range) {
 
         ArrayList<Tile> tiles = new ArrayList<>();

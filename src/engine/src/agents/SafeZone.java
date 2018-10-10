@@ -58,12 +58,12 @@ public class SafeZone extends CS {
 
         String title = "";
         if(patient.isSerious()) {
-            title = "serious patient arrived";
+            title = "serious patient arrived";                                  // Serious patient arrived at the Safe Zone
         } else {
-            title = "wounded patient arrived";
+            title = "wounded patient arrived";                                  // Wounded patient arrived at the Safe Zone
         }
 
-        router.route(new Msg()
+        router.route(new Msg()                                                  // Send a message to the Organization
                 .setFrom(name)
                 .setTo("Organization")
                 .setTitle(title)
@@ -83,49 +83,49 @@ public class SafeZone extends CS {
         return null;
     }
 
-    public int countPatient(Patient.Status status) {
-        int count = 0;
-        for (Patient patient : patients) {
-            if (patient.getStatus() == status) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    private int getWeight() {
-        int weight = 0;
-        for(Patient patient: patients) {
-            if(patient.getStatus() == Patient.Status.Serious) {
-                weight += 2;
-            } else {
-                weight += 1;
-            }
-        }
-        return weight;
-    }
-
-    private Patient getPriorityPatient() {
-        Patient patient = getPatient(Patient.Status.Serious);
-        if(patient == null) {
-            patient = getPatient(Patient.Status.Wounded);
-        }
-        return patient;
-    }
-
-    public void recvMsg(Msg msg) {
-        if(msg.title == "get weight") {
-            router.route(new Msg()
-                    .setFrom(name)
-                    .setTo(msg.from)
-                    .setTitle("weight")
-                    .setData(getWeight()));
-        } else if(msg.title == "get patient") {
-            router.route(new Msg()
-                    .setFrom(name)
-                    .setTo(msg.from)
-                    .setTitle("patient")
-                    .setData(getPriorityPatient()));
-        }
-    }
+//    public int countPatient(Patient.Status status) {
+//        int count = 0;
+//        for (Patient patient : patients) {
+//            if (patient.getStatus() == status) {
+//                count++;
+//            }
+//        }
+//        return count;
+//    }
+//
+//    private int getWeight() {
+//        int weight = 0;
+//        for(Patient patient: patients) {
+//            if(patient.getStatus() == Patient.Status.Serious) {
+//                weight += 5;
+//            } else {
+//                weight += 1;
+//            }
+//        }
+//        return weight;
+//    }
+//
+//    private Patient getPriorityPatient() {
+//        Patient patient = getPatient(Patient.Status.Serious);
+//        if(patient == null) {
+//            patient = getPatient(Patient.Status.Wounded);
+//        }
+//        return patient;
+//    }
+//
+//    public void recvMsg(Msg msg) {
+//        if(msg.title == "get weight") {
+//            router.route(new Msg()
+//                    .setFrom(name)
+//                    .setTo(msg.from)
+//                    .setTitle("weight")
+//                    .setData(getWeight()));
+//        } else if(msg.title == "get patient") {
+//            router.route(new Msg()
+//                    .setFrom(name)
+//                    .setTo(msg.from)
+//                    .setTitle("patient")
+//                    .setData(getPriorityPatient()));
+//        }
+//    }
 }

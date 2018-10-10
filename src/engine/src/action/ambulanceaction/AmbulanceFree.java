@@ -20,11 +20,10 @@ public class AmbulanceFree extends AmbulanceAction {
 
     boolean isFirstUpdate = true;
 
-    int timeout = 10;
+    int timeout = 10;               // timeout duration
     int frameCounter = timeout;
 
-    int maxTimeout = 3;
-    // timeoutCounter 횟수 카운팅
+    int maxTimeout = 3;             // timeoutCounter, number of timeout
     int timeoutCounter = maxTimeout;
 
 
@@ -35,15 +34,14 @@ public class AmbulanceFree extends AmbulanceAction {
             router.route(new Msg()
                     .setFrom(ambulance.name)
                     .setTo("Organization")
-                    .setTitle("free state start")
+                    .setTitle("free state start")                           // announce to the organization "Free"
                     .setData(ambulance));
         }
         if(frameCounter <= 0) {
             frameCounter = timeout;
             if(timeoutCounter <= 0) {
                 timeoutCounter = maxTimeout;
-                // 서치
-                ambulance.changeAction(new AmbulanceSearch(ambulance));
+                ambulance.changeAction(new AmbulanceSearch(ambulance));     // Search at Safe Zone
             }
             timeoutCounter--;
         }
@@ -51,6 +49,7 @@ public class AmbulanceFree extends AmbulanceAction {
     }
 
     @Override
+    // When Ambulance receive the message
     public void recvMsg(Msg msg) {
         if(msg.title == "move to safezone") {
             SafeZone safeZone = (SafeZone)msg.data;

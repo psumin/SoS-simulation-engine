@@ -16,9 +16,10 @@ import java.util.ArrayList;
 
 public class Tile extends SoSObject {
 
-    SoSObject light;
-    SoSObject dark;
+    SoSObject light;        // For visited tiles
+    SoSObject dark;         // For unvisited tiles
 
+    // Initial values
     public float moveDelayFactor = 1;
     public float sightRangeFactor = 1;
     public float communicationRangeFactor = 1;
@@ -42,32 +43,32 @@ public class Tile extends SoSObject {
 
         setPosition(position);
 
-        light = new ImageObject("src/engine/resources/tile30x30.png");
-        dark = new ImageObject("src/engine/resources/tile_dark30x30.png");
+        light = new ImageObject("src/engine/resources/tile30x30.png");              // For visited tiles
+        dark = new ImageObject("src/engine/resources/tile_dark30x30.png");          // For unvisited tiles
 
         addChild(light);
         addChild(dark);
     }
 
 
-    public void add(Patient patient) {
+    public void add(Patient patient) {                      // Add patient at tile
 
         patients.remove(patient);
         patients.add(patient);
         //objects.remove(object);
         //objects.add(object);
     }
-    public void add(FireFighter fireFighter) {
+    public void add(FireFighter fireFighter) {             // Add Fire fighter at tile
 
         fireFighters.remove(fireFighter);
         fireFighters.add(fireFighter);
     }
 
-    public void remove(Patient patient)  {
+    public void remove(Patient patient)  {                  // Remove patient at tile
 
         patients.remove(patient);
     }
-    public void remove(FireFighter fireFighter) {
+    public void remove(FireFighter fireFighter) {            // Remove Fire fighter at tile
         fireFighters.remove(fireFighter);
     }
 

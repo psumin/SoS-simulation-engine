@@ -30,15 +30,15 @@ public class FireFighterTransferToSafeZone extends FireFighterAction {
         fireFighter.defaultImage.visible(false);
 
         prevMoveDelay = fireFighter.moveDelay;
-        fireFighter.moveDelay = prevMoveDelay * 2;
+        fireFighter.moveDelay = prevMoveDelay * 2;          // Reduce the speed while transferring the patient
     }
 
     @Override
     public void onUpdate() {
         fireFighter.observe();
-        fireFighter.moveTo(safeZone.position);
+        fireFighter.moveTo(safeZone.position);              // Transfer the patient to the Safe Zone
         fireFighter.markVisitedTiles();
-        if(fireFighter.isArrivedAt(safeZone.position)) {
+        if(fireFighter.isArrivedAt(safeZone.position)) {    // When the Firefighter arrived at the Safe Zone
             safeZone.arrivedPatient(targetPatient);
 
 
@@ -46,7 +46,7 @@ public class FireFighterTransferToSafeZone extends FireFighterAction {
             fireFighter.defaultImage.visible(true);
 
             fireFighter.moveDelay = prevMoveDelay;
-            fireFighter.changeAction(new FireFighterSearch(fireFighter));
+            fireFighter.changeAction(new FireFighterSearch(fireFighter));       // Change the Firefighter's action to "Search"
         }
     }
 }
