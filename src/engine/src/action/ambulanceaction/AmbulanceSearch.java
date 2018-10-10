@@ -5,6 +5,7 @@ import agents.Hospital;
 import agents.Patient;
 import agents.SafeZone;
 import core.Msg;
+import core.SoSObject;
 
 import java.util.ArrayList;
 
@@ -18,18 +19,22 @@ import java.util.ArrayList;
 public class AmbulanceSearch extends AmbulanceAction {
 
     ArrayList<SafeZone> safeZones;
-    int destinationIndex = 0;
+    SafeZone targetSafeZone;
 
     public AmbulanceSearch(Ambulance target) {
         super(target);
-        safeZones = target.world.safeZones;
+        safeZones = new ArrayList<>(target.world.safeZones);
         name = "Search";
     }
 
     @Override
     // When timeout occurred, ambulance change the action to "Search"
     public void onUpdate() {
-        SafeZone targetSafeZone = safeZones.get(destinationIndex);      // The nearest Safe Zone
+
+        if(targetSafeZone == null) {
+            targetSafeZone = (SafeZone)ambulance.nearestObject(new ArrayList<>(safeZones));
+            safeZones.remove(targetSafeZone);
+        }
 
         ambulance.moveTo(targetSafeZone.position);
         if(ambulance.isArrivedAt(targetSafeZone.position)) {
@@ -40,7 +45,15 @@ public class AmbulanceSearch extends AmbulanceAction {
                 patient = targetSafeZone.getPatient(Patient.Status.Wounded);              // Wounded patient next
             }
             if(patient == null) {
-                destinationIndex = (destinationIndex + 1) % safeZones.size();               // Move to the another Safe Zone
+
+                if(safeZones.isEmpty()) {
+                    safeZones = new ArrayList<>(world.safeZones);
+                }
+
+                // 다른 SafeZone 찾기
+                targetSafeZone = (SafeZone)ambulance.nearestObject(new ArrayList<>(safeZones));
+                safeZones.remove(targetSafeZone);
+
                 return;
             }
             targetSafeZone.leavePatient(patient);                                           // Select the patient at the Safe Zone
