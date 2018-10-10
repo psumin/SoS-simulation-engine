@@ -4,6 +4,7 @@ import action.ambulanceaction.AmbulanceFree;
 import core.*;
 import misc.Position;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -23,5 +24,12 @@ public class Ambulance extends CS{
 
         moveDelay = 0;
         frameCounter = moveDelay;
+    }
+
+    @Override
+    public void onRender(Graphics2D graphics2D) {
+        graphics2D.setColor(Color.red);
+        graphics2D.setFont(new Font("default", Font.BOLD, 16));
+        graphics2D.drawChars(name.toCharArray(), 0, name.length(), 0, 0);
     }
 }

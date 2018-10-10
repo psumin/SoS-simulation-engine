@@ -39,7 +39,7 @@ public class FireFighter extends CS {
         this.world = world;
 
         transferImage = new ImageObject("src/engine/resources/transfer.png");
-        defaultImage = new ImageObject("src/engine/resources/ff30x30.png");
+        defaultImage = new ImageObject("src/engine/resources/firefighter.png");
         moveToPatient = new ImageObject("src/engine/resources/moveToPatient.png");
 
         transferImage.visible(false);
@@ -92,7 +92,7 @@ public class FireFighter extends CS {
 
     @Override
     public void onRender(Graphics2D graphics2D) {
-        graphics2D.setColor(Color.red);
+        graphics2D.setColor(Color.blue);
         graphics2D.setFont(new Font("default", Font.BOLD, 16));
         graphics2D.drawChars(name.toCharArray(), 0, name.length(), 0, 0);
     }
