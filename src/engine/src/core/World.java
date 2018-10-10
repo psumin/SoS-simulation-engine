@@ -457,6 +457,8 @@ public class World extends SoSObject{
         // Stimulus types
 
         // TODO: Late Rescue Start
+//        scenarios.add(new MoveDelayScenario(this, 1, "FF1", 100));
+//        scenarios.add(new MoveDelayScenario(this, 1, "FF5", 100));
 //        scenarios.add(new MoveDelayScenario(this, 1, firefighterNames, 100));                 // 1 frame 부터 100 frame까지 동작 안함 ==> 이동속도가 100 frame당 한 칸이므로
 //        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 3));                 // 100 프레임 부터 회복 --> 그런데 만약 위에서 1 frame부터 200 frame까지 이속 감소를 시키면... 회복은 200부터 적용되는듯?
 //
@@ -468,6 +470,7 @@ public class World extends SoSObject{
 //        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 3));                // 100 frame 부터 전체 FF의 이동소도 감소
 //        scenarios.add(new MoveDelayScenario(this, 100, new Range(0, 0, 10, 10), 10.0f));      // 100 frame 부터 0, 0, 10, 10 위치에서 이속 감소 (10배 감소)
 //        scenarios.add(new MoveDelayScenario(this, 100, AmbulanceNames, 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
+//        scenarios.add(new MoveDelayScenario(this, 100, "Ambulance1", 7));
 //
 //        // TODO: sightRange
 //        scenarios.add(new SightRangeScenario(this, 100, "FF1", 5));                               // 특정 frame count 이후 FF1의 sight range 변화
@@ -518,19 +521,19 @@ public class World extends SoSObject{
 //        scenarios.add(new LambdaScenario(this, 100, "FF1", this::removeCS));
 //
         // TODO: remove Ambulance1
-        scenarios.add(new LambdaScenario(this, 1000, "Ambulance1", this::removeCS));
-        scenarios.add(new LambdaScenario(this, 1100, "Ambulance2", this::removeCS));
-        scenarios.add(new LambdaScenario(this, 1200, "Ambulance8", this::removeCS));
-        scenarios.add(new LambdaScenario(this, 1300, "Ambulance6", this::removeCS));
+//        scenarios.add(new LambdaScenario(this, 1000, "Ambulance1", this::removeCS));
+//        scenarios.add(new LambdaScenario(this, 1100, "Ambulance2", this::removeCS));
+//        scenarios.add(new LambdaScenario(this, 1200, "Ambulance8", this::removeCS));
+//        scenarios.add(new LambdaScenario(this, 1300, "Ambulance6", this::removeCS));
 //
 //        // TODO: add FireFighter
 //        scenarios.add(new LambdaScenario(this, 105, this::addFireFighter));
 //
         // TODO: add Ambulance
-        scenarios.add(new LambdaScenario(this, 100, this::addAmbulance));
-        scenarios.add(new LambdaScenario(this, 200, this::addAmbulance));
-        scenarios.add(new LambdaScenario(this, 300, this::addAmbulance));
-        scenarios.add(new LambdaScenario(this, 400, this::addAmbulance));
+//        scenarios.add(new LambdaScenario(this, 100, this::addAmbulance));
+//        scenarios.add(new LambdaScenario(this, 200, this::addAmbulance));
+//        scenarios.add(new LambdaScenario(this, 300, this::addAmbulance));
+//        scenarios.add(new LambdaScenario(this, 400, this::addAmbulance));
     }
 
     void removeCS(String csName) {

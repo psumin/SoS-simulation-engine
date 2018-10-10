@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 
 public class SoSSimulationProgram implements Runnable {
 
-    final int SIMULATION_WIDTH = 1720;
+    final int SIMULATION_WIDTH = 990;
     final int SIMULATION_HEIGHT = 990;
     final int CONSOLE_WIDTH = 200;
 
