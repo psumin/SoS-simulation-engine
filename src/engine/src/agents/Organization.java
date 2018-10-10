@@ -12,6 +12,13 @@ import java.util.Map;
 
 import static core.World.fireFighterPrefix;
 
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public class Organization extends CS {
 
     private final int seriousPatientWeight = 10;

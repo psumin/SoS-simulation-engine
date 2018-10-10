@@ -4,6 +4,14 @@ package misc;
 // 그 구현에 update() 메소드가 있고, update 메소드에서 변수들의 값을 업데이트
 
 // 단위: 밀리 세컨드(아마... 까먹... 맞을듯)
+
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public abstract class Time {
 
     protected static Time instance;

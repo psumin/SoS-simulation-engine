@@ -1,11 +1,16 @@
 package stimulus;
 
-import agents.FireFighter;
 import core.World;
-import misc.Position;
 import misc.Range;
 
 import java.util.ArrayList;
+
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
 
 public class CommunicationRangeScenario extends ChangeValueScenario {
     public CommunicationRangeScenario(World world, int frame, Object targetObject, Object value) {

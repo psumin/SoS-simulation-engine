@@ -4,6 +4,13 @@ import agents.FireFighter;
 import agents.Hospital;
 import agents.Patient;
 
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public class FireFighterTransferToHospital extends FireFighterAction {
 
     Hospital hospital;

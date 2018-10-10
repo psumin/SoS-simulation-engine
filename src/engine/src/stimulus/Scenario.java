@@ -1,12 +1,13 @@
 package stimulus;
 
-import core.SoSObject;
-import core.Tile;
 import core.World;
-import misc.Range;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
 
 public abstract class Scenario {
 

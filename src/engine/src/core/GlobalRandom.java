@@ -4,6 +4,13 @@ import misc.Position;
 
 import java.util.Random;
 
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public class GlobalRandom {
     private static Random random = new Random(1);
 

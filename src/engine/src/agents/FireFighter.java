@@ -1,8 +1,5 @@
 package agents;
 
-import action.Action;
-import action.firefighteraction.FireFighterCollaborativeAction;
-import action.firefighteraction.FireFighterAction;
 import action.firefighteraction.FireFighterSearch;
 import core.*;
 import core.Map;
@@ -11,6 +8,13 @@ import misc.Time;
 
 import java.awt.*;
 import java.util.*;
+
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
 
 public class FireFighter extends CS {
 

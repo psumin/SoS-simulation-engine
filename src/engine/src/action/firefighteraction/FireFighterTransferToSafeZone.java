@@ -1,9 +1,15 @@
 package action.firefighteraction;
 
 import agents.FireFighter;
-import agents.Hospital;
 import agents.Patient;
 import agents.SafeZone;
+
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
 
 public class FireFighterTransferToSafeZone extends FireFighterAction {
 

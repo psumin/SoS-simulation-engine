@@ -18,6 +18,13 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public class World extends SoSObject{
 
     private final ArrayList<Scenario> scenarios = new ArrayList<>();
@@ -121,9 +128,9 @@ public class World extends SoSObject{
             addChild(hospital);
 
             if(i == 0){
-                hospital.setCapacity(20);
+                hospital.setCapacity(2);
             } else {
-                hospital.setCapacity(100);
+                hospital.setCapacity(10);
             }
         }
 

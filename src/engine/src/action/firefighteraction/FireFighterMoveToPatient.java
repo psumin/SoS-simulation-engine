@@ -7,6 +7,13 @@ import core.Tile;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public class FireFighterMoveToPatient extends FireFighterAction {
 
     Patient targetPatient;

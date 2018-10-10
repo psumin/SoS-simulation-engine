@@ -7,12 +7,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 // 참고: http://www.java-gaming.org/topics/basic-game/21919/view.html
-// SoSSimulationProgram 클래스에서 참조하고 있는 클래스: Time, SoSObjectManager, SoSScenario
+// SoSSimulationProgram 클래스에서 참조하고 있는 클래스: Time, SoSObject, SoSScenario
+
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public class SoSSimulationProgram implements Runnable {
 
     final int SIMULATION_WIDTH = 1720;
@@ -93,11 +100,6 @@ public class SoSSimulationProgram implements Runnable {
         init();
         while(running){
             beginLoopTime = System.nanoTime();
-
-            // 보통은 update 이후 render를 하는데, 여기서는 순서가 반대임
-            // 이게 맞는 것 같기도 함
-            // 문제 생길 것 같진 않지만
-            // 나중에 문제가 생기게 된다면 그때 수정
             render();
 
             lastUpdateTime = currentUpdateTime;

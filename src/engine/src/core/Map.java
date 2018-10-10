@@ -7,6 +7,13 @@ import misc.Size;
 
 import java.util.ArrayList;
 
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public class Map extends SoSObject {
     public static final Size mapSize = new Size(65, 65);
     public static final Size tileSize = new Size(15, 15);
