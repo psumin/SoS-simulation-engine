@@ -381,7 +381,7 @@ public class World extends SoSObject{
         Cell header = row.createCell(0);
         Cell body = row.createCell(1);
         header.setCellValue("Total RunTime");
-        body.setCellValue((endTime - startTime / 1000) + " s");
+        body.setCellValue(((endTime - startTime) / 1000) + " s");
 
 
         printPatientLog(true);
