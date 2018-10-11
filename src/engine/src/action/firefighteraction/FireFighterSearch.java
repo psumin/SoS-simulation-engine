@@ -36,9 +36,18 @@ public class FireFighterSearch extends FireFighterAction {
         //ArrayList<Patient> foundPatient = fireFighter.observe();
         //patientsMemory.addAll(foundPatient);
 
+        Patient targetPatient = null;
         // Select target patient
-        Patient targetPatient = fireFighter.selectTargetPatient(patientsMemory);
+        targetPatient = fireFighter.selectTargetPatient(patientsMemory);
         //patientsMemory.remove(targetPatient);
+        while(targetPatient != null) {
+            if(targetPatient.isSaved) {
+                patientsMemory.remove(targetPatient);
+                targetPatient = fireFighter.selectTargetPatient(patientsMemory);
+            } else {
+                break;
+            }
+        }
 
         if(targetPatient != null) {
             fireFighter.changeAction(new FireFighterMoveToPatient(fireFighter, targetPatient));

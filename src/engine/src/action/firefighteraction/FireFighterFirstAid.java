@@ -20,6 +20,7 @@ public class FireFighterFirstAid extends FireFighterAction {
         super(target);
 
         name = "FirstAid";
+        fireFighter.patientsMemory.remove(targetPatient);
         world.map.remove(targetPatient);
         this.targetPatient = targetPatient;
         if(targetPatient.assignedFireFighter == null) {

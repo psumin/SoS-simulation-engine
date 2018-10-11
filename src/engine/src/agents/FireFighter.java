@@ -199,9 +199,6 @@ public class FireFighter extends CS {
             }
             else if(msg.title == "patientsMemory") {
                 ArrayList<Patient> othersMemory = (ArrayList<Patient>)msg.data;
-                if(Time.getFrameCount() > 400) {
-                    int a = 10;
-                }
                 patientsMemory.removeAll(othersMemory);
                 othersMemory.forEach(patient -> {
 
