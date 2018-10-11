@@ -91,10 +91,8 @@ public class Hospital extends CS {
                 treatmentTarget = patients.get(0);
                 patients.remove(0);
             }
-            //= patients.get(0);
             treatmentPatients.add(treatmentTarget);
             treatmentTarget.treatmentStart(this);
-            patients.remove(0);
         }
         //patients.remove(patient);
         row.createCell(5).setCellValue("leave");
