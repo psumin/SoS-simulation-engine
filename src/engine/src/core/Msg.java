@@ -9,16 +9,20 @@ package core;
 
 public class Msg {
 
+    private static int idCounter = 0;
+
+    public int id;
     public String from;
     public String to;
     public String title;
     public Object data;
 
     public Msg() {
-
+        id = idCounter++;
     }
 
     public Msg(String from, String to, String title, Object data) {
+        id = idCounter++;
         setFrom(from)
                 .setTo(to)
                 .setTitle(title)

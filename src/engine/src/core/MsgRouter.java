@@ -93,6 +93,8 @@ public class MsgRouter extends SoSObject {
 //        row.getCell(4).setCellStyle(centerAlignmentStyle);
 
         for(int i = 0; i < 100; ++i) {
+            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("No.");
+            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
             row.createCell(row.getPhysicalNumberOfCells()).setCellValue("from");
             row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
             row.createCell(row.getPhysicalNumberOfCells()).setCellValue("to");
@@ -134,6 +136,8 @@ public class MsgRouter extends SoSObject {
         //Row row = sheet.createRow(rowNum++);
         Row row = currentRow;
         //row.createCell(0).setCellValue(Time.getFrameCount());
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
         row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
         row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
         row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
@@ -165,6 +169,8 @@ public class MsgRouter extends SoSObject {
 
         Row row = currentRow;
         //row.createCell(0).setCellValue(Time.getFrameCount());
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
         row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
         row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
         row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
