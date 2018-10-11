@@ -65,9 +65,12 @@ public class MsgRouter extends SoSObject {
     private Sheet sheet;
     private int rowNum = 0;
 
+    private Row currentRow;
+    CellStyle centerAlignmentStyle;
+
     // For the log. Save at the Excel
     public MsgRouter(World world, Workbook workbook) {
-        CellStyle centerAlignmentStyle = workbook.createCellStyle();
+        centerAlignmentStyle = workbook.createCellStyle();
         centerAlignmentStyle.setAlignment(HorizontalAlignment.CENTER);
 
         this.world = world;
@@ -76,35 +79,36 @@ public class MsgRouter extends SoSObject {
         this.workbook = workbook;
         this.sheet = workbook.createSheet("communications");;
 
-        Row row = sheet.createRow(rowNum++);
+        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
+        Row row = currentRow;
         row.createCell(0).setCellValue("frame count");
 
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 6));
+//        sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
+//        sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 6));
+//
+//        row.createCell(1).setCellValue("send messages");
+//        row.getCell(1).setCellStyle(centerAlignmentStyle);
+//
+//        row.createCell(4).setCellValue("recv messages");
+//        row.getCell(4).setCellStyle(centerAlignmentStyle);
 
-        row.createCell(1).setCellValue("send messages");
-        row.getCell(1).setCellStyle(centerAlignmentStyle);
+        for(int i = 0; i < 100; ++i) {
+            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("from");
+            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("to");
+            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("title");
 
-        row.createCell(4).setCellValue("recv messages");
-        row.getCell(4).setCellStyle(centerAlignmentStyle);
-
-        row = sheet.createRow(rowNum++);
-        row.createCell(1).setCellValue("from");
-        row.getCell(1).setCellStyle(centerAlignmentStyle);
-        row.createCell(2).setCellValue("to");
-        row.getCell(2).setCellStyle(centerAlignmentStyle);
-        row.createCell(3).setCellValue("title");
-        row.getCell(3).setCellStyle(centerAlignmentStyle);
-        row.createCell(4).setCellValue("from");
-        row.getCell(4).setCellStyle(centerAlignmentStyle);
-        row.createCell(5).setCellValue("to");
-        row.getCell(5).setCellStyle(centerAlignmentStyle);
-        row.createCell(6).setCellValue("title");
-        row.getCell(6).setCellStyle(centerAlignmentStyle);
+            row.createCell(row.getPhysicalNumberOfCells());
+        }
     }
 
+    boolean isFirstUpdate = true;
     @Override
     public void onUpdate() {
+        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
+        currentRow.createCell(0).setCellValue(Time.getFrameCount());
+
         delayedMsgs.add(null);
         while(true) {
             DelayedMsg delayedMsg = delayedMsgs.poll();
@@ -123,23 +127,25 @@ public class MsgRouter extends SoSObject {
         // recv log
         if(recvColorStyle == null) {
             recvColorStyle = workbook.createCellStyle();
+            recvColorStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+            recvColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         }
-        recvColorStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
-        recvColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        Row row = sheet.createRow(rowNum++);
-        row.createCell(0).setCellValue(Time.getFrameCount());
-        row.createCell(4).setCellValue(msg.from);
-        row.getCell(4).setCellStyle(recvColorStyle);
-        row.createCell(5).setCellValue(msg.to);
-        row.getCell(5).setCellStyle(recvColorStyle);
+        //Row row = sheet.createRow(rowNum++);
+        Row row = currentRow;
+        //row.createCell(0).setCellValue(Time.getFrameCount());
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
         if(msg.title == "reserve") {
-            row.createCell(6).setCellValue(msg.title + " " + msg.to);
-            row.getCell(6).setCellStyle(recvColorStyle);
+            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
+            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
         } else {
-            row.createCell(6).setCellValue(msg.title);
-            row.getCell(6).setCellStyle(recvColorStyle);
+            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
+            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
         }
+        row.createCell(row.getPhysicalNumberOfCells());
 
         SoSObject target = world.findObject(msg.to);
         if(target != null) {
@@ -152,23 +158,25 @@ public class MsgRouter extends SoSObject {
         // send log
         if(sendColorStyle == null) {
             sendColorStyle = workbook.createCellStyle();
+            sendColorStyle.setFillForegroundColor(IndexedColors.LAVENDER.getIndex());
+            sendColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         }
-        sendColorStyle.setFillForegroundColor(IndexedColors.LAVENDER.getIndex());
-        sendColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        Row row = sheet.createRow(rowNum++);
-        row.createCell(0).setCellValue(Time.getFrameCount());
-        row.createCell(1).setCellValue(msg.from);
-        row.getCell(1).setCellStyle(sendColorStyle);
-        row.createCell(2).setCellValue(msg.to);
-        row.getCell(2).setCellStyle(sendColorStyle);
+
+        Row row = currentRow;
+        //row.createCell(0).setCellValue(Time.getFrameCount());
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
         if(msg.title == "reserve") {
-            row.createCell(3).setCellValue(msg.title + " " + msg.to);
-            row.getCell(3).setCellStyle(sendColorStyle);
+            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
+            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
         } else {
-            row.createCell(3).setCellValue(msg.title);
-            row.getCell(3).setCellStyle(sendColorStyle);
+            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
+            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
         }
+        row.createCell(row.getPhysicalNumberOfCells());
 
         SoSObject target = world.findObject(msg.to);
 
