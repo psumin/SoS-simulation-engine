@@ -559,6 +559,13 @@ public class World extends SoSObject{
 //        scenarios.add(new LambdaScenario(this, 200, this::addAmbulance));
 //        scenarios.add(new LambdaScenario(this, 300, this::addAmbulance));
 //        scenarios.add(new LambdaScenario(this, 400, this::addAmbulance));
+
+        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF1"));
+        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF2"));
+        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF3"));
+        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF4"));
+        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF5"));
+        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF6"));
     }
 
     void removeCS(String csName) {
