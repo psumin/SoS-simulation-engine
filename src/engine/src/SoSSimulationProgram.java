@@ -162,7 +162,7 @@ public class SoSSimulationProgram implements Runnable {
 
 
         time += deltaTime;
-        if(time >= Time.fromSecond(0.1f)) {
+        if(time >= Time.fromSecond(0.0f)) {
             timeImpl.update(deltaTime);
             world.update();
             time = 0;

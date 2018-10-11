@@ -1,5 +1,6 @@
 package stimulus;
 
+import action.firefighteraction.FireFighterDead;
 import agents.FireFighter;
 import core.World;
 import misc.Position;
@@ -27,6 +28,7 @@ public class FireFighterToPatientScenario extends Scenario {
 
         Position position = target.position;
         world.addPatient(position);
+        target.changeAction(new FireFighterDead(target));
         world.removeChild(target);
         world.map.remove(target);
     }

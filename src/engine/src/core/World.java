@@ -1,5 +1,6 @@
 package core;
 
+import action.firefighteraction.FireFighterDead;
 import agents.*;
 import misc.Position;
 
@@ -255,9 +256,9 @@ public class World extends SoSObject{
             Row row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
             Cell frameCountCell = row.createCell(0);
             frameCountCell.setCellValue("frame count");
-            Cell[] positionCells = new Cell[maxFireFighter];
+            Cell[] positionCells = new Cell[fireFighters.size()];
 
-            for(int i = 0; i < maxFireFighter; ++i) {
+            for(int i = 0; i < fireFighters.size(); ++i) {
                 Cell currentCell = row.createCell(i * 2 + 1);
                 String position = fireFighters.get(i).position.toString();
                 currentCell.setCellValue("FF" + (i + 1) + " pos");
@@ -270,9 +271,9 @@ public class World extends SoSObject{
         Row row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
         Cell frameCountCell = row.createCell(0);
         frameCountCell.setCellValue(frameCount);
-        Cell[] positionCells = new Cell[maxFireFighter];
+        Cell[] positionCells = new Cell[fireFighters.size()];
 
-        for(int i = 0; i < maxFireFighter; ++i) {
+        for(int i = 0; i < fireFighters.size(); ++i) {
             Cell currentCell = row.createCell(i * 2 + 1);
 
             String position = fireFighters.get(i).position.toString();
@@ -287,9 +288,9 @@ public class World extends SoSObject{
             row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
             frameCountCell = row.createCell(0);
             frameCountCell.setCellValue("total distance");
-            positionCells = new Cell[maxFireFighter];
+            positionCells = new Cell[fireFighters.size()];
 
-            for(int i = 0; i < maxFireFighter; ++i) {
+            for(int i = 0; i < fireFighters.size(); ++i) {
                 Cell currentCell = row.createCell(i * 2 + 1);
                 positionCells[i] = currentCell;
 
@@ -574,7 +575,9 @@ public class World extends SoSObject{
 
         if(obj instanceof FireFighter) {
             map.remove((FireFighter)obj);
-            fireFighters.remove(obj);
+            //fireFighters.remove(obj);
+            FireFighter fireFighter = (FireFighter)obj;
+            fireFighter.changeAction(new FireFighterDead(fireFighter));
         } else if(obj instanceof Ambulance) {
             ambulances.remove(obj);
         }
