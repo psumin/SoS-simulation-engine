@@ -118,25 +118,24 @@ public class MsgRouter extends SoSObject {
         }
     }
 
+    CellStyle recvColorStyle = workbook.createCellStyle();
     private void _route(Msg msg) {
         // recv log
-        CellStyle colorStyle = workbook.createCellStyle();
-
-        colorStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
-        colorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        recvColorStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+        recvColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         Row row = sheet.createRow(rowNum++);
         row.createCell(0).setCellValue(Time.getFrameCount());
         row.createCell(4).setCellValue(msg.from);
-        row.getCell(4).setCellStyle(colorStyle);
+        row.getCell(4).setCellStyle(recvColorStyle);
         row.createCell(5).setCellValue(msg.to);
-        row.getCell(5).setCellStyle(colorStyle);
+        row.getCell(5).setCellStyle(recvColorStyle);
         if(msg.title == "reserve") {
             row.createCell(6).setCellValue(msg.title + " " + msg.to);
-            row.getCell(6).setCellStyle(colorStyle);
+            row.getCell(6).setCellStyle(recvColorStyle);
         } else {
             row.createCell(6).setCellValue(msg.title);
-            row.getCell(6).setCellStyle(colorStyle);
+            row.getCell(6).setCellStyle(recvColorStyle);
         }
 
         SoSObject target = world.findObject(msg.to);
@@ -145,24 +144,25 @@ public class MsgRouter extends SoSObject {
         }
     }
 
+    CellStyle sendColorStyle = workbook.createCellStyle();
     public void route(Msg msg) {
         // send log
-        CellStyle colorStyle = workbook.createCellStyle();
-        colorStyle.setFillForegroundColor(IndexedColors.LAVENDER.getIndex());
-        colorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        sendColorStyle = workbook.createCellStyle();
+        sendColorStyle.setFillForegroundColor(IndexedColors.LAVENDER.getIndex());
+        sendColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         Row row = sheet.createRow(rowNum++);
         row.createCell(0).setCellValue(Time.getFrameCount());
         row.createCell(1).setCellValue(msg.from);
-        row.getCell(1).setCellStyle(colorStyle);
+        row.getCell(1).setCellStyle(sendColorStyle);
         row.createCell(2).setCellValue(msg.to);
-        row.getCell(2).setCellStyle(colorStyle);
+        row.getCell(2).setCellStyle(sendColorStyle);
         if(msg.title == "reserve") {
             row.createCell(3).setCellValue(msg.title + " " + msg.to);
-            row.getCell(3).setCellStyle(colorStyle);
+            row.getCell(3).setCellStyle(sendColorStyle);
         } else {
             row.createCell(3).setCellValue(msg.title);
-            row.getCell(3).setCellStyle(colorStyle);
+            row.getCell(3).setCellStyle(sendColorStyle);
         }
 
         SoSObject target = world.findObject(msg.to);
