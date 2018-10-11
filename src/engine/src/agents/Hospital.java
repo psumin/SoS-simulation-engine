@@ -54,6 +54,25 @@ public class Hospital extends CS {
         row.createCell(1).setCellValue(name);
         row.createCell(2).setCellValue(treatmentPatients.size());
         row.createCell(3).setCellValue(patients.size());
+
+//        if(isAvailable() && !patients.isEmpty()) {
+//            Patient treatmentTarget = null;
+//            for(Patient p: patients) {
+//                if(p.isSerious()) {
+//                    treatmentTarget = p;
+//                    break;
+//                }
+//            }
+//
+//            if(treatmentTarget != null) {
+//                patients.remove(treatmentTarget);
+//            } else {
+//                treatmentTarget = patients.get(0);
+//                patients.remove(0);
+//            }
+//            treatmentPatients.add(treatmentTarget);
+//            treatmentTarget.treatmentStart(this);
+//        }
     }
 
     // 환자 입원
@@ -93,6 +112,7 @@ public class Hospital extends CS {
             }
             treatmentPatients.add(treatmentTarget);
             treatmentTarget.treatmentStart(this);
+            world.addChild(treatmentTarget);
         }
         //patients.remove(patient);
         row.createCell(5).setCellValue("leave");
