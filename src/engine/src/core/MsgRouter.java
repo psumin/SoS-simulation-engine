@@ -118,9 +118,12 @@ public class MsgRouter extends SoSObject {
         }
     }
 
-    CellStyle recvColorStyle = workbook.createCellStyle();
+    CellStyle recvColorStyle;
     private void _route(Msg msg) {
         // recv log
+        if(recvColorStyle == null) {
+            recvColorStyle = workbook.createCellStyle();
+        }
         recvColorStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
         recvColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
@@ -144,10 +147,12 @@ public class MsgRouter extends SoSObject {
         }
     }
 
-    CellStyle sendColorStyle = workbook.createCellStyle();
+    CellStyle sendColorStyle;
     public void route(Msg msg) {
         // send log
-        sendColorStyle = workbook.createCellStyle();
+        if(sendColorStyle == null) {
+            sendColorStyle = workbook.createCellStyle();
+        }
         sendColorStyle.setFillForegroundColor(IndexedColors.LAVENDER.getIndex());
         sendColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
