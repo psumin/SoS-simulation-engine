@@ -4,6 +4,8 @@ import misc.Position;
 import misc.Time;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -61,15 +63,15 @@ public class MsgRouter extends SoSObject {
     World world;
     Map worldMap;
 
-    private Workbook workbook;
-    private Sheet sheet;
+    private SXSSFWorkbook workbook;
+    private SXSSFSheet sheet;
     private int rowNum = 0;
 
     private Row currentRow;
     CellStyle centerAlignmentStyle;
 
     // For the log. Save at the Excel
-    public MsgRouter(World world, Workbook workbook) {
+    public MsgRouter(World world, SXSSFWorkbook workbook) {
         centerAlignmentStyle = workbook.createCellStyle();
         centerAlignmentStyle.setAlignment(HorizontalAlignment.CENTER);
 
@@ -77,7 +79,8 @@ public class MsgRouter extends SoSObject {
         worldMap = world.getMap();
 
         this.workbook = workbook;
-        this.sheet = workbook.createSheet("communications");;
+        sheet = workbook.createSheet("communications");;
+        sheet.trackAllColumnsForAutoSizing();
 
         currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
         Row row = currentRow;

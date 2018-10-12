@@ -2,6 +2,7 @@ package core;
 
 import action.firefighteraction.FireFighterDead;
 import agents.*;
+import misc.ExcelHelper;
 import misc.Position;
 
 import misc.Range;
@@ -10,6 +11,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import stimulus.*;
@@ -54,9 +56,12 @@ public class World extends SoSObject{
     public static final String fireFighterPrefix = "FF";
     //public static final String ambulancePrefix = "AM";
 
-    Workbook workbook = new SXSSFWorkbook();
-    Sheet statisticsSheet = workbook.createSheet("statistics");
-    Sheet hospitalSheet = workbook.createSheet("hospitals");
+    SXSSFWorkbook workbook = new SXSSFWorkbook();
+    SXSSFSheet statisticsSheet;
+    SXSSFSheet hospitalSheet;
+    SXSSFSheet patientSheet;
+    SXSSFSheet ambulanceSheet;
+    SXSSFSheet fireFighterSheet;
     long startTime;
 
     public World() {
@@ -64,6 +69,23 @@ public class World extends SoSObject{
 
 //        workbook = new XSSFWorkbook();
 //        patientSheet = workbook.createSheet("patients");
+
+        statisticsSheet = workbook.createSheet("statistics");
+        statisticsSheet.trackAllColumnsForAutoSizing();
+
+        hospitalSheet = workbook.createSheet("hospitals");
+        hospitalSheet.trackAllColumnsForAutoSizing();
+
+        patientSheet = workbook.createSheet("patients");
+        patientSheet.trackAllColumnsForAutoSizing();
+
+        ambulanceSheet = workbook.createSheet("ambulances");
+        ambulanceSheet.trackAllColumnsForAutoSizing();
+
+        fireFighterSheet = workbook.createSheet("fire fighters");
+        fireFighterSheet.trackAllColumnsForAutoSizing();
+
+
 
         map = new Map();
         addChild(map);
@@ -226,7 +248,7 @@ public class World extends SoSObject{
     }
 
 
-    Sheet patientSheet = workbook.createSheet("patients");
+
     private void printPatientLog(boolean isFinish) {
 
         if(frameCount == 0) {
@@ -246,7 +268,7 @@ public class World extends SoSObject{
         savedPatientCell.setCellValue(savedPatientCount);
     }
 
-    Sheet fireFighterSheet = workbook.createSheet("fire fighters");
+
     private void printFireFighterLog(boolean isFinish) {
 
         // i * 2
@@ -299,7 +321,7 @@ public class World extends SoSObject{
         }
     }
 
-    Sheet ambulanceSheet = workbook.createSheet("Ambulances");
+
     private void printAmbulanceLog(boolean isFinish) {
         if(frameCount == 0) {
             Row row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
@@ -393,11 +415,10 @@ public class World extends SoSObject{
 
         long nano = System.currentTimeMillis();
         String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        try (OutputStream fileOut = new FileOutputStream("log/" + date +".xlsx")) {
-            workbook.write(fileOut);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String filePath = "log/" + date + ".xlsx";
+
+        ExcelHelper.autoSizeAllColumn(workbook);
+        ExcelHelper.save(workbook, filePath);
     }
 
 
