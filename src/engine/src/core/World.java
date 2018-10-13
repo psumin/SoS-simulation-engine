@@ -7,16 +7,16 @@ import misc.Position;
 
 import misc.Range;
 import misc.Time;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import stimulus.*;
 
 import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -62,6 +62,9 @@ public class World extends SoSObject{
     SXSSFSheet patientSheet;
     SXSSFSheet ambulanceSheet;
     SXSSFSheet fireFighterSheet;
+
+    CellStyle headerStyle;
+
     long startTime;
     long endTime = 0;
     long endFrame = 0;
@@ -87,7 +90,10 @@ public class World extends SoSObject{
         fireFighterSheet = workbook.createSheet("fire fighters");
         fireFighterSheet.trackAllColumnsForAutoSizing();
 
-
+        headerStyle = workbook.createCellStyle();
+        headerStyle.setAlignment(HorizontalAlignment.CENTER);
+        headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         map = new Map();
         addChild(map);
@@ -410,36 +416,43 @@ public class World extends SoSObject{
 
         // Total runtime
         ExcelHelper.getCell(row, 0).setCellValue("Runtime");
+        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
         ExcelHelper.getCell(row, 1).setCellValue(((endTime - startTime) / 1000) + " s");
         row = ExcelHelper.nextRow(row);
 
         // end Frame
         ExcelHelper.getCell(row, 0).setCellValue("Run frame");
+        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
         ExcelHelper.getCell(row, 1).setCellValue(endFrame);
         row = ExcelHelper.nextRow(row);
 
         // initial patient count
         ExcelHelper.getCell(row, 0).setCellValue("initial patient count");
+        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
         ExcelHelper.getCell(row, 1).setCellValue(maxPatient);
         row = ExcelHelper.nextRow(row);
 
         // initial fire fighter count
         ExcelHelper.getCell(row, 0).setCellValue("initial fire fighter count");
+        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
         ExcelHelper.getCell(row, 1).setCellValue(maxFireFighter);
         row = ExcelHelper.nextRow(row);
 
         // initial ambulance count
         ExcelHelper.getCell(row, 0).setCellValue("initial ambulance count");
+        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
         ExcelHelper.getCell(row, 1).setCellValue(maxAmbulance);
         row = ExcelHelper.nextRow(row);
 
         // initial hospital count
         ExcelHelper.getCell(row, 0).setCellValue("initial hospital count");
+        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
         ExcelHelper.getCell(row, 1).setCellValue(maxHospital);
         row = ExcelHelper.nextRow(row);
 
         // initial safezone count
         ExcelHelper.getCell(row, 0).setCellValue("initial safezone count");
+        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
         ExcelHelper.getCell(row, 1).setCellValue(maxSafeZone);
         row = ExcelHelper.nextRow(row);
 
