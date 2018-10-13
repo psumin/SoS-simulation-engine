@@ -39,7 +39,7 @@ public class World extends SoSObject{
     int ambulanceCounter = 0;
 
     // Initial Values
-    public static final int maxPatient = 300;
+    public static final int maxPatient = 20;
     public static final int maxFireFighter = 8;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 12;
@@ -63,6 +63,8 @@ public class World extends SoSObject{
     SXSSFSheet ambulanceSheet;
     SXSSFSheet fireFighterSheet;
     long startTime;
+    long endTime = 0;
+    long endFrame = 0;
 
     public World() {
         startTime = System.currentTimeMillis();
@@ -160,7 +162,7 @@ public class World extends SoSObject{
         row.createCell(1).setCellValue("hospital name");
         row.createCell(2).setCellValue("treatment patient count");
         row.createCell(3).setCellValue("wait patient count");
-        row.createCell(4).setCellValue("hospitalize");;
+        row.createCell(4).setCellValue("hospitalize");
         row.createCell(5).setCellValue("leave");
         for(int i = 0; i < maxHospital; ++i) {
             Hospital hospital = new Hospital(this, "Hospital" + (i + 1), hospitalSheet);
@@ -225,6 +227,9 @@ public class World extends SoSObject{
         //if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
         if(patients.size() == savedPatientCount && map.getUnvisitedTileCount() == 0) {
             canUpdate(false);
+
+            endTime = System.currentTimeMillis();
+            endFrame = frameCount;
 //            printPatientLog(true);
 //            printFireFighterLog(true);
             return;
@@ -400,13 +405,45 @@ public class World extends SoSObject{
     @Override
     public void clear() {
 
-        long endTime = System.currentTimeMillis();
+        Sheet sheet = statisticsSheet;
+        Row row = sheet.createRow(0);
 
-        Row row = statisticsSheet.createRow(0);
-        Cell header = row.createCell(0);
-        Cell body = row.createCell(1);
-        header.setCellValue("Total RunTime");
-        body.setCellValue(((endTime - startTime) / 1000) + " s");
+        // Total runtime
+        ExcelHelper.getCell(row, 0).setCellValue("Runtime");
+        ExcelHelper.getCell(row, 1).setCellValue(((endTime - startTime) / 1000) + " s");
+        row = ExcelHelper.nextRow(row);
+
+        // end Frame
+        ExcelHelper.getCell(row, 0).setCellValue("Run frame");
+        ExcelHelper.getCell(row, 1).setCellValue(endFrame);
+        row = ExcelHelper.nextRow(row);
+
+        // initial patient count
+        ExcelHelper.getCell(row, 0).setCellValue("initial patient count");
+        ExcelHelper.getCell(row, 1).setCellValue(maxPatient);
+        row = ExcelHelper.nextRow(row);
+
+        // initial fire fighter count
+        ExcelHelper.getCell(row, 0).setCellValue("initial fire fighter count");
+        ExcelHelper.getCell(row, 1).setCellValue(maxFireFighter);
+        row = ExcelHelper.nextRow(row);
+
+        // initial ambulance count
+        ExcelHelper.getCell(row, 0).setCellValue("initial ambulance count");
+        ExcelHelper.getCell(row, 1).setCellValue(maxAmbulance);
+        row = ExcelHelper.nextRow(row);
+
+        // initial hospital count
+        ExcelHelper.getCell(row, 0).setCellValue("initial hospital count");
+        ExcelHelper.getCell(row, 1).setCellValue(maxHospital);
+        row = ExcelHelper.nextRow(row);
+
+        // initial safezone count
+        ExcelHelper.getCell(row, 0).setCellValue("initial safezone count");
+        ExcelHelper.getCell(row, 1).setCellValue(maxSafeZone);
+        row = ExcelHelper.nextRow(row);
+
+
 
 
         printPatientLog(true);
@@ -582,12 +619,12 @@ public class World extends SoSObject{
 //        scenarios.add(new LambdaScenario(this, 300, this::addAmbulance));
 //        scenarios.add(new LambdaScenario(this, 400, this::addAmbulance));
 
-        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF1"));
-        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF2"));
-        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF3"));
-        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF4"));
-        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF5"));
-        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF6"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF1"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF2"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF3"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF4"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF5"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF6"));
     }
 
     void removeCS(String csName) {

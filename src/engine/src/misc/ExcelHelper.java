@@ -44,13 +44,18 @@ public class ExcelHelper {
         }
         return row;
     }
-    public static Cell getCell(Sheet sheet, int rowNum, int colNum) {
-        Row row = getRow(sheet, rowNum);
+
+    public static Cell getCell(Row row, int colNum) {
         Cell cell = row.getCell(colNum);
         if(cell == null) {
             cell = row.createCell(colNum);
         }
         return cell;
+    }
+
+    public static Cell getCell(Sheet sheet, int rowNum, int colNum) {
+        Row row = getRow(sheet, rowNum);
+        return getCell(row, colNum);
     }
 
     public static void save(Workbook workbook, String filePath) {
