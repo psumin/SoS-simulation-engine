@@ -20,8 +20,8 @@ public class Ambulance extends CS{
     public Ambulance(World world, String name) {
         super(world, name);
         router = world.router;
-        transferImage = new ImageObject("src/engine/resources/transfer.png");
-        defaultImage = new ImageObject("src/engine/resources/ambulance.png");
+        transferImage = new ImageObject("src/engine/resources/transfer2.png");
+        defaultImage = new ImageObject("src/engine/resources/ambulance1.png");
 
 //        addChild(new ImageObject("src/engine/resources/ambulance.png"));
 
@@ -33,7 +33,7 @@ public class Ambulance extends CS{
 
         currentAction = new AmbulanceFree(this);        // Start action
 
-        moveDelay = 0;
+        moveDelay = 2;
         frameCounter = moveDelay;
     }
 

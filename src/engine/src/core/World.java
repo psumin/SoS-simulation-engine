@@ -195,10 +195,15 @@ public class World extends SoSObject{
             addChild(safeZone);
         }
 
-        safeZones.get(0).setPosition(new Position(Map.mapSize.width / 4, Map.mapSize.height / 4));
-        safeZones.get(1).setPosition(new Position(3 * Map.mapSize.width / 4, Map.mapSize.height / 4));
-        safeZones.get(2).setPosition(new Position(3 * Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
-        safeZones.get(3).setPosition(new Position(Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
+//        safeZones.get(0).setPosition(new Position(Map.mapSize.width / 4, Map.mapSize.height / 4));
+//        safeZones.get(1).setPosition(new Position(3 * Map.mapSize.width / 4, Map.mapSize.height / 4));
+//        safeZones.get(2).setPosition(new Position(3 * Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
+//        safeZones.get(3).setPosition(new Position(Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
+        safeZones.get(0).setPosition(new Position(Map.mapSize.width / 6, Map.mapSize.height / 6));
+        safeZones.get(1).setPosition(new Position(5 * Map.mapSize.width / 6, Map.mapSize.height / 6));
+        safeZones.get(2).setPosition(new Position(5 * Map.mapSize.width / 6, 5 * Map.mapSize.height / 6));
+        safeZones.get(3).setPosition(new Position(Map.mapSize.width / 6, 5 * Map.mapSize.height / 6));
+
     }
 
     int ambulancePositionIndex = 0;
@@ -565,7 +570,8 @@ public class World extends SoSObject{
 //        // TODO: moveDelay
 //        scenarios.add(new MoveDelayScenario(this, 100, "FF1", 3));                           // 100 frame 부터 FF1의 이동 속도 30 frame 당 1칸 이동 ==> 이속 감소
 //        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 3));                // 100 frame 부터 전체 FF의 이동소도 감소
-//        scenarios.add(new MoveDelayScenario(this, 100, new Range(0, 0, 10, 10), 10.0f));      // 100 frame 부터 0, 0, 10, 10 위치에서 이속 감소 (10배 감소)
+        scenarios.add(new MoveDelayScenario(this, 10, new Range(16, 16, 48, 48), 3.0f));      // 100 frame 부터 0, 0, 10, 10 위치에서 이속 감소 (10배 감소)
+        scenarios.add(new MoveDelayScenario(this, 10, new Range(24, 24, 40, 40), 5.0f));      // 100 frame 부터 0, 0, 10, 10 위치에서 이속 감소 (10배 감소)
 //        scenarios.add(new MoveDelayScenario(this, 100, AmbulanceNames, 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
 //        scenarios.add(new MoveDelayScenario(this, 100, "Ambulance1", 7));
 //
