@@ -19,7 +19,7 @@ public class Patient extends CS {
        public static Status random() {
            Status[] values = Status.values();
            int index = GlobalRandom.nextInt(1000);
-           if (index >= 100)                                    // Ratio for Serious patient
+           if (index >= 300)                                    // Ratio for Serious patient
                index = 0;
            else
                index = 1;

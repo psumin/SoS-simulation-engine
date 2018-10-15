@@ -39,10 +39,10 @@ public class World extends SoSObject{
     int ambulanceCounter = 0;
 
     // Initial Values
-    public static final int maxPatient = 20;
+    public static final int maxPatient = 350;
     public static final int maxFireFighter = 8;
     public static final int maxHospital = 4;
-    public static final int maxAmbulance = 12;
+    public static final int maxAmbulance = 8;
     public static final int maxSafeZone = 4;
 
     public Map map;
@@ -570,8 +570,9 @@ public class World extends SoSObject{
 //        // TODO: moveDelay
 //        scenarios.add(new MoveDelayScenario(this, 100, "FF1", 3));                           // 100 frame 부터 FF1의 이동 속도 30 frame 당 1칸 이동 ==> 이속 감소
 //        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 3));                // 100 frame 부터 전체 FF의 이동소도 감소
-        scenarios.add(new MoveDelayScenario(this, 10, new Range(16, 16, 48, 48), 3.0f));      // 100 frame 부터 0, 0, 10, 10 위치에서 이속 감소 (10배 감소)
-        scenarios.add(new MoveDelayScenario(this, 10, new Range(24, 24, 40, 40), 5.0f));      // 100 frame 부터 0, 0, 10, 10 위치에서 이속 감소 (10배 감소)
+        scenarios.add(new MoveDelayScenario(this, 10, new Range(16, 16, 48, 48), 3.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+        scenarios.add(new MoveDelayScenario(this, 10, new Range(24, 24, 40, 40), 7.0f));
+        scenarios.add(new MoveDelayScenario(this, 10, new Range(29, 29, 35, 35), 10.0f));
 //        scenarios.add(new MoveDelayScenario(this, 100, AmbulanceNames, 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
 //        scenarios.add(new MoveDelayScenario(this, 100, "Ambulance1", 7));
 //
