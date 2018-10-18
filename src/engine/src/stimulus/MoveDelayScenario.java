@@ -21,10 +21,10 @@ public class MoveDelayScenario extends ChangeValueScenario {
         super(world, frame, tileRange, "moveDelayFactor", value);
     }
 
-    // Tile 범위 설정 + targetObject 설정
-    public MoveDelayScenario(World world, int frame, Object targetObject, Range tileRange, Object value) {
-        super(world, frame, targetObject, tileRange, "moveDelayFactor", value);
-    }
+//    // Tile 범위 설정 + targetObject 설정
+//    public MoveDelayScenario(World world, int frame, Object targetObject, Range tileRange, Object value) {
+//        super(world, frame, targetObject, tileRange, "moveDelayFactor", value);
+//    }
 
     public MoveDelayScenario(World world, int frame, ArrayList<String> targetNames, Object value) {
         super(world, frame, targetNames, "moveDelay", value);

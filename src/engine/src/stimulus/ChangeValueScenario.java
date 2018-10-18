@@ -41,15 +41,15 @@ public class ChangeValueScenario extends Scenario {
         this.value = value;
     }
 
-    // Tile 범위 설정 + targetObject 설정
-    public ChangeValueScenario(World world, int frame, Object targetObject, Range tileRange, String fieldName, Object value) {
-        super(world, frame);
-
-        this.tileRange = tileRange;
-        this.fieldName = fieldName;
-        this.value = value;
-        this.targetObject = targetObject;
-    }
+//    // Tile 범위 설정 + targetObject 설정
+//    public ChangeValueScenario(World world, int frame, Object targetObject, Range tileRange, String fieldName, Object value) {
+//        super(world, frame);
+//
+//        this.tileRange = tileRange;
+//        this.fieldName = fieldName;
+//        this.value = value;
+//        this.targetObject = targetObject;
+//    }
 
     // CS 전체
     public ChangeValueScenario(World world, int frame, ArrayList<String> targetNames, String fieldName, Object value) {

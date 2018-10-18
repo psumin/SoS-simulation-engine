@@ -39,7 +39,8 @@ public class World extends SoSObject{
     int ambulanceCounter = 0;
 
     // Initial Values
-    public static final int maxPatient = 300;
+    public static final int maxPatient = 294;
+//    public static final int maxPatient = 65;
     public static final int maxFireFighter = 16;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 8;
@@ -185,6 +186,8 @@ public class World extends SoSObject{
         hospitals.get(1).setPosition(Map.mapSize.width - 1, 0);
         hospitals.get(2).setPosition(0, Map.mapSize.height - 1);
         hospitals.get(3).setPosition(Map.mapSize.width - 1, Map.mapSize.height - 1);
+//        hospitals.get(4).setPosition(0, (Map.mapSize.height - 1) / 2);
+//        hospitals.get(5).setPosition(Map.mapSize.width - 1, (Map.mapSize.height - 1) / 2);
     }
 
     private void createSafeZones() {                // Create the Safe Zone at the quarter position of the map
@@ -481,22 +484,7 @@ public class World extends SoSObject{
     }
 
     int positionIndex = 0;
-    void addFireFighter() {
-        Position[] positions = new Position[]{
-                new Position(0, 0),
-                new Position(Map.mapSize.width - 1, 0),
-                new Position(Map.mapSize.width - 1, Map.mapSize.height - 1),
-                new Position(0, Map.mapSize.height - 1)
-        };
 
-        FireFighter ff = new FireFighter(this, fireFighterPrefix + ++fireFighterCounter);
-        fireFighters.add(ff);
-
-        ff.setPosition(positions[positionIndex++]);
-        if (positionIndex >= 4)
-            positionIndex = 0;
-        addChild(ff);
-    }
 
     public void addPatient(Position position) {
         Patient patient = new Patient(this, "Patient" + ++patientCounter);
@@ -537,11 +525,7 @@ public class World extends SoSObject{
         }
     }
 
-    private void addAmbulance() {
-        Ambulance ambulance = new Ambulance(this, "Ambulance" + ++ambulanceCounter);
-        ambulances.add(ambulance);
-        addChild(ambulance);
-    }
+
 
     private void writeScenario() {
 
@@ -570,20 +554,30 @@ public class World extends SoSObject{
 //        scenarios.add(new MoveDelayScenario(this, 100, "FF1", 3));                           // 100 frame 부터 FF1의 이동 속도 30 frame 당 1칸 이동 ==> 이속 감소
 //        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 3));                // 100 frame 부터 전체 FF의 이동소도 감소
         //scenarios.add(new MoveDelayScenario(this, 10, new Range(29, 29, 35, 35), 10.0f));
-        scenarios.add(new MoveDelayScenario(this, 10, firefighterNames, new Range(16, 16, 48, 48), 2.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
-        scenarios.add(new MoveDelayScenario(this, 10, firefighterNames, new Range(24, 24, 40, 40), 3.0f));
-        scenarios.add(new MoveDelayScenario(this, 10, firefighterNames, new Range(29, 29, 35, 35), 5.0f));
+
+
+       scenarios.add(new MoveDelayScenario(this, 10, new Range(16, 16, 48, 48), 2.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+//        scenarios.add(new MoveDelayScenario(this, 10, new Range(24, 24, 40, 40), 3.0f));
+//        scenarios.add(new MoveDelayScenario(this, 10, new Range(29, 29, 35, 35), 5.0f));
+
+
 //       scenarios.add(new MoveDelayScenario(this, 100, AmbulanceNames, 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
 //        scenarios.add(new MoveDelayScenario(this, 100, "Ambulance1", 7));
 //
 //        // TODO: sightRange
 //        scenarios.add(new SightRangeScenario(this, 100, "FF1", 5));                               // 특정 frame count 이후 FF1의 sight range 변화
-//        scenarios.add(new SightRangeScenario(this, 100, firefighterNames, 9));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+        //scenarios.add(new SightRangeScenario(this, 10, firefighterNames, 0));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+        scenarios.add(new SightRangeScenario(this, 800, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+        scenarios.add(new SightRangeScenario(this, 1600, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+        scenarios.add(new SightRangeScenario(this, 2400, firefighterNames, 1));                    // 특정 frame count 이후 전체 FF의 sight range 변화
 ////        scenarios.add(new SightRangeScenario(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
 //
 //        // TODO: communicationRange (FF 관련)
 //        scenarios.add(new CommunicationRangeScenario(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
-//        scenarios.add(new CommunicationRangeScenario(this, 100, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+        //scenarios.add(new CommunicationRangeScenario(this, 10, firefighterNames, 0));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+        scenarios.add(new CommunicationRangeScenario(this, 800, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+        scenarios.add(new CommunicationRangeScenario(this, 1600, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+        scenarios.add(new CommunicationRangeScenario(this, 2400, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 communication range 변화
 ////        scenarios.add(new CommunicationRangeScenario(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 communication range 변화
 //
 //        // TODO: communication (1 to 1 casting), FF 제외?  FF가 org로 보내는 message는 포함
@@ -620,6 +614,11 @@ public class World extends SoSObject{
 //
 //        // TODO: FireFighter => Patient
 //        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF1"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF2"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF3"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF4"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF5"));
+//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
 //        scenarios.add(new LambdaScenario(this, 100, "FF1", this::removeCS));
@@ -639,12 +638,7 @@ public class World extends SoSObject{
 //        scenarios.add(new LambdaScenario(this, 300, this::addAmbulance));
 //        scenarios.add(new LambdaScenario(this, 400, this::addAmbulance));
 
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF1"));
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF2"));
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF3"));
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF4"));
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF5"));
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF6"));
+
     }
 
     void removeCS(String csName) {
@@ -660,5 +654,28 @@ public class World extends SoSObject{
             ambulances.remove(obj);
         }
         removeChild(obj);
+    }
+
+    void addFireFighter() {
+        Position[] positions = new Position[]{
+                new Position(0, 0),
+                new Position(Map.mapSize.width - 1, 0),
+                new Position(Map.mapSize.width - 1, Map.mapSize.height - 1),
+                new Position(0, Map.mapSize.height - 1)
+        };
+
+        FireFighter ff = new FireFighter(this, fireFighterPrefix + ++fireFighterCounter);
+        fireFighters.add(ff);
+
+        ff.setPosition(positions[positionIndex++]);
+        if (positionIndex >= 4)
+            positionIndex = 0;
+        addChild(ff);
+    }
+
+    private void addAmbulance() {
+        Ambulance ambulance = new Ambulance(this, "Ambulance" + ++ambulanceCounter);
+        ambulances.add(ambulance);
+        addChild(ambulance);
     }
 }
