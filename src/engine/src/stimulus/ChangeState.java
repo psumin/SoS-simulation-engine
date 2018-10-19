@@ -12,11 +12,11 @@ import misc.Position;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class FireFighterToPatientScenario extends Scenario {
+public class ChangeState extends Scenario {
 
     String fireFighterName;
 
-    public FireFighterToPatientScenario(World world, int frame, String fireFighterName) {
+    public ChangeState(World world, int frame, String fireFighterName) {
         super(world, frame);
         this.fireFighterName = fireFighterName;
     }

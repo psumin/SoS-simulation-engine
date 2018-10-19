@@ -5,6 +5,7 @@ import agents.*;
 import misc.ExcelHelper;
 import misc.Position;
 
+import misc.Range;
 import misc.Time;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -35,7 +36,7 @@ public class World extends SoSObject{
     // Initial Values
     public static final int maxPatient = 294;
 //    public static final int maxPatient = 65;
-    public static final int maxFireFighter = 4;
+    public static final int maxFireFighter = 8;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 4;
     public static final int maxSafeZone = 4;
@@ -535,107 +536,107 @@ public class World extends SoSObject{
 
         // Stimulus types
 
-        // TODO: Late Rescue Start
-//        scenarios.add(new MoveDelayScenario(this, 1, "FF1", 100));
-//        scenarios.add(new MoveDelayScenario(this, 1, "FF5", 100));
-//        scenarios.add(new MoveDelayScenario(this, 1, firefighterNames, 100));                 // 1 frame 부터 100 frame까지 동작 안함 ==> 이동속도가 100 frame당 한 칸이므로
-//        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 3));                 // 100 프레임 부터 회복 --> 그런데 만약 위에서 1 frame부터 200 frame까지 이속 감소를 시키면... 회복은 200부터 적용되는듯?
+//        // TODO: Late Rescue Start
+//        scenarios.add(new Speed(this, 1, "FF1", 100));
+//        scenarios.add(new Speed(this, 1, "FF5", 100));
+//        scenarios.add(new Speed(this, 1, firefighterNames, 100));                 // 1 frame 부터 100 frame까지 동작 안함 ==> 이동속도가 100 frame당 한 칸이므로
+//        scenarios.add(new Speed(this, 100, firefighterNames, 3));                 // 100 프레임 부터 회복 --> 그런데 만약 위에서 1 frame부터 200 frame까지 이속 감소를 시키면... 회복은 200부터 적용되는듯?
 //
-//        scenarios.add(new MoveDelayScenario(this, 100, AmbulanceNames, 300));                 // 100 frame 부터 400 frame까지 동작 안함
-//        scenarios.add(new MoveDelayScenario(this, 400, AmbulanceNames, 0));
+//        scenarios.add(new Speed(this, 100, AmbulanceNames, 300));                 // 100 frame 부터 400 frame까지 동작 안함
+//        scenarios.add(new Speed(this, 400, AmbulanceNames, 0));
 //
 //        // TODO: moveDelay
-//        scenarios.add(new MoveDelayScenario(this, 100, "FF1", 3));                           // 100 frame 부터 FF1의 이동 속도 30 frame 당 1칸 이동 ==> 이속 감소
-//        scenarios.add(new MoveDelayScenario(this, 100, firefighterNames, 3));                // 100 frame 부터 전체 FF의 이동소도 감소
-//        scenarios.add(new MoveDelayScenario(this, 10, new Range(29, 29, 35, 35), 10.0f));
-
-
-//       scenarios.add(new MoveDelayScenario(this, 10, new Range(16, 16, 48, 48), 2.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
-//        scenarios.add(new MoveDelayScenario(this, 10, new Range(24, 24, 40, 40), 3.0f));
-//        scenarios.add(new MoveDelayScenario(this, 10, new Range(29, 29, 35, 35), 5.0f));
-
-
-//       scenarios.add(new MoveDelayScenario(this, 100, AmbulanceNames, 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
-//        scenarios.add(new MoveDelayScenario(this, 100, "Ambulance1", 7));
+//        scenarios.add(new Speed(this, 100, "FF1", 3));                           // 100 frame 부터 FF1의 이동 속도 30 frame 당 1칸 이동 ==> 이속 감소
+//        scenarios.add(new Speed(this, 100, firefighterNames, 3));                // 100 frame 부터 전체 FF의 이동소도 감소
+//        scenarios.add(new Speed(this, 10, new Range(29, 29, 35, 35), 10.0f));
+//
+//
+//        scenarios.add(new Speed(this, 10, new Range(16, 16, 48, 48), 2.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+//        scenarios.add(new Speed(this, 10, new Range(24, 24, 40, 40), 3.0f));
+//        scenarios.add(new Speed(this, 10, new Range(29, 29, 35, 35), 5.0f));
+//
+//
+//        scenarios.add(new Speed(this, 100, AmbulanceNames, 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
+//        scenarios.add(new Speed(this, 100, "Ambulance1", 7));
 //
 //        // TODO: sightRange
-//        scenarios.add(new SightRangeScenario(this, 100, "FF1", 5));                               // 특정 frame count 이후 FF1의 sight range 변화
-//        scenarios.add(new SightRangeScenario(this, 10, firefighterNames, 0));                    // 특정 frame count 이후 전체 FF의 sight range 변화
-//        scenarios.add(new SightRangeScenario(this, 800, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 sight range 변화
-//        scenarios.add(new SightRangeScenario(this, 1600, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 sight range 변화
-//        scenarios.add(new SightRangeScenario(this, 2400, firefighterNames, 1));                    // 특정 frame count 이후 전체 FF의 sight range 변화
-////        scenarios.add(new SightRangeScenario(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
+//        scenarios.add(new SightRange(this, 100, "FF1", 5));                               // 특정 frame count 이후 FF1의 sight range 변화
+//        scenarios.add(new SightRange(this, 10, firefighterNames, 0));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+//        scenarios.add(new SightRange(this, 800, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+//        scenarios.add(new SightRange(this, 1600, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+//        scenarios.add(new SightRange(this, 2400, firefighterNames, 1));                    // 특정 frame count 이후 전체 FF의 sight range 변화
+//        scenarios.add(new SightRange(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
 //
 //        // TODO: communicationRange (FF 관련)
-//        scenarios.add(new CommunicationRangeScenario(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
-        //scenarios.add(new CommunicationRangeScenario(this, 10, firefighterNames, 0));                    // 특정 frame count 이후 전체 FF의 communication range 변화
-//        scenarios.add(new CommunicationRangeScenario(this, 800, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
-//        scenarios.add(new CommunicationRangeScenario(this, 1600, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 communication range 변화
-//        scenarios.add(new CommunicationRangeScenario(this, 2400, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 communication range 변화
-////        scenarios.add(new CommunicationRangeScenario(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 communication range 변화
+//        scenarios.add(new CommunicationRange(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
+//        scenarios.add(new CommunicationRange(this, 10, firefighterNames, 0));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+//        scenarios.add(new CommunicationRange(this, 800, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+//        scenarios.add(new CommunicationRange(this, 1600, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+//        scenarios.add(new CommunicationRange(this, 2400, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+//        scenarios.add(new CommunicationRange(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 communication range 변화
 //
 //        // TODO: communication (1 to 1 casting), FF 제외?  FF가 org로 보내는 message는 포함
-//        scenarios.add(new CommunicationDelayScenario(this, 10, "ALL_DELAY", 300));            //
-//        scenarios.add(new CommunicationDelayScenario(this, 500,  "ALL_DELAY", 0));
+//        scenarios.add(new Delay(this, 10, "ALL_DELAY", 300));            //
+//        scenarios.add(new Delay(this, 500,  "ALL_DELAY", 0));
 //
-//        scenarios.add(new CommunicationDelayScenario(this, 10, "TO_ORG_DELAY", 130));
-//        scenarios.add(new CommunicationDelayScenario(this, 200,  "TO_ORG_DELAY", 0));
+//        scenarios.add(new Delay(this, 10, "TO_ORG_DELAY", 130));
+//        scenarios.add(new Delay(this, 200,  "TO_ORG_DELAY", 0));
 //
-//        scenarios.add(new CommunicationDelayScenario(this, 10, "FROM_ORG_DELAY", 130));
-//        scenarios.add(new CommunicationDelayScenario(this, 200,  "FROM_ORG_DELAY", 0));
+//        scenarios.add(new Delay(this, 10, "FROM_ORG_DELAY", 130));
+//        scenarios.add(new Delay(this, 200,  "FROM_ORG_DELAY", 0));
 //
-//        scenarios.add(new CommunicationDelayScenario(this, 10, "FF_TO_ORG_DELAY", 130));
-//        scenarios.add(new CommunicationDelayScenario(this, 200,  "FF_TO_ORG_DELAY", 0));
+//        scenarios.add(new Delay(this, 10, "FF_TO_ORG_DELAY", 130));
+//        scenarios.add(new Delay(this, 200,  "FF_TO_ORG_DELAY", 0));
 //
-//        scenarios.add(new CommunicationDelayScenario(this, 10, "ORG_TO_FF_DELAY", 130));
-//        scenarios.add(new CommunicationDelayScenario(this, 200,  "ORG_TO_FF_DELAY", 0));
+//        scenarios.add(new Delay(this, 10, "ORG_TO_FF_DELAY", 130));
+//        scenarios.add(new Delay(this, 200,  "ORG_TO_FF_DELAY", 0));
 //
-//        scenarios.add(new CommunicationDelayScenario(this, 10, "AMB_TO_ORG_DELAY", 300));
-//        scenarios.add(new CommunicationDelayScenario(this, 500,  "AMB_TO_ORG_DELAY", 0));
+//        scenarios.add(new Delay(this, 10, "AMB_TO_ORG_DELAY", 300));
+//        scenarios.add(new Delay(this, 500,  "AMB_TO_ORG_DELAY", 0));
 //
-//        scenarios.add(new CommunicationDelayScenario(this, 10, "ORG_TO_AMB_DELAY", 130));
-//        scenarios.add(new CommunicationDelayScenario(this, 200,  "ORG_TO_AMB_DELAY", 0));
+//        scenarios.add(new Delay(this, 10, "ORG_TO_AMB_DELAY", 130));
+//        scenarios.add(new Delay(this, 200,  "ORG_TO_AMB_DELAY", 0));
 //
-//        scenarios.add(new CommunicationDelayScenario(this, 10, "SZ_TO_ORG_DELAY", 130));
-//        scenarios.add(new CommunicationDelayScenario(this, 200,  "SZ_TO_ORG_DELAY", 0));
+//        scenarios.add(new Delay(this, 10, "SZ_TO_ORG_DELAY", 130));
+//        scenarios.add(new Delay(this, 200,  "SZ_TO_ORG_DELAY", 0));
 //
-//        scenarios.add(new CommunicationDelayScenario(this, 10, "ORG_TO_SZ_DELAY", 130));
-//        scenarios.add(new CommunicationDelayScenario(this, 200,  "ORG_TO_SZ_DELAY", 0));
+//        scenarios.add(new Delay(this, 10, "ORG_TO_SZ_DELAY", 130));
+//        scenarios.add(new Delay(this, 200,  "ORG_TO_SZ_DELAY", 0));
 //
-//        scenarios.add(new CommunicationDelayScenario(this, 10, "FF_RANGECAST_DELAY", 130));
-//        scenarios.add(new CommunicationDelayScenario(this, 200,  "FF_RANGECAST_DELAY", 0));
+//        scenarios.add(new Delay(this, 10, "FF_RANGECAST_DELAY", 130));
+//        scenarios.add(new Delay(this, 200,  "FF_RANGECAST_DELAY", 0));
 //
 //
 //        // TODO: FireFighter => Patient
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF1"));
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF2"));
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF3"));
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF4"));
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF5"));
-//        scenarios.add(new FireFighterToPatientScenario(this, 100, "FF6"));
+//        scenarios.add(new Injured(this, 100, "FF1"));
+//        scenarios.add(new Injured(this, 100, "FF2"));
+//        scenarios.add(new Injured(this, 100, "FF3"));
+//        scenarios.add(new Injured(this, 100, "FF4"));
+//        scenarios.add(new Injured(this, 100, "FF5"));
+//        scenarios.add(new Injured(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
-
-//        scenarios.add(new RemoveEntityScenario(this, 100, "FF1", this::removeCS));
+//
+//        scenarios.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
 ////
 //        // TODO: remove Ambulance1    ==> error 발생!! log 문제인듯
-//        scenarios.add(new RemoveEntityScenario(this, 100, "Ambulance1", this::removeCS));
-//        scenarios.add(new RemoveEntityScenario(this, 200, "Ambulance2", this::removeCS));
-//        scenarios.add(new RemoveEntityScenario(this, 300, "Ambulance3", this::removeCS));
-//        scenarios.add(new RemoveEntityScenario(this, 400, "Ambulance4", this::removeCS));
-
+//        scenarios.add(new RemoveEntity(this, 100, "Ambulance1", this::removeCS));
+//        scenarios.add(new RemoveEntity(this, 200, "Ambulance2", this::removeCS));
+//        scenarios.add(new RemoveEntity(this, 300, "Ambulance3", this::removeCS));
+//        scenarios.add(new RemoveEntity(this, 400, "Ambulance4", this::removeCS));
+//
 //        // TODO: add FireFighter
-        scenarios.add(new AddEntityScenario(this, 105, this::addFireFighter));
-        scenarios.add(new AddEntityScenario(this, 105, this::addFireFighter));
-        scenarios.add(new AddEntityScenario(this, 105, this::addFireFighter));
-        scenarios.add(new AddEntityScenario(this, 105, this::addFireFighter));
-
+//        scenarios.add(new AddEntity(this, 105, this::addFireFighter));
+//        scenarios.add(new AddEntity(this, 105, this::addFireFighter));
+//        scenarios.add(new AddEntity(this, 105, this::addFireFighter));
+//        scenarios.add(new AddEntity(this, 105, this::addFireFighter));
+//
 //
 //         // TODO: add Ambulance
-//        scenarios.add(new AddEntityScenario(this, 100, this::addAmbulance));
-//        scenarios.add(new AddEntityScenario(this, 100, this::addAmbulance));
-//        scenarios.add(new AddEntityScenario(this, 100, this::addAmbulance));
-//        scenarios.add(new AddEntityScenario(this, 100, this::addAmbulance));
+//        scenarios.add(new AddEntity(this, 100, this::addAmbulance));
+//        scenarios.add(new AddEntity(this, 100, this::addAmbulance));
+//        scenarios.add(new AddEntity(this, 100, this::addAmbulance));
+//        scenarios.add(new AddEntity(this, 100, this::addAmbulance));
 
 
 

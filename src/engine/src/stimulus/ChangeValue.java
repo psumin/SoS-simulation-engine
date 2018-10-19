@@ -5,7 +5,6 @@ import core.Tile;
 import core.World;
 import misc.Range;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +14,7 @@ import java.util.ArrayList;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class ChangeValueScenario extends Scenario {
+public class ChangeValue extends Scenario {
     protected Object targetObject;
     protected Range tileRange;
     protected ArrayList<String> targetNames;
@@ -23,17 +22,17 @@ public class ChangeValueScenario extends Scenario {
     protected String fieldName;
     protected Object value;
 
-    //
-    public ChangeValueScenario(World world, int frame, Object targetObject, String fieldName, Object value) {
-        super(world, frame);
-
-        this.targetObject = targetObject;
-        this.fieldName = fieldName;
-        this.value = value;
-    }
+    // sight range, communication range
+//    public ChangeValue(World world, int frame, Object targetObject, String fieldName, Object value) {
+//        super(world, frame);
+//
+//        this.targetObject = targetObject;
+//        this.fieldName = fieldName;
+//        this.value = value;
+//    }
 
     // Tile 범위 설정
-    public ChangeValueScenario(World world, int frame, Range tileRange, String fieldName, Object value) {
+    public ChangeValue(World world, int frame, Range tileRange, String fieldName, Object value) {
         super(world, frame);
 
         this.tileRange = tileRange;
@@ -42,7 +41,7 @@ public class ChangeValueScenario extends Scenario {
     }
 
 //    // Tile 범위 설정 + targetObject 설정
-//    public ChangeValueScenario(World world, int frame, Object targetObject, Range tileRange, String fieldName, Object value) {
+//    public ChangeValue(World world, int frame, Object targetObject, Range tileRange, String fieldName, Object value) {
 //        super(world, frame);
 //
 //        this.tileRange = tileRange;
@@ -52,7 +51,7 @@ public class ChangeValueScenario extends Scenario {
 //    }
 
     // CS 전체
-    public ChangeValueScenario(World world, int frame, ArrayList<String> targetNames, String fieldName, Object value) {
+    public ChangeValue(World world, int frame, ArrayList<String> targetNames, String fieldName, Object value) {
         super(world, frame);
 
         this.targetNames = targetNames;
@@ -60,7 +59,8 @@ public class ChangeValueScenario extends Scenario {
         this.value = value;
     }
 
-    public ChangeValueScenario(World world, int frame, String targetName, String fieldName, Object value) {
+    // 얘 안쓰이는 것 같은데...???
+    public ChangeValue(World world, int frame, String targetName, String fieldName, Object value) {
         super(world, frame);
 
         this.targetName = targetName;
@@ -88,7 +88,7 @@ public class ChangeValueScenario extends Scenario {
                 for(int x = tileRange.left; x <= tileRange.right; ++x) {
                     Tile tile = world.map.getTile(x, y);
                     if(tile != null) {
-                        setField(tile, fieldName, value);
+                        Reflection.setField(tile, fieldName, value);
                     }
                 }
             }
@@ -96,42 +96,14 @@ public class ChangeValueScenario extends Scenario {
         }
 
         if(targetObject != null) {
-            setField(targetObject, fieldName, value);
+            Reflection.setField(targetObject, fieldName, value);
             return;
         }
     }
     private void setField(String targetName) {
         SoSObject singleTarget = world.findObject(targetName);
         if (singleTarget != null) {
-            setField(singleTarget, fieldName, value);
-        }
-    }
-
-
-    public static boolean setField(Object targetObject, String fieldName, Object fieldValue) {
-        Field field;
-        try {
-            field = targetObject.getClass().getDeclaredField(fieldName);
-        } catch (NoSuchFieldException e) {
-            field = null;
-        }
-        Class superClass = targetObject.getClass().getSuperclass();
-        while (field == null && superClass != null) {
-            try {
-                field = superClass.getDeclaredField(fieldName);
-            } catch (NoSuchFieldException e) {
-                superClass = superClass.getSuperclass();
-            }
-        }
-        if (field == null) {
-            return false;
-        }
-        field.setAccessible(true);
-        try {
-            field.set(targetObject, fieldValue);
-            return true;
-        } catch (IllegalAccessException e) {
-            return false;
+            Reflection.setField(singleTarget, fieldName, value);
         }
     }
 }
