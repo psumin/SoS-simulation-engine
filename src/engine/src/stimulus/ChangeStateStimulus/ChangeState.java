@@ -1,9 +1,10 @@
-package stimulus;
+package stimulus.ChangeStateStimulus;
 
 import action.firefighteraction.FireFighterDead;
 import agents.FireFighter;
 import core.World;
 import misc.Position;
+import stimulus.Scenario;
 
 /**
  * Project: NewSimulator

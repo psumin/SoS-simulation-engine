@@ -1,9 +1,11 @@
-package stimulus;
+package stimulus.ChangeValueStimulus;
 
 import core.SoSObject;
 import core.Tile;
 import core.World;
 import misc.Range;
+import stimulus.Reflection;
+import stimulus.Scenario;
 
 import java.util.ArrayList;
 
@@ -23,7 +25,7 @@ public class ChangeValue extends Scenario {
     protected Object value;
 
     // sight range, communication range
-//    public ChangeValue(World world, int frame, Object targetObject, String fieldName, Object value) {
+//    public ChangeValueStimulus(World world, int frame, Object targetObject, String fieldName, Object value) {
 //        super(world, frame);
 //
 //        this.targetObject = targetObject;
@@ -41,7 +43,7 @@ public class ChangeValue extends Scenario {
     }
 
 //    // Tile 범위 설정 + targetObject 설정
-//    public ChangeValue(World world, int frame, Object targetObject, Range tileRange, String fieldName, Object value) {
+//    public ChangeValueStimulus(World world, int frame, Object targetObject, Range tileRange, String fieldName, Object value) {
 //        super(world, frame);
 //
 //        this.tileRange = tileRange;

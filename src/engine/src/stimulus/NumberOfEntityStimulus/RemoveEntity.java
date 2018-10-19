@@ -1,4 +1,4 @@
-package stimulus;
+package stimulus.NumberOfEntityStimulus;
 
 import core.World;
 

@@ -1,7 +1,8 @@
-package stimulus;
+package stimulus.NumberOfEntityStimulus;
 
 import action.Func;
 import core.World;
+import stimulus.Scenario;
 
 import java.util.function.Consumer;
 

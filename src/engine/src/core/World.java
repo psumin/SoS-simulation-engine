@@ -11,6 +11,13 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import stimulus.*;
+import stimulus.ChangeStateStimulus.Injured;
+import stimulus.ChangeValueStimulus.CommunicationRange;
+import stimulus.ChangeValueStimulus.SightRange;
+import stimulus.ChangeValueStimulus.Speed;
+import stimulus.MessageStimulus.Delay;
+import stimulus.NumberOfEntityStimulus.AddEntity;
+import stimulus.NumberOfEntityStimulus.RemoveEntity;
 
 import java.awt.*;
 import java.awt.Color;
@@ -618,13 +625,13 @@ public class World extends SoSObject{
 //        // TODO: remove FireFighter1
 //
 //        scenarios.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
-////
-//        // TODO: remove Ambulance1    ==> error 발생!! log 문제인듯
+//
+        // TODO: remove Ambulance1    ==> error 발생!! log 문제인듯
 //        scenarios.add(new RemoveEntity(this, 100, "Ambulance1", this::removeCS));
 //        scenarios.add(new RemoveEntity(this, 200, "Ambulance2", this::removeCS));
 //        scenarios.add(new RemoveEntity(this, 300, "Ambulance3", this::removeCS));
 //        scenarios.add(new RemoveEntity(this, 400, "Ambulance4", this::removeCS));
-//
+
 //        // TODO: add FireFighter
 //        scenarios.add(new AddEntity(this, 105, this::addFireFighter));
 //        scenarios.add(new AddEntity(this, 105, this::addFireFighter));
@@ -637,9 +644,6 @@ public class World extends SoSObject{
 //        scenarios.add(new AddEntity(this, 100, this::addAmbulance));
 //        scenarios.add(new AddEntity(this, 100, this::addAmbulance));
 //        scenarios.add(new AddEntity(this, 100, this::addAmbulance));
-
-
-
     }
 
     void removeCS(String csName) {

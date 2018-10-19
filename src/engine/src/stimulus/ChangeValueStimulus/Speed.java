@@ -1,4 +1,4 @@
-package stimulus;
+package stimulus.ChangeValueStimulus;
 
 import core.World;
 import misc.Range;

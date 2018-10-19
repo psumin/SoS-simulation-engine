@@ -1,4 +1,4 @@
-package stimulus;
+package stimulus.MessageStimulus;
 
 import core.World;
 

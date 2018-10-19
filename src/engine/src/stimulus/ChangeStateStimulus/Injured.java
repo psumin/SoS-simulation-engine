@@ -1,4 +1,4 @@
-package stimulus;
+package stimulus.ChangeStateStimulus;
 
 import core.World;
 
