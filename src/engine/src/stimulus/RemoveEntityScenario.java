@@ -1,5 +1,6 @@
 package stimulus;
 
+import action.Func;
 import core.World;
 
 import java.util.function.Consumer;
@@ -11,24 +12,9 @@ import java.util.function.Consumer;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class RemoveEntityScenario extends Scenario {
-
-
-    private Consumer<String> onExecute;
-    private String param;
-
-    // remove
+public class RemoveEntityScenario extends NumberOfEntityScenario {
     public RemoveEntityScenario(World world, int frame, String param1, Consumer<String> function) {
-        super(world, frame);
-        onExecute = function;
-        this.param = param1;
-    }
-
-    @Override
-    public void execute() {
-        if(onExecute != null) {
-            onExecute.accept(param);
-        }
+        super(world,frame, param1, function);
     }
 }
 

@@ -3,8 +3,6 @@ package stimulus;
 import action.Func;
 import core.World;
 
-import java.util.function.Consumer;
-
 /**
  * Project: NewSimulator
  * Created by IntelliJ IDEA
@@ -12,21 +10,8 @@ import java.util.function.Consumer;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class AddEntityScenario extends Scenario {
-
-    private Func onExecute;
-
-    // add
+public class AddEntityScenario extends NumberOfEntityScenario {
     public AddEntityScenario(World world, int frame, Func function) {
-        super(world, frame);
-        onExecute = function;
-    }
-
-    @Override
-    public void execute() {
-        if(onExecute != null) {
-            onExecute.invoke();
-            return;
-        }
+        super(world, frame, function);
     }
 }
