@@ -29,6 +29,7 @@ public class FireFighter extends CS {
     public ImageObject transferImage;
     public ImageObject defaultImage;
     public ImageObject moveToPatient;
+    public ImageObject firstAid;
 
 
     public int defaultSightRange = 7;               // Fire fighter's sight range
@@ -41,14 +42,17 @@ public class FireFighter extends CS {
         transferImage = new ImageObject("src/engine/resources/transfer1.png");
         defaultImage = new ImageObject("src/engine/resources/firefighter1.png");
         moveToPatient = new ImageObject("src/engine/resources/moveToPatient1.png");
+        firstAid = new ImageObject("src/engine/resources/firstAid.png");
 
         transferImage.visible(false);
         defaultImage.visible(true);
         moveToPatient.visible(false);
+        firstAid.visible(false);
 
         addChild(transferImage);
         addChild(defaultImage);
         addChild(moveToPatient);
+        addChild(firstAid);
 
         individualMap = new Map();
         LinkedList<Tile> temp = new LinkedList<>(individualMap.getTiles());
