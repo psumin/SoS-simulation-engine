@@ -6,6 +6,8 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -63,15 +65,15 @@ public class MsgRouter extends SoSObject {
     World world;
     Map worldMap;
 
-    private SXSSFWorkbook workbook;
-    private SXSSFSheet sheet;
+    private XSSFWorkbook workbook;
+    private XSSFSheet sheet;
     private int rowNum = 0;
 
     private Row currentRow;
     CellStyle centerAlignmentStyle;
 
     // For the log. Save at the Excel
-    public MsgRouter(World world, SXSSFWorkbook workbook) {
+    public MsgRouter(World world, XSSFWorkbook workbook) {
         centerAlignmentStyle = workbook.createCellStyle();
         centerAlignmentStyle.setAlignment(HorizontalAlignment.CENTER);
 
@@ -80,7 +82,7 @@ public class MsgRouter extends SoSObject {
 
         this.workbook = workbook;
         sheet = workbook.createSheet("communications");;
-        sheet.trackAllColumnsForAutoSizing();
+        //sheet.trackAllColumnsForAutoSizing();
 
         currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
         Row row = currentRow;
@@ -264,7 +266,9 @@ public class MsgRouter extends SoSObject {
 
         for(Tile tile: tiles) {
             tile.fireFighters.forEach(fireFighter -> {
-                if(fireFighter != sender) {
+                if(fireFighter.currentAction.name.startsWith("Removed") || fireFighter.currentAction.name.startsWith("Dead")) {
+
+                } else if(fireFighter != sender) {
 
                     Msg copiedMsg = new Msg()
                             .setFrom(msg.from)

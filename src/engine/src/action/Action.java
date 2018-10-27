@@ -43,5 +43,4 @@ public class Action extends SoSObject {
         }
         stop();
     }
-
 }

@@ -39,7 +39,7 @@ public class ExcelHelper {
 
     public static Row getRow(Sheet sheet, int rowNum) {
         Row row = sheet.getRow(rowNum);
-        if(row == null) {
+        if (row == null) {
             row = sheet.createRow(rowNum);
         }
         return row;

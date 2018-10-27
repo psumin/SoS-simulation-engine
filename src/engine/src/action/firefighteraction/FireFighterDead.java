@@ -6,6 +6,6 @@ public class FireFighterDead extends FireFighterAction {
     public FireFighterDead(FireFighter target) {
         super(target);
 
-        name = "Dead";
+        name = "Halt";
     }
 }

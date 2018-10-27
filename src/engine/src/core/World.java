@@ -1,6 +1,5 @@
 package core;
 
-import action.firefighteraction.FireFighterDead;
 import agents.*;
 import misc.ExcelHelper;
 import misc.Position;
@@ -8,8 +7,8 @@ import misc.Position;
 import misc.Range;
 import misc.Time;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import stimulus.*;
 import stimulus.ChangeStateStimulus.Injured;
 import stimulus.ChangeValueStimulus.CommunicationRange;
@@ -59,12 +58,12 @@ public class World extends SoSObject{
     public static final String fireFighterPrefix = "FF";
     //public static final String ambulancePrefix = "AM";
 
-    SXSSFWorkbook workbook = new SXSSFWorkbook();
-    SXSSFSheet statisticsSheet;
-    SXSSFSheet hospitalSheet;
-    SXSSFSheet patientSheet;
-    SXSSFSheet ambulanceSheet;
-    SXSSFSheet fireFighterSheet;
+    XSSFWorkbook workbook = new XSSFWorkbook();
+    XSSFSheet statisticsSheet;
+    XSSFSheet hospitalSheet;
+    XSSFSheet patientSheet;
+    XSSFSheet ambulanceSheet;
+    XSSFSheet fireFighterSheet;
 
     CellStyle headerStyle;
 
@@ -79,19 +78,19 @@ public class World extends SoSObject{
 //        patientSheet = workbook.createSheet("patients");
 
         statisticsSheet = workbook.createSheet("statistics");
-        statisticsSheet.trackAllColumnsForAutoSizing();
+        //statisticsSheet.trackAllColumnsForAutoSizing();
 
         hospitalSheet = workbook.createSheet("hospitals");
-        hospitalSheet.trackAllColumnsForAutoSizing();
+        //hospitalSheet.trackAllColumnsForAutoSizing();
 
         patientSheet = workbook.createSheet("patients");
-        patientSheet.trackAllColumnsForAutoSizing();
+        //patientSheet.trackAllColumnsForAutoSizing();
 
         ambulanceSheet = workbook.createSheet("ambulances");
-        ambulanceSheet.trackAllColumnsForAutoSizing();
+        //ambulanceSheet.trackAllColumnsForAutoSizing();
 
         fireFighterSheet = workbook.createSheet("fire fighters");
-        fireFighterSheet.trackAllColumnsForAutoSizing();
+        //fireFighterSheet.trackAllColumnsForAutoSizing();
 
         headerStyle = workbook.createCellStyle();
         headerStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -294,20 +293,10 @@ public class World extends SoSObject{
         // i * 2
         // i * 2 + 1
 
-        if(frameCount == 0) {
-            Row row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
-            Cell frameCountCell = row.createCell(0);
-            frameCountCell.setCellValue("frame count");
-            Cell[] positionCells = new Cell[fireFighters.size()];
-
-            for(int i = 0; i < fireFighters.size(); ++i) {
-                Cell currentCell = row.createCell(i * 2 + 1);
-                String position = fireFighters.get(i).position.toString();
-                currentCell.setCellValue("FF" + (i + 1) + " pos");
-
-                currentCell = row.createCell(  i * 2 + 2);
-                currentCell.setCellValue("FF" + (i + 1) + " Status");
-            }
+        ExcelHelper.getCell(fireFighterSheet, 0, 0).setCellValue(frameCount);
+        for(int i = 0; i < fireFighters.size(); ++i) {
+            ExcelHelper.getCell(fireFighterSheet, 0, i * 2 + 1).setCellValue("FF" + (i + 1) + " pos");
+            ExcelHelper.getCell(fireFighterSheet, 0, i * 2 + 2).setCellValue("FF" + (i + 1) + " Status");
         }
 
         Row row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
@@ -343,28 +332,19 @@ public class World extends SoSObject{
 
 
     private void printAmbulanceLog(boolean isFinish) {
-        if(frameCount == 0) {
-            Row row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
-            Cell frameCountCell = row.createCell(0);
-            frameCountCell.setCellValue("frame count");
-            Cell[] positionCells = new Cell[maxAmbulance];
 
-            for(int i = 0; i < maxAmbulance; ++i) {
-                Cell currentCell = row.createCell(i * 2 + 1);
-                String position = ambulances.get(i).position.toString();
-                currentCell.setCellValue("Amb" + (i + 1) + " pos");
-
-                currentCell = row.createCell(  i * 2 + 2);
-                currentCell.setCellValue("Amb" + (i + 1) + " Status");
-            }
+        ExcelHelper.getCell(ambulanceSheet, 0, 0).setCellValue("frame count");
+        for(int i = 0; i < maxAmbulance; ++i) {
+            ExcelHelper.getCell(ambulanceSheet, 0, i * 2 + 1).setCellValue("Amb" + (i + 1) + " pos");
+            ExcelHelper.getCell(ambulanceSheet, 0, i * 2 + 1).setCellValue("Amb" + (i + 1) + " Status");
         }
 
         Row row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
         Cell frameCountCell = row.createCell(0);
         frameCountCell.setCellValue(frameCount);
-        Cell[] positionCells = new Cell[maxAmbulance];
+        Cell[] positionCells;
 
-        for(int i = 0; i < maxAmbulance; ++i) {
+        for(int i = 0; i < ambulances.size(); ++i) {
             Cell currentCell = row.createCell(i * 2 + 1);
 
             String position = ambulances.get(i).position.toString();
@@ -379,9 +359,9 @@ public class World extends SoSObject{
             row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
             frameCountCell = row.createCell(0);
             frameCountCell.setCellValue("total distance");
-            positionCells = new Cell[maxAmbulance];
+            positionCells = new Cell[ambulances.size()];
 
-            for(int i = 0; i < maxAmbulance; ++i) {
+            for(int i = 0; i < ambulances.size(); ++i) {
                 Cell currentCell = row.createCell(i * 2 + 1);
                 positionCells[i] = currentCell;
 
@@ -631,6 +611,10 @@ public class World extends SoSObject{
 //        // TODO: remove FireFighter1
 //
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 150, "FF2", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 200, "FF3", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 250, "FF4", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 250, "FF44", this::removeCS));
 //
 //        // TODO: remove Ambulance1    ==> error 발생!! log 문제인듯
 //        stimuli.add(new RemoveEntity(this, 100, "Ambulance1", this::removeCS));
@@ -656,14 +640,11 @@ public class World extends SoSObject{
         SoSObject obj = findObject(csName);
         if(obj == null) return;
 
-        if(obj instanceof FireFighter) {
-            map.remove((FireFighter)obj);
-            //fireFighters.remove(obj);
-            FireFighter fireFighter = (FireFighter)obj;
-            fireFighter.changeAction(new FireFighterDead(fireFighter));
-        } else if(obj instanceof Ambulance) {
-            ambulances.remove(obj);
-        }
+
+        CS cs = (CS)obj;
+        cs.visible(false);
+        cs.canUpdate(false);
+        cs.currentAction.name = "Removed";
         removeChild(obj);
     }
 

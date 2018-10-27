@@ -5,10 +5,7 @@ import core.SoSObject;
 import core.World;
 import misc.Time;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import static core.World.fireFighterPrefix;
 
@@ -69,6 +66,15 @@ public class Organization extends CS {
             msgsFromSafeZone.add(msg);
         } else {
             SafeZone safeZone = (SafeZone)msg.data;
+
+            ArrayList<Ambulance> mustRemove = new ArrayList<Ambulance>();
+            for(Ambulance amb: freeStateAmbulances) {
+                if(amb.currentAction.name.startsWith("Removed")) {
+                    mustRemove.add(amb);
+                }
+            }
+            freeStateAmbulances.removeAll(mustRemove);
+
 
             Ambulance ambulance = (Ambulance)safeZone.nearestObject(new ArrayList<SoSObject>(freeStateAmbulances));
             freeStateAmbulances.remove(ambulance);
