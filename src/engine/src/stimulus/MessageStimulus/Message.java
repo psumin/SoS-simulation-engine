@@ -1,12 +1,9 @@
 package stimulus.MessageStimulus;
 
 
-import core.SoSObject;
 import core.World;
 import stimulus.Reflection;
-import stimulus.Scenario;
-
-import java.lang.reflect.Field;
+import stimulus.Stimulus;
 
 /**
  * Project: NewSimulator
@@ -15,7 +12,7 @@ import java.lang.reflect.Field;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class Message extends Scenario {
+public class Message extends Stimulus {
     protected Object targetObject;
     protected String fieldName;
     protected Object value;

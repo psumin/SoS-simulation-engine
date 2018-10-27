@@ -5,7 +5,7 @@ import core.Tile;
 import core.World;
 import misc.Range;
 import stimulus.Reflection;
-import stimulus.Scenario;
+import stimulus.Stimulus;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class ChangeValue extends Scenario {
+public class ChangeValue extends Stimulus {
     protected Object targetObject;
     protected Range tileRange;
     protected ArrayList<String> targetNames;

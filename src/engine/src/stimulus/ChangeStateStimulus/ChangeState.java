@@ -4,7 +4,7 @@ import action.firefighteraction.FireFighterDead;
 import agents.FireFighter;
 import core.World;
 import misc.Position;
-import stimulus.Scenario;
+import stimulus.Stimulus;
 
 /**
  * Project: NewSimulator
@@ -13,7 +13,7 @@ import stimulus.Scenario;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class ChangeState extends Scenario {
+public class ChangeState extends Stimulus {
 
     String fireFighterName;
 

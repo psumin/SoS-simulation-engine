@@ -2,11 +2,11 @@ package stimulus.NumberOfEntityStimulus;
 
 import action.Func;
 import core.World;
-import stimulus.Scenario;
+import stimulus.Stimulus;
 
 import java.util.function.Consumer;
 
-public class NumberOfEntity extends Scenario {
+public class NumberOfEntity extends Stimulus {
 
     private Func onExecute;
     private Consumer<String> onExecute1;
