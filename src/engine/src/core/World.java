@@ -426,12 +426,18 @@ public class World extends SoSObject{
         // Total runtime
         ExcelHelper.getCell(row, 0).setCellValue("Runtime");
         ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
+        if(endTime == 0) {
+            endTime = System.currentTimeMillis();
+        }
         ExcelHelper.getCell(row, 1).setCellValue(((endTime - startTime) / 1000) + " s");
         row = ExcelHelper.nextRow(row);
 
         // end Frame
         ExcelHelper.getCell(row, 0).setCellValue("Run frame");
         ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
+        if(endFrame == 0) {
+            endFrame = frameCount;
+        }
         ExcelHelper.getCell(row, 1).setCellValue(endFrame);
         row = ExcelHelper.nextRow(row);
 
