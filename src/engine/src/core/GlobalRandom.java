@@ -23,6 +23,10 @@ public class GlobalRandom {
         return new Position(random.nextInt(boundX), random.nextInt(boundY));
     }
 
+    public static Position nextPosition(int startX, int endX, int startY, int endY) {
+        return new Position(random.nextInt(endX - startX) + startX, random.nextInt(endY - startY) + startY);
+    }
+
     public static int nextInt(int bound) {
         return random.nextInt(bound);
     }

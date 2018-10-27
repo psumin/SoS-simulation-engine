@@ -127,7 +127,9 @@ public class World extends SoSObject{
             Position randomPosition = null;
 
             while(true) {
-                randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
+                //randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
+                randomPosition = GlobalRandom.nextPosition(Map.mapSize.width / 8, 7 * Map.mapSize.width / 8,
+                        Map.mapSize.height / 8, 7 * Map.mapSize.width / 8);
                 boolean isSafeZone = false;
                 for(SafeZone zone: safeZones) {
                     if(zone.isSafeZone(randomPosition)) {
@@ -202,10 +204,10 @@ public class World extends SoSObject{
 //        safeZones.get(1).setPosition(new Position(3 * Map.mapSize.width / 4, Map.mapSize.height / 4));
 //        safeZones.get(2).setPosition(new Position(3 * Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
 //        safeZones.get(3).setPosition(new Position(Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
-        safeZones.get(0).setPosition(new Position(Map.mapSize.width / 6, Map.mapSize.height / 6));
-        safeZones.get(1).setPosition(new Position(5 * Map.mapSize.width / 6, Map.mapSize.height / 6));
-        safeZones.get(2).setPosition(new Position(5 * Map.mapSize.width / 6, 5 * Map.mapSize.height / 6));
-        safeZones.get(3).setPosition(new Position(Map.mapSize.width / 6, 5 * Map.mapSize.height / 6));
+        safeZones.get(0).setPosition(new Position(Map.mapSize.width / 8, Map.mapSize.height / 8));
+        safeZones.get(1).setPosition(new Position(7 * Map.mapSize.width / 8, Map.mapSize.height / 8));
+        safeZones.get(2).setPosition(new Position(7 * Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
+        safeZones.get(3).setPosition(new Position(Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
 
     }
 
@@ -482,7 +484,9 @@ public class World extends SoSObject{
             Position randomPosition = null;
 
             while (true) {
-                randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
+                //randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
+                randomPosition = GlobalRandom.nextPosition(Map.mapSize.width / 8, 7 * Map.mapSize.width / 8,
+                        Map.mapSize.height / 8, 7 * Map.mapSize.width / 8);
                 boolean isSafeZone = false;
                 for (SafeZone zone : safeZones) {
                     if (zone.isSafeZone(randomPosition)) {
@@ -611,29 +615,32 @@ public class World extends SoSObject{
 //        // TODO: remove FireFighter1
 //
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 150, "FF2", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 200, "FF3", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 250, "FF4", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 250, "FF44", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 110, "FF2", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 120, "FF3", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 130, "FF4", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 140, "FF5", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 150, "FF6", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 160, "FF7", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 170, "FF8", this::removeCS));
 //
 //        // TODO: remove Ambulance1    ==> error 발생!! log 문제인듯
 //        stimuli.add(new RemoveEntity(this, 100, "Ambulance1", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 200, "Ambulance2", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 300, "Ambulance3", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 400, "Ambulance4", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 120, "Ambulance2", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 130, "Ambulance3", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 140, "Ambulance4", this::removeCS));
 //
 //        // TODO: add FireFighter
-//        stimuli.add(new AddEntity(this, 105, this::addFireFighter));
-//        stimuli.add(new AddEntity(this, 105, this::addFireFighter));
-//        stimuli.add(new AddEntity(this, 105, this::addFireFighter));
-//        stimuli.add(new AddEntity(this, 105, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 205, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 205, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 205, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 205, this::addFireFighter));
 //
 //
 //         // TODO: add Ambulance
-//        stimuli.add(new AddEntity(this, 100, this::addAmbulance));
-//        stimuli.add(new AddEntity(this, 100, this::addAmbulance));
-//        stimuli.add(new AddEntity(this, 100, this::addAmbulance));
-//        stimuli.add(new AddEntity(this, 100, this::addAmbulance));
+//        stimuli.add(new AddEntity(this, 200, this::addAmbulance));
+//        stimuli.add(new AddEntity(this, 210, this::addAmbulance));
+//        stimuli.add(new AddEntity(this, 220, this::addAmbulance));
+//        stimuli.add(new AddEntity(this, 230, this::addAmbulance));
     }
 
     void removeCS(String csName) {
