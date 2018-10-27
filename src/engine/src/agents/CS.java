@@ -37,17 +37,17 @@ public class CS extends SoSObject {
     public Position nextPosition(Position destination) {
         int differenceX = destination.x - position.x;
         int differenceY = destination.y - position.y;
-        int distantX = Math.abs(differenceX);
-        int distantY = Math.abs(differenceY);
+        int distanceX = Math.abs(differenceX);
+        int distanceY = Math.abs(differenceY);
 
-        if(distantX + distantY == 0) {
+        if(distanceX + distanceY == 0) {
             return null;
         }
 
-        if(distantX > distantY) {
-            return new Position(position.x + differenceX / distantX, position.y);
+        if(distanceX > distanceY) {
+            return new Position(position.x + differenceX / distanceX, position.y);
         } else {
-            return new Position(position.x, position.y + differenceY / distantY);
+            return new Position(position.x, position.y + differenceY / distanceY);
         }
     }
 
