@@ -5,6 +5,7 @@ import agents.Patient;
 import misc.Position;
 import misc.Size;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -16,8 +17,8 @@ import java.util.ArrayList;
 
 public class Tile extends SoSObject {
 
-    SoSObject light;        // For visited tiles
-    SoSObject dark;         // For unvisited tiles
+    ImageObject light;        // For visited tiles
+    ImageObject dark;         // For unvisited tiles
 
     // Initial values
     public float moveDelayFactor = 1;
@@ -80,5 +81,10 @@ public class Tile extends SoSObject {
 //            }
 //        }
 //        return false;
+    }
+
+    @Override
+    public void onUpdate() {
+        light.setColor(new Color(255, 255 - (int)(255 * (moveDelayFactor - 1) / 7), 255 - (int)(255 * (moveDelayFactor - 1)/ 7)));
     }
 }

@@ -14,6 +14,7 @@ public class ImageObject extends SoSObject {
 
     SoSImage image;
     float scale = 1;
+    Color color = null;
     public ImageObject(String filePath) {
         setImage(filePath);
     }
@@ -28,13 +29,24 @@ public class ImageObject extends SoSObject {
         image = SoSImage.create(filePath);
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     @Override
     // Change the scale of the image
     protected void onRender(Graphics2D g) {
         BufferedImage bufImage = image.getImage();
         g.translate((int)(-scale / 2) * Map.tileSize.width, (int)(-scale / 2) * Map.tileSize.height);
         g.scale(scale, scale);
-        g.drawImage(bufImage, 0, 0, Map.tileSize.width, Map.tileSize.height, null);
+        if(color != null) {
+            g.setColor(color);
+            g.fillRect(0, 0, Map.tileSize.width - 1, Map.tileSize.height - 1);
+
+            // paint original with composite
+            g.setComposite(AlphaComposite.DstIn);
+        }
+        g.drawImage(bufImage, 0, 0, Map.tileSize.width - 0, Map.tileSize.height - 0, null);
     }
 
     @Override

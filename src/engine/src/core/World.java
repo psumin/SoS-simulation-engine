@@ -101,7 +101,7 @@ public class World extends SoSObject{
 
         map = new Map();
         addChild(map);
-        map.canUpdate(false);
+        //map.canUpdate(false);
 
         // Create map first and then create router
         router = new MsgRouter(this, workbook);
@@ -554,6 +554,11 @@ public class World extends SoSObject{
 //        stimuli.add(new Speed(this, 10, new Range(29, 29, 35, 35), 10.0f));
 //
 //
+        stimuli.add(new Speed(this, 10, new Range(3, 3, 61, 61), 2.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+        stimuli.add(new Speed(this, 10, new Range(4, 4, 60, 60), 5.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+        stimuli.add(new Speed(this, 10, new Range(5, 5, 59, 59), 6.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+        stimuli.add(new Speed(this, 10, new Range(6, 6, 58, 58), 7.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+        stimuli.add(new Speed(this, 10, new Range(7, 7, 57, 57), 8.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
 //        stimuli.add(new Speed(this, 10, new Range(16, 16, 48, 48), 2.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
 //        stimuli.add(new Speed(this, 10, new Range(24, 24, 40, 40), 3.0f));
 //        stimuli.add(new Speed(this, 10, new Range(29, 29, 35, 35), 5.0f));
@@ -569,6 +574,7 @@ public class World extends SoSObject{
 //        stimuli.add(new SightRange(this, 1600, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 sight range 변화
 //        stimuli.add(new SightRange(this, 2400, firefighterNames, 1));                    // 특정 frame count 이후 전체 FF의 sight range 변화
 //        stimuli.add(new SightRange(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
+//        stimuli.add(new SightRange(this, 10, new Range(0, 0, 64, 64), 3.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
 //
 //        // TODO: communicationRange (FF 관련)
 //        stimuli.add(new CommunicationRange(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
