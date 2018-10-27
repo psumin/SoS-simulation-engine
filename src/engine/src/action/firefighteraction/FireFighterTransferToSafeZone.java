@@ -46,6 +46,7 @@ public class FireFighterTransferToSafeZone extends FireFighterAction {
             fireFighter.changeAction(new FireFighterSearch(fireFighter));       // Change the Firefighter's action to "Search"
             fireFighter.transferImage.visible(false);
             fireFighter.defaultImage.visible(true);
+            world.rescuedPatientCount++;
         }
     }
 }

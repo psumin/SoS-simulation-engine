@@ -71,6 +71,8 @@ public class World extends SoSObject{
     long endTime = 0;
     long endFrame = 0;
 
+    public int rescuedPatientCount = 0;
+
     public World() {
         startTime = System.currentTimeMillis();
 
@@ -276,17 +278,21 @@ public class World extends SoSObject{
             Row row = patientSheet.createRow(patientSheet.getPhysicalNumberOfRows());
             Cell frameCountCell = row.createCell(0);
             Cell savedPatientCell = row.createCell(1);
+            Cell rescuedPatientCell = row.createCell(2);
 
             frameCountCell.setCellValue("frame count");
-            savedPatientCell.setCellValue("number of rescued patients");
+            savedPatientCell.setCellValue("number of treated patients");
+            rescuedPatientCell.setCellValue("number of rescued patients");
         }
 
         Row row = patientSheet.createRow(patientSheet.getPhysicalNumberOfRows());
         Cell frameCountCell = row.createCell(0);
         Cell savedPatientCell = row.createCell(1);
+        Cell rescuedPatientCell = row.createCell(2);
 
         frameCountCell.setCellValue(frameCount);
         savedPatientCell.setCellValue(savedPatientCount);
+        rescuedPatientCell.setCellValue(rescuedPatientCount);
     }
 
 
