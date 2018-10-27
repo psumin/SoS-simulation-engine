@@ -271,6 +271,8 @@ public class MsgRouter extends SoSObject {
                             .setTo(fireFighter.name)
                             .setTitle(msg.title)
                             .setData(msg.data);
+                    copiedMsg.id--;
+                    copiedMsg.idCounter--;
 
                     route(copiedMsg);
                     //

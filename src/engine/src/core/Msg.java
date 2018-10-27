@@ -9,7 +9,7 @@ package core;
 
 public class Msg {
 
-    private static int idCounter = 0;
+    public static int idCounter = 0;
 
     public int id;
     public String from;
