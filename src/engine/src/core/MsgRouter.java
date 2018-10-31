@@ -65,8 +65,8 @@ public class MsgRouter extends SoSObject {
     World world;
     Map worldMap;
 
-    private XSSFWorkbook workbook;
-    private XSSFSheet sheet;
+//    private XSSFWorkbook workbook;
+//    private XSSFSheet sheet;
     private int rowNum = 0;
 
     private Row currentRow;
@@ -74,19 +74,19 @@ public class MsgRouter extends SoSObject {
 
     // For the log. Save at the Excel
     public MsgRouter(World world, XSSFWorkbook workbook) {
-        centerAlignmentStyle = workbook.createCellStyle();
-        centerAlignmentStyle.setAlignment(HorizontalAlignment.CENTER);
+//        centerAlignmentStyle = workbook.createCellStyle();
+//        centerAlignmentStyle.setAlignment(HorizontalAlignment.CENTER);
 
         this.world = world;
         worldMap = world.getMap();
 
-        this.workbook = workbook;
-        sheet = workbook.createSheet("communications");;
-        //sheet.trackAllColumnsForAutoSizing();
-
-        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
-        Row row = currentRow;
-        row.createCell(0).setCellValue("frame count");
+//        this.workbook = workbook;
+//        sheet = workbook.createSheet("communications");;
+//        //sheet.trackAllColumnsForAutoSizing();
+//
+//        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
+//        Row row = currentRow;
+//        row.createCell(0).setCellValue("frame count");
 
 //        sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
 //        sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 6));
@@ -97,24 +97,24 @@ public class MsgRouter extends SoSObject {
 //        row.createCell(4).setCellValue("recv messages");
 //        row.getCell(4).setCellStyle(centerAlignmentStyle);
 
-        for(int i = 0; i < 100; ++i) {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("No.");
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("from");
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("to");
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("title");
-
-            row.createCell(row.getPhysicalNumberOfCells());
-        }
+//        for(int i = 0; i < 100; ++i) {
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("No.");
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("from");
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("to");
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("title");
+//
+//            row.createCell(row.getPhysicalNumberOfCells());
+//        }
     }
 
     boolean isFirstUpdate = true;
     @Override
     public void onUpdate() {
-        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
-        currentRow.createCell(0).setCellValue(Time.getFrameCount());
+//        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
+//        currentRow.createCell(0).setCellValue(Time.getFrameCount());
 
         delayedMsgs.add(null);
         while(true) {
@@ -132,29 +132,29 @@ public class MsgRouter extends SoSObject {
     CellStyle recvColorStyle;
     private void _route(Msg msg) {
         // recv log
-        if(recvColorStyle == null) {
-            recvColorStyle = workbook.createCellStyle();
-            recvColorStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
-            recvColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        }
-
-        //Row row = sheet.createRow(rowNum++);
-        Row row = currentRow;
-        //row.createCell(0).setCellValue(Time.getFrameCount());
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-        if(msg.title == "reserve") {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-        } else {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-        }
-        row.createCell(row.getPhysicalNumberOfCells());
+//        if(recvColorStyle == null) {
+//            recvColorStyle = workbook.createCellStyle();
+//            recvColorStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+//            recvColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//        }
+//
+//        //Row row = sheet.createRow(rowNum++);
+//        Row row = currentRow;
+//        //row.createCell(0).setCellValue(Time.getFrameCount());
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+//        if(msg.title == "reserve") {
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+//        } else {
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+//        }
+//        row.createCell(row.getPhysicalNumberOfCells());
 
         SoSObject target = world.findObject(msg.to);
         if(target != null) {
@@ -165,29 +165,29 @@ public class MsgRouter extends SoSObject {
     CellStyle sendColorStyle;
     public void route(Msg msg) {
         // send log
-        if(sendColorStyle == null) {
-            sendColorStyle = workbook.createCellStyle();
-            sendColorStyle.setFillForegroundColor(IndexedColors.LAVENDER.getIndex());
-            sendColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        }
-
-
-        Row row = currentRow;
-        //row.createCell(0).setCellValue(Time.getFrameCount());
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-        if(msg.title == "reserve") {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-        } else {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-        }
-        row.createCell(row.getPhysicalNumberOfCells());
+//        if(sendColorStyle == null) {
+//            sendColorStyle = workbook.createCellStyle();
+//            sendColorStyle.setFillForegroundColor(IndexedColors.LAVENDER.getIndex());
+//            sendColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//        }
+//
+//
+//        Row row = currentRow;
+//        //row.createCell(0).setCellValue(Time.getFrameCount());
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+//        if(msg.title == "reserve") {
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+//        } else {
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+//        }
+//        row.createCell(row.getPhysicalNumberOfCells());
 
         SoSObject target = world.findObject(msg.to);
 

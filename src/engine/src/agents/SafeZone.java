@@ -18,7 +18,7 @@ public class SafeZone extends CS {
     private ArrayList<Patient> patients = new ArrayList<>();
 
     private TextObject textObject = new TextObject();
-    private int scale = 5;
+    private int scale = 3;
     public SafeZone(World world, String name) {
         super(world, name);
         addChild(new ImageObject("src/engine/resources/safezone.png", scale));

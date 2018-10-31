@@ -53,7 +53,7 @@ public class FireFighterSelectTransferDestination extends FireFighterAction {
             SafeZone nearestSafeZone = (SafeZone)fireFighter.nearestObject(new ArrayList<>(world.safeZones));
 
             if(fireFighter.distantTo(nearestHospital) < fireFighter.distantTo(nearestSafeZone)) {                           // Calculate the distance between nearest Safe Zone and nearest Safe Zone
-                fireFighter.changeAction(new FireFighterTransferToHospital(fireFighter, nearestHospital, targetPatient));   // transfer the patient to the hospital
+                fireFighter.changeAction(new FireFighterTransferToSafeZone(fireFighter, nearestSafeZone, targetPatient));   // transfer the patient to the hospital
             } else {
                 fireFighter.changeAction(new FireFighterTransferToSafeZone(fireFighter, nearestSafeZone, targetPatient));   // transfer the patient to the Safe Zone
                 //fireFighter.changeAction(new FireFighterTransferToHospital(fireFighter, nearestHospital, targetPatient));
