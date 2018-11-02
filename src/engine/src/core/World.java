@@ -578,6 +578,7 @@ public class World extends SoSObject{
 //        stimuli.add(new SightRange(this, 2400, firefighterNames, 1));                    // 특정 frame count 이후 전체 FF의 sight range 변화
 
         stimuli.add(new SightRange(this, 1200, new Range(13, 13, 51, 51), 0.5f));
+        stimuli.add(new SightRange(this, 4830, new Range(14, 14, 50, 50), 0.2f));
 
 //        stimuli.add(new SightRange(this, 10, new Range(0, 0, 64, 64), 3.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
 //
@@ -621,6 +622,8 @@ public class World extends SoSObject{
 //
 //        stimuli.add(new Delay(this, 10, "FF_RANGECAST_DELAY", 130));
 //        stimuli.add(new Delay(this, 200,  "FF_RANGECAST_DELAY", 0));
+//        stimuli.add(new Delay(this, 1980, "FF_RANGECAST_DELAY", 5000));
+//        stimuli.add(new Delay(this, 7000,  "FF_RANGECAST_DELAY", 0));
 //
 //
 //        // TODO: FireFighter => Patient

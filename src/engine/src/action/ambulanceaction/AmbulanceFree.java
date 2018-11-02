@@ -20,7 +20,7 @@ public class AmbulanceFree extends AmbulanceAction {
 
     boolean isFirstUpdate = true;
 
-    int timeout = 10;               // timeout duration
+    int timeout = 30;               // timeout duration, 1frame을 2초로 생각했을 때 1분간!
     int frameCounter = timeout;
 
     int maxTimeout = 3;             // timeoutCounter, number of timeout
