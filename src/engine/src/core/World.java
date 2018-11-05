@@ -704,21 +704,21 @@ public class World extends SoSObject{
         stimuli.add(new AddEntity(this, 990, this::addFireFighter));
         stimuli.add(new AddEntity(this, 990, this::addFireFighter));
 
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
-        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
+//        stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
 
 
 
