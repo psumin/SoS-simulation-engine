@@ -44,11 +44,24 @@ public class CS extends SoSObject {
             return null;
         }
 
-        if(distanceX > distanceY) {
+//        if(distanceX > distanceY) {
+//            return new Position(position.x + differenceX / distanceX, position.y);
+//        } else {
+//            return new Position(position.x, position.y + differenceY / distanceY);
+//        }
+        if(distanceX > 0 && distanceY >0) {
+            int index = GlobalRandom.nextInt(2);
+            if(index == 0) {
+                return new Position(position.x + differenceX / distanceX, position.y);
+            } else {
+                return new Position(position.x, position.y + differenceY / distanceY);
+            }
+        } else if(distanceX > 0) {
             return new Position(position.x + differenceX / distanceX, position.y);
         } else {
             return new Position(position.x, position.y + differenceY / distanceY);
         }
+
     }
 
 //    public void moveTo(Position destination) {

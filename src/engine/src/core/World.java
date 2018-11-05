@@ -65,6 +65,7 @@ public class World extends SoSObject{
     XSSFSheet ambulanceSheet;
     XSSFSheet fireFighterSheet;
 
+
     CellStyle headerStyle;
 
     long startTime;
@@ -298,24 +299,27 @@ public class World extends SoSObject{
 
     private void printFireFighterLog(boolean isFinish) {
 
-        ExcelHelper.getCell(fireFighterSheet, 0, 0).setCellValue(frameCount);
+        ExcelHelper.getCell(fireFighterSheet, 0, 0).setCellValue("frame Count");
+        ExcelHelper.getCell(fireFighterSheet, 0, 1).setCellValue("number of Firefighter");
         for(int i = 0; i < fireFighters.size(); ++i) {
-            ExcelHelper.getCell(fireFighterSheet, 0, i * 2 + 1).setCellValue("FF" + (i + 1) + " pos");
-            ExcelHelper.getCell(fireFighterSheet, 0, i * 2 + 2).setCellValue("FF" + (i + 1) + " Status");
+            ExcelHelper.getCell(fireFighterSheet, 0, i * 2 + 2).setCellValue("FF" + (i + 1) + " pos");
+            ExcelHelper.getCell(fireFighterSheet, 0, i * 2 + 3).setCellValue("FF" + (i + 1) + " Status");
         }
 
         Row row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
         Cell frameCountCell = row.createCell(0);
+        Cell firefighterCountCell = row.createCell(1);
         frameCountCell.setCellValue(frameCount);
+        firefighterCountCell.setCellValue(fireFighterCounter);
         Cell[] positionCells = new Cell[fireFighters.size()];
 
         for(int i = 0; i < fireFighters.size(); ++i) {
-            Cell currentCell = row.createCell(i * 2 + 1);
+            Cell currentCell = row.createCell(i * 2 + 2);
 
             String position = fireFighters.get(i).position.toString();
             currentCell.setCellValue(position);
 
-            currentCell = row.createCell(  i * 2 + 2);
+            currentCell = row.createCell(i * 2 + 3);
             currentCell.setCellValue(fireFighters.get(i).currentAction.name);
             //currentCell.setCellValue(fireFighters.get(i).getState().toString());
         }
@@ -339,23 +343,26 @@ public class World extends SoSObject{
     private void printAmbulanceLog(boolean isFinish) {
 
         ExcelHelper.getCell(ambulanceSheet, 0, 0).setCellValue("frame count");
-        for(int i = 0; i < maxAmbulance; ++i) {
-            ExcelHelper.getCell(ambulanceSheet, 0, i * 2 + 1).setCellValue("Amb" + (i + 1) + " pos");
-            ExcelHelper.getCell(ambulanceSheet, 0, i * 2 + 1).setCellValue("Amb" + (i + 1) + " Status");
+        ExcelHelper.getCell(ambulanceSheet, 0, 1).setCellValue("number of Ambulances");
+        for(int i = 0; i < ambulances.size(); ++i) {
+            ExcelHelper.getCell(ambulanceSheet, 0, i * 2 + 2).setCellValue("Amb" + (i + 1) + " pos");
+            ExcelHelper.getCell(ambulanceSheet, 0, i * 2 + 3).setCellValue("Amb" + (i + 1) + " Status");
         }
 
         Row row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
         Cell frameCountCell = row.createCell(0);
+        Cell ambulanceCountCell = row.createCell(1);
         frameCountCell.setCellValue(frameCount);
+        ambulanceCountCell.setCellValue(ambulanceCounter);
         Cell[] positionCells;
 
         for(int i = 0; i < ambulances.size(); ++i) {
-            Cell currentCell = row.createCell(i * 2 + 1);
+            Cell currentCell = row.createCell(i * 2 + 2);
 
             String position = ambulances.get(i).position.toString();
             currentCell.setCellValue(position);
 
-            currentCell = row.createCell(  i * 2 + 2);
+            currentCell = row.createCell(i * 2 + 3);
             currentCell.setCellValue(ambulances.get(i).currentAction.name);
             //currentCell.setCellValue(fireFighters.get(i).getState().toString());
         }
@@ -534,8 +541,8 @@ public class World extends SoSObject{
             AmbulanceNames.add("Ambulance" + (i + 1));
         }
 
+//
         // Stimulus types
-
 //        // TODO: Late Rescue Start
 //        stimuli.add(new Speed(this, 1, "FF1", 100));
 //        stimuli.add(new Speed(this, 1, "FF5", 100));
@@ -550,7 +557,9 @@ public class World extends SoSObject{
 //        stimuli.add(new Speed(this, 100, firefighterNames, 3));                // 100 frame 부터 전체 FF의 이동소도 감소
 //        stimuli.add(new Speed(this, 10, new Range(29, 29, 35, 35), 10.0f));
 //
-//
+
+
+
         stimuli.add(new Speed(this, 1200, new Range(13, 13, 51, 51), 2.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
         stimuli.add(new Speed(this, 4260, new Range(14, 14, 50, 50), 4.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
 
@@ -561,6 +570,9 @@ public class World extends SoSObject{
         stimuli.add(new Speed(this, 5310, new Range(22, 22, 42, 42), 4.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
 
         stimuli.add(new Speed(this, 6060, new Range(22, 22, 42, 42), 2.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+
+
+
 
 //        stimuli.add(new Speed(this, 10, new Range(16, 16, 48, 48), 2.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
 //        stimuli.add(new Speed(this, 10, new Range(24, 24, 40, 40), 3.0f));
@@ -576,19 +588,32 @@ public class World extends SoSObject{
 //        stimuli.add(new SightRange(this, 800, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 sight range 변화
 //        stimuli.add(new SightRange(this, 1600, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 sight range 변화
 //        stimuli.add(new SightRange(this, 2400, firefighterNames, 1));                    // 특정 frame count 이후 전체 FF의 sight range 변화
-
-        stimuli.add(new SightRange(this, 1200, new Range(13, 13, 51, 51), 0.5f));
-        stimuli.add(new SightRange(this, 4830, new Range(14, 14, 50, 50), 0.2f));
-
-//        stimuli.add(new SightRange(this, 10, new Range(0, 0, 64, 64), 3.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
 //
-//        // TODO: communicationRange (FF 관련)
-//        stimuli.add(new CommunicationRange(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
-//        stimuli.add(new CommunicationRange(this, 10, firefighterNames, 0));                    // 특정 frame count 이후 전체 FF의 communication range 변화
-//        stimuli.add(new CommunicationRange(this, 800, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
-//        stimuli.add(new CommunicationRange(this, 1600, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 communication range 변화
-        stimuli.add(new CommunicationRange(this, 1200, firefighterNames, 7));
-        stimuli.add(new CommunicationRange(this, 2000, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+//
+//
+//
+//        stimuli.add(new SightRange(this, 1200, new Range(13, 13, 51, 51), 0.5f));
+//        stimuli.add(new SightRange(this, 4830, new Range(14, 14, 50, 50), 0.2f));
+//
+//
+//
+//
+////        stimuli.add(new SightRange(this, 10, new Range(0, 0, 64, 64), 3.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
+////
+////        // TODO: communicationRange (FF 관련)
+////        stimuli.add(new CommunicationRange(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
+////        stimuli.add(new CommunicationRange(this, 10, firefighterNames, 0));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+////        stimuli.add(new CommunicationRange(this, 800, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+////        stimuli.add(new CommunicationRange(this, 1600, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+//
+//
+//
+        stimuli.add(new CommunicationRange(this, 2000, firefighterNames, 1));
+//        stimuli.add(new CommunicationRange(this, 1200, firefighterNames, 7));
+//        stimuli.add(new CommunicationRange(this, 2000, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+//
+//
+//
 //        stimuli.add(new CommunicationRange(this, 2400, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 communication range 변화
 //        stimuli.add(new CommunicationRange(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 communication range 변화
 //
@@ -695,13 +720,13 @@ public class World extends SoSObject{
         stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
         stimuli.add(new AddEntity(this, 1980, this::addFireFighter));
 
-//
-//
-//         // TODO: add Ambulance
-//        stimuli.add(new AddEntity(this, 200, this::addAmbulance));
-//        stimuli.add(new AddEntity(this, 210, this::addAmbulance));
-//        stimuli.add(new AddEntity(this, 220, this::addAmbulance));
-//        stimuli.add(new AddEntity(this, 230, this::addAmbulance));
+
+
+         // TODO: add Ambulance
+        stimuli.add(new AddEntity(this, 200, this::addAmbulance));
+        stimuli.add(new AddEntity(this, 210, this::addAmbulance));
+        stimuli.add(new AddEntity(this, 220, this::addAmbulance));
+        stimuli.add(new AddEntity(this, 230, this::addAmbulance));
     }
 
     void removeCS(String csName) {
