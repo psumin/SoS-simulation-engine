@@ -3,12 +3,10 @@ package core;
 import misc.Position;
 import misc.Time;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import stimulus.MessageStimulus.Delay;
+import stimulus.MessageStimulus.Loss;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -23,7 +21,8 @@ import java.util.Queue;
 
 public class MsgRouter extends SoSObject {
 
-    private final ArrayList<Delay> conditions = new ArrayList<>();
+    private final ArrayList<Delay> delayConditions = new ArrayList<>();
+    private final ArrayList<Loss> lossConditions = new ArrayList<>();
 
     // For the Simulation
     // All delay
@@ -120,28 +119,6 @@ public class MsgRouter extends SoSObject {
         currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
         currentRow.createCell(0).setCellValue(Time.getFrameCount());
 
-        ArrayList<Delay> recoveries = new ArrayList<>();
-        for(Delay condition: conditions) {
-            if(condition.frame < Time.getFrameCount() && condition.delay == 0) {
-                recoveries.add(condition);
-            }
-        }
-
-        for(Delay recovery: recoveries) {
-            ArrayList<Delay> removes = new ArrayList<>();
-            for(Delay condition: conditions) {
-                if(condition.frame > recovery.frame)
-                    continue;
-
-                if(condition.sender.equals(recovery.sender) && condition.receiver.equals(recovery.receiver)) {
-                    removes.add(condition);
-                    removes.add(recovery);
-                }
-            }
-
-            conditions.removeAll(removes);
-        }
-
         delayedMsgs.add(null);
         while(true) {
             DelayedMsg delayedMsg = delayedMsgs.poll();
@@ -221,7 +198,96 @@ public class MsgRouter extends SoSObject {
 
         SoSObject target = world.findObject(msg.to);
 
-        for(Delay condition: conditions) {
+        {
+            ArrayList<Delay> removes = new ArrayList<>();
+            for (Delay condition : delayConditions) {
+                if (condition.endFrame <= Time.getFrameCount()) {
+                    removes.add(condition);
+                }
+            }
+            delayConditions.removeAll(removes);
+        }
+
+        {
+            ArrayList<Loss> removes = new ArrayList<>();
+            for (Loss condition : lossConditions) {
+                if (condition.endFrame <= Time.getFrameCount()) {
+                    removes.add(condition);
+                }
+            }
+            lossConditions.removeAll(removes);
+        }
+
+        for(Loss condition: lossConditions) {
+            if(condition.frame > Time.getFrameCount()) {
+                continue;
+            }
+
+            boolean senderIsAll = condition.sender.equalsIgnoreCase("ALL");
+            boolean receiverIsAll = condition.receiver.equalsIgnoreCase("ALL");
+
+            boolean senderHasDigit = containDigit(condition.sender);
+            boolean receiverHasDigit = containDigit(condition.receiver);
+
+            if(senderIsAll && receiverIsAll) {
+                // ALL && ALL
+                return;
+            } else if(senderIsAll) {
+                // ALL && Not ALL
+                if(receiverHasDigit) {
+                    // ALL && FF1
+                    if(msg.to.equals(condition.receiver)) {
+                        return;
+                    }
+                } else {
+                    // ALL && FF
+                    if(msg.to.startsWith(condition.receiver)) {
+                        return;
+                    }
+                }
+
+            } else if(receiverIsAll) {
+                // Not ALL && ALL
+
+                if(senderHasDigit) {
+                    // FF1 && ALL
+                    if(msg.from.equals(condition.sender)) {
+                        return;
+                    }
+                } else {
+                    // FF && ALL
+                    if(msg.from.startsWith(condition.sender)) {
+                        return;
+                    }
+                }
+            } else {
+                // Not ALL && Not ALL
+
+                if(senderHasDigit && receiverHasDigit) {
+                    // FF1 && FF2
+                    if(msg.from.equals(condition.sender) && msg.to.equals(condition.receiver)) {
+                        return;
+                    }
+                } else if(senderHasDigit) {
+                    // FF1 && FF
+                    if(msg.from.equals(condition.sender) && msg.to.startsWith(condition.receiver)) {
+                        return;
+                    }
+                } else if(receiverHasDigit) {
+                    // FF && FF1
+                    if(msg.from.startsWith(condition.sender) && msg.to.startsWith(condition.receiver)) {
+                        return;
+                    }
+                } else {
+                    // FF && FF
+                    if(msg.from.startsWith(condition.sender) && msg.to.startsWith(condition.receiver)) {
+                        return;
+                    }
+                }
+            }
+        }
+
+        for(Delay condition: delayConditions) {
             if(condition.frame > Time.getFrameCount()) {
                 continue;
             }
@@ -396,6 +462,10 @@ public class MsgRouter extends SoSObject {
     }
 
     public void add(Delay condition) {
-        conditions.add(condition);
+        delayConditions.add(condition);
+    }
+
+    public void add(Loss condition) {
+        lossConditions.add(condition);
     }
 }

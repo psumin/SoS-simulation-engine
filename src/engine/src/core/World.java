@@ -15,6 +15,7 @@ import stimulus.ChangeValueStimulus.CommunicationRange;
 import stimulus.ChangeValueStimulus.SightRange;
 import stimulus.ChangeValueStimulus.Speed;
 import stimulus.MessageStimulus.Delay;
+import stimulus.MessageStimulus.Loss;
 import stimulus.NumberOfEntityStimulus.AddEntity;
 import stimulus.NumberOfEntityStimulus.RemoveEntity;
 
@@ -729,10 +730,10 @@ public class World extends SoSObject{
         stimuli.add(new AddEntity(this, 220, this::addAmbulance));
         stimuli.add(new AddEntity(this, 230, this::addAmbulance));
 
+        // TODO: Msg Delay
         // CS && CS
-        router.add(new Delay(1, "FF", "FF", 20));
-        router.add(new Delay(25, "FF", "FF", 0));       // 해제
-        router.add(new Delay(26, "FF", "FF", 100));     // 해제 했을 경우 다음 프레임부터 적용하도록
+        //router.add(new Delay(1, 20, "FF", "FF", 20));
+        //router.add(new Delay(26, 100, "FF", "FF", 100));
 
         //router.add(new Delay(1, "Ambulance", "Org", 20));
 
@@ -748,7 +749,23 @@ public class World extends SoSObject{
         //router.add(new Delay(1, "FF1", "FF5", 20));
 
 
+        // TODO: Msg Loss
+        // CS && CS
+        router.add(new Loss(1, 20, "FF", "FF"));
+        //router.add(new Loss(26, 100, "FF", "FF"));
 
+        //router.add(new Loss(1, "Ambulance", "Org"));
+
+        // Entity && CS
+        //router.add(new Loss(1, "FF1", "FF"));
+//        router.add(new Loss(1, "Ambulance1", "Org"));
+
+        // CS && Entity
+        //router.add(new Loss(1, "FF", "FF5"));
+        //router.add(new Loss(1, "Org", "Ambulance1"));
+
+        // Entity && Entity
+        //router.add(new Loss(1, "FF1", "FF5"));
     }
 
     void removeCS(String csName) {

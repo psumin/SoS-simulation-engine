@@ -17,6 +17,11 @@ public class Message extends Stimulus {
     protected String fieldName;
     protected Object value;
 
+    public int frame;
+    public int endFrame;
+    public String sender;
+    public String receiver;
+
     public Message() {
 
     }

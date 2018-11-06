@@ -9,29 +9,13 @@ import core.World;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-//Delay(int frame, String sender, String receiver, int delay)
-// new Delay( frame, "FF1", "FF2", delay)
-// new Delay( frame, "FF", "Amb1", delay)
-// new Delay( frame, "FF1", "Amb", delay)
-// new Delay( frame, "FF", "Amb", delay)
-// new Delay( frame, "ALL", "FF2", delay)
-// new Delay( frame, "FF1", "ALL", delay)
-// new Delay( frame, "ALL", "ALL", delay)
-// new Delay( frame, "ALL", "FF", delay)
-// new Delay( frame, "FF", "ALL", delay)
+public class Loss extends Message {
 
-public class Delay extends Message {
-
-
-    public int delay;
-
-
-    public Delay(int frame, int endFrame, String sender, String receiver, int delay) {
+    public Loss(int frame, int endFrame, String sender, String receiver) {
         this.frame = frame;
         this.endFrame = endFrame;
         this.sender = sender;
         this.receiver = receiver;
-        this.delay = delay;
     }
 
 
