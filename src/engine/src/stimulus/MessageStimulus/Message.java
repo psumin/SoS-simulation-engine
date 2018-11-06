@@ -17,6 +17,10 @@ public class Message extends Stimulus {
     protected String fieldName;
     protected Object value;
 
+    public Message() {
+
+    }
+
     public Message(World world, int frame, Object targetObject, String fieldName, Object value) {
         super(world, frame);
 

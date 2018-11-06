@@ -42,7 +42,7 @@ public class World extends SoSObject{
     // Initial Values
     public static final int maxPatient = 294;
 //    public static final int maxPatient = 65;
-    public static final int maxFireFighter = 4;
+    public static final int maxFireFighter = 16;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 4;
     public static final int maxSafeZone = 4;
@@ -608,6 +608,7 @@ public class World extends SoSObject{
 //
 //
 //
+
         stimuli.add(new CommunicationRange(this, 2000, firefighterNames, 1));
 //        stimuli.add(new CommunicationRange(this, 1200, firefighterNames, 7));
 //        stimuli.add(new CommunicationRange(this, 2000, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 communication range 변화
@@ -727,6 +728,27 @@ public class World extends SoSObject{
         stimuli.add(new AddEntity(this, 210, this::addAmbulance));
         stimuli.add(new AddEntity(this, 220, this::addAmbulance));
         stimuli.add(new AddEntity(this, 230, this::addAmbulance));
+
+        // CS && CS
+        router.add(new Delay(1, "FF", "FF", 20));
+        router.add(new Delay(25, "FF", "FF", 0));       // 해제
+        router.add(new Delay(26, "FF", "FF", 100));     // 해제 했을 경우 다음 프레임부터 적용하도록
+
+        //router.add(new Delay(1, "Ambulance", "Org", 20));
+
+        // Entity && CS
+        //router.add(new Delay(1, "FF1", "FF", 20));
+//        router.add(new Delay(1, "Ambulance1", "Org", 20));
+
+        // CS && Entity
+        //router.add(new Delay(1, "FF", "FF5", 20));
+        //router.add(new Delay(1, "Org", "Ambulance1", 20));
+
+        // Entity && Entity
+        //router.add(new Delay(1, "FF1", "FF5", 20));
+
+
+
     }
 
     void removeCS(String csName) {

@@ -9,10 +9,31 @@ import core.World;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
+//Delay(int frame, String sender, String receiver, int delay)
+// new Delay( frame, "FF1", "FF2", delay)
+// new Delay( frame, "FF", "Amb1", delay)
+// new Delay( frame, "FF1", "Amb", delay)
+// new Delay( frame, "FF", "Amb", delay)
+// new Delay( frame, "ALL", "FF2", delay)
+// new Delay( frame, "FF1", "ALL", delay)
+// new Delay( frame, "ALL", "ALL", delay)
+// new Delay( frame, "ALL", "FF", delay)
+// new Delay( frame, "FF", "ALL", delay)
+
 public class Delay extends Message {
-    public Delay(World world, int frame, String fieldName, Object value) {
-        super(world, frame, world.router, fieldName, value);
+
+    public int frame;
+    public String sender;
+    public String receiver;
+    public int delay;
+
+    public Delay(int frame, String sender, String receiver, int delay) {
+        this.frame = frame;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.delay = delay;
     }
+
 
 //    public Delay(World world, int frame, Range tileRange, String fieldName, Object value) {
 //        super(world, frame, tileRange, fieldName, value);

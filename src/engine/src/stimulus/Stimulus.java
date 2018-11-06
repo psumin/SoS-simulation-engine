@@ -14,6 +14,10 @@ public abstract class Stimulus {
     protected World world;
     public int frame;
 
+    public Stimulus() {
+
+    }
+
     public Stimulus(World world, int frame) {
         this.world = world;
         this.frame = frame;
