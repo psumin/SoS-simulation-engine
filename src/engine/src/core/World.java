@@ -43,7 +43,7 @@ public class World extends SoSObject{
 //    public static final int maxPatient = 294;
     public static final int maxPatient = 227;
 //    public static final int maxPatient = 65;
-    public static final int maxFireFighter = 4;
+    public static final int maxFireFighter = 12;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 4;
     public static final int maxBridgehead = 4;
@@ -759,7 +759,8 @@ public class World extends SoSObject{
 //        // TODO: Msg Delay
 //        // CS && CS
 //        router.add(new Delay(1, 3000, "FF", "FF", 3000));   // 1frame 부터 20프레임까지 적용
-//        router.add(new Delay(26, 100, "FF", "FF", 100));
+        //router.add(new Delay(10, 100, "FF", "FF", 20));
+//        router.add(new Delay(10, 200, "All", "ALL", 20));
 //
 //        router.add(new Delay(1, 20,"Ambulance", "Org", 20));
 //
@@ -779,7 +780,7 @@ public class World extends SoSObject{
 //        // CS && CS
 //        router.add(new Loss(1, 3000, "FF", "FF"));
 //        router.add(new Loss(1, 20, "FF", "FF"));
-//        router.add(new Loss(26, 100, "FF", "FF"));
+        router.add(new Loss(10, 200, "All", "All"));
 //
 //        router.add(new Loss(1, 20, "Ambulance", "Org"));
 //

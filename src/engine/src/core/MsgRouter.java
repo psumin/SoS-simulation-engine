@@ -1,5 +1,6 @@
 package core;
 
+import misc.ExcelHelper;
 import misc.Position;
 import misc.Time;
 import org.apache.poi.ss.usermodel.*;
@@ -49,6 +50,29 @@ public class MsgRouter extends SoSObject {
 
     // FF <-> FF message delay at the communication range
     private int FF_RANGECAST_DELAY = 0;
+
+    private int FF_TO_FF_SEND = 0;
+    private int FF_TO_FF_RECV = 0;
+
+    private int FF_TO_ORG_SEND = 0;
+    private int FF_TO_ORG_RECV = 0;
+
+    private int ORG_TO_FF_SEND = 0;
+    private int ORG_TO_FF_RECV = 0;
+
+    private int AMB_TO_ORG_SEND = 0;
+    private int AMB_TO_ORG_RECV = 0;
+
+    private int ORG_TO_AMB_SEND = 0;
+    private int ORG_TO_AMB_RECV = 0;
+
+    private int BRIDGE_TO_ORG_SEND = 0;
+    private int BRIDGE_TO_ORG_RECV = 0;
+
+    private int ORG_TO_BRIDGE_SEND = 0;
+    private int ORG_TO_BRIDGE_RECV = 0;
+
+
 
     private class DelayedMsg {
         public Msg source;
@@ -158,6 +182,42 @@ public class MsgRouter extends SoSObject {
         currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
         currentRow.createCell(0).setCellValue(Time.getFrameCount());
 
+        ExcelHelper.getCell(currentRow, 1).setCellValue(FF_TO_FF_SEND / 2);
+        ExcelHelper.getCell(currentRow, 2).setCellValue(FF_TO_FF_RECV / 2);
+
+        ExcelHelper.getCell(currentRow, 4).setCellValue(FF_TO_ORG_SEND);
+        ExcelHelper.getCell(currentRow, 5).setCellValue(FF_TO_ORG_RECV);
+
+        ExcelHelper.getCell(currentRow, 7).setCellValue(ORG_TO_FF_SEND);
+        ExcelHelper.getCell(currentRow, 8).setCellValue(ORG_TO_FF_RECV);
+
+        ExcelHelper.getCell(currentRow, 10).setCellValue(AMB_TO_ORG_SEND);
+        ExcelHelper.getCell(currentRow, 11).setCellValue(AMB_TO_ORG_RECV);
+
+        ExcelHelper.getCell(currentRow, 13).setCellValue(ORG_TO_AMB_SEND);
+        ExcelHelper.getCell(currentRow, 14).setCellValue(ORG_TO_AMB_RECV);
+
+        ExcelHelper.getCell(currentRow, 16).setCellValue(BRIDGE_TO_ORG_SEND);
+        ExcelHelper.getCell(currentRow, 17).setCellValue(BRIDGE_TO_ORG_RECV);
+
+        ExcelHelper.getCell(currentRow, 19).setCellValue(ORG_TO_BRIDGE_SEND);
+        ExcelHelper.getCell(currentRow, 20).setCellValue(ORG_TO_BRIDGE_RECV);
+
+        FF_TO_FF_SEND = 0;
+        FF_TO_FF_RECV = 0;
+        FF_TO_ORG_SEND = 0;
+        FF_TO_ORG_RECV = 0;
+        ORG_TO_FF_SEND = 0;
+        ORG_TO_FF_RECV = 0;
+        AMB_TO_ORG_SEND = 0;
+        AMB_TO_ORG_RECV = 0;
+        ORG_TO_AMB_SEND = 0;
+        ORG_TO_AMB_RECV = 0;
+        BRIDGE_TO_ORG_SEND = 0;
+        BRIDGE_TO_ORG_RECV = 0;
+        ORG_TO_BRIDGE_SEND = 0;
+        ORG_TO_BRIDGE_RECV = 0;
+
         delayedMsgs.add(null);
         while(true) {
             DelayedMsg delayedMsg = delayedMsgs.poll();
@@ -198,6 +258,22 @@ public class MsgRouter extends SoSObject {
 //        }
 //        row.createCell(row.getPhysicalNumberOfCells());
 
+        if(msg.from.startsWith("FF") && msg.to.startsWith("FF")) {
+            FF_TO_FF_RECV++;
+        } else if(msg.from.startsWith("FF") && msg.to.startsWith("Org")) {
+            FF_TO_ORG_RECV++;
+        } else if(msg.from.startsWith("Org") && msg.to.startsWith("FF")) {
+            ORG_TO_FF_RECV++;
+        } else if(msg.from.startsWith("Amb") && msg.to.startsWith("Org")) {
+            AMB_TO_ORG_RECV++;
+        } else if(msg.from.startsWith("Org") && msg.to.startsWith("Amb")) {
+            ORG_TO_AMB_RECV++;
+        } else if(msg.from.startsWith("Bri") && msg.to.startsWith("Org")) {
+            BRIDGE_TO_ORG_RECV++;
+        } else if(msg.from.startsWith("Org") && msg.to.startsWith("Bri")) {
+            ORG_TO_BRIDGE_RECV++;
+        }
+
         SoSObject target = world.findObject(msg.to);
         if(target != null) {
             target.recvMsg(msg);
@@ -235,12 +311,46 @@ public class MsgRouter extends SoSObject {
 //        }
 //        row.createCell(row.getPhysicalNumberOfCells());
 
+//        FF_TO_FF_SEND = 0;
+//        FF_TO_FF_RECV = 0;
+//        FF_TO_ORG_SEND = 0;
+//        FF_TO_ORG_RECV = 0;
+//        ORG_TO_FF_SEND = 0;
+//        ORG_TO_FF_RECV = 0;
+//        AMB_TO_ORG_SEND = 0;
+//        AMB_TO_ORG_RECV = 0;
+//        ORG_TO_AMB_SEND = 0;
+//        ORG_TO_AMB_RECV = 0;
+//        BRIDGE_TO_ORG_SEND = 0;
+//        BRIDGE_TO_ORG_RECV = 0;
+//        ORG_TO_BRIDGE_SEND = 0;
+//        ORG_TO_BRIDGE_RECV = 0;
+
+        if(msg.from.startsWith("FF") && msg.to.startsWith("FF")) {
+            FF_TO_FF_SEND++;
+        } else if(msg.from.startsWith("FF") && msg.to.startsWith("Org")) {
+            FF_TO_ORG_SEND++;
+        } else if(msg.from.startsWith("Org") && msg.to.startsWith("FF")) {
+            ORG_TO_FF_SEND++;
+        } else if(msg.from.startsWith("Amb") && msg.to.startsWith("Org")) {
+            AMB_TO_ORG_SEND++;
+        } else if(msg.from.startsWith("Org") && msg.to.startsWith("Amb")) {
+            ORG_TO_AMB_SEND++;
+        } else if(msg.from.startsWith("Bri") && msg.to.startsWith("Org")) {
+            BRIDGE_TO_ORG_SEND++;
+        } else if(msg.from.startsWith("Org") && msg.to.startsWith("Bri")) {
+            ORG_TO_BRIDGE_SEND++;
+        }
+
+
+
+
         SoSObject target = world.findObject(msg.to);
 
         {
             ArrayList<Delay> removes = new ArrayList<>();
             for (Delay condition : delayConditions) {
-                if (condition.endFrame < Time.getFrameCount()) {
+                if (condition.endFrame <= Time.getFrameCount()) {
                     removes.add(condition);
                 }
             }
@@ -250,7 +360,7 @@ public class MsgRouter extends SoSObject {
         {
             ArrayList<Loss> removes = new ArrayList<>();
             for (Loss condition : lossConditions) {
-                if (condition.endFrame < Time.getFrameCount()) {
+                if (condition.endFrame <= Time.getFrameCount()) {
                     removes.add(condition);
                 }
             }
@@ -258,7 +368,7 @@ public class MsgRouter extends SoSObject {
         }
 
         for(Loss condition: lossConditions) {
-            if(condition.frame > Time.getFrameCount()) {
+            if(condition.frame> Time.getFrameCount() + 1) {
                 continue;
             }
 
@@ -327,7 +437,7 @@ public class MsgRouter extends SoSObject {
         }
 
         for(Delay condition: delayConditions) {
-            if(condition.frame > Time.getFrameCount()) {
+            if(condition.frame > Time.getFrameCount() + 1) {
                 continue;
             }
 
