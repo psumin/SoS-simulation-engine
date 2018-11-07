@@ -1,8 +1,8 @@
 package action.firefighteraction;
 
+import agents.Bridgehead;
 import agents.FireFighter;
 import agents.Patient;
-import agents.SafeZone;
 
 /**
  * Project: NewSimulator
@@ -11,19 +11,19 @@ import agents.SafeZone;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class FireFighterTransferToSafeZone extends FireFighterAction {
+public class FireFighterTransferToBridgehead extends FireFighterAction {
 
-    SafeZone safeZone;
+    Bridgehead bridgehead;
     Patient targetPatient;
 
     int prevMoveDelay;
 
-    public FireFighterTransferToSafeZone(FireFighter target, SafeZone safeZone, Patient targetPatient) {
+    public FireFighterTransferToBridgehead(FireFighter target, Bridgehead bridgehead, Patient targetPatient) {
         super(target);
 
-        name = "TransferToSafeZone";
+        name = "TransferToBridgehead";
 
-        this.safeZone = safeZone;
+        this.bridgehead = bridgehead;
         this.targetPatient = targetPatient;
 
         fireFighter.transferImage.visible(true);
@@ -37,10 +37,10 @@ public class FireFighterTransferToSafeZone extends FireFighterAction {
     @Override
     public void onUpdate() {
         fireFighter.observe();
-        fireFighter.moveTo(safeZone.position);              // Transfer the patient to the Safe Zone
+        fireFighter.moveTo(bridgehead.position);              // Transfer the patient to the Bridgehead
         fireFighter.markVisitedTiles();
-        if(fireFighter.isArrivedAt(safeZone.position)) {    // When the Firefighter arrived at the Safe Zone
-            safeZone.arrivedPatient(targetPatient);
+        if(fireFighter.isArrivedAt(bridgehead.position)) {    // When the Firefighter arrived at the Bridgehead
+            bridgehead.arrivedPatient(targetPatient);
 
             fireFighter.moveDelay = prevMoveDelay;
             fireFighter.changeAction(new FireFighterSearch(fireFighter));       // Change the Firefighter's action to "Search"

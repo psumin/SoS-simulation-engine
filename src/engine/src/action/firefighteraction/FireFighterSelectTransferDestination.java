@@ -3,9 +3,8 @@ package action.firefighteraction;
 import agents.FireFighter;
 import agents.Hospital;
 import agents.Patient;
-import agents.SafeZone;
+import agents.Bridgehead;
 import core.Msg;
-import core.SoSObject;
 
 import java.util.ArrayList;
 
@@ -39,8 +38,8 @@ public class FireFighterSelectTransferDestination extends FireFighterAction {
                     .setTitle("nearest hospital")
                     .setData(fireFighter));
         } else if(frameCounter <= 0) {                                                                                      // If timeout
-            SafeZone nearestSafeZone = (SafeZone)fireFighter.nearestObject(new ArrayList<>(world.safeZones));               // Select the nearest Safe Zone
-            fireFighter.changeAction(new FireFighterTransferToSafeZone(fireFighter, nearestSafeZone, targetPatient));       // transfer the patient to the nearest Safe Zone
+            Bridgehead nearestBridgehead = (Bridgehead)fireFighter.nearestObject(new ArrayList<>(world.bridgeheads));               // Select the nearest Bridgehead
+            fireFighter.changeAction(new FireFighterTransferToBridgehead(fireFighter, nearestBridgehead, targetPatient));       // transfer the patient to the nearest Bridgehead
         }
         frameCounter--;
     }
@@ -50,12 +49,12 @@ public class FireFighterSelectTransferDestination extends FireFighterAction {
     public void recvMsg(Msg msg) {
         if(msg.from == "Organization" && msg.title == "nearest hospital") {
             Hospital nearestHospital = (Hospital)msg.data;
-            SafeZone nearestSafeZone = (SafeZone)fireFighter.nearestObject(new ArrayList<>(world.safeZones));
+            Bridgehead nearestBridgehead = (Bridgehead)fireFighter.nearestObject(new ArrayList<>(world.bridgeheads));
 
-            if(fireFighter.distantTo(nearestHospital) < fireFighter.distantTo(nearestSafeZone)) {                           // Calculate the distance between nearest Safe Zone and nearest Safe Zone
-                fireFighter.changeAction(new FireFighterTransferToSafeZone(fireFighter, nearestSafeZone, targetPatient));   // transfer the patient to the hospital
+            if(fireFighter.distantTo(nearestHospital) < fireFighter.distantTo(nearestBridgehead)) {                           // Calculate the distance between nearest Hospital and nearest Bridgehead
+                fireFighter.changeAction(new FireFighterTransferToBridgehead(fireFighter, nearestBridgehead, targetPatient));   // transfer the patient to the hospital
             } else {
-                fireFighter.changeAction(new FireFighterTransferToSafeZone(fireFighter, nearestSafeZone, targetPatient));   // transfer the patient to the Safe Zone
+                fireFighter.changeAction(new FireFighterTransferToBridgehead(fireFighter, nearestBridgehead, targetPatient));   // transfer the patient to the Bridgehead
                 //fireFighter.changeAction(new FireFighterTransferToHospital(fireFighter, nearestHospital, targetPatient));
             }
         }

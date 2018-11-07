@@ -1,9 +1,9 @@
 package action.ambulanceaction;
 
 import agents.Ambulance;
+import agents.Bridgehead;
 import agents.Hospital;
 import agents.Patient;
-import agents.SafeZone;
 
 import java.util.ArrayList;
 
@@ -14,34 +14,34 @@ import java.util.ArrayList;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class AmbulanceMoveToSafeZone extends AmbulanceAction {
+public class AmbulanceMoveTobridgehead extends AmbulanceAction {
 
-    SafeZone safeZone;
+    Bridgehead bridgehead;
 
-    public AmbulanceMoveToSafeZone(Ambulance target, SafeZone safeZone) {
+    public AmbulanceMoveTobridgehead(Ambulance target, Bridgehead bridgehead) {
         super(target);
 
-        this.safeZone = safeZone;
-        name = "Move To SafeZone";
+        this.bridgehead = bridgehead;
+        name = "Move To Bridgehead";
     }
 
     @Override
-    // Move to the Safe Zone
+    // Move to the Bridgehead
     public void onUpdate() {
-        ambulance.moveTo(safeZone.position);
-        if(ambulance.isArrivedAt(safeZone.position)) {
+        ambulance.moveTo(bridgehead.position);
+        if(ambulance.isArrivedAt(bridgehead.position)) {
 
             Hospital nearestHospital = (Hospital)ambulance.nearestObject(new ArrayList<>(world.hospitals));
-            Patient patient = safeZone.getPatient(Patient.Status.Serious);          // Serious patient first
+            Patient patient = bridgehead.getPatient(Patient.Status.Serious);          // Serious patient first
             if(patient == null) {
-                patient = safeZone.getPatient(Patient.Status.Wounded);              // Wounded patient next
+                patient = bridgehead.getPatient(Patient.Status.Wounded);              // Wounded patient next
             }
             if(patient == null) {
                 ambulance.changeAction(new AmbulanceFree(ambulance));               // When there is no patient, "Free"
                 return;
             }
 
-            safeZone.leavePatient(patient);                                           // Select the patient at the Safe Zone
+            bridgehead.leavePatient(patient);                                           // Select the patient at the Bridgehead
 
             ambulance.changeAction(new AmbulanceTransferToHospital(ambulance, nearestHospital, patient));       // Transfer the patient to the hospital
         }

@@ -42,7 +42,7 @@ public class MsgRouter extends SoSObject {
     private int AMB_TO_ORG_DELAY = 0;
     private int ORG_TO_AMB_DELAY = 0;
 
-    // SafeZone <-> Organization delay
+    // Bridgehead <-> Organization delay
     private int SZ_TO_ORG_DELAY = 0;
     private int ORG_TO_SZ_DELAY = 0;
 
@@ -386,12 +386,12 @@ public class MsgRouter extends SoSObject {
 //            return;
 //        }
 //
-//        // SafeZone <-> Org
-//        if(SZ_TO_ORG_DELAY > 0 && msg.from.startsWith("SafeZone") && msg.to.startsWith("Org")) {
+//        // Bridgehead <-> Org
+//        if(SZ_TO_ORG_DELAY > 0 && msg.from.startsWith("Bridgehead") && msg.to.startsWith("Org")) {
 //            delayedMsgs.add(new DelayedMsg(msg, SZ_TO_ORG_DELAY + Time.getFrameCount()));
 //            return;
 //        }
-//        if(ORG_TO_SZ_DELAY > 0 && msg.from.startsWith("Org") && msg.to.startsWith("SafeZone")) {
+//        if(ORG_TO_SZ_DELAY > 0 && msg.from.startsWith("Org") && msg.to.startsWith("Bridgehead")) {
 //            delayedMsgs.add(new DelayedMsg(msg, ORG_TO_SZ_DELAY + Time.getFrameCount()));
 //            return;
 //        }

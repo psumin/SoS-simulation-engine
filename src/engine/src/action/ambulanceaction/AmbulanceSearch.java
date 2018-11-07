@@ -1,11 +1,10 @@
 package action.ambulanceaction;
 
 import agents.Ambulance;
+import agents.Bridgehead;
 import agents.Hospital;
 import agents.Patient;
-import agents.SafeZone;
 import core.Msg;
-import core.SoSObject;
 
 import java.util.ArrayList;
 
@@ -18,12 +17,12 @@ import java.util.ArrayList;
 
 public class AmbulanceSearch extends AmbulanceAction {
 
-    ArrayList<SafeZone> safeZones;
-    SafeZone targetSafeZone;
+    ArrayList<Bridgehead> bridgeheads;
+    Bridgehead targetBridgehead;
 
     public AmbulanceSearch(Ambulance target) {
         super(target);
-        safeZones = new ArrayList<>(target.world.safeZones);
+        bridgeheads = new ArrayList<>(target.world.bridgeheads);
         name = "Search";
     }
 
@@ -31,41 +30,41 @@ public class AmbulanceSearch extends AmbulanceAction {
     // When timeout occurred, ambulance change the action to "Search"
     public void onUpdate() {
 
-        if(targetSafeZone == null) {
-            targetSafeZone = (SafeZone)ambulance.nearestObject(new ArrayList<>(safeZones));
-            safeZones.remove(targetSafeZone);
+        if(targetBridgehead == null) {
+            targetBridgehead = (Bridgehead)ambulance.nearestObject(new ArrayList<>(bridgeheads));
+            bridgeheads.remove(targetBridgehead);
         }
 
-        ambulance.moveTo(targetSafeZone.position);
-        if(ambulance.isArrivedAt(targetSafeZone.position)) {
+        ambulance.moveTo(targetBridgehead.position);
+        if(ambulance.isArrivedAt(targetBridgehead.position)) {
 
             Hospital nearestHospital = (Hospital)ambulance.nearestObject(new ArrayList<>(world.hospitals));
-            Patient patient = targetSafeZone.getPatient(Patient.Status.Serious);          // Serious patient first
+            Patient patient = targetBridgehead.getPatient(Patient.Status.Serious);          // Serious patient first
             if(patient == null) {
-                patient = targetSafeZone.getPatient(Patient.Status.Wounded);              // Wounded patient next
+                patient = targetBridgehead.getPatient(Patient.Status.Wounded);              // Wounded patient next
             }
             if(patient == null) {
 
-                if(safeZones.isEmpty()) {
-                    safeZones = new ArrayList<>(world.safeZones);
+                if(bridgeheads.isEmpty()) {
+                    bridgeheads = new ArrayList<>(world.bridgeheads);
                 }
 
-                // 다른 SafeZone 찾기
-                targetSafeZone = (SafeZone)ambulance.nearestObject(new ArrayList<>(safeZones));
-                safeZones.remove(targetSafeZone);
+                // 다른 Bridgehead 찾기
+                targetBridgehead = (Bridgehead)ambulance.nearestObject(new ArrayList<>(bridgeheads));
+                bridgeheads.remove(targetBridgehead);
 
                 return;
             }
-            targetSafeZone.leavePatient(patient);                                           // Select the patient at the Safe Zone
+            targetBridgehead.leavePatient(patient);                                           // Select the patient at the Bridgehead
             ambulance.changeAction(new AmbulanceTransferToHospital(ambulance, nearestHospital, patient));       // Transfer the patient to the hospital
         }
     }
 
     @Override
     public void recvMsg(Msg msg) {
-        if(msg.title == "move to safezone") {
-            SafeZone safeZone = (SafeZone)msg.data;
-            ambulance.changeAction(new AmbulanceMoveToSafeZone(ambulance, safeZone));
+        if(msg.title == "move to bridgehead") {
+            Bridgehead bridgehead = (Bridgehead)msg.data;
+            ambulance.changeAction(new AmbulanceMoveTobridgehead(ambulance, bridgehead));
         }
     }
 }

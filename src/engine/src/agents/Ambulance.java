@@ -5,7 +5,6 @@ import core.*;
 import misc.Position;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Project: NewSimulator
@@ -51,18 +50,18 @@ public class Ambulance extends CS{
         int top = worldMap.mapSize.height;
         int bottom = 0;
 
-        for(SafeZone safeZone: world.safeZones) {
-            if(safeZone.position.x < left) {
-                left = safeZone.position.x;
+        for(Bridgehead bridgehead : world.bridgeheads) {
+            if(bridgehead.position.x < left) {
+                left = bridgehead.position.x;
             }
-            if(safeZone.position.x > right) {
-                right = safeZone.position.x;
+            if(bridgehead.position.x > right) {
+                right = bridgehead.position.x;
             }
-            if(safeZone.position.y < top) {
-                top = safeZone.position.y;
+            if(bridgehead.position.y < top) {
+                top = bridgehead.position.y;
             }
-            if(safeZone.position.y > bottom) {
-                bottom = safeZone.position.y;
+            if(bridgehead.position.y > bottom) {
+                bottom = bridgehead.position.y;
             }
         }
 

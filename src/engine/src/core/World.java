@@ -10,14 +10,10 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import stimulus.*;
-import stimulus.ChangeStateStimulus.Injured;
 import stimulus.ChangeValueStimulus.CommunicationRange;
-import stimulus.ChangeValueStimulus.SightRange;
 import stimulus.ChangeValueStimulus.Speed;
 import stimulus.MessageStimulus.Delay;
-import stimulus.MessageStimulus.Loss;
 import stimulus.NumberOfEntityStimulus.AddEntity;
-import stimulus.NumberOfEntityStimulus.RemoveEntity;
 
 import java.awt.*;
 import java.awt.Color;
@@ -46,14 +42,14 @@ public class World extends SoSObject{
     public static final int maxFireFighter = 16;
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 4;
-    public static final int maxSafeZone = 4;
+    public static final int maxBridgehead = 4;
 
     public Map map;
     public MsgRouter router;
     public ArrayList<Patient> patients = new ArrayList<>(maxPatient);
     public ArrayList<FireFighter> fireFighters = new ArrayList<>(maxFireFighter);
     public ArrayList<Hospital> hospitals = new ArrayList<>(maxHospital);
-    public ArrayList<SafeZone> safeZones = new ArrayList<>(maxSafeZone);
+    public ArrayList<Bridgehead> bridgeheads = new ArrayList<>(maxBridgehead);
     public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);
 
     public static final String fireFighterPrefix = "FF";
@@ -115,7 +111,7 @@ public class World extends SoSObject{
 
     // Create Objects for visualization
     private void createObjects() {
-        createSafeZones();
+        createBridgehead();
         createOrganization();
         createHospitals();
         createPatients();
@@ -134,14 +130,14 @@ public class World extends SoSObject{
                 //randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
                 randomPosition = GlobalRandom.nextPosition(Map.mapSize.width / 8 + 2, 7 * Map.mapSize.width / 8 -1,
                         Map.mapSize.height / 8 + 2, 7 * Map.mapSize.width / 8 - 1);
-                boolean isSafeZone = false;
-                for(SafeZone zone: safeZones) {
-                    if(zone.isSafeZone(randomPosition)) {
-                        isSafeZone = true;
+                boolean isBridgehead = false;
+                for(Bridgehead zone: bridgeheads) {
+                    if(zone.isBridgehead(randomPosition)) {
+                        isBridgehead = true;
                         break;
                     }
                 }
-                if(isSafeZone == false) break;
+                if(isBridgehead == false) break;
             }
             patient.setPosition(randomPosition);
             this.addChild(patient);
@@ -197,21 +193,21 @@ public class World extends SoSObject{
 //        hospitals.get(5).setPosition(Map.mapSize.width - 1, (Map.mapSize.height - 1) / 2);
     }
 
-    private void createSafeZones() {                // Create the Safe Zone at the quarter position of the map
-        for(int i = 0; i < maxSafeZone; ++i) {
-            SafeZone safeZone = new SafeZone(this, "SafeZone" + (i + 1));
-            safeZones.add(safeZone);
-            addChild(safeZone);
+    private void createBridgehead() {                // Create the Bridgehead at the quarter position of the map
+        for(int i = 0; i < maxBridgehead; ++i) {
+            Bridgehead bridgehead = new Bridgehead(this, "Bridgehead" + (i + 1));
+            bridgeheads.add(bridgehead);
+            addChild(bridgehead);
         }
 
-//        safeZones.get(0).setPosition(new Position(Map.mapSize.width / 4, Map.mapSize.height / 4));
-//        safeZones.get(1).setPosition(new Position(3 * Map.mapSize.width / 4, Map.mapSize.height / 4));
-//        safeZones.get(2).setPosition(new Position(3 * Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
-//        safeZones.get(3).setPosition(new Position(Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
-        safeZones.get(0).setPosition(new Position(Map.mapSize.width / 8, Map.mapSize.height / 8));
-        safeZones.get(1).setPosition(new Position(7 * Map.mapSize.width / 8, Map.mapSize.height / 8));
-        safeZones.get(2).setPosition(new Position(7 * Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
-        safeZones.get(3).setPosition(new Position(Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
+//        bridgeheads.get(0).setPosition(new Position(Map.mapSize.width / 4, Map.mapSize.height / 4));
+//        bridgeheads.get(1).setPosition(new Position(3 * Map.mapSize.width / 4, Map.mapSize.height / 4));
+//        bridgeheads.get(2).setPosition(new Position(3 * Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
+//        bridgeheads.get(3).setPosition(new Position(Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
+        bridgeheads.get(0).setPosition(new Position(Map.mapSize.width / 8, Map.mapSize.height / 8));
+        bridgeheads.get(1).setPosition(new Position(7 * Map.mapSize.width / 8, Map.mapSize.height / 8));
+        bridgeheads.get(2).setPosition(new Position(7 * Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
+        bridgeheads.get(3).setPosition(new Position(Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
 
     }
 
@@ -458,10 +454,10 @@ public class World extends SoSObject{
         ExcelHelper.getCell(row, 1).setCellValue(maxHospital);
         row = ExcelHelper.nextRow(row);
 
-        // initial safezone count
-        ExcelHelper.getCell(row, 0).setCellValue("initial safezone count");
+        // initial Bridgehead count
+        ExcelHelper.getCell(row, 0).setCellValue("initial bridgehead count");
         ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
-        ExcelHelper.getCell(row, 1).setCellValue(maxSafeZone);
+        ExcelHelper.getCell(row, 1).setCellValue(maxBridgehead);
         row = ExcelHelper.nextRow(row);
 
 
@@ -498,14 +494,14 @@ public class World extends SoSObject{
                 //randomPosition = GlobalRandom.nextPosition(Map.mapSize.width, Map.mapSize.height);
                 randomPosition = GlobalRandom.nextPosition(Map.mapSize.width / 8, 7 * Map.mapSize.width / 8,
                         Map.mapSize.height / 8, 7 * Map.mapSize.width / 8);
-                boolean isSafeZone = false;
-                for (SafeZone zone : safeZones) {
-                    if (zone.isSafeZone(randomPosition)) {
-                        isSafeZone = true;
+                boolean isBridgehead = false;
+                for (Bridgehead zone : bridgeheads) {
+                    if (zone.isBridgehead(randomPosition)) {
+                        isBridgehead = true;
                         break;
                     }
                 }
-                if (isSafeZone == false) break;
+                if (isBridgehead == false) break;
             }
 
             patient.setPosition(randomPosition);

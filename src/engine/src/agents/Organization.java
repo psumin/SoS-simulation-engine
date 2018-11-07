@@ -3,7 +3,6 @@ package agents;
 import core.Msg;
 import core.SoSObject;
 import core.World;
-import misc.Time;
 
 import java.util.*;
 
@@ -21,8 +20,8 @@ public class Organization extends CS {
     private final int seriousPatientWeight = 10;
 
     private final ArrayList<Ambulance> freeStateAmbulances = new ArrayList<>();
-    private final ArrayList<Msg> msgsFromSafeZone = new ArrayList<>();
-    //private final ArrayList<SafeZone> targetSafeZones = new ArrayList<>();
+    private final ArrayList<Msg> msgsFromBridgehead = new ArrayList<>();
+    //private final ArrayList<Bridgehead> targetSafeZones = new ArrayList<>();
 
     public Organization(World world, String name) {
         super(world, name);
@@ -30,42 +29,42 @@ public class Organization extends CS {
 
     // Serious patient priority
     private void ambulanceFreeStateStart(Msg msg) {
-        if(msgsFromSafeZone.isEmpty()) {
+        if(msgsFromBridgehead.isEmpty()) {
             freeStateAmbulances.add((Ambulance) msg.data);
         } else {
             Ambulance ambulance = (Ambulance)msg.data;
 
             Msg seriousMsg = null;
-            for(Msg msgFromSafeZone: msgsFromSafeZone) {
-                if(msgFromSafeZone.title == "serious patient arrived") {
-                    seriousMsg = msgFromSafeZone;
+            for(Msg msgFromBridgehead: msgsFromBridgehead) {
+                if(msgFromBridgehead.title == "serious patient arrived") {
+                    seriousMsg = msgFromBridgehead;
                     break;
                 }
             }
 
-            SafeZone safeZone = null;
+            Bridgehead bridgehead = null;
             if(seriousMsg != null) {                    // Serious patient first
-                msgsFromSafeZone.remove(seriousMsg);
-                safeZone = (SafeZone)seriousMsg.data;
+                msgsFromBridgehead.remove(seriousMsg);
+                bridgehead = (Bridgehead)seriousMsg.data;
             } else {
-                Msg first = msgsFromSafeZone.get(0);    // Wounded patient next
-                msgsFromSafeZone.remove(0);
-                safeZone = (SafeZone)first.data;
+                Msg first = msgsFromBridgehead.get(0);    // Wounded patient next
+                msgsFromBridgehead.remove(0);
+                bridgehead = (Bridgehead)first.data;
             }
 
             router.route(new Msg()
                     .setFrom(name)
                     .setTo(ambulance.name)
-                    .setTitle("move to safezone")
-                    .setData(safeZone));
+                    .setTitle("move to bridgeheade")
+                    .setData(bridgehead));
         }
     }
 
-    private void patientArrivedAtSafeZone(Msg msg) {
+    private void patientArrivedAtBridgehead(Msg msg) {
         if(freeStateAmbulances.isEmpty()) {
-            msgsFromSafeZone.add(msg);
+            msgsFromBridgehead.add(msg);
         } else {
-            SafeZone safeZone = (SafeZone)msg.data;
+            Bridgehead bridgehead = (Bridgehead)msg.data;
 
             ArrayList<Ambulance> mustRemove = new ArrayList<Ambulance>();
             for(Ambulance amb: freeStateAmbulances) {
@@ -76,7 +75,7 @@ public class Organization extends CS {
             freeStateAmbulances.removeAll(mustRemove);
 
 
-            Ambulance ambulance = (Ambulance)safeZone.nearestObject(new ArrayList<SoSObject>(freeStateAmbulances));
+            Ambulance ambulance = (Ambulance) bridgehead.nearestObject(new ArrayList<SoSObject>(freeStateAmbulances));
             freeStateAmbulances.remove(ambulance);
 
             //Ambulance ambulance = freeStateAmbulances.get(0);
@@ -85,8 +84,8 @@ public class Organization extends CS {
             router.route(new Msg()
                     .setFrom(name)
                     .setTo(ambulance.name)
-                    .setTitle("move to safezone")
-                    .setData(safeZone));
+                    .setTitle("move to bridgehead")
+                    .setData(bridgehead));
         }
     }
 
@@ -102,12 +101,12 @@ public class Organization extends CS {
                         .setTitle("nearest hospital")
                         .setData(nearestHospital));
             }
-        } else if(msg.from.startsWith("SafeZone")) {                                                                    // Message from Safe Zone. Information about the arrived patient
-            patientArrivedAtSafeZone(msg);
+        } else if(msg.from.startsWith("Bridgehead")) {                                                                    // Message from Bridgehead. Information about the arrived patient
+            patientArrivedAtBridgehead(msg);
 //            if(msg.title == "serious patient arrived") {
-//                patientArrivedAtSafeZone(msg);
+//                patientArrivedAtBridgehead(msg);
 //            } else if(msg.title == "wounded patient arrived") {
-//                patientArrivedAtSafeZone(msg);
+//                patientArrivedAtBridgehead(msg);
 //            }
         } else if(msg.from.startsWith("Ambulance")) {                                                                   // Message from the Ambulance, when Free state
             if(msg.title == "free state start") {

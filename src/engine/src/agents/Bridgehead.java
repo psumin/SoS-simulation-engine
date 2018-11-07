@@ -13,24 +13,24 @@ import java.util.ArrayList;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class SafeZone extends CS {
+public class Bridgehead extends CS {
 
     private ArrayList<Patient> patients = new ArrayList<>();
 
     private TextObject textObject = new TextObject();
     private int scale = 3;
-    public SafeZone(World world, String name) {
+    public Bridgehead(World world, String name) {
         super(world, name);
-        addChild(new ImageObject("src/engine/resources/safezone.png", scale));
+        addChild(new ImageObject("src/engine/resources/bridgehead.png", scale));
         addChild(textObject);
         textObject.fontColor = Color.red;
     }
 
-    public boolean isSafeZone(Position position) {
-        return isSafeZone(position.x, position.y);
+    public boolean isBridgehead(Position position) {
+        return isBridgehead(position.x, position.y);
     }
 
-    public boolean isSafeZone(int x, int y) {
+    public boolean isBridgehead(int x, int y) {
         int distanceX = Math.abs(position.x - x);
         int distanceY = Math.abs(position.y - y);
 
@@ -58,9 +58,9 @@ public class SafeZone extends CS {
 
         String title = "";
         if(patient.isSerious()) {
-            title = "serious patient arrived";                                  // Serious patient arrived at the Safe Zone
+            title = "serious patient arrived";                                  // Serious patient arrived at the Bridgehead
         } else {
-            title = "wounded patient arrived";                                  // Wounded patient arrived at the Safe Zone
+            title = "wounded patient arrived";                                  // Wounded patient arrived at the Bridgehead
         }
 
         router.route(new Msg()                                                  // Send a message to the Organization

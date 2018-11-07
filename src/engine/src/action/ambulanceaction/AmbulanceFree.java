@@ -1,7 +1,7 @@
 package action.ambulanceaction;
 
 import agents.Ambulance;
-import agents.SafeZone;
+import agents.Bridgehead;
 import core.Msg;
 
 /**
@@ -41,7 +41,7 @@ public class AmbulanceFree extends AmbulanceAction {
             frameCounter = timeout;
             if(timeoutCounter <= 0) {
                 timeoutCounter = maxTimeout;
-                ambulance.changeAction(new AmbulanceSearch(ambulance));     // Search at Safe Zone
+                ambulance.changeAction(new AmbulanceSearch(ambulance));     // Search at Bridgehead
             }
             timeoutCounter--;
         }
@@ -51,9 +51,9 @@ public class AmbulanceFree extends AmbulanceAction {
     @Override
     // When Ambulance receive the message
     public void recvMsg(Msg msg) {
-        if(msg.title == "move to safezone") {
-            SafeZone safeZone = (SafeZone)msg.data;
-            ambulance.changeAction(new AmbulanceMoveToSafeZone(ambulance, safeZone));
+        if(msg.title == "move to bridgehead") {
+            Bridgehead bridgehead = (Bridgehead)msg.data;
+            ambulance.changeAction(new AmbulanceMoveTobridgehead(ambulance, bridgehead));
         }
     }
 }
