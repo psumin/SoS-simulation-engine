@@ -201,7 +201,7 @@ public class MsgRouter extends SoSObject {
         {
             ArrayList<Delay> removes = new ArrayList<>();
             for (Delay condition : delayConditions) {
-                if (condition.endFrame <= Time.getFrameCount()) {
+                if (condition.endFrame < Time.getFrameCount()) {
                     removes.add(condition);
                 }
             }
@@ -211,7 +211,7 @@ public class MsgRouter extends SoSObject {
         {
             ArrayList<Loss> removes = new ArrayList<>();
             for (Loss condition : lossConditions) {
-                if (condition.endFrame <= Time.getFrameCount()) {
+                if (condition.endFrame < Time.getFrameCount()) {
                     removes.add(condition);
                 }
             }

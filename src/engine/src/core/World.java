@@ -730,42 +730,42 @@ public class World extends SoSObject{
         stimuli.add(new AddEntity(this, 220, this::addAmbulance));
         stimuli.add(new AddEntity(this, 230, this::addAmbulance));
 
-        // TODO: Msg Delay
-        // CS && CS
-        //router.add(new Delay(1, 20, "FF", "FF", 20));
-        //router.add(new Delay(26, 100, "FF", "FF", 100));
+//        // TODO: Msg Delay
+//        // CS && CS
+        router.add(new Delay(1, 20, "FF", "FF", 20));   // 1frame 부터 20프레임까지 적용
+//        router.add(new Delay(26, 100, "FF", "FF", 100));
+//
+//        router.add(new Delay(1, 20,"Ambulance", "Org", 20));
+//
+//        // Entity && CS
+//        router.add(new Delay(1, 20, "FF1", "FF", 20));
+//        router.add(new Delay(1, 20, "Ambulance1", "Org", 20));
+//
+//        // CS && Entity
+//        router.add(new Delay(1, 20, "FF", "FF5", 20));
+//        router.add(new Delay(1, 20, "Org", "Ambulance1", 20));
+//
+//        // Entity && Entity
+//        router.add(new Delay(1, 20, "FF1", "FF5", 20));
 
-        //router.add(new Delay(1, "Ambulance", "Org", 20));
 
-        // Entity && CS
-        //router.add(new Delay(1, "FF1", "FF", 20));
-//        router.add(new Delay(1, "Ambulance1", "Org", 20));
-
-        // CS && Entity
-        //router.add(new Delay(1, "FF", "FF5", 20));
-        //router.add(new Delay(1, "Org", "Ambulance1", 20));
-
-        // Entity && Entity
-        //router.add(new Delay(1, "FF1", "FF5", 20));
-
-
-        // TODO: Msg Loss
-        // CS && CS
-        router.add(new Loss(1, 20, "FF", "FF"));
-        //router.add(new Loss(26, 100, "FF", "FF"));
-
-        //router.add(new Loss(1, "Ambulance", "Org"));
-
-        // Entity && CS
-        //router.add(new Loss(1, "FF1", "FF"));
-//        router.add(new Loss(1, "Ambulance1", "Org"));
-
-        // CS && Entity
-        //router.add(new Loss(1, "FF", "FF5"));
-        //router.add(new Loss(1, "Org", "Ambulance1"));
-
-        // Entity && Entity
-        //router.add(new Loss(1, "FF1", "FF5"));
+//        // TODO: Msg Loss
+//        // CS && CS
+//        router.add(new Loss(1, 20, "FF", "FF"));
+//        router.add(new Loss(26, 100, "FF", "FF"));
+//
+//        router.add(new Loss(1, 20, "Ambulance", "Org"));
+//
+//        // Entity && CS
+//        router.add(new Loss(1, 20, "FF1", "FF"));
+//        router.add(new Loss(1, 20, "Ambulance1", "Org"));
+//
+//        // CS && Entity
+//        router.add(new Loss(1, 20, "FF", "FF5"));
+//        router.add(new Loss(1, 20, "Org", "Ambulance1"));
+//
+//        // Entity && Entity
+//        router.add(new Loss(1, 20, "FF1", "FF5"));
     }
 
     void removeCS(String csName) {
