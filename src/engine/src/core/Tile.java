@@ -85,6 +85,6 @@ public class Tile extends SoSObject {
 
     @Override
     public void onUpdate() {
-        light.setColor(new Color(255, 255 - (int)(255 * (moveDelayFactor - 1) / 7), 255 - (int)(255 * (moveDelayFactor - 1)/ 7)));
+        light.setColor(new Color(255, 255 - (int)(255 * (moveDelayFactor - 1) / 10), 255 - (int)(255 * (moveDelayFactor - 1)/ 10)));
     }
 }
