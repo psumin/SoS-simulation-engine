@@ -89,7 +89,7 @@ public class Hospital extends CS {
             patients.add(patient);
         }
 
-        row.createCell(4).setCellValue("hospitalize");
+//        row.createCell(4).setCellValue("hospitalize");
     }
 
     // 환자 퇴원
@@ -115,7 +115,7 @@ public class Hospital extends CS {
             world.addChild(treatmentTarget);
         }
         //patients.remove(patient);
-        row.createCell(5).setCellValue("leave");
+//        row.createCell(5).setCellValue("leave");
     }
 
     public void setCapacity(int capacity) {

@@ -3,6 +3,7 @@ package core;
 import misc.Position;
 import misc.Time;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import stimulus.MessageStimulus.Delay;
@@ -89,25 +90,63 @@ public class MsgRouter extends SoSObject {
 
         currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
         Row row = currentRow;
+
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Type");
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+
+
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("FF->FF");
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+        row.createCell(row.getPhysicalNumberOfCells());
+        row.createCell(row.getPhysicalNumberOfCells());
+
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("FF->Org");
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+        row.createCell(row.getPhysicalNumberOfCells());
+        row.createCell(row.getPhysicalNumberOfCells());
+
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Org->FF");
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+        row.createCell(row.getPhysicalNumberOfCells());
+        row.createCell(row.getPhysicalNumberOfCells());
+
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Amb->Org");
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+        row.createCell(row.getPhysicalNumberOfCells());
+        row.createCell(row.getPhysicalNumberOfCells());
+
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Org->Amb");
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+        row.createCell(row.getPhysicalNumberOfCells());
+        row.createCell(row.getPhysicalNumberOfCells());
+
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Bridge->Org");
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+        row.createCell(row.getPhysicalNumberOfCells());
+        row.createCell(row.getPhysicalNumberOfCells());
+
+        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Org->Bridge");
+        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+        row.createCell(row.getPhysicalNumberOfCells());
+        row.createCell(row.getPhysicalNumberOfCells());
+
+        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
+        row = currentRow;
         row.createCell(0).setCellValue("frame count");
 
-//        sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
-//        sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 6));
-//
-//        row.createCell(1).setCellValue("send messages");
-//        row.getCell(1).setCellStyle(centerAlignmentStyle);
-//
-//        row.createCell(4).setCellValue("recv messages");
-//        row.getCell(4).setCellStyle(centerAlignmentStyle);
+        for (int i = 0; i < 7; ++i) {
+            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Send");
+            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
 
-        for(int i = 0; i < 100; ++i) {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("No.");
+            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Received");
             row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("from");
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("to");
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("title");
 
             row.createCell(row.getPhysicalNumberOfCells());
         }
@@ -135,29 +174,29 @@ public class MsgRouter extends SoSObject {
     CellStyle recvColorStyle;
     private void _route(Msg msg) {
         // recv log
-        if(recvColorStyle == null) {
-            recvColorStyle = workbook.createCellStyle();
-            recvColorStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
-            recvColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        }
-
-        //Row row = sheet.createRow(rowNum++);
-        Row row = currentRow;
-        //row.createCell(0).setCellValue(Time.getFrameCount());
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-        if(msg.title == "reserve") {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-        } else {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-        }
-        row.createCell(row.getPhysicalNumberOfCells());
+//        if(recvColorStyle == null) {
+//            recvColorStyle = workbook.createCellStyle();
+//            recvColorStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+//            recvColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//        }
+//
+//        //Row row = sheet.createRow(rowNum++);
+//        Row row = currentRow;
+//        //row.createCell(0).setCellValue(Time.getFrameCount());
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+//        if(msg.title == "reserve") {
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+//        } else {
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
+//        }
+//        row.createCell(row.getPhysicalNumberOfCells());
 
         SoSObject target = world.findObject(msg.to);
         if(target != null) {
@@ -172,29 +211,29 @@ public class MsgRouter extends SoSObject {
     CellStyle sendColorStyle;
     public void route(Msg msg) {
         // send log
-        if(sendColorStyle == null) {
-            sendColorStyle = workbook.createCellStyle();
-            sendColorStyle.setFillForegroundColor(IndexedColors.LAVENDER.getIndex());
-            sendColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        }
-
-
-        Row row = currentRow;
-        //row.createCell(0).setCellValue(Time.getFrameCount());
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-        if(msg.title == "reserve") {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-        } else {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-        }
-        row.createCell(row.getPhysicalNumberOfCells());
+//        if(sendColorStyle == null) {
+//            sendColorStyle = workbook.createCellStyle();
+//            sendColorStyle.setFillForegroundColor(IndexedColors.LAVENDER.getIndex());
+//            sendColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//        }
+//
+//
+//        Row row = currentRow;
+//        //row.createCell(0).setCellValue(Time.getFrameCount());
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+//        if(msg.title == "reserve") {
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+//        } else {
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
+//        }
+//        row.createCell(row.getPhysicalNumberOfCells());
 
         SoSObject target = world.findObject(msg.to);
 

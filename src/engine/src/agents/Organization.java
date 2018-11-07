@@ -55,7 +55,7 @@ public class Organization extends CS {
             router.route(new Msg()
                     .setFrom(name)
                     .setTo(ambulance.name)
-                    .setTitle("move to bridgeheade")
+                    .setTitle("move to bridgehead")
                     .setData(bridgehead));
         }
     }

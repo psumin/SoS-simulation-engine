@@ -172,8 +172,8 @@ public class World extends SoSObject{
         row.createCell(1).setCellValue("hospital name");
         row.createCell(2).setCellValue("treatment patient count");
         row.createCell(3).setCellValue("wait patient count");
-        row.createCell(4).setCellValue("hospitalize");
-        row.createCell(5).setCellValue("leave");
+//        row.createCell(4).setCellValue("hospitalize");
+//        row.createCell(5).setCellValue("leave");
         for(int i = 0; i < maxHospital; ++i) {
             Hospital hospital = new Hospital(this, "Hospital" + (i + 1), hospitalSheet);
             hospitals.add(hospital);
@@ -298,9 +298,10 @@ public class World extends SoSObject{
 
         ExcelHelper.getCell(fireFighterSheet, 0, 0).setCellValue("frame Count");
         ExcelHelper.getCell(fireFighterSheet, 0, 1).setCellValue("number of Firefighter");
+        ExcelHelper.getCell(fireFighterSheet, 0, fireFighters.size() + 2).setCellValue("Total distance");
         for(int i = 0; i < fireFighters.size(); ++i) {
-            ExcelHelper.getCell(fireFighterSheet, 0, i * 2 + 2).setCellValue("FF" + (i + 1) + " pos");
-            ExcelHelper.getCell(fireFighterSheet, 0, i * 2 + 3).setCellValue("FF" + (i + 1) + " Status");
+            ExcelHelper.getCell(fireFighterSheet, 0, i + 2).setCellValue("FF" + (i + 1));
+//            ExcelHelper.getCell(fireFighterSheet, 0, i * 2 + 3).setCellValue("FF" + (i + 1) + " Status");
         }
 
         Row row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
@@ -310,28 +311,33 @@ public class World extends SoSObject{
         firefighterCountCell.setCellValue(fireFighterCounter);
         Cell[] positionCells = new Cell[fireFighters.size()];
 
-        for(int i = 0; i < fireFighters.size(); ++i) {
-            Cell currentCell = row.createCell(i * 2 + 2);
-
-            String position = fireFighters.get(i).position.toString();
-            currentCell.setCellValue(position);
-
-            currentCell = row.createCell(i * 2 + 3);
-            currentCell.setCellValue(fireFighters.get(i).currentAction.name);
-            //currentCell.setCellValue(fireFighters.get(i).getState().toString());
-        }
+//        for(int i = 0; i < fireFighters.size(); ++i) {
+//            Cell currentCell = row.createCell(i * 2 + 2);
+//
+//            String position = fireFighters.get(i).position.toString();
+//            currentCell.setCellValue(position);
+//
+//            currentCell = row.createCell(i * 2 + 3);
+//            currentCell.setCellValue(fireFighters.get(i).currentAction.name);
+//            //currentCell.setCellValue(fireFighters.get(i).getState().toString());
+//        }
 
         if(isFinish) {
+            int totalFirefighterDistance = 0;
             row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
             frameCountCell = row.createCell(0);
-            frameCountCell.setCellValue("total distance");
-            positionCells = new Cell[fireFighters.size()];
+            frameCountCell.setCellValue("distance");
+            positionCells = new Cell[fireFighters.size() + 1];
 
-            for(int i = 0; i < fireFighters.size(); ++i) {
-                Cell currentCell = row.createCell(i * 2 + 2);
+            for(int i = 0; i <= fireFighters.size(); ++i) {
+                Cell currentCell = row.createCell(i + 2);
                 positionCells[i] = currentCell;
-
-                positionCells[i].setCellValue(fireFighters.get(i).totalDistance);
+                if (i < fireFighters.size()) {
+                    positionCells[i].setCellValue(fireFighters.get(i).totalDistance);
+                    totalFirefighterDistance += fireFighters.get(i).totalDistance;
+                } else {
+                    positionCells[i].setCellValue(totalFirefighterDistance);
+                }
             }
         }
     }
@@ -342,9 +348,10 @@ public class World extends SoSObject{
         ExcelHelper.getCell(ambulanceSheet, 0, 0).setCellValue("frame count");
         ExcelHelper.getCell(ambulanceSheet, 0, 1).setCellValue("number of Ambulances");
         for(int i = 0; i < ambulances.size(); ++i) {
-            ExcelHelper.getCell(ambulanceSheet, 0, i * 2 + 2).setCellValue("Amb" + (i + 1) + " pos");
-            ExcelHelper.getCell(ambulanceSheet, 0, i * 2 + 3).setCellValue("Amb" + (i + 1) + " Status");
+            ExcelHelper.getCell(ambulanceSheet, 0, i + 2).setCellValue("Amb" + (i + 1));
+//            ExcelHelper.getCell(ambulanceSheet, 0, i * 2 + 3).setCellValue("Amb" + (i + 1) + " Status");
         }
+        ExcelHelper.getCell(ambulanceSheet, 0, ambulances.size() + 2).setCellValue("Total distance");
 
         Row row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
         Cell frameCountCell = row.createCell(0);
@@ -353,28 +360,33 @@ public class World extends SoSObject{
         ambulanceCountCell.setCellValue(ambulanceCounter);
         Cell[] positionCells;
 
-        for(int i = 0; i < ambulances.size(); ++i) {
-            Cell currentCell = row.createCell(i * 2 + 2);
-
-            String position = ambulances.get(i).position.toString();
-            currentCell.setCellValue(position);
-
-            currentCell = row.createCell(i * 2 + 3);
-            currentCell.setCellValue(ambulances.get(i).currentAction.name);
-            //currentCell.setCellValue(fireFighters.get(i).getState().toString());
-        }
+//        for(int i = 0; i < ambulances.size(); ++i) {
+//            Cell currentCell = row.createCell(i * 2 + 2);
+//
+//            String position = ambulances.get(i).position.toString();
+//            currentCell.setCellValue(position);
+//
+//            currentCell = row.createCell(i * 2 + 3);
+//            currentCell.setCellValue(ambulances.get(i).currentAction.name);
+//            //currentCell.setCellValue(fireFighters.get(i).getState().toString());
+//        }
 
         if(isFinish) {
+            int totalAmbulanceDistance = 0;
             row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
             frameCountCell = row.createCell(0);
-            frameCountCell.setCellValue("total distance");
-            positionCells = new Cell[ambulances.size()];
+            frameCountCell.setCellValue("distance");
+            positionCells = new Cell[ambulances.size() + 1];
 
-            for(int i = 0; i < ambulances.size(); ++i) {
-                Cell currentCell = row.createCell(i * 2 + 2);
+            for(int i = 0; i <= ambulances.size(); ++i) {
+                Cell currentCell = row.createCell(i + 2);
                 positionCells[i] = currentCell;
-
-                positionCells[i].setCellValue(ambulances.get(i).totalDistance);
+                if(i < ambulances.size()) {
+                    positionCells[i].setCellValue(ambulances.get(i).totalDistance);
+                    totalAmbulanceDistance += ambulances.get(i).totalDistance;
+                } else {
+                    positionCells[i].setCellValue(totalAmbulanceDistance);
+                }
             }
         }
     }
