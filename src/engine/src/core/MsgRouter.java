@@ -84,7 +84,7 @@ public class MsgRouter extends SoSObject {
         worldMap = world.getMap();
 
         this.workbook = workbook;
-        sheet = workbook.createSheet("communications");;
+        sheet = workbook.createSheet("communications");
         //sheet.trackAllColumnsForAutoSizing();
 
         currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());

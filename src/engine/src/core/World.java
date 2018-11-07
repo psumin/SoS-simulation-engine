@@ -179,11 +179,11 @@ public class World extends SoSObject{
             hospitals.add(hospital);
             addChild(hospital);
 
-            if(i == 0){
-                hospital.setCapacity(2);
-            } else {
-                hospital.setCapacity(10);
-            }
+//            if(i == 0){
+//                hospital.setCapacity(2);
+//            } else {
+            hospital.setCapacity(10);
+//            }
         }
         hospitals.get(0).setPosition(0, 0);
         hospitals.get(1).setPosition(Map.mapSize.width - 1, 0);
@@ -328,7 +328,7 @@ public class World extends SoSObject{
             positionCells = new Cell[fireFighters.size()];
 
             for(int i = 0; i < fireFighters.size(); ++i) {
-                Cell currentCell = row.createCell(i * 2 + 1);
+                Cell currentCell = row.createCell(i * 2 + 2);
                 positionCells[i] = currentCell;
 
                 positionCells[i].setCellValue(fireFighters.get(i).totalDistance);
@@ -371,7 +371,7 @@ public class World extends SoSObject{
             positionCells = new Cell[ambulances.size()];
 
             for(int i = 0; i < ambulances.size(); ++i) {
-                Cell currentCell = row.createCell(i * 2 + 1);
+                Cell currentCell = row.createCell(i * 2 + 2);
                 positionCells[i] = currentCell;
 
                 positionCells[i].setCellValue(ambulances.get(i).totalDistance);
