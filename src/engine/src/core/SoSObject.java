@@ -89,6 +89,8 @@ public abstract class SoSObject {
         if(_canUpdate) {
             onUpdate();
 
+            if(!_canUpdate) return;
+
             children.add(null);
             while(true) {
                 SoSObject child = children.poll();

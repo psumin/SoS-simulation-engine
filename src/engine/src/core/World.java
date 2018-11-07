@@ -486,6 +486,8 @@ public class World extends SoSObject{
         printFireFighterLog(true);
         printAmbulanceLog(true);
 
+        router.clear();
+
         long nano = System.currentTimeMillis();
         String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
         String filePath = "log/" + date + ".xlsx";

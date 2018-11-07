@@ -104,6 +104,11 @@ public class FireFighter extends CS {
     @Override
     public void onUpdate() {
         super.onUpdate();
+
+        if(patientsMemory.isEmpty() && unvisitedTiles.isEmpty()) {
+            return;
+        }
+
         router.broadcast(this,
                 new Msg()
                         .setFrom(name)

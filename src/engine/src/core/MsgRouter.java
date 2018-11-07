@@ -73,6 +73,29 @@ public class MsgRouter extends SoSObject {
     private int ORG_TO_BRIDGE_RECV = 0;
 
 
+    private int TOTAL_FF_TO_FF_SEND = 0;
+    private int TOTAL_FF_TO_FF_RECV = 0;
+
+    private int TOTAL_FF_TO_ORG_SEND = 0;
+    private int TOTAL_FF_TO_ORG_RECV = 0;
+
+    private int TOTAL_ORG_TO_FF_SEND = 0;
+    private int TOTAL_ORG_TO_FF_RECV = 0;
+
+    private int TOTAL_AMB_TO_ORG_SEND = 0;
+    private int TOTAL_AMB_TO_ORG_RECV = 0;
+
+    private int TOTAL_ORG_TO_AMB_SEND = 0;
+    private int TOTAL_ORG_TO_AMB_RECV = 0;
+
+    private int TOTAL_BRIDGE_TO_ORG_SEND = 0;
+    private int TOTAL_BRIDGE_TO_ORG_RECV = 0;
+
+    private int TOTAL_ORG_TO_BRIDGE_SEND = 0;
+    private int TOTAL_ORG_TO_BRIDGE_RECV = 0;
+
+
+
 
     private class DelayedMsg {
         public Msg source;
@@ -260,18 +283,25 @@ public class MsgRouter extends SoSObject {
 
         if(msg.from.startsWith("FF") && msg.to.startsWith("FF")) {
             FF_TO_FF_RECV++;
+            TOTAL_FF_TO_FF_RECV++;
         } else if(msg.from.startsWith("FF") && msg.to.startsWith("Org")) {
             FF_TO_ORG_RECV++;
+            TOTAL_FF_TO_ORG_RECV++;
         } else if(msg.from.startsWith("Org") && msg.to.startsWith("FF")) {
             ORG_TO_FF_RECV++;
+            TOTAL_ORG_TO_FF_RECV++;
         } else if(msg.from.startsWith("Amb") && msg.to.startsWith("Org")) {
             AMB_TO_ORG_RECV++;
+            TOTAL_AMB_TO_ORG_RECV++;
         } else if(msg.from.startsWith("Org") && msg.to.startsWith("Amb")) {
             ORG_TO_AMB_RECV++;
+            TOTAL_ORG_TO_AMB_RECV++;
         } else if(msg.from.startsWith("Bri") && msg.to.startsWith("Org")) {
             BRIDGE_TO_ORG_RECV++;
+            TOTAL_BRIDGE_TO_ORG_RECV++;
         } else if(msg.from.startsWith("Org") && msg.to.startsWith("Bri")) {
             ORG_TO_BRIDGE_RECV++;
+            TOTAL_ORG_TO_BRIDGE_RECV++;
         }
 
         SoSObject target = world.findObject(msg.to);
@@ -328,18 +358,25 @@ public class MsgRouter extends SoSObject {
 
         if(msg.from.startsWith("FF") && msg.to.startsWith("FF")) {
             FF_TO_FF_SEND++;
+            TOTAL_FF_TO_FF_SEND++;
         } else if(msg.from.startsWith("FF") && msg.to.startsWith("Org")) {
             FF_TO_ORG_SEND++;
+            TOTAL_FF_TO_ORG_SEND++;
         } else if(msg.from.startsWith("Org") && msg.to.startsWith("FF")) {
             ORG_TO_FF_SEND++;
+            TOTAL_ORG_TO_FF_SEND++;
         } else if(msg.from.startsWith("Amb") && msg.to.startsWith("Org")) {
             AMB_TO_ORG_SEND++;
+            TOTAL_AMB_TO_ORG_SEND++;
         } else if(msg.from.startsWith("Org") && msg.to.startsWith("Amb")) {
             ORG_TO_AMB_SEND++;
+            TOTAL_ORG_TO_AMB_SEND++;
         } else if(msg.from.startsWith("Bri") && msg.to.startsWith("Org")) {
             BRIDGE_TO_ORG_SEND++;
+            TOTAL_BRIDGE_TO_ORG_SEND++;
         } else if(msg.from.startsWith("Org") && msg.to.startsWith("Bri")) {
             ORG_TO_BRIDGE_SEND++;
+            TOTAL_ORG_TO_BRIDGE_SEND++;
         }
 
 
@@ -616,5 +653,32 @@ public class MsgRouter extends SoSObject {
 
     public void add(Loss condition) {
         lossConditions.add(condition);
+    }
+
+    @Override
+    public void clear() {
+        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
+        currentRow.createCell(0).setCellValue("Total communication");
+        ExcelHelper.getCell(currentRow, 1).setCellValue(TOTAL_FF_TO_FF_SEND / 2);
+        ExcelHelper.getCell(currentRow, 2).setCellValue(TOTAL_FF_TO_FF_RECV / 2);
+
+        ExcelHelper.getCell(currentRow, 4).setCellValue(TOTAL_FF_TO_ORG_SEND);
+        ExcelHelper.getCell(currentRow, 5).setCellValue(TOTAL_FF_TO_ORG_RECV);
+
+        ExcelHelper.getCell(currentRow, 7).setCellValue(TOTAL_ORG_TO_FF_SEND);
+        ExcelHelper.getCell(currentRow, 8).setCellValue(TOTAL_ORG_TO_FF_RECV);
+
+        ExcelHelper.getCell(currentRow, 10).setCellValue(TOTAL_AMB_TO_ORG_SEND);
+        ExcelHelper.getCell(currentRow, 11).setCellValue(TOTAL_AMB_TO_ORG_RECV);
+
+        ExcelHelper.getCell(currentRow, 13).setCellValue(TOTAL_ORG_TO_AMB_SEND);
+        ExcelHelper.getCell(currentRow, 14).setCellValue(TOTAL_ORG_TO_AMB_RECV);
+
+        ExcelHelper.getCell(currentRow, 16).setCellValue(TOTAL_BRIDGE_TO_ORG_SEND);
+        ExcelHelper.getCell(currentRow, 17).setCellValue(TOTAL_BRIDGE_TO_ORG_RECV);
+
+        ExcelHelper.getCell(currentRow, 19).setCellValue(TOTAL_ORG_TO_BRIDGE_SEND);
+        ExcelHelper.getCell(currentRow, 20).setCellValue(TOTAL_ORG_TO_BRIDGE_RECV);
+        super.clear();
     }
 }
