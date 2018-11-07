@@ -14,7 +14,7 @@ import core.ImageObject;
 public class FireFighterFirstAid extends FireFighterAction {
 
     private int firstAidTime = 10;
-    private Patient targetPatient;
+    public Patient targetPatient;
     private int frameCounter = firstAidTime;
 
     public FireFighterFirstAid(FireFighter target, Patient targetPatient) {

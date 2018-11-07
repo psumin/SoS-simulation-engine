@@ -16,7 +16,7 @@ import java.util.Collections;
 
 public class FireFighterMoveToPatient extends FireFighterAction {
 
-    Patient targetPatient;
+    public Patient targetPatient;
     ArrayList<Patient> patientsMemory;
 
     public FireFighterMoveToPatient(FireFighter target, Patient targetPatient) {

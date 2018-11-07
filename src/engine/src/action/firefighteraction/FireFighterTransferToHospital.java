@@ -14,7 +14,7 @@ import agents.Patient;
 public class FireFighterTransferToHospital extends FireFighterAction {
 
     Hospital hospital;
-    Patient targetPatient;
+    public Patient targetPatient;
 
     int prevMoveDelay;
 

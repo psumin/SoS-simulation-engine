@@ -14,7 +14,7 @@ import agents.Patient;
 public class FireFighterTransferToBridgehead extends FireFighterAction {
 
     Bridgehead bridgehead;
-    Patient targetPatient;
+    public Patient targetPatient;
 
     int prevMoveDelay;
 

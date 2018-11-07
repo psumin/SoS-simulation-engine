@@ -1,11 +1,13 @@
 package core;
 
+import action.firefighteraction.*;
 import agents.*;
 import misc.ExcelHelper;
 import misc.Position;
 
 import misc.Range;
 import misc.Time;
+import org.apache.poi.hwpf.model.FIBFieldHandler;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -16,6 +18,7 @@ import stimulus.ChangeValueStimulus.Speed;
 import stimulus.MessageStimulus.Delay;
 import stimulus.MessageStimulus.Loss;
 import stimulus.NumberOfEntityStimulus.AddEntity;
+import stimulus.NumberOfEntityStimulus.RemoveEntity;
 
 import java.awt.*;
 import java.awt.Color;
@@ -689,14 +692,14 @@ public class World extends SoSObject{
 //
 //        // TODO: remove FireFighter1
 //
-//        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 110, "FF2", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 120, "FF3", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 130, "FF4", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 140, "FF5", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 150, "FF6", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 160, "FF7", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 170, "FF8", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 110, "FF2", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 120, "FF3", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 130, "FF4", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 140, "FF5", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 150, "FF6", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 160, "FF7", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 170, "FF8", this::removeCS));
 //
 //        // TODO: remove Ambulance1    ==> error 발생!! log 문제인듯
 //        stimuli.add(new RemoveEntity(this, 100, "Ambulance1", this::removeCS));
@@ -780,7 +783,7 @@ public class World extends SoSObject{
 //        // CS && CS
 //        router.add(new Loss(1, 3000, "FF", "FF"));
 //        router.add(new Loss(1, 20, "FF", "FF"));
-        router.add(new Loss(10, 200, "All", "All"));
+        //router.add(new Loss(10, 200, "All", "All"));
 //
 //        router.add(new Loss(1, 20, "Ambulance", "Org"));
 //
@@ -794,6 +797,8 @@ public class World extends SoSObject{
 //
 //        // Entity && Entity
 //        router.add(new Loss(1, 20, "FF1", "FF5"));
+
+
     }
 
     void removeCS(String csName) {
@@ -805,6 +810,53 @@ public class World extends SoSObject{
         cs.visible(false);
         cs.canUpdate(false);
         cs.currentAction.name = "Removed";
+
+        if(cs instanceof FireFighter) {
+            FireFighter ff = (FireFighter)cs;
+            if(cs.currentAction instanceof FireFighterFirstAid) {
+                FireFighterFirstAid action = (FireFighterFirstAid)cs.currentAction;
+                action.targetPatient.assignedFireFighter = null;
+                action.targetPatient.isSaved = false;
+                map.add(action.targetPatient);
+                action.targetPatient.position.set(cs.position);
+                ff.patientsMemory.remove(action.targetPatient);
+                ff.patientsMemory.add(action.targetPatient);
+            } else if(cs.currentAction instanceof FireFighterSelectTransferDestination) {
+                FireFighterSelectTransferDestination action = (FireFighterSelectTransferDestination)cs.currentAction;
+                action.targetPatient.isSaved = false;
+                action.targetPatient.assignedFireFighter = null;
+                addChild(action.targetPatient);
+                map.add(action.targetPatient);
+                action.targetPatient.position.set(cs.position);
+                ff.patientsMemory.remove(action.targetPatient);
+                ff.patientsMemory.add(action.targetPatient);
+            } else if(cs.currentAction instanceof FireFighterTransferToBridgehead) {
+                FireFighterTransferToBridgehead action = (FireFighterTransferToBridgehead)cs.currentAction;
+                action.targetPatient.isSaved = false;
+                action.targetPatient.assignedFireFighter = null;
+                addChild(action.targetPatient);
+                map.add(action.targetPatient);
+                action.targetPatient.position.set(cs.position);
+                ff.patientsMemory.remove(action.targetPatient);
+                ff.patientsMemory.add(action.targetPatient);
+            } else if(cs.currentAction instanceof FireFighterTransferToHospital) {
+                FireFighterTransferToHospital action = (FireFighterTransferToHospital)cs.currentAction;
+                action.targetPatient.assignedFireFighter = null;
+                action.targetPatient.isSaved = false;
+                addChild(action.targetPatient);
+                map.add(action.targetPatient);
+                action.targetPatient.position.set(cs.position);
+                ff.patientsMemory.remove(action.targetPatient);
+                ff.patientsMemory.add(action.targetPatient);
+            } else if(cs.currentAction instanceof FireFighterMoveToPatient) {
+                FireFighterMoveToPatient action = (FireFighterMoveToPatient)cs.currentAction;
+                action.targetPatient.assignedFireFighter = null;
+                map.add(action.targetPatient);
+                ff.patientsMemory.remove(action.targetPatient);
+                ff.patientsMemory.add(action.targetPatient);
+            }
+        }
+
         removeChild(obj);
     }
 
