@@ -26,31 +26,6 @@ public class MsgRouter extends SoSObject {
     private final ArrayList<Delay> delayConditions = new ArrayList<>();
     private final ArrayList<Loss> lossConditions = new ArrayList<>();
 
-    // For the Simulation
-    // All delay
-    private int ALL_DELAY = 0;
-
-    // TO: Org delay
-    private int TO_ORG_DELAY = 0;
-
-    // FROM: Org delay
-    private int FROM_ORG_DELAY = 0;
-
-    // FF <-> Organization delay
-    private int FF_TO_ORG_DELAY = 0;
-    private int ORG_TO_FF_DELAY = 0;
-
-    // Ambulance <-> Organization delay
-    private int AMB_TO_ORG_DELAY = 0;
-    private int ORG_TO_AMB_DELAY = 0;
-
-    // Bridgehead <-> Organization delay
-    private int SZ_TO_ORG_DELAY = 0;
-    private int ORG_TO_SZ_DELAY = 0;
-
-    // FF <-> FF message delay at the communication range
-    private int FF_RANGECAST_DELAY = 0;
-
     private int FF_TO_FF_SEND = 0;
     private int FF_TO_FF_RECV = 0;
 
@@ -95,8 +70,6 @@ public class MsgRouter extends SoSObject {
     private int TOTAL_ORG_TO_BRIDGE_RECV = 0;
 
 
-
-
     private class DelayedMsg {
         public Msg source;
         public int delayedTime;
@@ -111,7 +84,6 @@ public class MsgRouter extends SoSObject {
     }
 
     private final Queue<DelayedMsg> delayedMsgs = new LinkedList<>();
-
 
     World world;
     Map worldMap;
@@ -132,15 +104,14 @@ public class MsgRouter extends SoSObject {
         worldMap = world.getMap();
 
         this.workbook = workbook;
-        sheet = workbook.createSheet("communications");
+        sheet = workbook.createSheet("communications");     // communication sheet at log file
         //sheet.trackAllColumnsForAutoSizing();
 
+        // Initial format of the communication sheet
         currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
         Row row = currentRow;
-
         row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Type");
         row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-
 
         row.createCell(row.getPhysicalNumberOfCells()).setCellValue("FF->FF");
         row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
@@ -205,7 +176,7 @@ public class MsgRouter extends SoSObject {
         currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
         currentRow.createCell(0).setCellValue(Time.getFrameCount());
 
-        ExcelHelper.getCell(currentRow, 1).setCellValue(FF_TO_FF_SEND / 2);
+        ExcelHelper.getCell(currentRow, 1).setCellValue(FF_TO_FF_SEND / 2);     // 2가지 종류의 메시지를 보내므로 (local map, patient memory)
         ExcelHelper.getCell(currentRow, 2).setCellValue(FF_TO_FF_RECV / 2);
 
         ExcelHelper.getCell(currentRow, 4).setCellValue(FF_TO_ORG_SEND);
@@ -226,6 +197,7 @@ public class MsgRouter extends SoSObject {
         ExcelHelper.getCell(currentRow, 19).setCellValue(ORG_TO_BRIDGE_SEND);
         ExcelHelper.getCell(currentRow, 20).setCellValue(ORG_TO_BRIDGE_RECV);
 
+        // Initialize to zero. To count the messages for each frame
         FF_TO_FF_SEND = 0;
         FF_TO_FF_RECV = 0;
         FF_TO_ORG_SEND = 0;
@@ -257,30 +229,6 @@ public class MsgRouter extends SoSObject {
     CellStyle recvColorStyle;
     private void _route(Msg msg) {
         // recv log
-//        if(recvColorStyle == null) {
-//            recvColorStyle = workbook.createCellStyle();
-//            recvColorStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
-//            recvColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-//        }
-//
-//        //Row row = sheet.createRow(rowNum++);
-//        Row row = currentRow;
-//        //row.createCell(0).setCellValue(Time.getFrameCount());
-//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
-//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
-//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
-//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-//        if(msg.title == "reserve") {
-//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
-//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-//        } else {
-//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
-//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(recvColorStyle);
-//        }
-//        row.createCell(row.getPhysicalNumberOfCells());
-
         if(msg.from.startsWith("FF") && msg.to.startsWith("FF")) {
             FF_TO_FF_RECV++;
             TOTAL_FF_TO_FF_RECV++;
@@ -317,45 +265,6 @@ public class MsgRouter extends SoSObject {
     CellStyle sendColorStyle;
     public void route(Msg msg) {
         // send log
-//        if(sendColorStyle == null) {
-//            sendColorStyle = workbook.createCellStyle();
-//            sendColorStyle.setFillForegroundColor(IndexedColors.LAVENDER.getIndex());
-//            sendColorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-//        }
-//
-//
-//        Row row = currentRow;
-//        //row.createCell(0).setCellValue(Time.getFrameCount());
-//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.id);
-//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.from);
-//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.to);
-//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-//        if(msg.title == "reserve") {
-//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title + " " + msg.to);
-//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-//        } else {
-//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue(msg.title);
-//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(sendColorStyle);
-//        }
-//        row.createCell(row.getPhysicalNumberOfCells());
-
-//        FF_TO_FF_SEND = 0;
-//        FF_TO_FF_RECV = 0;
-//        FF_TO_ORG_SEND = 0;
-//        FF_TO_ORG_RECV = 0;
-//        ORG_TO_FF_SEND = 0;
-//        ORG_TO_FF_RECV = 0;
-//        AMB_TO_ORG_SEND = 0;
-//        AMB_TO_ORG_RECV = 0;
-//        ORG_TO_AMB_SEND = 0;
-//        ORG_TO_AMB_RECV = 0;
-//        BRIDGE_TO_ORG_SEND = 0;
-//        BRIDGE_TO_ORG_RECV = 0;
-//        ORG_TO_BRIDGE_SEND = 0;
-//        ORG_TO_BRIDGE_RECV = 0;
-
         if(msg.from.startsWith("FF") && msg.to.startsWith("FF")) {
             FF_TO_FF_SEND++;
             TOTAL_FF_TO_FF_SEND++;
@@ -378,9 +287,6 @@ public class MsgRouter extends SoSObject {
             ORG_TO_BRIDGE_SEND++;
             TOTAL_ORG_TO_BRIDGE_SEND++;
         }
-
-
-
 
         SoSObject target = world.findObject(msg.to);
 
@@ -550,59 +456,6 @@ public class MsgRouter extends SoSObject {
                 }
             }
         }
-
-//
-//        // FF <-> Org
-//        if(FF_TO_ORG_DELAY > 0 && msg.from.startsWith(World.fireFighterPrefix) && msg.to.startsWith("Org")) {
-//            delayedMsgs.add(new DelayedMsg(msg, FF_TO_ORG_DELAY + Time.getFrameCount()));
-//            return;
-//        }
-//        if(ORG_TO_FF_DELAY > 0 && msg.from.startsWith("Org") && msg.to.startsWith(World.fireFighterPrefix)) {
-//            delayedMsgs.add(new DelayedMsg(msg, ORG_TO_FF_DELAY + Time.getFrameCount()));
-//            return;
-//        }
-//
-//        // Ambulance <-> Org
-//        if(AMB_TO_ORG_DELAY > 0 && msg.from.startsWith("Amb") && msg.to.startsWith("Org")) {
-//            delayedMsgs.add(new DelayedMsg(msg, AMB_TO_ORG_DELAY + Time.getFrameCount()));
-//            return;
-//        }
-//        if(ORG_TO_AMB_DELAY > 0 && msg.from.startsWith("Org") && msg.to.startsWith("Amb")) {
-//            delayedMsgs.add(new DelayedMsg(msg, ORG_TO_AMB_DELAY + Time.getFrameCount()));
-//            return;
-//        }
-//
-//        // Bridgehead <-> Org
-//        if(SZ_TO_ORG_DELAY > 0 && msg.from.startsWith("Bridgehead") && msg.to.startsWith("Org")) {
-//            delayedMsgs.add(new DelayedMsg(msg, SZ_TO_ORG_DELAY + Time.getFrameCount()));
-//            return;
-//        }
-//        if(ORG_TO_SZ_DELAY > 0 && msg.from.startsWith("Org") && msg.to.startsWith("Bridgehead")) {
-//            delayedMsgs.add(new DelayedMsg(msg, ORG_TO_SZ_DELAY + Time.getFrameCount()));
-//            return;
-//        }
-//
-//        if(TO_ORG_DELAY > 0 && msg.to.startsWith("Org")) {
-//            delayedMsgs.add(new DelayedMsg(msg, TO_ORG_DELAY + Time.getFrameCount()));
-//            return;
-//        }
-//
-//        if(FROM_ORG_DELAY > 0 && msg.from.startsWith("Org")) {
-//            delayedMsgs.add(new DelayedMsg(msg, FROM_ORG_DELAY + Time.getFrameCount()));
-//            return;
-//        }
-//
-//        if(FF_RANGECAST_DELAY > 0 && msg.from.startsWith(World.fireFighterPrefix) && msg.to.startsWith(World.fireFighterPrefix)) {
-//            delayedMsgs.add(new DelayedMsg(msg, FF_RANGECAST_DELAY + Time.getFrameCount()));
-//            return;
-//        }
-//
-//        // All Delay
-//        if(ALL_DELAY > 0) {
-//            delayedMsgs.add(new DelayedMsg(msg, ALL_DELAY + Time.getFrameCount()));
-//            return;
-//        }
-
         _route(msg);
     }
 
