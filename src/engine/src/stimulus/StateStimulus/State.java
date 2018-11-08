@@ -1,4 +1,4 @@
-package stimulus.ChangeStateStimulus;
+package stimulus.StateStimulus;
 
 import action.firefighteraction.FireFighterDead;
 import agents.FireFighter;
@@ -13,11 +13,11 @@ import stimulus.Stimulus;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class ChangeState extends Stimulus {
+public class State extends Stimulus {
 
     String fireFighterName;
 
-    public ChangeState(World world, int frame, String fireFighterName) {
+    public State(World world, int frame, String fireFighterName) {
         super(world, frame);
         this.fireFighterName = fireFighterName;
     }

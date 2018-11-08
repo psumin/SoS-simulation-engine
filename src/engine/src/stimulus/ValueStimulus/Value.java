@@ -1,4 +1,4 @@
-package stimulus.ChangeValueStimulus;
+package stimulus.ValueStimulus;
 
 import core.SoSObject;
 import core.Tile;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class ChangeValue extends Stimulus {
+public class Value extends Stimulus {
     protected Object targetObject;
     protected Range tileRange;
     protected ArrayList<String> targetNames;
@@ -25,7 +25,7 @@ public class ChangeValue extends Stimulus {
     protected Object value;
 
     // sight range, communication range
-//    public ChangeValueStimulus(World world, int frame, Object targetObject, String fieldName, Object value) {
+//    public ValueStimulus(World world, int frame, Object targetObject, String fieldName, Object value) {
 //        super(world, frame);
 //
 //        this.targetObject = targetObject;
@@ -34,7 +34,7 @@ public class ChangeValue extends Stimulus {
 //    }
 
     // Tile 범위 설정
-    public ChangeValue(World world, int frame, Range tileRange, String fieldName, Object value) {
+    public Value(World world, int frame, Range tileRange, String fieldName, Object value) {
         super(world, frame);
 
         this.tileRange = tileRange;
@@ -43,7 +43,7 @@ public class ChangeValue extends Stimulus {
     }
 
 //    // Tile 범위 설정 + targetObject 설정
-//    public ChangeValueStimulus(World world, int frame, Object targetObject, Range tileRange, String fieldName, Object value) {
+//    public ValueStimulus(World world, int frame, Object targetObject, Range tileRange, String fieldName, Object value) {
 //        super(world, frame);
 //
 //        this.tileRange = tileRange;
@@ -53,7 +53,7 @@ public class ChangeValue extends Stimulus {
 //    }
 
     // CS 전체
-    public ChangeValue(World world, int frame, ArrayList<String> targetNames, String fieldName, Object value) {
+    public Value(World world, int frame, ArrayList<String> targetNames, String fieldName, Object value) {
         super(world, frame);
 
         this.targetNames = targetNames;
@@ -62,7 +62,7 @@ public class ChangeValue extends Stimulus {
     }
 
     // 얘 안쓰이는 것 같은데...???
-    public ChangeValue(World world, int frame, String targetName, String fieldName, Object value) {
+    public Value(World world, int frame, String targetName, String fieldName, Object value) {
         super(world, frame);
 
         this.targetName = targetName;

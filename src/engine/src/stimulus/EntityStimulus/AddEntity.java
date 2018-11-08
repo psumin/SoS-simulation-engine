@@ -1,4 +1,4 @@
-package stimulus.NumberOfEntityStimulus;
+package stimulus.EntityStimulus;
 
 import action.Func;
 import core.World;
@@ -10,7 +10,7 @@ import core.World;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class AddEntity extends NumberOfEntity {
+public class AddEntity extends Entity {
     public AddEntity(World world, int frame, Func function) {
         super(world, frame, function);
     }

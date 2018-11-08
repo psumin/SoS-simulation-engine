@@ -7,18 +7,18 @@ import misc.Position;
 
 import misc.Range;
 import misc.Time;
-import org.apache.poi.hwpf.model.FIBFieldHandler;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import stimulus.*;
-import stimulus.ChangeValueStimulus.CommunicationRange;
-import stimulus.ChangeValueStimulus.SightRange;
-import stimulus.ChangeValueStimulus.Speed;
 import stimulus.MessageStimulus.Delay;
 import stimulus.MessageStimulus.Loss;
-import stimulus.NumberOfEntityStimulus.AddEntity;
-import stimulus.NumberOfEntityStimulus.RemoveEntity;
+import stimulus.StateStimulus.Injured;
+import stimulus.ValueStimulus.CommunicationRange;
+import stimulus.ValueStimulus.SightRange;
+import stimulus.ValueStimulus.Speed;
+import stimulus.EntityStimulus.AddEntity;
+import stimulus.EntityStimulus.RemoveEntity;
 
 import java.awt.*;
 import java.awt.Color;
@@ -633,8 +633,8 @@ public class World extends SoSObject{
 ////        stimuli.add(new SightRange(this, 10, new Range(0, 0, 64, 64), 3.0f));           // 특정 frame count 이후 특정 구역의 sight range 변화
 ////
 ////        // TODO: communicationRange (FF 관련)
-////        stimuli.add(new CommunicationRange(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
-////        stimuli.add(new CommunicationRange(this, 800, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+//        stimuli.add(new CommunicationRange(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
+//        stimuli.add(new CommunicationRange(this, 800, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
 ////        stimuli.add(new CommunicationRange(this, 1600, firefighterNames, 5));                    // 특정 frame count 이후 전체 FF의 communication range 변화
 //
 //
@@ -650,7 +650,7 @@ public class World extends SoSObject{
 //        stimuli.add(new CommunicationRange(this, 2400, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 communication range 변화
 //        stimuli.add(new CommunicationRange(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 communication range 변화
 //
-//        // TODO: communication (1 to 1 casting), FF 제외?  FF가 org로 보내는 message는 포함
+//        // TODO: communication (1 to 1 casting), FF 제외?  FF가 org로 보내는 message는 포함 (old version)
 //        stimuli.add(new Delay(this, 1980, "ALL_DELAY", 5000));
 //        stimuli.add(new Delay(this, 7000,  "ALL_DELAY", 0));
 //
@@ -685,7 +685,7 @@ public class World extends SoSObject{
 //
 //
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
+        stimuli.add(new Injured(this, 100, "FF1"));
 //        stimuli.add(new Injured(this, 100, "FF2"));
 //        stimuli.add(new Injured(this, 100, "FF3"));
 //        stimuli.add(new Injured(this, 100, "FF4"));
@@ -703,11 +703,11 @@ public class World extends SoSObject{
         stimuli.add(new RemoveEntity(this, 160, "FF7", this::removeCS));
         stimuli.add(new RemoveEntity(this, 170, "FF8", this::removeCS));
 //
-//        // TODO: remove Ambulance1    ==> error 발생!! log 문제인듯
-//        stimuli.add(new RemoveEntity(this, 100, "Ambulance1", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 120, "Ambulance2", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 130, "Ambulance3", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 140, "Ambulance4", this::removeCS));
+//        // TODO: remove Ambulance1
+        stimuli.add(new RemoveEntity(this, 100, "Ambulance1", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 120, "Ambulance2", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 130, "Ambulance3", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 140, "Ambulance4", this::removeCS));
 //
 //        // TODO: add FireFighter
         stimuli.add(new AddEntity(this, 275, this::addFireFighter));
@@ -775,17 +775,17 @@ public class World extends SoSObject{
 //
 //        // CS && Entity
 //        router.add(new Delay(1, 20, "FF", "FF5", 20));
-//        router.add(new Delay(1, 20, "Org", "Ambulance1", 20));
-//
-//        // Entity && Entity
-//        router.add(new Delay(1, 20, "FF1", "FF5", 20));
+        router.add(new Delay(1, 20, "Org", "Ambulance1", 20));
+
+        // Entity && Entity
+        router.add(new Delay(1, 20, "FF1", "FF5", 20));
 
 
-//        // TODO: Msg Loss
-//        // CS && CS
-//        router.add(new Loss(1, 3000, "FF", "FF"));
-//        router.add(new Loss(1, 20, "FF", "FF"));
-        //router.add(new Loss(10, 200, "All", "All"));
+        // TODO: Msg Loss
+        // CS && CS
+        router.add(new Loss(1, 3000, "FF", "FF"));
+        router.add(new Loss(1, 20, "FF", "FF"));
+        router.add(new Loss(10, 200, "All", "All"));
 //
 //        router.add(new Loss(1, 20, "Ambulance", "Org"));
 //

@@ -9,10 +9,10 @@
 //import org.apache.poi.ss.usermodel.*;
 //import org.apache.poi.xssf.usermodel.XSSFSheet;
 //import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-//import stimulus.ChangeValueStimulus.CommunicationRange;
-//import stimulus.ChangeValueStimulus.Speed;
+//import stimulus.ValueStimulus.CommunicationRange;
+//import stimulus.ValueStimulus.Speed;
 //import stimulus.MessageStimulus.Delay;
-//import stimulus.NumberOfEntityStimulus.AddEntity;
+//import stimulus.EntityStimulus.AddEntity;
 //import stimulus.Stimulus;
 //
 //import java.awt.Color;

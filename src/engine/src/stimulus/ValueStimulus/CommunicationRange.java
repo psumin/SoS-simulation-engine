@@ -1,4 +1,4 @@
-package stimulus.ChangeValueStimulus;
+package stimulus.ValueStimulus;
 
 import core.World;
 import misc.Range;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class CommunicationRange extends ChangeValue {
+public class CommunicationRange extends Value {
 
     // 안쓰는 듯
 //    public CommunicationRange(World world, int frame, Object targetObject, Object value) {

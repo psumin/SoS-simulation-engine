@@ -1,4 +1,4 @@
-package stimulus.ChangeValueStimulus;
+package stimulus.ValueStimulus;
 
 import core.World;
 import misc.Range;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class Speed extends ChangeValue {
+public class Speed extends Value {
 
     // 안쓰임
 //    public Speed(World world, int frame, Object targetObject, Object value) {
