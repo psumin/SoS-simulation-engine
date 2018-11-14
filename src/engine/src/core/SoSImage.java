@@ -6,6 +6,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public class SoSImage {
 
     private SoSImage() {
@@ -51,30 +58,21 @@ public class SoSImage {
     public BufferedImage getImage() {
         return image;
     }
-    // << Field: image >>
 
-
-    // << Field: filePath >>
-    // 이미지 파일 경로
+    // FilePath
     private String filePath;
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
-
     public String getFilePath() {
         return filePath;
     }
-    // << Field: filePath >>
 
-
-    // << Field: refCount >>
-    // 이 이미지를 참조하고 있는 객체 수
+    // The number of the objects which refer to the image
     private int refCount = 0;
     public int getRefCount() {
         return refCount;
     }
-    // << Field: refCount >>
-
 
     // << Method: clear >>
     // 정리 코드 작성

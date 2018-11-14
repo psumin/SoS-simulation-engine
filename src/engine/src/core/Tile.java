@@ -5,12 +5,25 @@ import agents.Patient;
 import misc.Position;
 import misc.Size;
 
+import java.awt.*;
 import java.util.ArrayList;
+
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
 
 public class Tile extends SoSObject {
 
-    SoSObject light;
-    SoSObject dark;
+    ImageObject light;        // For visited tiles
+    ImageObject dark;         // For unvisited tiles
+
+    // Initial values
+    public float moveDelayFactor = 1;
+    public float sightRangeFactor = 1;
+    public float communicationRangeFactor = 1;
 
     public final ArrayList<Patient> patients = new ArrayList<>();
     public final ArrayList<FireFighter> fireFighters = new ArrayList<>();
@@ -31,41 +44,47 @@ public class Tile extends SoSObject {
 
         setPosition(position);
 
-        light = new ImageObject("src/engine/resources/tile30x30.png");
-        dark = new ImageObject("src/engine/resources/tile_dark30x30.png");
+        light = new ImageObject("src/engine/resources/tile30x30.png");              // For visited tiles
+        dark = new ImageObject("src/engine/resources/tile_dark30x30.png");          // For unvisited tiles
 
         addChild(light);
         addChild(dark);
     }
 
 
-    public void add(Patient patient) {
+    public void add(Patient patient) {                      // Add patient at tile
 
         patients.remove(patient);
         patients.add(patient);
         //objects.remove(object);
         //objects.add(object);
     }
-    public void add(FireFighter fireFighter) {
+    public void add(FireFighter fireFighter) {             // Add Fire fighter at tile
 
         fireFighters.remove(fireFighter);
         fireFighters.add(fireFighter);
     }
 
-    public void remove(Patient patient)  {
+    public void remove(Patient patient)  {                  // Remove patient at tile
 
         patients.remove(patient);
     }
-    public void remove(FireFighter fireFighter) {
+    public void remove(FireFighter fireFighter) {            // Remove Fire fighter at tile
         fireFighters.remove(fireFighter);
     }
 
     public boolean contain(Patient patient) {
-        for(Patient element: patients) {
-            if(element == patient) {
-                return true;
-            }
-        }
-        return false;
+        return patients.contains(patient);
+//        for(Patient element: patients) {
+//            if(element == patient) {
+//                return true;
+//            }
+//        }
+//        return false;
+    }
+
+    @Override
+    public void onUpdate() {
+        light.setColor(new Color(255, 255 - (int)(255 * (moveDelayFactor - 1) / 10), 255 - (int)(255 * (moveDelayFactor - 1)/ 10)));        // 색깔 변경을 위한 method
     }
 }

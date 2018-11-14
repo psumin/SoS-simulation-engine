@@ -1,14 +1,17 @@
 package action.firefighteraction;
 
-import action.Action;
-import agents.CS;
 import agents.FireFighter;
 import agents.Patient;
 import core.Tile;
-import misc.Position;
-
 import java.util.ArrayList;
 import java.util.Queue;
+
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
 
 public class FireFighterSearch extends FireFighterAction {
 
@@ -27,42 +30,51 @@ public class FireFighterSearch extends FireFighterAction {
 
     @Override
     public void onUpdate() {
-        //------------------------------------- observe environment
+        // Observe environment
         fireFighter.observe();
+        fireFighter.markVisitedTiles();
         //ArrayList<Patient> foundPatient = fireFighter.observe();
         //patientsMemory.addAll(foundPatient);
 
-        //------------------------------------- 타겟 환자 선택
-        Patient targetPatient = fireFighter.selectTargetPatient(patientsMemory);
-        patientsMemory.remove(targetPatient);
+        Patient targetPatient = null;
+        // Select target patient
+        targetPatient = fireFighter.selectTargetPatient(patientsMemory);
+        //patientsMemory.remove(targetPatient);
+        while(targetPatient != null) {
+            if(targetPatient.isSaved) {
+                patientsMemory.remove(targetPatient);
+                targetPatient = fireFighter.selectTargetPatient(patientsMemory);
+            } else {
+                break;
+            }
+        }
 
         if(targetPatient != null) {
             fireFighter.changeAction(new FireFighterMoveToPatient(fireFighter, targetPatient));
         } else {
-            //------------------------------------- 타겟 환자가 존재하지 않을 때, 방문하지 않은 타일로 이동
-            // select unvisited tile
+            // If there is no target patient, move to the unvisited tile
+            // Select unvisited tile
             if(unvisitedTile == null) {
                 unvisitedTile = selectUnvisitedTile();
             }
-            // move to unvisited tile (1 tile per 3 frame)
+            // Move to unvisited tile
             if(unvisitedTile != null) {
                 fireFighter.moveTo(unvisitedTile.position);
-                fireFighter.markVisitedTiles();
+                //fireFighter.markVisitedTiles();
             }
 
-            if(fireFighter.isArrivedAt(unvisitedTile.position)) {
+            if(unvisitedTile != null && fireFighter.isArrivedAt(unvisitedTile.position)) {
                 unvisitedTile = null;
             }
         }
 
         //-------------------------------------
         // TODO: 소방관 사이의 통신
-        // if exist other firefighters in sight range
-        //      send msg( patient memory ) to other firefighters
+        // Implemented at Firefighter.java
     }
 
 
-
+    // Select the unvisited tile randomly
     private Tile selectUnvisitedTile() {
         while(unvisitedTiles.isEmpty() == false) {
             Tile tile = unvisitedTiles.poll();

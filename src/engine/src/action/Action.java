@@ -5,6 +5,13 @@ import core.MsgRouter;
 import core.SoSObject;
 import core.World;
 
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public class Action extends SoSObject {
 
     protected World world;
@@ -36,5 +43,4 @@ public class Action extends SoSObject {
         }
         stop();
     }
-
 }
