@@ -45,7 +45,7 @@ public class World extends SoSObject{
 
     // Initial Values
     public static final int maxPatient = 294;
-//    public static final int maxPatient = 227;
+//    public static final int maxPatient = 100;
 //    public static final int maxPatient = 65;
     public static final int maxFireFighter = 4;
     public static final int maxHospital = 4;
@@ -112,10 +112,10 @@ public class World extends SoSObject{
 
         createObjects();
 //        writeScenario();          // old version
-        writeScenario1();         // baseline
+//        writeScenario1();         // baseline
 //        writeScenario2();         // 2배의 소방관을 투입
 //        writeScenario3();         // 3배의 소방관을 투입
-//        writeScenario4();         // 4배의 소방관을 투입
+        writeScenario4();         // 4배의 소방관을 투입
 //        writeScenario5();         // 2배 빠른 소방관 투입
 //        writeScenario6();         // 3배 빠른 소방관 투입
 //        writeScenario7();         // 4배 빠른 소방관 투입
@@ -127,7 +127,7 @@ public class World extends SoSObject{
 //        writeScenario12();        // speed, sight range 가 둘다 감소 안한 경우
 //        writeScenario13();         // // smoke, fire 로 인한 communication range 감소
 
-//        writeScenario14();         // injury
+//        writeScenario14();         // remove
 
 
     }
@@ -206,7 +206,7 @@ public class World extends SoSObject{
 //            if(i == 0){
 //                hospital.setCapacity(2);
 //            } else {
-            hospital.setCapacity(10);
+            hospital.setCapacity(5);
 //            }
         }
         hospitals.get(0).setPosition(0, 0);
@@ -660,17 +660,14 @@ public class World extends SoSObject{
             stimuli.add(new AddEntity(this, 275, this::addFireFighter));
             stimuli.add(new AddEntity(this, 275, this::addFireFighter));
         }
-
         for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 315, this::addFireFighter));
             stimuli.add(new AddEntity(this, 315, this::addFireFighter));
         }
-
         for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 390, this::addFireFighter));
             stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
-
         for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 435, this::addFireFighter));
             stimuli.add(new AddEntity(this, 435, this::addFireFighter));
@@ -840,13 +837,11 @@ public class World extends SoSObject{
             stimuli.add(new AddEntity(this, 315, this::addFireFighter));
             stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
-
         for(int i = 0; i < 5; i++) {
             stimuli.add(new AddEntity(this, 435, this::addFireFighter));
             stimuli.add(new AddEntity(this, 465, this::addFireFighter));
             stimuli.add(new AddEntity(this, 495, this::addFireFighter));
         }
-
         for(int i = 0; i < 15; i++) {
             stimuli.add(new AddEntity(this, 990, this::addFireFighter));
         }
@@ -1246,13 +1241,11 @@ public class World extends SoSObject{
             stimuli.add(new AddEntity(this, 315, this::addFireFighter));
             stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
-
         for(int i = 0; i < 20; i++) {
             stimuli.add(new AddEntity(this, 435, this::addFireFighter));
             stimuli.add(new AddEntity(this, 465, this::addFireFighter));
             stimuli.add(new AddEntity(this, 495, this::addFireFighter));
         }
-
         for(int i = 0; i < 60; i++) {
             stimuli.add(new AddEntity(this, 990, this::addFireFighter));
         }
@@ -1649,13 +1642,11 @@ public class World extends SoSObject{
             stimuli.add(new AddEntity(this, 79, this::addFireFighter));
             stimuli.add(new AddEntity(this, 98, this::addFireFighter));
         }
-
         for(int i = 0; i < 5; i++) {
             stimuli.add(new AddEntity(this, 109, this::addFireFighter));
             stimuli.add(new AddEntity(this, 116, this::addFireFighter));
             stimuli.add(new AddEntity(this, 124, this::addFireFighter));
         }
-
         for(int i = 0; i < 15; i++) {
             stimuli.add(new AddEntity(this, 248, this::addFireFighter));
         }
@@ -2591,14 +2582,16 @@ public class World extends SoSObject{
 //        stimuli.add(new Injured(this, 300, "FF6"));
 //
 //        // TODO: remove FireFighter
-//        stimuli.add(new RemoveEntity(this, 300, "FF1", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 310, "FF2", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 320, "FF3", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 330, "FF4", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 340, "FF5", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 350, "FF6", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 360, "FF7", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 370, "FF8", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 990, "FF1", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 990, "FF2", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 990, "FF3", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 990, "FF4", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 990, "FF5", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 990, "FF6", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 990, "FF7", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 990, "FF8", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 990, "FF9", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 990, "FF10", this::removeCS));
 //
 //        // TODO: remove Ambulance
 //        stimuli.add(new RemoveEntity(this, 100, "Ambulance1", this::removeCS));
@@ -2607,26 +2600,26 @@ public class World extends SoSObject{
 //        stimuli.add(new RemoveEntity(this, 140, "Ambulance4", this::removeCS));
 //
 //        // TODO: add FireFighter
-        for(int i = 0; i < 2; i++) {
-            stimuli.add(new AddEntity(this, 275, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
-        }
-
-        for(int i = 0; i < 5; i++) {
-            stimuli.add(new AddEntity(this, 435, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 465, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
-        }
-
-        for(int i = 0; i < 15; i++) {
-            stimuli.add(new AddEntity(this, 990, this::addFireFighter));
-        }
-
-        // TODO: add Ambulance
-        for(int i = 0; i < 4; i++) {
-            stimuli.add(new AddEntity(this, 400, this::addAmbulance));
-        }
+//        for(int i = 0; i < 2; i++) {
+//            stimuli.add(new AddEntity(this, 275, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+//        }
+//
+//        for(int i = 0; i < 5; i++) {
+//            stimuli.add(new AddEntity(this, 435, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 465, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
+//        }
+//
+//        for(int i = 0; i < 15; i++) {
+//            stimuli.add(new AddEntity(this, 990, this::addFireFighter));
+//        }
+//
+//        // TODO: add Ambulance
+//        for(int i = 0; i < 4; i++) {
+//            stimuli.add(new AddEntity(this, 400, this::addAmbulance));
+//        }
 //        // TODO: Msg Delay
 //        // CS && CS
 //        router.add(new Delay(900, 2130, "FF", "FF", 75));   // 1프레임부터 3000프레임까지 3000 프레임의 딜레이 적용. 2999에서도 적용되면 그 메시지는 5999 프레임에 전송된다.
@@ -2667,7 +2660,7 @@ public class World extends SoSObject{
 //        // Entity && Entity
 //        router.add(new Loss(1, 20, "FF1", "FF5"));
 
-    }       // Injury (test)
+    }       // remove
 
 
     // n배의 수, n배 빠르게 적용했을때도 delay 나 loss 나 그런게 없을 경우에 대해서도 해야하나?
