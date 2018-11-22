@@ -1,6 +1,7 @@
 package core;
 
 import action.firefighteraction.*;
+
 import agents.*;
 import misc.ExcelHelper;
 import misc.Position;
@@ -42,6 +43,7 @@ public class World extends SoSObject{
     int fireFighterCounter = 0;
     int ambulanceCounter = 0;
     int currentFirefighterCounter = 0;
+    public int transferCounter = 0;
 
     // Initial Values
     public static final int maxPatient = 294;
@@ -206,7 +208,7 @@ public class World extends SoSObject{
 //            if(i == 0){
 //                hospital.setCapacity(2);
 //            } else {
-            hospital.setCapacity(5);
+            hospital.setCapacity(10);
 //            }
         }
         hospitals.get(0).setPosition(0, 0);
@@ -359,8 +361,9 @@ public class World extends SoSObject{
 
         ExcelHelper.getCell(ambulanceSheet, 0, 0).setCellValue("frame count");
         ExcelHelper.getCell(ambulanceSheet, 0, 1).setCellValue("number of Ambulances");
+        ExcelHelper.getCell(ambulanceSheet, 0, 2).setCellValue("total patient transfer");
         for(int i = 0; i < ambulances.size(); ++i) {
-            ExcelHelper.getCell(ambulanceSheet, 0, i + 2).setCellValue("Amb" + (i + 1));
+            ExcelHelper.getCell(ambulanceSheet, 0, i + 3).setCellValue("Amb" + (i + 1));
 //            ExcelHelper.getCell(ambulanceSheet, 0, i * 2 + 3).setCellValue("Amb" + (i + 1) + " Status");
         }
         ExcelHelper.getCell(ambulanceSheet, 0, ambulances.size() + 2).setCellValue("Total distance");
@@ -368,8 +371,10 @@ public class World extends SoSObject{
         Row row = ambulanceSheet.createRow(ambulanceSheet.getPhysicalNumberOfRows());
         Cell frameCountCell = row.createCell(0);
         Cell ambulanceCountCell = row.createCell(1);
+        Cell transferCountCell = row.createCell(2);
         frameCountCell.setCellValue(frameCount);
         ambulanceCountCell.setCellValue(ambulanceCounter);
+        transferCountCell.setCellValue(transferCounter);
         Cell[] positionCells;
 
         if(isFinish) {
@@ -380,7 +385,7 @@ public class World extends SoSObject{
             positionCells = new Cell[ambulances.size() + 1];
 
             for(int i = 0; i <= ambulances.size(); ++i) {
-                Cell currentCell = row.createCell(i + 2);
+                Cell currentCell = row.createCell(i + 3);
                 positionCells[i] = currentCell;
                 if(i < ambulances.size()) {
                     positionCells[i].setCellValue(ambulances.get(i).totalDistance);
