@@ -47,7 +47,7 @@ public class World extends SoSObject{
 
     // Initial Values
 //    public static final int maxPatient = 294;
-    public static final int maxPatient = 227;
+    public static final int maxPatient = 223;
 //    public static final int maxPatient = 100;
 //    public static final int maxPatient = 65;
     public static final int maxFireFighter = 4;
