@@ -43,15 +43,16 @@ public class World extends SoSObject{
     int fireFighterCounter = 0;
     int ambulanceCounter = 0;
     int currentFirefighterCounter = 0;
-    public int transferCounter = 0;
+
 
     // Initial Values
-    public static final int maxPatient = 294;
+//    public static final int maxPatient = 294;
+    public static final int maxPatient = 227;
 //    public static final int maxPatient = 100;
 //    public static final int maxPatient = 65;
     public static final int maxFireFighter = 4;
     public static final int maxHospital = 4;
-    public static final int maxAmbulance = 4;
+    public static final int maxAmbulance = 12;
     public static final int maxBridgehead = 4;
 
     public Map map;
@@ -79,6 +80,7 @@ public class World extends SoSObject{
     long endTime = 0;
     long endFrame = 0;
 
+    public int transferCounter = 0;
     public int rescuedPatientCount = 0;
 
     public World() {
@@ -114,10 +116,10 @@ public class World extends SoSObject{
 
         createObjects();
 //        writeScenario();          // old version
-//        writeScenario1();         // baseline
+        writeScenario1();         // baseline
 //        writeScenario2();         // 2배의 소방관을 투입
 //        writeScenario3();         // 3배의 소방관을 투입
-        writeScenario4();         // 4배의 소방관을 투입
+//        writeScenario4();         // 4배의 소방관을 투입
 //        writeScenario5();         // 2배 빠른 소방관 투입
 //        writeScenario6();         // 3배 빠른 소방관 투입
 //        writeScenario7();         // 4배 빠른 소방관 투입
@@ -852,9 +854,12 @@ public class World extends SoSObject{
         }
 
         // TODO: add Ambulance
-        for(int i = 0; i < 4; i++) {
-            stimuli.add(new AddEntity(this, 400, this::addAmbulance));
-        }
+//        for(int i = 0; i < 2; i++) {
+//            stimuli.add(new AddEntity(this, 300, this::addAmbulance));
+//            stimuli.add(new AddEntity(this, 400, this::addAmbulance));
+//            stimuli.add(new AddEntity(this, 800, this::addAmbulance));
+//            stimuli.add(new AddEntity(this, 1000, this::addAmbulance));
+//        }
 //        // TODO: Msg Delay
 //        // CS && CS
 //        router.add(new Delay(900, 2130, "FF", "FF", 75));   // 1프레임부터 3000프레임까지 3000 프레임의 딜레이 적용. 2999에서도 적용되면 그 메시지는 5999 프레임에 전송된다.

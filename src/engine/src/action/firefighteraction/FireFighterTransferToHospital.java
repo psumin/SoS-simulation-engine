@@ -31,7 +31,7 @@ public class FireFighterTransferToHospital extends FireFighterAction {
 
 
         prevMoveDelay = fireFighter.moveDelay;
-        fireFighter.moveDelay = prevMoveDelay * 4;          // Reduce the speed while transferring the patient
+        fireFighter.moveDelay = prevMoveDelay * 3;          // Reduce the speed while transferring the patient
     }
 
     @Override

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class Hospital extends CS {
 
-    private int capacity = 5;
+    private int capacity = 10;
 
     private final ArrayList<Patient> treatmentPatients = new ArrayList<>();
 
