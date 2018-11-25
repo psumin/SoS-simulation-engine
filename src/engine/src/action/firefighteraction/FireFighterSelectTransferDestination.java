@@ -51,8 +51,9 @@ public class FireFighterSelectTransferDestination extends FireFighterAction {
             Hospital nearestHospital = (Hospital)msg.data;
             Bridgehead nearestBridgehead = (Bridgehead)fireFighter.nearestObject(new ArrayList<>(world.bridgeheads));
 
-            if(fireFighter.distantTo(nearestHospital) < fireFighter.distantTo(nearestBridgehead)) {                           // Calculate the distance between nearest Hospital and nearest Bridgehead
-                fireFighter.changeAction(new FireFighterTransferToBridgehead(fireFighter, nearestBridgehead, targetPatient));   // transfer the patient to the hospital
+//            if(fireFighter.distantTo(nearestHospital) < fireFighter.distantTo(nearestBridgehead)) {                           // Calculate the distance between nearest Hospital and nearest Bridgehead
+            if(fireFighter.distantTo(nearestHospital) <= 8) {
+                fireFighter.changeAction(new FireFighterTransferToHospital(fireFighter, nearestHospital, targetPatient));   // transfer the patient to the hospital
             } else {
                 fireFighter.changeAction(new FireFighterTransferToBridgehead(fireFighter, nearestBridgehead, targetPatient));   // transfer the patient to the Bridgehead
                 //fireFighter.changeAction(new FireFighterTransferToHospital(fireFighter, nearestHospital, targetPatient));

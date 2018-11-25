@@ -22,9 +22,9 @@ import javax.swing.JPanel;
 
 public class SoSSimulationProgram implements Runnable {
 
-    final int SIMULATION_WIDTH = 990;
-    final int SIMULATION_HEIGHT = 990;
-    final int CONSOLE_WIDTH = 200;
+    final int SIMULATION_WIDTH = 910;
+    final int SIMULATION_HEIGHT = 910;
+//    final int CONSOLE_WIDTH = 200;
 
     JFrame frame;
     Canvas canvas;
@@ -34,14 +34,15 @@ public class SoSSimulationProgram implements Runnable {
         frame = new JFrame("SimulationEngine");
 
         JPanel panel = (JPanel) frame.getContentPane();
-        panel.setPreferredSize(new Dimension(SIMULATION_WIDTH + CONSOLE_WIDTH, SIMULATION_HEIGHT));
+//        panel.setPreferredSize(new Dimension(SIMULATION_WIDTH + CONSOLE_WIDTH, SIMULATION_HEIGHT));
+        panel.setPreferredSize(new Dimension(SIMULATION_WIDTH , SIMULATION_HEIGHT));
         //panel.setLayout(null);
         panel.setLayout(new FlowLayout());
 
         // 시뮬레이션 콘솔 GUI
-        Button button = new Button("Console GUI Here");
-        button.setPreferredSize(new Dimension(CONSOLE_WIDTH, SIMULATION_HEIGHT));
-        panel.add(button);
+//        Button button = new Button("Console GUI Here");
+//        button.setPreferredSize(new Dimension(CONSOLE_WIDTH, SIMULATION_HEIGHT));
+//        panel.add(button);
         // 시뮬레이션 콘솔 GUI
 
         // 시뮬레이션 화면
@@ -184,7 +185,7 @@ public class SoSSimulationProgram implements Runnable {
 
     public static void main(String [] args){
 
-        SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
-        new Thread(simulationEngine).start();
+            SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
+            new Thread(simulationEngine).start();
     }
 }

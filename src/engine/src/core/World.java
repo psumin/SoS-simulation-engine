@@ -2948,15 +2948,18 @@ public class World extends SoSObject{
                 ambulanceCounter--;
             } else if(cs.currentAction instanceof AmbulanceTransferToHospital) {
                 AmbulanceTransferToHospital action = (AmbulanceTransferToHospital) cs.currentAction;
-//              action.patient.isSaved = false;
+
+                action.patient.assignedFireFighter = null;
+                action.patient.isSaved = false;
 //                ambulance.moveTo(action.hospital.position);
-                ambulance.setPosition(action.hospital.position);
-                action.hospital.hospitalize(action.patient);
-                transferCounter++;
-//                action.patient.assignedFireFighter = null;
-//                addChild(action.patient);
-                //map.add(action.patient);
-                //action.patient.position.set(cs.position);
+//                ambulance.setPosition(action.hospital.position);
+//                action.hospital.hospitalize(action.patient);
+//                transferCounter++;
+                addChild(action.patient);
+                action.patient.position.set(cs.position);
+                map.add(action.patient);
+//                action.patient.position.set(cs.position);
+
                 AmbulanceNames.remove(ambulance);
                 ambulanceCounter--;
 
