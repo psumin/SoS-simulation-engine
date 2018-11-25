@@ -13,8 +13,8 @@ import agents.Patient;
 
 public class AmbulanceTransferToHospital extends AmbulanceAction {
 
-    Hospital hospital;
-    Patient patient;
+    public Hospital hospital;
+    public Patient patient;
     public AmbulanceTransferToHospital(Ambulance target, Hospital hospital, Patient targetPatient) {
         super(target);
 
