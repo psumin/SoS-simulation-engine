@@ -16,14 +16,14 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import stimulus.*;
+import stimulus.EntityStimulus.RemoveEntity;
 import stimulus.MessageStimulus.Delay;
 import stimulus.MessageStimulus.Loss;
-import stimulus.StateStimulus.Injured;
+import stimulus.StateStimulus.Injury;
 import stimulus.ValueStimulus.CommunicationRange;
 import stimulus.ValueStimulus.SightRange;
 import stimulus.ValueStimulus.Speed;
 import stimulus.EntityStimulus.AddEntity;
-import stimulus.EntityStimulus.RemoveEntity;
 
 import java.awt.*;
 import java.awt.Color;
@@ -120,7 +120,7 @@ public class World extends SoSObject{
 
         createObjects();
 //        writeScenario();          // old version
-//        writeScenario1();         // baseline
+        writeScenario1();         // baseline
 //        writeScenario2();         // 2배의 소방관을 투입
 //        writeScenario3();         // 3배의 소방관을 투입
 //        writeScenario4();         // 4배의 소방관을 투입
@@ -135,7 +135,7 @@ public class World extends SoSObject{
 //        writeScenario12();        // speed, sight range 가 둘다 감소 안한 경우
 //        writeScenario13();         // // smoke, fire 로 인한 communication range 감소
 
-        writeScenario14();         // RQ3, RQ4
+//        writeScenario14();         // RQ3, RQ4
 
 
     }
@@ -495,7 +495,7 @@ public class World extends SoSObject{
 
         long nano = System.currentTimeMillis();
         String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        String filePath = "log/RQ4/" + date + ".xlsx";
+        String filePath = "log/RQ1/" + date + ".xlsx";
 
         ExcelHelper.autoSizeAllColumn(workbook);
         ExcelHelper.save(workbook, filePath);
@@ -643,12 +643,12 @@ public class World extends SoSObject{
         stimuli.add(new CommunicationRange(this, 2130, firefighterNames, 1));
 //
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -819,12 +819,12 @@ public class World extends SoSObject{
 //
 //
 ////        // TODO: FireFighter => Patient
-////        stimuli.add(new Injured(this, 100, "FF1"));
-////        stimuli.add(new Injured(this, 100, "FF2"));
-////        stimuli.add(new Injured(this, 100, "FF3"));
-////        stimuli.add(new Injured(this, 100, "FF4"));
-////        stimuli.add(new Injured(this, 100, "FF5"));
-////        stimuli.add(new Injured(this, 100, "FF6"));
+////        stimuli.add(new Injury(this, 100, "FF1"));
+////        stimuli.add(new Injury(this, 100, "FF2"));
+////        stimuli.add(new Injury(this, 100, "FF3"));
+////        stimuli.add(new Injury(this, 100, "FF4"));
+////        stimuli.add(new Injury(this, 100, "FF5"));
+////        stimuli.add(new Injury(this, 100, "FF6"));
 ////
 ////        // TODO: remove FireFighter
 ////        stimuli.add(new RemoveEntity(this, 300, "FF1", this::removeCS));
@@ -958,12 +958,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter
 //        stimuli.add(new RemoveEntity(this, 600, "FF1", this::removeCS));
@@ -1016,6 +1016,13 @@ public class World extends SoSObject{
 //        router.add(new Delay(900, 2130, "FF", "FF", 75));
         router.add(new Delay(600, 2130, "FF", "FF", 75));       // 5분간 delay
         router.add(new Delay(2130, 2655, "FF", "FF", 150));     // 10분간 delay
+
+
+//        router.add(new Delay(600, 2655, "FF", "FF", 100));       // 5분간 delay
+
+
+//        router.add(new Loss(900, 2130, "FF", "FF"));
+//        router.add(new Loss(2130, 2655, "FF", "FF"));
 //        router.add(new Delay(10, 100, "FF", "FF", 20));
 //        router.add(new Delay(10, 200, "All", "ALL", 20));
 //        router.add(new Delay(1, 20,"Ambulance", "Org", 20));
@@ -1105,12 +1112,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -1154,6 +1161,8 @@ public class World extends SoSObject{
 //        router.add(new Delay(2130, 3000, "FF", "FF", 1000));   // 1프레임부터 3000프레임까지 3000 프레임의 딜레이 적용. 2999에서도 적용되면 그 메시지는 5999 프레임에 전송된다.
         router.add(new Delay(900, 2130, "ALL", "ALL", 150));       // 10분간 delay
         router.add(new Delay(2130, 2655, "ALL", "ALL", 450));     // 30분간 delay
+
+
 //        router.add(new Delay(10, 100, "FF", "FF", 20));
 //        router.add(new Delay(10, 200, "All", "ALL", 20));
 //        router.add(new Delay(1, 20,"Ambulance", "Org", 20));
@@ -1239,12 +1248,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -1373,12 +1382,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -1506,12 +1515,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -1640,12 +1649,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -1774,12 +1783,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -1909,12 +1918,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -2045,12 +2054,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter1
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -2181,12 +2190,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -2319,12 +2328,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -2457,12 +2466,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -2597,12 +2606,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter
 //        stimuli.add(new RemoveEntity(this, 100, "FF1", this::removeCS));
@@ -2735,12 +2744,12 @@ public class World extends SoSObject{
 
 
 //        // TODO: FireFighter => Patient
-//        stimuli.add(new Injured(this, 100, "FF1"));
-//        stimuli.add(new Injured(this, 100, "FF2"));
-//        stimuli.add(new Injured(this, 100, "FF3"));
-//        stimuli.add(new Injured(this, 100, "FF4"));
-//        stimuli.add(new Injured(this, 100, "FF5"));
-//        stimuli.add(new Injured(this, 100, "FF6"));
+//        stimuli.add(new Injury(this, 100, "FF1"));
+//        stimuli.add(new Injury(this, 100, "FF2"));
+//        stimuli.add(new Injury(this, 100, "FF3"));
+//        stimuli.add(new Injury(this, 100, "FF4"));
+//        stimuli.add(new Injury(this, 100, "FF5"));
+//        stimuli.add(new Injury(this, 100, "FF6"));
 //
 
 
@@ -2765,16 +2774,16 @@ public class World extends SoSObject{
 
 
         //        // TODO: remove FireFighter
-        stimuli.add(new RemoveEntity(this, 600, "FF1", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "FF2", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "FF3", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "FF4", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "FF5", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "FF6", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "FF7", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "FF8", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "FF9", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "FF10", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "FF1", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "FF2", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "FF3", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "FF4", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "FF5", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "FF6", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "FF7", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "FF8", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "FF9", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "FF10", this::removeCS));
 
 
 //        for(int i = 0; i < 10; i++) {
@@ -2784,14 +2793,14 @@ public class World extends SoSObject{
 
 //
 //        // TODO: remove Ambulance
-        stimuli.add(new RemoveEntity(this, 600, "Ambulance1", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "Ambulance2", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "Ambulance3", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "Ambulance4", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "Ambulance5", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "Ambulance6", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "Ambulance7", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 600, "Ambulance8", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "Ambulance1", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "Ambulance2", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "Ambulance3", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "Ambulance4", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "Ambulance5", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "Ambulance6", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "Ambulance7", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 600, "Ambulance8", this::removeCS));
 
 
 
