@@ -228,8 +228,6 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     BufferStrategy bufferStrategy;
 
 
-    static Thread luke;
-
     public SoSSimulationProgram(){
         frame = new JFrame("SimulationEngine");
 
@@ -332,30 +330,12 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
             beginLoopTime = System.nanoTime();
             render();
-            while(pause) {
-                try{
-
-                    luke.sleep(1000);
-
-                }catch(InterruptedException er) {
-
-                }
-            }
-            if (stop) {
-
-                try{
-                    luke.sleep(1000);
-
-                }catch(InterruptedException er) {
-
-                }
-
-            }
 
             lastUpdateTime = currentUpdateTime;
             currentUpdateTime = System.nanoTime();
-            update((int) ((currentUpdateTime - lastUpdateTime)/(1000*1000)));
-
+            if(!pause) {
+                update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)));
+            }
             endLoopTime = System.nanoTime();
             deltaLoop = endLoopTime - beginLoopTime;
 
@@ -437,7 +417,6 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     public static void main(String [] args){
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
-        luke = new Thread(simulationEngine);
-        luke.start();
+        new Thread(simulationEngine).start();
     }
 }
