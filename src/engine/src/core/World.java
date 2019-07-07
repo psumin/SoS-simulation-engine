@@ -3015,4 +3015,16 @@ public class World extends SoSObject{
             positionIndex = 0;
         addChild(ambulance);
     }
+
+    public void onAddFireFighter(int frame, int count) {
+        for(int i = 0; i < count; ++i) {
+            stimuli.add(new AddEntity(this, frame, this::addFireFighter));
+        }
+    }
+
+    public void onAddAmbulance(int frame, int count) {
+        for(int i = 0; i < count; ++i) {
+            stimuli.add(new AddEntity(this, frame, this::addAmbulance));
+        }
+    }
 }
