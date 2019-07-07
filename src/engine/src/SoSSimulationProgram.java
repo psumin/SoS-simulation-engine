@@ -652,26 +652,54 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                 "  3. Remove\n" +
                 "  0. Resume\n" +
                 "===== Input command: ";
-        System.out.print(menu);
-        while(true) {
-            Scanner input = new Scanner(System.in);
-            if (input.hasNextInt()) {
-                switch (input.nextInt()) {
-                    case 1:
+        int command = getCommandOnBeginnerMode(menu);
+        switch (command) {
+            case 1:
+                menu = "==== Add menu\n" +
+                        "  1. Ambulance\n" +
+                        "  2. FireFighter\n" +
+                        "===== Input command: ";
+                command = getCommandOnBeginnerMode(menu);
+                switch (command) {
+                    case 1: {
+                        int frame = getCommandOnBeginnerMode("frame count: ");
+                        int number = getCommandOnBeginnerMode("number of ambulance: ");
+                        world.onAddAmbulance(frame, number);
                         break;
-                    case 2:
+                    }
+                    case 2: {
+                        int frame = getCommandOnBeginnerMode("frame count: ");
+                        int number = getCommandOnBeginnerMode("number of firefighter: ");
+                        world.onAddFireFighter(frame, number);
                         break;
-                    case 3:
-                        break;
-                    case 0:
-                        pause = false;
-                        frame.setVisible(true);
-                        break;
+                    }
                 }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 0:
+                frame.setVisible(true);
+                canvas.requestFocus();
+                pause = false;
+                break;
+        }
+    }
+
+    int getCommandOnBeginnerMode(String menu) {
+        System.out.print(menu);
+        Scanner input = new Scanner(System.in);
+        while(true) {
+            if (input.hasNextInt()) {
                 break;
             } else {
                 System.out.println("Please enter number");
+                System.out.println(input.next());
+                System.out.print(menu);
             }
         }
+        return input.nextInt();
     }
+
 }
