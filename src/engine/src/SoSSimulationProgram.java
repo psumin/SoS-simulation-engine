@@ -729,6 +729,10 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         }
     }
 
+    // 한 글자씩 바로바로 처리하는 것이 문제.
+    // backspace가 문제가 됨. ==> 문자가 쌓여있으면, 지울만큼 지우고 사용하면 되는데
+    // ex) 여기서는 123 \b\b ==> 123으로 처리하는 것만 가능
+    // 결국 read 2개의 메소드를 새롭게 구현해야할 듯
     public static class SimulationInputStream extends InputStream implements KeyListener {
 
         ArrayBlockingQueue<Integer> queue;
@@ -736,6 +740,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         public SimulationInputStream(){
             queue=new ArrayBlockingQueue<Integer>(1024);
         }
+
 
         @Override
         public int read() throws IOException {
@@ -751,6 +756,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
             return -1;
         }
 
+        // 얘가 위의 read()를 호출함
         @Override
         public int read(byte[] b, int off, int len) throws IOException {
             if (b == null) {
