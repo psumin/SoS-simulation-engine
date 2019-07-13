@@ -283,7 +283,7 @@ public class World extends SoSObject{
 //            printFireFighterLog(false);
 //            printAmbulanceLog(false);
             frameCount++;
-            System.out.println("FrameCount: " + frameCount);
+//            System.out.println("FrameCount: " + frameCount);
         }
 
         ArrayList<Stimulus> mustRemove = new ArrayList<>();

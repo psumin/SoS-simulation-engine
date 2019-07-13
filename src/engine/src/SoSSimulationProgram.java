@@ -29,7 +29,7 @@ import misc.ExcelHelper;
 
 public class SoSSimulationProgram implements Runnable, KeyListener {
 
-    final int MAX_SIMULATION_COUNT = 20;
+    final int MAX_SIMULATION_COUNT = 3;
     final int MAX_FRAME_COUNT = 200;
 
     final int SIMULATION_WIDTH = 910;
@@ -41,6 +41,9 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     BufferStrategy bufferStrategy;
     boolean isExpert = false;
     boolean isFirstWorld = true;
+
+    long programStartTime;
+    long programEndTime;
 
 
     public SoSSimulationProgram(){
@@ -160,6 +163,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
         init();
 
+        programStartTime = System.nanoTime();
         while(running) {
 
             if (isFirstWorld) {
@@ -195,6 +199,9 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                 update(1);
             }
         }
+
+        programEndTime = System.nanoTime();
+        System.out.println("=== Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");
     }
 
     private void render() {
@@ -244,6 +251,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
     protected void update(int deltaTime){
 
+        System.out.println("Simulation repeated: " + simulation_count + " Frame count: " + timeImpl.getFrameCount());
 
 
         time += deltaTime;
