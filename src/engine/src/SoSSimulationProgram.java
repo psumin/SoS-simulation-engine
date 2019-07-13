@@ -29,7 +29,8 @@ import misc.ExcelHelper;
 
 public class SoSSimulationProgram implements Runnable, KeyListener {
 
-    final int MAX_SIMULATION_COUNT = 2;
+    final int MAX_SIMULATION_COUNT = 20;
+    final int MAX_FRAME_COUNT = 200;
 
     final int SIMULATION_WIDTH = 910;
     final int SIMULATION_HEIGHT = 910;
@@ -39,6 +40,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     Canvas canvas;
     BufferStrategy bufferStrategy;
     boolean isExpert = false;
+    boolean isFirstWorld = true;
 
 
     public SoSSimulationProgram(){
@@ -97,18 +99,19 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     public void keyPressed(KeyEvent e)
     {
         if (e.getKeyCode() == KeyEvent.VK_S) {
-            System.out.println("Stop buttom pressed!");
-            pause = true;
-
+            if(isFirstWorld) {
+                //            System.out.println("Stop buttom pressed!");
+                pause = true;
+            }
         }
-        if (e.getKeyCode() == KeyEvent.VK_G) {
-            pause = false;
-        }
-        //restart
-        if (e.getKeyCode() == KeyEvent.VK_I) {
-            pause = false;
-            init();
-        }
+//        if (e.getKeyCode() == KeyEvent.VK_G) {
+//            pause = false;
+//        }
+//        //restart
+//        if (e.getKeyCode() == KeyEvent.VK_I) {
+//            pause = false;
+//            init();
+//        }
     }
     public void keyReleased(KeyEvent e)
     {}
@@ -131,6 +134,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
     XSSFWorkbook workbook = new XSSFWorkbook();
     XSSFSheet statisticsSheet;
+    XSSFSheet inputScenarioSheet;
     CellStyle headerStyle;
 
     public void run(){
@@ -142,6 +146,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         long deltaLoop;
 
         statisticsSheet = workbook.createSheet("statistics");
+        inputScenarioSheet = workbook.createSheet("inputScenarios");
 
         headerStyle = workbook.createCellStyle();
         headerStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -207,6 +212,10 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
             frameCount = 0;
         }
 
+        public void reset() {
+            frameCount = 0;
+        }
+
         public void update(int deltaTime) {
             this.deltaTime = deltaTime;
             time += deltaTime;
@@ -217,7 +226,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
     World world;
     protected void init() {
-        world = new World(300);
+        world = new World(MAX_FRAME_COUNT, true);
 
     }
 
@@ -244,7 +253,48 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
                 if(simulation_count < MAX_SIMULATION_COUNT) {
                     simulation_count++;
-                    world = new World(300);
+                    timeImpl.reset();
+                    isFirstWorld = false;
+
+                    sheet = inputScenarioSheet;
+                    int rowNum = 0;
+
+                    row = sheet.createRow(rowNum++);
+                    ExcelHelper.getCell(row, 0).setCellValue("maxPatient");
+                    ExcelHelper.getCell(row, 1).setCellValue("maxFireFighter");
+                    ExcelHelper.getCell(row, 2).setCellValue("maxHospital");
+                    ExcelHelper.getCell(row, 3).setCellValue("maxAmbulance");
+                    ExcelHelper.getCell(row, 4).setCellValue("maxBridgehead");
+                    for(int i = 0; i < 5; ++i) {
+                        ExcelHelper.getCell(row, i).setCellStyle(headerStyle);
+                    }
+
+                    row = sheet.createRow(rowNum++);
+                    ExcelHelper.getCell(row, 0).setCellValue(World.maxPatient);
+                    ExcelHelper.getCell(row, 1).setCellValue(World.maxFireFighter);
+                    ExcelHelper.getCell(row, 2).setCellValue(World.maxHospital);
+                    ExcelHelper.getCell(row, 3).setCellValue(World.maxAmbulance);
+                    ExcelHelper.getCell(row, 4).setCellValue(World.maxBridgehead);
+
+                    row = sheet.createRow(rowNum++);
+                    for(World.InputData inputData: World.inputDatas) {
+                        row = sheet.createRow(rowNum++);
+                        int colNum = 0;
+                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("count: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.count);
+                    }
+
+
+                    world = new World(MAX_FRAME_COUNT, false);
                 } else {
                     clear();
                     running = false;

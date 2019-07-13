@@ -40,6 +40,20 @@ import java.util.ArrayList;
 
 public class World extends SoSObject{
 
+    public static class InputData {
+        public String command;
+        public int frame;
+        public int count;
+
+        public InputData(String command, int frame, int count) {
+            this.command = command;
+            this.frame = frame;
+            this.count = count;
+        }
+    }
+
+    public static final ArrayList<InputData> inputDatas = new ArrayList<>();
+
     private final ArrayList<Stimulus> stimuli = new ArrayList<>();
     private final ArrayList<String> firefighterNames = new ArrayList<>();
     private final ArrayList<String> AmbulanceNames = new ArrayList<>();
@@ -84,8 +98,10 @@ public class World extends SoSObject{
     public int transferCounter = 0;
     public int rescuedPatientCount = 0;
 
-    public World(int maxFrame) {
+    boolean saveInputData = false;
+    public World(int maxFrame, boolean saveInputData) {
         this.maxFrame = maxFrame;
+        this.saveInputData = saveInputData;
         startTime = System.currentTimeMillis();
 
 //        statisticsSheet = workbook.createSheet("statistics");
@@ -108,7 +124,18 @@ public class World extends SoSObject{
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
 
-
+        if(!inputDatas.isEmpty()) {
+            for (InputData data: inputDatas) {
+                switch (data.command) {
+                    case "addFireFighter":
+                        this.onAddFireFighter(data.frame, data.count);
+                        break;
+                    case "addAmbulance":
+                        this.onAddAmbulance(data.frame, data.count);
+                        break;
+                }
+            }
+        }
 
     }
 
@@ -1077,14 +1104,22 @@ public class World extends SoSObject{
     }
 
     public void onAddFireFighter(int frame, int count) {
+        if(saveInputData) {
+            inputDatas.add(new InputData("addFireFighter", frame, count));
+        }
         for(int i = 0; i < count; ++i) {
-            stimuli.add(new AddEntity(this, frame, this::addFireFighter));
+            Stimulus stimulus = new AddEntity(this, frame, this::addFireFighter);
+            stimuli.add(stimulus);
         }
     }
 
     public void onAddAmbulance(int frame, int count) {
+        if(saveInputData) {
+            inputDatas.add(new InputData("addAmbulance", frame, count));
+        }
         for(int i = 0; i < count; ++i) {
-            stimuli.add(new AddEntity(this, frame, this::addAmbulance));
+            Stimulus stimulus = new AddEntity(this, frame, this::addAmbulance);
+            stimuli.add(stimulus);
         }
     }
 
