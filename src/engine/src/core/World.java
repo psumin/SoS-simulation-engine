@@ -51,12 +51,12 @@ public class World extends SoSObject{
 
     // Initial Values
 //    public static final int maxPatient = 294;
-    public static final int maxPatient = 223;
+    public static final int maxPatient = 22;                // 223
     //    public static final int maxPatient = 100;
 //    public static final int maxPatient = 65;
-    public static final int maxFireFighter = 4;
+    public static final int maxFireFighter = 40;            // 4
     public static final int maxHospital = 4;
-    public static final int maxAmbulance = 16;
+    public static final int maxAmbulance = 40;              // 16
     public static final int maxBridgehead = 4;
 
     public Map map;
@@ -3016,15 +3016,7 @@ public class World extends SoSObject{
         addChild(ambulance);
     }
 
-    public void onAddFireFighter(int frame, int count) {
-        for(int i = 0; i < count; ++i) {
-            stimuli.add(new AddEntity(this, frame, this::addFireFighter));
-        }
-    }
-
-    public void onAddAmbulance(int frame, int count) {
-        for(int i = 0; i < count; ++i) {
-            stimuli.add(new AddEntity(this, frame, this::addAmbulance));
-        }
+    public boolean isFinished() {
+        return !_canUpdate;
     }
 }
