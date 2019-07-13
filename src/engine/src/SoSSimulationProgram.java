@@ -262,12 +262,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                 Sheet sheet = statisticsSheet;
                 Row row = sheet.createRow(simulation_count);
                 ExcelHelper.getCell(row, 0).setCellValue("" + world.getSavedRate());
-
-                if(simulation_count < MAX_SIMULATION_COUNT) {
-                    simulation_count++;
-                    timeImpl.reset();
-                    isFirstWorld = false;
-
+                if(isFirstWorld) {
                     sheet = inputScenarioSheet;
                     int rowNum = 0;
 
@@ -304,6 +299,16 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                         ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
                         ExcelHelper.getCell(row, colNum++).setCellValue(inputData.count);
                     }
+                }
+
+                if(simulation_count < MAX_SIMULATION_COUNT) {
+                    simulation_count++;
+                    timeImpl.reset();
+                    isFirstWorld = false;
+
+
+
+
 
 
                     world = new World(MAX_FRAME_COUNT, false);
