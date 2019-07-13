@@ -160,35 +160,39 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
         init();
 
-        while(running){
+        while(running) {
 
-            beginLoopTime = System.nanoTime();
-            render();
+            if (isFirstWorld) {
+                beginLoopTime = System.nanoTime();
+                render();
 
-            lastUpdateTime = currentUpdateTime;
-            currentUpdateTime = System.nanoTime();
-            if(!pause) {
-                update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)));
-            }else { // pause
-                frame.setVisible(false);
-                if(isExpert) {
-                    expertMode();
+                lastUpdateTime = currentUpdateTime;
+                currentUpdateTime = System.nanoTime();
+                if (!pause) {
+                    update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)));
+                } else { // pause
+                    frame.setVisible(false);
+                    if (isExpert) {
+                        expertMode();
+                    } else {
+                        beginnerMode();
+                    }
+                }
+
+                endLoopTime = System.nanoTime();
+                deltaLoop = endLoopTime - beginLoopTime;
+
+                if (deltaLoop > desiredDeltaLoop) {
+                    //Do nothing. We are already late.
                 } else {
-                    beginnerMode();
+                    try {
+                        Thread.sleep((desiredDeltaLoop - deltaLoop) / (1000 * 1000));
+                    } catch (InterruptedException e) {
+                        //Do nothing
+                    }
                 }
-            }
-
-            endLoopTime = System.nanoTime();
-            deltaLoop = endLoopTime - beginLoopTime;
-
-            if(deltaLoop > desiredDeltaLoop){
-                //Do nothing. We are already late.
-            }else{
-                try{
-                    Thread.sleep((desiredDeltaLoop - deltaLoop)/(1000*1000));
-                }catch(InterruptedException e){
-                    //Do nothing
-                }
+            } else {
+                update(1);
             }
         }
     }
