@@ -13,9 +13,8 @@ import agents.Patient;
 
 public class AmbulanceTransferToHospital extends AmbulanceAction {
 
-    Hospital hospital;
-    Patient patient;
-
+    public Hospital hospital;
+    public Patient patient;
     public AmbulanceTransferToHospital(Ambulance target, Hospital hospital, Patient targetPatient) {
         super(target);
 
@@ -32,9 +31,11 @@ public class AmbulanceTransferToHospital extends AmbulanceAction {
         ambulance.moveTo(hospital.position);
         if(ambulance.isArrivedAt(hospital.position)) {
             hospital.hospitalize(patient);
+            world.transferCounter++;
             ambulance.transferImage.visible(false);
             ambulance.defaultImage.visible(true);
             ambulance.changeAction(new AmbulanceFree(ambulance));       // After transfer, change the action to "Free"
         }
     }
+
 }

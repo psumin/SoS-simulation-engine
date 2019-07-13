@@ -31,7 +31,7 @@ public class FireFighterTransferToHospital extends FireFighterAction {
 
 
         prevMoveDelay = fireFighter.moveDelay;
-        fireFighter.moveDelay = prevMoveDelay * 4;          // Reduce the speed while transferring the patient
+        fireFighter.moveDelay = prevMoveDelay * 3;          // Reduce the speed while transferring the patient
     }
 
     @Override
@@ -47,7 +47,8 @@ public class FireFighterTransferToHospital extends FireFighterAction {
             fireFighter.changeAction(new FireFighterSearch(fireFighter));       // Change the Firefighter's action to "Search"
             fireFighter.transferImage.visible(false);
             fireFighter.defaultImage.visible(true);
-            world.rescuedPatientCount++;
+//            world.rescuedPatientCount++;
+            world.transferCounter++;
         }
     }
 }
