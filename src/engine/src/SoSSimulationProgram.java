@@ -29,7 +29,7 @@ import misc.ExcelHelper;
 
 public class SoSSimulationProgram implements Runnable, KeyListener {
 
-    final int MAX_SIMULATION_COUNT = 3;
+    final int MAX_SIMULATION_COUNT = 100;
     final int MAX_FRAME_COUNT = 200;
 
     final int SIMULATION_WIDTH = 910;
@@ -267,12 +267,14 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                     int rowNum = 0;
 
                     row = sheet.createRow(rowNum++);
-                    ExcelHelper.getCell(row, 0).setCellValue("maxPatient");
-                    ExcelHelper.getCell(row, 1).setCellValue("maxFireFighter");
-                    ExcelHelper.getCell(row, 2).setCellValue("maxHospital");
-                    ExcelHelper.getCell(row, 3).setCellValue("maxAmbulance");
-                    ExcelHelper.getCell(row, 4).setCellValue("maxBridgehead");
-                    for(int i = 0; i < 5; ++i) {
+                    ExcelHelper.getCell(row, 0).setCellValue("# of Patient");
+                    ExcelHelper.getCell(row, 1).setCellValue("# of FireFighter");
+                    ExcelHelper.getCell(row, 2).setCellValue("# of Hospital");
+                    ExcelHelper.getCell(row, 3).setCellValue("# of Ambulance");
+                    ExcelHelper.getCell(row, 4).setCellValue("# of Bridgehead");
+                    ExcelHelper.getCell(row, 5).setCellValue("Max frame count");
+                    ExcelHelper.getCell(row, 6).setCellValue("Max simulation time");
+                    for(int i = 0; i < 7; ++i) {
                         ExcelHelper.getCell(row, i).setCellStyle(headerStyle);
                     }
 
@@ -282,6 +284,8 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                     ExcelHelper.getCell(row, 2).setCellValue(World.maxHospital);
                     ExcelHelper.getCell(row, 3).setCellValue(World.maxAmbulance);
                     ExcelHelper.getCell(row, 4).setCellValue(World.maxBridgehead);
+                    ExcelHelper.getCell(row, 5).setCellValue(MAX_FRAME_COUNT);
+                    ExcelHelper.getCell(row, 6).setCellValue(MAX_SIMULATION_COUNT);
 
                     row = sheet.createRow(rowNum++);
                     for(World.InputData inputData: World.inputDatas) {
