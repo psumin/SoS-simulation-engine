@@ -52,6 +52,24 @@ public class World extends SoSObject{
         }
     }
 
+    public static class InputMsg {
+        public String command;
+        public int startFrame;
+        public int endFrame;
+        public String sender;
+        public String receiver;
+        public int duration;
+
+        public InputMsg(String command, int startFrame, int endFrame, String sender, String receiver, int duration) {
+            this.command = command;
+            this.startFrame = startFrame;
+            this.endFrame = endFrame;
+            this.sender = sender;
+            this.receiver = receiver;
+            this.duration = duration;
+        }
+    }
+
     public static final ArrayList<InputData> inputDatas = new ArrayList<>();
 
     private final ArrayList<Stimulus> stimuli = new ArrayList<>();
