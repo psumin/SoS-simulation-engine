@@ -339,7 +339,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         world.clear();
         long nano = System.currentTimeMillis();
         String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        String filePath = "log/RQ1/" + date + ".xlsx";
+        String filePath = "new_log/" + date + ".xlsx";
 
         ExcelHelper.autoSizeAllColumn(workbook);
         ExcelHelper.save(workbook, filePath);
