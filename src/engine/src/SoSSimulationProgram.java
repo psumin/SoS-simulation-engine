@@ -288,7 +288,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                     ExcelHelper.getCell(row, 6).setCellValue(MAX_SIMULATION_COUNT);
 
                     row = sheet.createRow(rowNum++);
-                    for(World.InputData inputData: World.inputDatas) {
+                    for(World.InputData inputData: World.inputDatum) {
                         row = sheet.createRow(rowNum++);
                         int colNum = 0;
                         ExcelHelper.getCell(row, colNum).setCellValue("command: ");
