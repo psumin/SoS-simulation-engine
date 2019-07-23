@@ -29,8 +29,8 @@ import misc.ExcelHelper;
 
 public class SoSSimulationProgram implements Runnable, KeyListener {
 
-    final int MAX_SIMULATION_COUNT = 100;
-    final int MAX_FRAME_COUNT = 200;
+    final int MAX_SIMULATION_COUNT = 2000;
+    final int MAX_FRAME_COUNT = 300;
 
     final int SIMULATION_WIDTH = 910;
     final int SIMULATION_HEIGHT = 910;

@@ -55,15 +55,15 @@ public class World extends SoSObject{
     public static class InputMsg {
         public String command;
         public int startFrame;
-        public int endFrame;
+        public int finishFrame;
         public String sender;
         public String receiver;
         public int duration;
 
-        public InputMsg(String command, int startFrame, int endFrame, String sender, String receiver, int duration) {
+        public InputMsg(String command, int startFrame, int finishFrame, String sender, String receiver, int duration) {
             this.command = command;
             this.startFrame = startFrame;
-            this.endFrame = endFrame;
+            this.finishFrame = finishFrame;
             this.sender = sender;
             this.receiver = receiver;
             this.duration = duration;
@@ -86,7 +86,7 @@ public class World extends SoSObject{
     public static final int maxPatient = 20;                // 223
     //    public static final int maxPatient = 100;
 //    public static final int maxPatient = 65;
-    public static final int maxFireFighter = 4;            // 4
+    public static final int maxFireFighter = 40;            // 4
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 40;              // 16
     public static final int maxBridgehead = 4;
