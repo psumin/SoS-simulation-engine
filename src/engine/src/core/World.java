@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 public class World extends SoSObject{
 
+    // Structure of stimuli
     public static class InputData {
         public String command;
         public int frame;
@@ -44,7 +45,8 @@ public class World extends SoSObject{
         }
     }
 
-    public static class InputMsgs {
+    // Structure o message stimuli
+    public static class InputMessages {
         public String command;
         public int startFrame;
         public int finishFrame;
@@ -52,7 +54,7 @@ public class World extends SoSObject{
         public String receiver;
         public int duration;
 
-        public InputMsgs(String command, int startFrame, int finishFrame, String sender, String receiver, int duration) {
+        public InputMessages(String command, int startFrame, int finishFrame, String sender, String receiver, int duration) {
             this.command = command;
             this.startFrame = startFrame;
             this.finishFrame = finishFrame;
@@ -62,12 +64,15 @@ public class World extends SoSObject{
         }
     }
 
+    // Use arraylist to apply stimuli structure (InputData, InputData)
     public static final ArrayList<InputData> inputDatum = new ArrayList<>();
-    public static final ArrayList<InputMsgs> inputMsg = new ArrayList<>();
+    public static final ArrayList<InputMessages> inputMsg = new ArrayList<>();
 
     private final ArrayList<Stimulus> stimuli = new ArrayList<>();
     private final ArrayList<String> firefighterNames = new ArrayList<>();
     private final ArrayList<String> AmbulanceNames = new ArrayList<>();
+
+    // Variables for logs
     int patientCounter = 0;
     int fireFighterCounter = 0;
     int ambulanceCounter = 0;
@@ -86,13 +91,13 @@ public class World extends SoSObject{
 
     public Map map;
     public MsgRouter router;
-    public ArrayList<Patient> patients = new ArrayList<>(maxPatient);
-    public ArrayList<FireFighter> fireFighters = new ArrayList<>(maxFireFighter);
-    public ArrayList<Hospital> hospitals = new ArrayList<>(maxHospital);
-    public ArrayList<Bridgehead> bridgeheads = new ArrayList<>(maxBridgehead);
-    public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);
+    public ArrayList<Patient> patients = new ArrayList<>(maxPatient);               // Patient를 위한 arraylist
+    public ArrayList<FireFighter> fireFighters = new ArrayList<>(maxFireFighter);   // FireFighter를 위한 arraylist
+    public ArrayList<Hospital> hospitals = new ArrayList<>(maxHospital);            // Hospital를 위한 arraylist
+    public ArrayList<Bridgehead> bridgeheads = new ArrayList<>(maxBridgehead);      // Bridgehead를 위한 arraylist
+    public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);         // Ambulance를 위한 arraylist
 
-    public static final String fireFighterPrefix = "FF";
+    public static final String fireFighterPrefix = "FF";                            // FireFighter의 이름은 "FF"로 시작
     //public static final String ambulancePrefix = "AM";
 
 //    XSSFWorkbook workbook = new XSSFWorkbook();
@@ -100,14 +105,14 @@ public class World extends SoSObject{
 
 //    CellStyle headerStyle;
 
-    long startTime;
-    long endTime = 0;
-    long endFrame = 0;
+    long startTime;                                                                 // 프로그램 시작 시간
+    long endTime = 0;                                                               // 프로그램 종료 시간
+    long endFrame = 0;                                                              // 프로그램 종료의 frame 수
 
-    int maxFrame = 0;
+    int maxFrame = 0;                                                               // 시뮬레이션 한 번의 최대 frame 수
 
-    public int transferCounter = 0;
-    public int rescuedPatientCount = 0;
+    public int transferCounter = 0;                                                 // Bridgehead까지 이송 시킨 환자 수
+    public int rescuedPatientCount = 0;                                             // Hospital에서 치료를 마친 환자 수
 
     boolean saveInputData = false;
     public World(int maxFrame, boolean saveInputData) {
@@ -123,15 +128,18 @@ public class World extends SoSObject{
 //        headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
 //        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
+        // Create map
         map = new Map();
         addChild(map);
         //map.canUpdate(false);
 
-        // Create map first and then create router
+        // Create router
         router = new MsgRouter(this);
         addChild(router);
 
         createObjects();
+
+        // static stimulus injection technique
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
         writeScenario2();         // interactive simulation test
@@ -163,7 +171,8 @@ public class World extends SoSObject{
         createFireFighters();
     }
 
-    private void createPatients() {                 // Create the patient at random position
+    // Create the patient at random position
+    private void createPatients() {
         for (int i = 0; i < maxPatient; i++) {
             Patient patient = new Patient(this, "Patient" + ++patientCounter);
             patients.add(patient);
@@ -188,7 +197,8 @@ public class World extends SoSObject{
         }
     }
 
-    private void createFireFighters() {                 // Create Firefighters at the edge position
+    // Create Firefighters at the edge position
+    private void createFireFighters() {
         Position[] positions = new Position[] {
                 new Position(0, 0),
                 new Position(Map.mapSize.width - 1, 0),
@@ -208,10 +218,11 @@ public class World extends SoSObject{
 //            }
             addChild(ff);
         }
-        currentFirefighterCounter = fireFighterCounter;
+        currentFirefighterCounter = fireFighterCounter;                         // count number of firefighters
     }
 
-    private void createHospitals() {                 // Create Hospital at the edge position
+    // Create Hospitals at the edge position
+    private void createHospitals() {
         for(int i = 0; i < maxHospital; ++i) {
             Hospital hospital = new Hospital(this, "Hospital" + (i + 1));
             hospitals.add(hospital);
@@ -231,7 +242,8 @@ public class World extends SoSObject{
 //        hospitals.get(5).setPosition(Map.mapSize.width - 1, (Map.mapSize.height - 1) / 2);
     }
 
-    private void createBridgehead() {                // Create the Bridgehead at the quarter position of the map
+    // Create the Bridgeheads at the quarter position of the map
+    private void createBridgehead() {
         for(int i = 0; i < maxBridgehead; ++i) {
             Bridgehead bridgehead = new Bridgehead(this, "Bridgehead" + (i + 1));
             bridgeheads.add(bridgehead);
@@ -250,7 +262,9 @@ public class World extends SoSObject{
     }
 
     int ambulancePositionIndex = 0;
-    private void createAmbulances() {                    // Create Ambulance at the edge position
+
+    // Create Ambulances at the edge position
+    private void createAmbulances() {
         Position[] positions = new Position[] {
                 new Position(0, 0),
                 new Position(Map.mapSize.width - 1, 0),
@@ -268,31 +282,35 @@ public class World extends SoSObject{
         }
     }
 
-    private void createOrganization() {                      // Create Organization
+    // Create Organization.  Not visible
+    private void createOrganization() {
         Organization organization = new Organization(this, "Organization");
         addChild(organization);
     }
 
     int frameCount = 0;
     public int savedPatientCount = 0;
+
+    // Update at every frame
     @Override
     public void onUpdate() {
 
+        // end condition ==> current frame count is equal or bigger than the max frame count.
         if(frameCount >= maxFrame) {
             canUpdate(false);
             return;
         }
 
+        // end condition ==> every patients are saved
         //if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
         if(patients.size() == savedPatientCount && map.getUnvisitedTileCount() == 0) {
             canUpdate(false);
-
             endTime = System.currentTimeMillis();
             endFrame = frameCount;
 //            printPatientLog(true);
 //            printFireFighterLog(true);
             return;
-        } else {
+        } else {                                                        // It is not an end condition. continue.
 //            printPatientLog(false);
 //            printFireFighterLog(false);
 //            printAmbulanceLog(false);
@@ -300,6 +318,7 @@ public class World extends SoSObject{
 //            System.out.println("FrameCount: " + frameCount);
         }
 
+        // Execute the stimulus and then remove it. To prevent the duplicate execution.
         ArrayList<Stimulus> mustRemove = new ArrayList<>();
         for(Stimulus stimulus : stimuli) {
             if(stimulus.frame == Time.getFrameCount()) {
@@ -312,16 +331,18 @@ public class World extends SoSObject{
     }
 
 
+
     @Override
     public void onRender(Graphics2D g) {
         Rectangle rect = g.getDeviceConfiguration().getBounds();
-        g.setColor(new Color(100, 100, 100));
+        g.setColor(new Color(100, 100, 100));                   // 타일 간의 경계를 표현함. (사각형의 테두리 색깔)
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
 
-        g.setColor(Color.red);
-        g.setFont(new Font("default", Font.BOLD, 16));
-        String strFrameCount = "frameCount: " + frameCount;
-        g.drawChars(strFrameCount.toCharArray(), 0, strFrameCount.length(), 600, 700);
+        // GUI에 frame을 보여주기 위한 것이었으나 현재는 사용하지 않음.
+//        g.setColor(Color.red);
+//        g.setFont(new Font("default", Font.BOLD, 16));
+//        String strFrameCount = "frameCount: " + frameCount;
+//        g.drawChars(strFrameCount.toCharArray(), 0, strFrameCount.length(), 600, 700);
     }
 
     public Map getMap() {
@@ -329,6 +350,7 @@ public class World extends SoSObject{
     }
 
 
+    // patient의 수를 가져오기 위한 함수. 현재는 사용 안함.
     public int getPatientCount() {
         int count = 0;
         for(SoSObject child: children) {
@@ -414,7 +436,7 @@ public class World extends SoSObject{
     public void addPatient(Position position) {
         Patient patient = new Patient(this, "Patient" + ++patientCounter);
         patients.add(patient);
-        patient.setStatus(Patient.Status.random());
+        patient.setStatus(Patient.Status.random());                                 // serious, wounded.  현재는 wounded만 사용
         if(position == null) {
             Position randomPosition = null;
 
@@ -825,7 +847,6 @@ public class World extends SoSObject{
     }       // baseline (message delay 만 존재(All - All)
 
 
-
     private void writeScenario2() {
 
         for(int i = 0; i < maxFireFighter; ++i) {
@@ -980,6 +1001,7 @@ public class World extends SoSObject{
 
     }       // baseline (message delay 만 존재(All - All)
 
+    // remove CS stimulus를 적용하기 위한 함수
     void removeCS(String csName) {
         SoSObject obj = findObject(csName);
         if(obj == null) return;
@@ -990,6 +1012,8 @@ public class World extends SoSObject{
         cs.canUpdate(false);
         cs.currentAction.name = "Removed";
 
+        // Remove 하려는 CS가 Firefighter인 경우
+        // 현재의 action 상태에 따라 다르게 처리한다.
         if(cs instanceof FireFighter) {
             FireFighter ff = (FireFighter) cs;
             if (cs.currentAction instanceof FireFighterFirstAid) {
@@ -1059,6 +1083,8 @@ public class World extends SoSObject{
                 fireFighterCounter--;
             }
         }
+        // Remove 하려는 CS가 Ambulance인 경우
+        // 현재의 action 상태에 따라 다르게 처리한다.
         else if(cs instanceof Ambulance) {
             Ambulance ambulance = (Ambulance) cs;
 
@@ -1094,9 +1120,10 @@ public class World extends SoSObject{
             }
         }
 
-        removeChild(obj);
+        removeChild(obj);               // child에서도 remove함.
     }
 
+    // Firefighter를 추가하는 stimulus를 적용하기 위한 함수
     void addFireFighter() {
         Position[] positions = new Position[]{
                 new Position(0, 0),
@@ -1117,6 +1144,18 @@ public class World extends SoSObject{
         addChild(ff);
     }
 
+    // Interactive simulation에서 firefighter를 추가하는 것을 처리하는 함수
+    public void onAddFireFighter(int frame, int count) {
+        if(saveInputData) {
+            inputDatum.add(new InputData("addFireFighter", frame, count));
+        }
+        for(int i = 0; i < count; ++i) {
+            Stimulus stimulus = new AddEntity(this, frame, this::addFireFighter);
+            stimuli.add(stimulus);
+        }
+    }
+
+    // Ambulance를 추가하는 stimulus를 적용하기 위한 함수
     private void addAmbulance() {
         Position[] positions = new Position[]{
                 new Position(0, 0),
@@ -1135,16 +1174,7 @@ public class World extends SoSObject{
         addChild(ambulance);
     }
 
-    public void onAddFireFighter(int frame, int count) {
-        if(saveInputData) {
-            inputDatum.add(new InputData("addFireFighter", frame, count));
-        }
-        for(int i = 0; i < count; ++i) {
-            Stimulus stimulus = new AddEntity(this, frame, this::addFireFighter);
-            stimuli.add(stimulus);
-        }
-    }
-
+    // Interactive simulation에서 ambulance를 추가하는 것을 처리하는 함수
     public void onAddAmbulance(int frame, int count) {
         if(saveInputData) {
             inputDatum.add(new InputData("addAmbulance", frame, count));
