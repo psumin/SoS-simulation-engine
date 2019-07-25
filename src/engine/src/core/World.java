@@ -105,9 +105,10 @@ public class World extends SoSObject{
 
 //    CellStyle headerStyle;
 
-    long startTime;                                                                 // 프로그램 시작 시간
-    long endTime = 0;                                                               // 프로그램 종료 시간
-    long endFrame = 0;                                                              // 프로그램 종료의 frame 수
+    // log 작성에 필요한 변수들. 현재는 사용하지 않음
+//    long startTime;                                                                 // 프로그램 시작 시간
+//    long endTime = 0;                                                               // 프로그램 종료 시간
+//    long endFrame = 0;                                                              // 프로그램 종료의 frame 수
 
     int maxFrame = 0;                                                               // 시뮬레이션 한 번의 최대 frame 수
 
@@ -118,7 +119,7 @@ public class World extends SoSObject{
     public World(int maxFrame, boolean saveInputData) {
         this.maxFrame = maxFrame;
         this.saveInputData = saveInputData;
-        startTime = System.currentTimeMillis();
+//        startTime = System.currentTimeMillis();
 
 //        statisticsSheet = workbook.createSheet("statistics");
         //statisticsSheet.trackAllColumnsForAutoSizing();
@@ -142,7 +143,7 @@ public class World extends SoSObject{
         // static stimulus injection technique
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
-        writeScenario2();         // interactive simulation test
+//        writeScenario2();         // interactive simulation test
 
 
 
@@ -305,8 +306,8 @@ public class World extends SoSObject{
         //if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
         if(patients.size() == savedPatientCount && map.getUnvisitedTileCount() == 0) {
             canUpdate(false);
-            endTime = System.currentTimeMillis();
-            endFrame = frameCount;
+//            endTime = System.currentTimeMillis();
+//            endFrame = frameCount;
 //            printPatientLog(true);
 //            printFireFighterLog(true);
             return;
