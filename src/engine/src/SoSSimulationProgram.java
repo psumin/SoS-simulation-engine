@@ -29,21 +29,21 @@ import misc.ExcelHelper;
 
 public class SoSSimulationProgram implements Runnable, KeyListener {
 
-    final int MAX_SIMULATION_COUNT = 2000;
-    final int MAX_FRAME_COUNT = 300;
+    final int MAX_SIMULATION_COUNT = 100;                          // 시뮬레이션 반복 횟수
+    final int MAX_FRAME_COUNT = 200;                                // 각 시뮬레이션마다 최대 frame의 수
 
-    final int SIMULATION_WIDTH = 910;
-    final int SIMULATION_HEIGHT = 910;
+    final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
+    final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
 //    final int CONSOLE_WIDTH = 200;
 
     JFrame frame;
     Canvas canvas;
     BufferStrategy bufferStrategy;
     boolean isExpert = false;
-    boolean isFirstWorld = true;
+    boolean isFirstSimulation = true;
 
-    long programStartTime;
-    long programEndTime;
+    long programStartTime;                                          // 프로그램 시작 시간
+    long programEndTime;                                            // 프로그램 종료 시간
 
 
     public SoSSimulationProgram(){
@@ -70,9 +70,9 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         // 시뮬레이션 화면
 
         // 마우스 이벤트... 알아보기
-        canvas.addMouseListener(new MouseControl());
-        canvas.addKeyListener(this);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        canvas.addMouseListener(new MouseControl());                      // 현재 마우스는 사용 안하므로 필요없음
+        canvas.addKeyListener(this);                                     // Interactive simulation 을 위해서 key listener 가 필요함. Key listener 를 통해서 프로그램을 정지시키고 stimulus 를 삽입한다.
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);               // 종료를 위한건데, 없어도 동작하네?
         frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);
@@ -80,19 +80,20 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         canvas.createBufferStrategy(2);
         bufferStrategy = canvas.getBufferStrategy();
 
-        canvas.requestFocus();
+        canvas.requestFocus();                                              // 처음에 프로그램을 시작시키고 focus를 GUI (Canvas)에 적용한다.
 
 
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosed(WindowEvent e) {
-                //System.out.println("jdialog window closed event received");
-            }
-
-            public void windowClosing(WindowEvent e) {
-                running = false;
-                clear();
-            }
-        });
+        // 현재 필요없는 기능
+//        frame.addWindowListener(new WindowAdapter() {
+//            public void windowClosed(WindowEvent e) {
+//                //System.out.println("dialog window closed event received");
+//            }
+//
+//            public void windowClosing(WindowEvent e) {
+//                running = false;
+//                clear();
+//            }
+//        });
 
     }
 
@@ -101,9 +102,9 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
     public void keyPressed(KeyEvent e)
     {
-        if (e.getKeyCode() == KeyEvent.VK_S) {
-            if(isFirstWorld) {
-                //            System.out.println("Stop buttom pressed!");
+        if (e.getKeyCode() == KeyEvent.VK_S) {                          // 첫번째 시뮬레이션에서 "S" key 가 눌리면 pause 의 value 를 true 로!
+            if(isFirstSimulation) {
+                //System.out.println("Stop button pressed!");
                 pause = true;
             }
         }
@@ -121,12 +122,12 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     public void keyTyped(KeyEvent e)
     {}
 
-
-    private class MouseControl extends MouseAdapter{
-        public void mouseClicked(MouseEvent e) {
-            int a = 10;
-        }
-    }
+    // 현재 마우스 event는 사용하지 않음
+//    private class MouseControl extends MouseAdapter{
+//        public void mouseClicked(MouseEvent e) {
+//            int a = 10;
+//        }
+//    }
 
     long desiredFPS = 120;
     long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
@@ -161,25 +162,25 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         ExcelHelper.getCell(row, 0).setCellValue("saved rate");
         ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
 
-        init();
+        init();                                                         // World 초기화
 
         programStartTime = System.nanoTime();
         while(running) {
 
-            if (isFirstWorld) {
+            if (isFirstSimulation) {                                    // 첫 번째 시뮬레이션에만 적용
                 beginLoopTime = System.nanoTime();
-                render();
+                render();                                               // 첫 번째 시뮬레이션에서만 GUI 를 rendering 한다.
 
                 lastUpdateTime = currentUpdateTime;
                 currentUpdateTime = System.nanoTime();
                 if (!pause) {
                     update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)));
-                } else { // pause
-                    frame.setVisible(false);
-                    if (isExpert) {
-                        expertMode();
+                } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
+                    frame.setVisible(false);                            // pause 상태에서는 GUI 를 숨긴다.
+                    if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
+                        expertMode();                                   // String 으로 stimulus 입력 가능
                     } else {
-                        beginnerMode();
+                        beginnerMode();                                 // 메뉴에 따라서 stimulus 입력 가능
                     }
                 }
 
@@ -195,15 +196,16 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                         //Do nothing
                     }
                 }
-            } else {
+            } else {                                                    // 첫 번째 시뮬레이션이 아니면 그냥 계속해서 업데이트 진행. stop 없음
                 update(1);
             }
         }
 
         programEndTime = System.nanoTime();
-        System.out.println("=== Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");
+        System.out.println("=== Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");          // 전체 프로그램 실행 시간
     }
 
+    // Rendering
     private void render() {
         Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
         g.clearRect(0, 0, SIMULATION_WIDTH, SIMULATION_HEIGHT);
@@ -235,6 +237,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     }
     TimeImpl timeImpl = new TimeImpl();
 
+    // World 초기화
     World world;
     protected void init() {
         world = new World(MAX_FRAME_COUNT, true);
@@ -249,6 +252,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     int simulation_count = 1;
 
 
+    // Upodate 실행하는 함수
     protected void update(int deltaTime){
 
         System.out.println("Simulation repeated: " + simulation_count + " Frame count: " + timeImpl.getFrameCount());
@@ -262,7 +266,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                 Sheet sheet = statisticsSheet;
                 Row row = sheet.createRow(simulation_count);
                 ExcelHelper.getCell(row, 0).setCellValue("" + world.getSavedRate());
-                if(isFirstWorld) {
+                if(isFirstSimulation) {                                                 // 첫 번째 시뮬레이션일 때 초기 정보 저장
                     sheet = inputScenarioSheet;
                     int rowNum = 0;
 
@@ -288,7 +292,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                     ExcelHelper.getCell(row, 6).setCellValue(MAX_SIMULATION_COUNT);
 
                     row = sheet.createRow(rowNum++);
-                    for(World.InputData inputData: World.inputDatum) {
+                    for(World.InputData inputData: World.inputDatum) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 제외)
                         row = sheet.createRow(rowNum++);
                         int colNum = 0;
                         ExcelHelper.getCell(row, colNum).setCellValue("command: ");
@@ -303,19 +307,43 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                         ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
                         ExcelHelper.getCell(row, colNum++).setCellValue(inputData.count);
                     }
+
+                    row = sheet.createRow(rowNum++);
+                    for(World.InputMessages inputMsg: World.inputMsg) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+                        row = sheet.createRow(rowNum++);
+                        int colNum = 0;
+                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.command);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("start frame: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.startFrame);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("finish frame: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.finishFrame);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("sender: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.sender);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("receiver: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.receiver);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("duration: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.duration);
+                    }
                 }
 
+                // 시뮬레이션의 반복 실행 횟수가 최대가 될 때까지 반복한다.
                 if(simulation_count < MAX_SIMULATION_COUNT) {
-                    simulation_count++;
-                    timeImpl.reset();
-                    isFirstWorld = false;
-
-
-
-
-
-
-                    world = new World(MAX_FRAME_COUNT, false);
+                    simulation_count++;                                         // 시뮬레이션 실행 횟수는 증가
+                    timeImpl.reset();                                           // frame 의 시작은 0으로 초기화.
+                    isFirstSimulation = false;                                  // 첫 번째 시뮬레이션이 아니므로 boolean 값을 false 로 바꿔준다
+                    world = new World(MAX_FRAME_COUNT, false);      // world 를 다시 생성한다.
                 } else {
                     clear();
                     running = false;
