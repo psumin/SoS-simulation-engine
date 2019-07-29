@@ -85,7 +85,7 @@ public class SoSSimulationProgram implements Runnable {
         }
     }
 
-    long desiredFPS = 120;
+    long desiredFPS = 30;
     long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
 
     boolean running = true;
