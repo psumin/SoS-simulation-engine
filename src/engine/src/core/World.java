@@ -12,7 +12,10 @@ import misc.Position;
 import misc.Range;
 import misc.Time;
 import stimulus.*;
+import stimulus.EntityStimulus.RemoveEntity;
 import stimulus.MessageStimulus.Delay;
+import stimulus.MessageStimulus.Loss;
+import stimulus.StateStimulus.Injury;
 import stimulus.ValueStimulus.CommunicationRange;
 import stimulus.ValueStimulus.SightRange;
 import stimulus.ValueStimulus.Speed;
@@ -20,7 +23,6 @@ import stimulus.EntityStimulus.AddEntity;
 
 import java.awt.*;
 import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
 
 /**
@@ -32,43 +34,69 @@ import java.util.ArrayList;
 
 public class World extends SoSObject{
 
-    // Structure of stimuli
-    public static class InputData {
-        public String command;
-        public int frame;
-        public int count;
+//    // Structure of stimuli
+//    public static class InputData {
+//        public String command;
+//        public int frame;
+//        public int count;
+//
+//        public InputData(String command, int frame, int count) {
+//            this.command = command;
+//            this.frame = frame;
+//            this.count = count;
+//        }
+//    }
+//
+//    public static class InputRanges {
+//        public String command;
+//        public int frame;
+//        public int left;
+//        public int top;
+//        public int right;
+//        public int bottom;
+//        public Object value;
+//
+//        public InputRanges(String command, int frame, int left, int top, int right, int bottom, Object value) {
+//            this.command = command;
+//            this. frame = frame;
+//            this.left = left;
+//            this.top = top;
+//            this.right = right;
+//            this.bottom = bottom;
+//            this.value = value;
+//        }
+//    }
+//
+//    // Structure o message stimuli
+//    public static class InputMessages {
+//        public String command;
+//        public int startFrame;
+//        public int finishFrame;
+//        public String sender;
+//        public String receiver;
+//        public int duration;
+//
+//        public InputMessages(String command, int startFrame, int finishFrame, String sender, String receiver, int duration) {
+//            this.command = command;
+//            this.startFrame = startFrame;
+//            this.finishFrame = finishFrame;
+//            this.sender = sender;
+//            this.receiver = receiver;
+//            this.duration = duration;
+//        }
+//    }
 
-        public InputData(String command, int frame, int count) {
-            this.command = command;
-            this.frame = frame;
-            this.count = count;
-        }
-    }
-
-    // Structure o message stimuli
-    public static class InputMessages {
-        public String command;
-        public int startFrame;
-        public int finishFrame;
-        public String sender;
-        public String receiver;
-        public int duration;
-
-        public InputMessages(String command, int startFrame, int finishFrame, String sender, String receiver, int duration) {
-            this.command = command;
-            this.startFrame = startFrame;
-            this.finishFrame = finishFrame;
-            this.sender = sender;
-            this.receiver = receiver;
-            this.duration = duration;
-        }
-    }
 
     // Use arraylist to apply stimuli structure (InputData, InputData)
-    public static final ArrayList<InputData> inputDatum = new ArrayList<>();
-    public static final ArrayList<InputMessages> inputMsg = new ArrayList<>();
+    public static final ArrayList<DataStructure.AddCS> addCS = new ArrayList<>();
+    public static final ArrayList<DataStructure.Message> message = new ArrayList<>();
+    public static final ArrayList<DataStructure.Range> range = new ArrayList<>();
+    public static final ArrayList<DataStructure.ChangeAll> changeAll = new ArrayList<>();
+    public static final ArrayList<DataStructure.ChangeOne> changeOne = new ArrayList<>();
+    public static final ArrayList<DataStructure.RemoveCS> removeCS = new ArrayList<>();
 
     private final ArrayList<Stimulus> stimuli = new ArrayList<>();
+//    private final ArrayList<MsgRouter> router = new ArrayList<>();
     private final ArrayList<String> firefighterNames = new ArrayList<>();
     private final ArrayList<String> AmbulanceNames = new ArrayList<>();
 
@@ -81,10 +109,10 @@ public class World extends SoSObject{
 
     // Initial Values
 //    public static final int maxPatient = 294;
-    public static final int maxPatient = 20;                // 223
+    public static final int maxPatient = 100;                // 223
     //    public static final int maxPatient = 100;
 //    public static final int maxPatient = 65;
-    public static final int maxFireFighter = 4;            // 4
+    public static final int maxFireFighter = 20;            // 4
     public static final int maxHospital = 4;
     public static final int maxAmbulance = 40;              // 16
     public static final int maxBridgehead = 4;
@@ -98,7 +126,7 @@ public class World extends SoSObject{
     public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);         // Ambulance를 위한 arraylist
 
     public static final String fireFighterPrefix = "FF";                            // FireFighter의 이름은 "FF"로 시작
-    //public static final String ambulancePrefix = "AM";
+//    public static final String ambulancePrefix = "Amb";
 
 //    XSSFWorkbook workbook = new XSSFWorkbook();
 //    XSSFSheet statisticsSheet;
@@ -145,20 +173,112 @@ public class World extends SoSObject{
 //        writeScenario1();         // baseline
 //        writeScenario2();         // interactive simulation test
 
+        for(int i = 0; i < maxFireFighter; ++i) {
+            firefighterNames.add(fireFighterPrefix + (i + 1));
+        }
 
+//        ArrayList<String> AmbulanceNames = new ArrayList<>();
+        for(int i = 0; i < maxAmbulance; ++i) {
+            AmbulanceNames.add("Ambulance" + (i + 1));
+        }
 
-        if(!inputDatum.isEmpty()) {
-            for (InputData data: inputDatum) {
+        // 첫 번째 시뮬레이션에서 저장한 정보를 그 다음 시뮬레이션에서 그대로 이용
+
+        if(!addCS.isEmpty()) {
+            for (DataStructure.AddCS data: addCS) {
                 switch (data.command) {
                     case "addFireFighter":
-                        this.onAddFireFighter(data.frame, data.count);
+                        this.interAddFF(data.frame, data.count);
                         break;
                     case "addAmbulance":
-                        this.onAddAmbulance(data.frame, data.count);
+                        this.interAddAmb(data.frame, data.count);
                         break;
                 }
             }
         }
+        if(!message.isEmpty()) {
+            for(DataStructure.Message data: message) {
+                switch(data.command) {
+                    case "messageDelay" :
+                        this.interMsgDelay(data.startFrame, data.finishFrame, data.sender, data.receiver, data.duration);
+                        break;
+                    case "messageLoss" :
+                        this.interMsgDelay(data.startFrame, data.finishFrame, data.sender, data.receiver, data.duration);
+                        break;
+                }
+            }
+        }
+
+        if(!range.isEmpty()) {
+            for(DataStructure.Range data: range) {
+                switch(data.command) {
+                    case "speedRange" :
+                        this.interSpeedRange(data.frame, data.left, data.top, data.right, data.bottom, data.value);
+                        break;
+                    case "interSightRange" :
+                        this.interSightRange(data.frame, data.left, data.top, data.right, data.bottom, data.value);
+                        break;
+                    case "interCommunicationRange" :
+                        this.interSightRange(data.frame, data.left, data.top, data.right, data.bottom, data.value);
+                        break;
+                }
+            }
+        }
+
+        if(!changeAll.isEmpty()) {
+            for(DataStructure.ChangeAll data: changeAll) {
+                switch(data.command) {
+                    case "speedAllAmb" :
+                        this.interSpeedAllAmb(data.frame, data.value);
+                        break;
+                    case "speedAllFF" :
+                        this.interSpeedAllFF(data.frame, data.value);
+                        break;
+                    case "sightAllFF" :
+                        this.interSightAllFF(data.frame, data.value);
+                        break;
+                    case "communicationAllFF" :
+                        this.interCommunicationRangeAllFF(data.frame, data.value);
+                        break;
+                }
+            }
+        }
+
+        if(!changeOne.isEmpty()) {
+            for(DataStructure.ChangeOne data: changeOne) {
+                switch(data.command) {
+                    case "interSpeedOneAmb" :
+                        this.interSpeedOneAmb(data.frame, data.number, data.value);
+                        break;
+                    case "interSpeedOneFF" :
+                        this.interSpeedOneAmb(data.frame, data.number, data.value);
+                        break;
+                    case "interSightOneFF" :
+                        this.interSpeedOneAmb(data.frame, data.number, data.value);
+                        break;
+                    case "interCommunicationRangeOneFF" :
+                        this.interSpeedOneAmb(data.frame, data.number, data.value);
+                        break;
+                }
+            }
+        }
+
+        if(!removeCS.isEmpty()) {
+            for(DataStructure.RemoveCS data: removeCS) {
+                switch(data.command) {
+                    case "removeFF" :
+                        this.interRemoveFF(data.frame, data.number);
+                        break;
+                    case "removeAmb" :
+                        this.interRemoveAmb(data.frame, data.number);
+                        break;
+                    case "injuryFF" :
+                        this.interInjury(data.frame, data.number);
+                        break;
+                }
+            }
+        }
+
 
     }
 
@@ -1145,16 +1265,7 @@ public class World extends SoSObject{
         addChild(ff);
     }
 
-    // Interactive simulation에서 firefighter를 추가하는 것을 처리하는 함수
-    public void onAddFireFighter(int frame, int count) {
-        if(saveInputData) {
-            inputDatum.add(new InputData("addFireFighter", frame, count));
-        }
-        for(int i = 0; i < count; ++i) {
-            Stimulus stimulus = new AddEntity(this, frame, this::addFireFighter);
-            stimuli.add(stimulus);
-        }
-    }
+
 
     // Ambulance를 추가하는 stimulus를 적용하기 위한 함수
     private void addAmbulance() {
@@ -1175,16 +1286,164 @@ public class World extends SoSObject{
         addChild(ambulance);
     }
 
-    // Interactive simulation에서 ambulance를 추가하는 것을 처리하는 함수
-    public void onAddAmbulance(int frame, int count) {
+    // Interactive simulation에서 firefighter를 추가하는 것을 처리하는 함수
+    public void interAddFF(int frame, int count) {
         if(saveInputData) {
-            inputDatum.add(new InputData("addAmbulance", frame, count));
+            addCS.add(new DataStructure.AddCS("addFireFighter", frame, count));
+        }
+        for(int i = 0; i < count; ++i) {
+            Stimulus stimulus = new AddEntity(this, frame, this::addFireFighter);
+            stimuli.add(stimulus);
+        }
+    }
+
+    // Interactive simulation에서 ambulance를 추가하는 것을 처리하는 함수
+    public void interAddAmb(int frame, int count) {
+        if(saveInputData) {
+            addCS.add(new DataStructure.AddCS("addAmbulance", frame, count));
         }
         for(int i = 0; i < count; ++i) {
             Stimulus stimulus = new AddEntity(this, frame, this::addAmbulance);
             stimuli.add(stimulus);
         }
     }
+
+    public void interMsgDelay(int startFrame, int finishFrame, String sender, String receiver, int duration) {
+        if(saveInputData) {
+            message.add(new DataStructure.Message("messageDelay", startFrame, finishFrame, sender, receiver, duration));
+        }
+        router.add(new Delay(startFrame, finishFrame, sender, receiver, duration));
+
+    }
+
+    public void interMsgLoss(int startFrame, int finishFrame, String sender, String receiver) {
+        if(saveInputData) {
+            message.add(new DataStructure.Message("messageLoss", startFrame, finishFrame, sender, receiver,0));
+        }
+        router.add(new Loss(startFrame, finishFrame, sender, receiver));
+    }
+
+    //Speed
+    public void interSpeedRange(int frame, int left, int top, int right, int bottom, Object value) {
+        if(saveInputData) {
+            range.add(new DataStructure.Range("speedRange", frame, left, top, right, bottom, value));
+        }
+        Stimulus stimulus = new Speed(this, frame, new Range(left, top, right, bottom), value);
+        stimuli.add(stimulus);
+    }
+
+    public void interSpeedAllAmb(int frame, Object value) {
+        if(saveInputData) {
+            changeAll.add(new DataStructure.ChangeAll("speedAllAmb", frame, value));
+        }
+        Stimulus stimulus = new Speed(this, frame, AmbulanceNames, value);
+        stimuli.add(stimulus);
+    }
+
+    public void interSpeedAllFF(int frame, Object value) {
+        if(saveInputData) {
+            changeAll.add(new DataStructure.ChangeAll("speedAllFF", frame, value));
+        }
+        Stimulus stimulus = new Speed(this, frame, firefighterNames, value);
+        stimuli.add(stimulus);
+
+    }
+
+    public void interSpeedOneAmb(int frame, int number, Object value) {
+        if(saveInputData) {
+            changeOne.add(new DataStructure.ChangeOne("speedOneAmb", frame, number, value));
+        }
+        Stimulus stimulus = new Speed(this, frame, "Ambulance" + number, value);
+        stimuli.add(stimulus);
+
+    }
+
+    public void interSpeedOneFF(int frame, int number, Object value) {
+        if(saveInputData) {
+            changeOne.add(new DataStructure.ChangeOne("speedOneFF", frame, number, value));
+        }
+        Stimulus stimulus = new Speed(this, frame, "FF" + number, value);
+        stimuli.add(stimulus);
+    }
+
+    //Sight
+    public void interSightRange(int frame, int left, int top, int right, int bottom, Object value) {
+        if(saveInputData) {
+            range.add(new DataStructure.Range("sightRange", frame, left, top, right, bottom, value));
+        }
+        Stimulus stimulus = new SightRange(this, frame, new Range(left, top, right, bottom), value);
+        stimuli.add(stimulus);
+    }
+
+    public void interSightAllFF(int frame, Object value) {
+        if(saveInputData) {
+            changeAll.add(new DataStructure.ChangeAll("sightAllFF", frame, value));
+        }
+        Stimulus stimulus = new SightRange(this, frame, firefighterNames, value);
+        stimuli.add(stimulus);
+    }
+
+    public void interSightOneFF(int frame, int number, Object value) {
+        if(saveInputData) {
+            changeOne.add(new DataStructure.ChangeOne("sightOneFF", frame, number, value));
+        }
+        Stimulus stimulus = new SightRange(this, frame, "FF" + number, value);
+        stimuli.add(stimulus);
+    }
+
+    //Remove
+    public void interRemoveFF(int frame, int number) {
+        if(saveInputData) {
+            removeCS.add(new DataStructure.RemoveCS("removeFF", frame, number));
+        }
+        Stimulus stimulus = new RemoveEntity(this, frame, "FF" + number, this::removeCS);
+        stimuli.add(stimulus);
+    }
+
+    public void interRemoveAmb(int frame, int number) {
+        if(saveInputData) {
+            removeCS.add(new DataStructure.RemoveCS("removeAmb", frame, number));
+        }
+        Stimulus stimulus = new RemoveEntity(this, frame, "Ambulance" + number, this::removeCS);
+        stimuli.add(stimulus);
+    }
+
+    //Communication Range
+    public void interCommunicationRange(int frame, int left, int top, int right, int bottom, Object value) {
+        if(saveInputData) {
+            range.add(new DataStructure.Range("communicationRange", frame, left, top, right, bottom, value));
+        }
+        Stimulus stimulus = new CommunicationRange(this, frame, new Range(left, top, right, bottom), value);
+        stimuli.add(stimulus);
+    }
+
+    public void interCommunicationRangeAllFF(int frame, Object value) {
+        if(saveInputData) {
+            changeAll.add(new DataStructure.ChangeAll("communicationAllFF", frame, value));
+        }
+        Stimulus stimulus = new CommunicationRange(this, frame, firefighterNames, value);
+        stimuli.add(stimulus);
+    }
+
+    public void interCommunicationRangeOneFF(int frame, int number, Object value) {
+        if(saveInputData) {
+            changeOne.add(new DataStructure.ChangeOne("communicationOneFF", frame, number, value));
+        }
+        Stimulus stimulus = new CommunicationRange(this, frame, "FF" + number, value);
+        stimuli.add(stimulus);
+
+    }
+
+    //Injury
+    public void interInjury(int frame, int number) {
+        if(saveInputData) {
+            removeCS.add(new DataStructure.RemoveCS("injuryFF", frame, number));
+        }
+        Stimulus stimulus = new Injury(this, frame, "FF" + number);
+        stimuli.add(stimulus);
+    }
+
+
 
     public boolean isFinished() {
         return !_canUpdate;

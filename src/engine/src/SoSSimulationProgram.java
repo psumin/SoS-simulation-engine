@@ -1,4 +1,5 @@
 
+import core.DataStructure;
 import core.World;
 import misc.Time;
 
@@ -29,7 +30,7 @@ import misc.ExcelHelper;
 
 public class SoSSimulationProgram implements Runnable, KeyListener {
 
-    final int MAX_SIMULATION_COUNT = 100;                          // 시뮬레이션 반복 횟수
+    final int MAX_SIMULATION_COUNT = 10;                          // 시뮬레이션 반복 횟수
     final int MAX_FRAME_COUNT = 200;                                // 각 시뮬레이션마다 최대 frame의 수
 
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
@@ -241,7 +242,6 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     World world;
     protected void init() {
         world = new World(MAX_FRAME_COUNT, true);
-
     }
 
     /**
@@ -292,7 +292,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                     ExcelHelper.getCell(row, 6).setCellValue(MAX_SIMULATION_COUNT);
 
                     row = sheet.createRow(rowNum++);
-                    for(World.InputData inputData: World.inputDatum) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 제외)
+                    for(DataStructure.AddCS inputData: World.addCS) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 제외)
                         row = sheet.createRow(rowNum++);
                         int colNum = 0;
                         ExcelHelper.getCell(row, colNum).setCellValue("command: ");
@@ -303,39 +303,129 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                         ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
                         ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
 
-                        ExcelHelper.getCell(row, colNum).setCellValue("count: ");
+                        ExcelHelper.getCell(row, colNum).setCellValue("How many?: ");
                         ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
                         ExcelHelper.getCell(row, colNum++).setCellValue(inputData.count);
                     }
 
                     row = sheet.createRow(rowNum++);
-                    for(World.InputMessages inputMsg: World.inputMsg) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+                    for(DataStructure.Message inputData: World.message) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
                         row = sheet.createRow(rowNum++);
                         int colNum = 0;
                         ExcelHelper.getCell(row, colNum).setCellValue("command: ");
                         ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.command);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
 
                         ExcelHelper.getCell(row, colNum).setCellValue("start frame: ");
                         ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.startFrame);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.startFrame);
 
-                        ExcelHelper.getCell(row, colNum).setCellValue("finish frame: ");
+                        ExcelHelper.getCell(row, colNum).setCellValue("end frame: ");
                         ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.finishFrame);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.finishFrame);
 
                         ExcelHelper.getCell(row, colNum).setCellValue("sender: ");
                         ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.sender);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.sender);
 
                         ExcelHelper.getCell(row, colNum).setCellValue("receiver: ");
                         ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.receiver);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.receiver);
 
-                        ExcelHelper.getCell(row, colNum).setCellValue("duration: ");
+                        ExcelHelper.getCell(row, colNum).setCellValue("delay duration: ");
                         ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputMsg.duration);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.duration);
                     }
+
+                    row = sheet.createRow(rowNum++);
+                    for(DataStructure.Range inputData: World.range) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+                        row = sheet.createRow(rowNum++);
+                        int colNum = 0;
+                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("left: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.left);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("top: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.top);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("right: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.right);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("bottom: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.bottom);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("ratio: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue((Float) inputData.value);
+                    }
+
+                    row = sheet.createRow(rowNum++);
+                    for(DataStructure.ChangeAll inputData: World.changeAll) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+                        row = sheet.createRow(rowNum++);
+                        int colNum = 0;
+                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("value: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue((int) inputData.value);
+                    }
+
+                    row = sheet.createRow(rowNum++);
+                    for(DataStructure.ChangeOne inputData: World.changeOne) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+                        row = sheet.createRow(rowNum++);
+                        int colNum = 0;
+                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("number: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.number);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("value: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue((int) inputData.value);
+                    }
+
+                    row = sheet.createRow(rowNum++);
+                    for(DataStructure.RemoveCS inputData: World.removeCS) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+                        row = sheet.createRow(rowNum++);
+                        int colNum = 0;
+                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
+
+                        ExcelHelper.getCell(row, colNum).setCellValue("number: ");
+                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.number);
+                    }
+
+
                 }
 
                 // 시뮬레이션의 반복 실행 횟수가 최대가 될 때까지 반복한다.
@@ -367,7 +457,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         world.clear();
         long nano = System.currentTimeMillis();
         String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        String filePath = "new_log/" + date + ".xlsx";
+        String filePath = "log/new_log/" + date + ".xlsx";
 
         ExcelHelper.autoSizeAllColumn(workbook);
         ExcelHelper.save(workbook, filePath);
@@ -378,7 +468,9 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
         new Thread(simulationEngine).start();
     }
-
+    /**
+     * Insertion parts
+     */
     private void expertMode() {
         System.out.print("Input command here: ");
         Scanner input = new Scanner(System.in);
@@ -392,57 +484,366 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                 command = input.next().toLowerCase();
                 // add firefighter 275 5
                 switch (command) {
-                    case "firefighter":
-                        world.onAddFireFighter(input.nextInt(), input.nextInt());
-                        break;
                     case "ambulance":
-                        world.onAddAmbulance(input.nextInt(), input.nextInt());
+                        world.interAddAmb(input.nextInt(), input.nextInt());
+                        break;
+
+                    case "firefighter":
+                        world.interAddFF(input.nextInt(), input.nextInt());
                         break;
                 }
+                break;
 
+            case "message":
+                command = input.next().toLowerCase();
+                // message delay 100 500 FF FF 50
+                switch (command) {
+                    case "delay":
+                        world.interMsgDelay(input.nextInt(), input.nextInt(), input.next(), input.next(), input.nextInt());
+                        break;
+
+                    case "loss":
+                        world.interMsgLoss(input.nextInt(), input.nextInt(), input.next(), input.next());
+                        break;
+                }
+                break;
+
+            case "speed":
+                command = input.next().toLowerCase();
+                // speed ambulance all 300 10
+                // speed ambulance one 300 5 10
+                switch (command) {
+                    case "ambulance":
+                        command = input.next().toLowerCase();
+                        switch (command) {
+                            case "all":
+                                world.interSpeedAllAmb(input.nextInt(), input.nextInt());
+                                break;
+
+                            case "one":
+                                world.interSpeedOneAmb(input.nextInt(), input.nextInt(), input.nextInt());
+                                break;
+                        }
+                        break;
+
+                    case "firefighter":
+                        command = input.next().toLowerCase();
+                        switch (command) {
+                            // speed firefighter range 300 8  8  26  26 3.0
+                            case "Range":
+                                world.interSpeedRange(input.nextInt(), input.nextInt(), input.nextInt(), input.nextInt(), input.nextInt(), input.nextFloat());
+                                break;
+                            // speed firefighter all 300 10
+                            case "all":
+                                world.interSpeedAllFF(input.nextInt(), input.nextInt());
+                                break;
+                            // speed firefighter one 300 4 10
+                            case "one":
+                                world.interSpeedOneFF(input.nextInt(), input.nextInt(), input.nextInt());
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case "sight":
+                command = input.next().toLowerCase();
+                switch (command) {
+                    case "range":
+                        world.interSightRange(input.nextInt(), input.nextInt(), input.nextInt(), input.nextInt(), input.nextInt(), input.nextFloat());
+                        break;
+                    case "all":
+                        world.interSightAllFF(input.nextInt(), input.nextInt());
+                        break;
+                    case "one":
+                        world.interSightOneFF(input.nextInt(), input.nextInt(), input.nextInt());
+                        break;
+                }
+                break;
+
+            case "communication":
+                command = input.next().toLowerCase();
+                switch (command) {
+                    case "range":
+                        world.interCommunicationRange(input.nextInt(), input.nextInt(), input.nextInt(), input.nextInt(), input.nextInt(), input.nextFloat());
+                        break;
+                    case "all":
+                        world.interCommunicationRangeAllFF(input.nextInt(), input.nextInt());
+                        break;
+                    case "one":
+                        world.interCommunicationRangeOneFF(input.nextInt(), input.nextInt(), input.nextInt());
+                        break;
+                }
+                break;
+
+            // injury 100 5
+            case "injury":
+                world.interInjury(input.nextInt(), input.nextInt());
+                break;
+
+            case "remove":
+                command = input.next().toLowerCase();
+                switch (command) {
+                    // remove ambulance 100 5
+                    case "ambulance":
+                        world.interRemoveAmb(input.nextInt(), input.nextInt());
+                        break;
+                    case "firefighter":
+                        world.interRemoveAmb(input.nextInt(), input.nextInt());
+                        break;
+                }
                 break;
         }
     }
 
     private void beginnerMode() {
         String menu = "===== Menu\n" +
-                "  1. Add\n" +
-                "  2. Set\n" +
-                "  3. Remove\n" +
+                "  1. Speed\n" +
+                "  2. Range\n" +
+                "  3. Message\n" +
+                "  4. Add\n" +
+                "  5. Remove\n" +
+                "  6. Injury\n" +
                 "  0. Resume\n" +
                 "===== Input command: ";
         int command = getCommandOnBeginnerMode(menu);
         switch (command) {
             case 1:
-                menu = "==== Add menu\n" +
+                menu = "==== Speed menu\n" +
                         "  1. Ambulance\n" +
                         "  2. FireFighter\n" +
                         "===== Input command: ";
                 command = getCommandOnBeginnerMode(menu);
                 switch (command) {
-                    case 1: {
-                        int frame = getCommandOnBeginnerMode("frame count: ");
-                        int number = getCommandOnBeginnerMode("number of ambulance: ");
-                        world.onAddAmbulance(frame, number);
+                    case 1:
+                        menu = "==== Ambulance menu\n" +
+                                "  1. One\n" +
+                                "  2. All\n" +
+                                "===== Input command: ";
+                        command = getCommandOnBeginnerMode(menu);
+                        switch (command) {
+                            case 1: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                int number = getCommandOnBeginnerMode("ambulance number: ");
+                                Object value = getCommandOnBeginnerMode("speed: ");
+                                world.interSpeedOneAmb(frame, number, value);
+                                break;
+                            }
+                            case 2: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                Object value = getCommandOnBeginnerMode("speed: ");
+                                world.interSpeedAllAmb(frame, value);
+                                break;
+                            }
+                        }
                         break;
-                    }
+
+
+
                     case 2: {
-                        int frame = getCommandOnBeginnerMode("frame count: ");
-                        int number = getCommandOnBeginnerMode("number of firefighter: ");
-                        world.onAddFireFighter(frame, number);
+                        menu = "==== FireFighter menu\n" +
+                                "  1. One\n" +
+                                "  2. All\n" +
+                                "  3. Range\n" +
+                                "===== Input command: ";
+                        command = getCommandOnBeginnerMode(menu);
+                        switch (command) {
+                            case 1: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                int number = getCommandOnBeginnerMode("firefighter number: ");
+                                Object value = getCommandOnBeginnerMode("speed: ");
+                                world.interSpeedOneFF(frame, number, value);
+                                break;
+                            }
+                            case 2: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                Object value = getCommandOnBeginnerMode("speed: ");
+                                world.interSpeedAllFF(frame, value);
+                                break;
+                            }
+
+                            case 3: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                int left = getCommandOnBeginnerMode("range of left: ");
+                                int top = getCommandOnBeginnerMode("range of top: ");
+                                int right = getCommandOnBeginnerMode("range of right: ");
+                                int bottom = getCommandOnBeginnerMode("range of bottom: ");
+                                Object value = getCommandOnBeginnerModeF("speed delay ratio (float: 0.0 ~ 11.0): ");
+                                world.interSpeedRange(frame, left, top, right, bottom, value);
+                                break;
+                            }
+                        }
                         break;
                     }
                 }
                 break;
+
             case 2:
+                menu = "==== Range\n" +
+                        "  1. Sight\n" +
+                        "  2. Communication\n" +
+                        "===== Input command: ";
+
+                command = getCommandOnBeginnerMode(menu);
+                switch (command) {
+                    // Sight
+                    case 1: {
+                        menu = "==== Sight\n" +
+                                "  1. One\n" +
+                                "  2. All\n" +
+                                "  3. Range\n" +
+                                "===== Input command: ";
+                        command = getCommandOnBeginnerMode(menu);
+                        switch (command) {
+                            case 1: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                int number = getCommandOnBeginnerMode("firefighter number: ");
+                                Object value = getCommandOnBeginnerMode("sight range: ");
+                                world.interSightOneFF(frame, number, value);
+                                break;
+                            }
+                            case 2: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                Object value = getCommandOnBeginnerMode("sight range: ");
+                                world.interSightAllFF(frame, value);
+                                break;
+                            }
+                            case 3: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                int left = getCommandOnBeginnerMode("range of left: ");
+                                int top = getCommandOnBeginnerMode("range of top: ");
+                                int right = getCommandOnBeginnerMode("range of right: ");
+                                int bottom = getCommandOnBeginnerMode("range of bottom: ");
+                                Object value = getCommandOnBeginnerModeF("sight range increasing ratio (float): ");
+                                world.interSightRange(frame, left, top, right, bottom, value);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case 2: {
+                        // Communication
+                        menu = "==== Communication\n" +
+                                "  1. One\n" +
+                                "  2. All\n" +
+                                "  3. Range\n" +
+                                "===== Input command: ";
+                        command = getCommandOnBeginnerMode(menu);
+                        switch (command) {
+                            case 1: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                int number = getCommandOnBeginnerMode("firefighter number: ");
+                                Object value = getCommandOnBeginnerMode("communication range: ");
+                                world.interCommunicationRangeOneFF(frame, number, value);
+                                break;
+                            }
+                            case 2: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                Object value = getCommandOnBeginnerMode("communication range: ");
+                                world.interCommunicationRangeAllFF(frame, value);
+                                break;
+                            }
+                            case 3: {
+                                int frame = getCommandOnBeginnerMode("frame count: ");
+                                int left = getCommandOnBeginnerMode("range of left: ");
+                                int top = getCommandOnBeginnerMode("range of top: ");
+                                int right = getCommandOnBeginnerMode("range of right: ");
+                                int bottom = getCommandOnBeginnerMode("range of bottom: ");
+                                Object value = getCommandOnBeginnerModeF("communication range increasing ratio (float): ");
+                                world.interCommunicationRange(frame, left, top, right, bottom, value);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
                 break;
+
             case 3:
+                menu = "==== Message menu\n" +
+                        "  1. Delay\n" +
+                        "  2. Loss\n" +
+                        "===== Input command: ";
+                command = getCommandOnBeginnerMode(menu);
+                switch (command) {
+                    case 1: {
+                        int startFrame = getCommandOnBeginnerMode("start frame count: ");
+                        int endFrame = getCommandOnBeginnerMode("end frame count: ");
+                        String sender = getCommandOnBeginnerModeS("sender: ");
+                        String receiver = getCommandOnBeginnerModeS("receiver: ");
+                        int delay = getCommandOnBeginnerMode("duration of delay: ");
+                        world.interMsgDelay(startFrame, endFrame, sender, receiver, delay);
+                        break;
+                    }
+                    case 2: {
+                        int startFrame = getCommandOnBeginnerMode("start frame count: ");
+                        int endFrame = getCommandOnBeginnerMode("end frame count: ");
+                        String sender = getCommandOnBeginnerModeS("sender: ");
+                        String receiver = getCommandOnBeginnerModeS("receiver: ");
+                        world.interMsgLoss(startFrame, endFrame, sender, receiver);
+                        break;
+                    }
+                }
                 break;
-            case 0:
+
+            case 4:
+                menu = "==== Add\n" +
+                        "  1. FireFighter\n" +
+                        "  2. Ambulance\n" +
+                        "===== Input command: ";
+                command = getCommandOnBeginnerMode(menu);
+                switch (command) {
+                    case 1: {
+                        // FireFighter
+                        int frame = getCommandOnBeginnerMode("frame count: ");
+                        int number = getCommandOnBeginnerMode("number of firefighters: ");
+                        world.interAddFF(frame, number);
+                        break;
+                    }
+
+                    case 2: {
+                        // Ambulance
+                        int frame = getCommandOnBeginnerMode("frame count: ");
+                        int number = getCommandOnBeginnerMode("number of ambulances: ");
+                        world.interAddAmb(frame, number);
+                        break;
+                    }
+                }
+                break;
+
+            case 5:
+                menu = "==== Remove menu\n" +
+                        "  1. FireFighter\n" +
+                        "  2. Ambulance\n" +
+                        "===== Input command: ";
+                command = getCommandOnBeginnerMode(menu);
+                switch (command) {
+                    case 1: {
+                        int frame = getCommandOnBeginnerMode("frame count: ");
+                        int number = getCommandOnBeginnerMode("firefighter number: ");
+                        world.interRemoveFF(frame, number);
+                        break;
+                    }
+                    case 2: {
+                        int frame = getCommandOnBeginnerMode("frame count: ");
+                        int number = getCommandOnBeginnerMode("ambulance number: ");
+                        world.interRemoveAmb(frame, number);
+                        break;
+                    }
+                }
+                break;
+
+            case 6: {
+                int frame = getCommandOnBeginnerMode("frame count: ");
+                int number = getCommandOnBeginnerMode("firefighter number: ");
+                world.interInjury(frame, number);
+                break;
+            }
+            case 0: {
                 frame.setVisible(true);
                 canvas.requestFocus();
                 pause = false;
                 break;
+            }
         }
     }
 
@@ -459,5 +860,36 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
             }
         }
         return input.nextInt();
+    }
+
+    float getCommandOnBeginnerModeF(String menu) {
+        System.out.print(menu);
+        Scanner input = new Scanner(System.in);
+        while(true) {
+            if (input.hasNextFloat()) {
+                break;
+            } else {
+                System.out.println("Please enter float");
+                System.out.println(input.next());
+                System.out.print(menu);
+            }
+        }
+        return input.nextFloat();
+    }
+
+    String getCommandOnBeginnerModeS(String menu) {
+        System.out.print(menu);
+        Scanner input = new Scanner(System.in);
+//        String command = input.next();
+        while(true) {
+            if (input.hasNext()) {
+                break;
+            } else {
+                System.out.println("Please enter CS");
+                System.out.println(input.next());
+                System.out.print(menu);
+            }
+        }
+        return input.next();
     }
 }

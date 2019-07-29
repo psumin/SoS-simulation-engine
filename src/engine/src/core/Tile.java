@@ -83,6 +83,8 @@ public class Tile extends SoSObject {
 //        return false;
     }
 
+    // 속도를 느리게 만들면서 타일의 색깔을 변경 시켜준다.
+    // float 값은 9까지 가능.
     @Override
     public void onUpdate() {
         light.setColor(new Color(255, 255 - (int)(255 * (moveDelayFactor - 1) / 10), 255 - (int)(255 * (moveDelayFactor - 1)/ 10)));        // 색깔 변경을 위한 method
