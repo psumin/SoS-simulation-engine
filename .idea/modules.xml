@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/NewSimulator_main.iml" filepath="$PROJECT_DIR$/.idea/modules/NewSimulator_main.iml" group="NewSimulator" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/NewSimulator_test.iml" filepath="$PROJECT_DIR$/.idea/modules/NewSimulator_test.iml" group="NewSimulator" />
       <module fileurl="file://$PROJECT_DIR$/src/engine/engine.iml" filepath="$PROJECT_DIR$/src/engine/engine.iml" group="NewSimulator" />
-      <module fileurl="file://$PROJECT_DIR$/src/engine/engine1.iml" filepath="$PROJECT_DIR$/src/engine/engine1.iml" />
     </modules>
   </component>
 </project>
