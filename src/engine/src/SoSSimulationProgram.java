@@ -30,8 +30,8 @@ import misc.ExcelHelper;
 
 public class SoSSimulationProgram implements Runnable, KeyListener {
 
-    final int MAX_SIMULATION_COUNT = 10;                          // 시뮬레이션 반복 횟수
-    final int MAX_FRAME_COUNT = 200;                                // 각 시뮬레이션마다 최대 frame의 수
+    final int MAX_SIMULATION_COUNT = 30;                          // 시뮬레이션 반복 횟수
+    final int MAX_FRAME_COUNT = 300;                                // 각 시뮬레이션마다 최대 frame의 수
 
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
@@ -130,7 +130,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 //        }
 //    }
 
-    long desiredFPS = 120;
+    long desiredFPS = 10;
     long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
 
     boolean running = true;
@@ -177,7 +177,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                 if (!pause) {
                     update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)));
                 } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
-                    frame.setVisible(false);                            // pause 상태에서는 GUI 를 숨긴다.
+//                    frame.setVisible(false);                            // pause 상태에서는 GUI 를 숨긴다.
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
                         expertMode();                                   // String 으로 stimulus 입력 가능
                     } else {
@@ -472,6 +472,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
      * Insertion parts
      */
     private void expertMode() {
+        System.out.println("현재 시뮬레이션 Frame: " + timeImpl.getFrameCount());
         System.out.print("Input command here: ");
         Scanner input = new Scanner(System.in);
         String command = input.next().toLowerCase();
@@ -596,6 +597,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     }
 
     private void beginnerMode() {
+        System.out.println("현재 시뮬레이션 Frame: " + timeImpl.getFrameCount());
         String menu = "===== Menu\n" +
                 "  1. Speed\n" +
                 "  2. Range\n" +
