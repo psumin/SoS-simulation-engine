@@ -435,15 +435,15 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
                 // 시뮬레이션의 반복 실행 횟수가 최대가 될 때까지 반복한다.
 //                if(simulation_count < MAX_SIMULATION_COUNT) {
-                    simulation_count++;                                         // 시뮬레이션 실행 횟수는 증가
-                    timeImpl.reset();                                           // frame 의 시작은 0으로 초기화.
-                    isFirstSimulation = false;                                  // 첫 번째 시뮬레이션이 아니므로 boolean 값을 false 로 바꿔준다
+                simulation_count++;                                         // 시뮬레이션 실행 횟수는 증가
+                timeImpl.reset();                                           // frame 의 시작은 0으로 초기화.
+                isFirstSimulation = false;                                  // 첫 번째 시뮬레이션이 아니므로 boolean 값을 false 로 바꿔준다
 //                    world = new World(MAX_FRAME_COUNT, false);      // world 를 다시 생성한다.
 //                }
 //                else{
-                    clear();
-                    running = false;
-                    frame.dispose();
+                clear();
+                running = false;
+                frame.dispose();
 //                }
             }
             time = 0;
