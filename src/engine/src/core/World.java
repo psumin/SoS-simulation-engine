@@ -109,12 +109,12 @@ public class World extends SoSObject{
 
     // Initial Values
 //    public static final int maxPatient = 294;
-    public static final int maxPatient = 150;                // 223
+    public static final int maxPatient = 200;                // 223
     //    public static final int maxPatient = 100;
 //    public static final int maxPatient = 65;
     public static final int maxFireFighter = 12;            // 4
     public static final int maxHospital = 4;
-    public static final int maxAmbulance = 40;              // 16
+    public static final int maxAmbulance = 4;              // 16
     public static final int maxBridgehead = 4;
 
     public Map map;
@@ -140,8 +140,8 @@ public class World extends SoSObject{
 
     int maxFrame = 0;                                                               // 시뮬레이션 한 번의 최대 frame 수
 
-    public int transferCounter = 0;                                                 // Bridgehead까지 이송 시킨 환자 수
-    public int rescuedPatientCount = 0;                                             // Hospital에서 치료를 마친 환자 수
+    public int transferCounter = 0;                                                 // Hospital에서 치료를 마친 환자 수
+    public int rescuedPatientCount = 0;                                             // Bridgehead까지 이송 시킨 환자 수
 
     boolean saveInputData = false;
     public World(int maxFrame, boolean saveInputData) {
