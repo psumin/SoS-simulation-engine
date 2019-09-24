@@ -22,13 +22,14 @@ public class main {
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
         simulationEngine.setRunning();
+        System.out.println("Get Running: "+ simulationEngine.getRunning());
         simulationEngine.run();
         simulationEngine.setSuper_counter();
 
         double satisfactionProb = 0;
         Boolean satisfaction = true;
         for (int i = 1; i < 100; i++) {
-            System.out.println(simulationEngine.getRunning());
+            System.out.println("inside for loop:" + simulationEngine.getRunning());
             double theta = i * 0.01;
             //Existence, Absence, Universality
             //verificationResult = verifier.verifyWithSimulationGUI(smartHomeSimulation, null, 2000, theta);

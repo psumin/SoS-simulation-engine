@@ -284,8 +284,8 @@ public class SoSSimulationProgram implements KeyListener {
             timeImpl.update(deltaTime);
             world.update();
             if(world.isFinished()) {
-                log.addSnapshot(time, String.valueOf(world.getSavedRate()));
-//                log.addSnapshot(time, String.valueOf(world.rescuedPatientCount));
+                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.getSavedRate()));
+//                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.rescuedPatientCount));
 //                Sheet sheet = statisticsSheet;
 //                Row row = sheet.createRow(simulation_count);
 //                ExcelHelper.getCell(row, 0).setCellValue("" + world.getSavedRate());

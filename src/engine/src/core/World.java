@@ -1449,6 +1449,7 @@ public class World extends SoSObject{
         return !_canUpdate;
     }
     public float getSavedRate() {
-        return savedPatientCount / (float)maxPatient;
+//        return savedPatientCount / (float)maxPatient;               // hospital 에서 치료 받은 환자 수 기준
+        return rescuedPatientCount / (float)maxPatient;         // bridehead에 도착한 환자 수 기준
     }
 }
