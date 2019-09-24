@@ -34,7 +34,7 @@ public class SoSSimulationProgram implements KeyListener {
 
     int super_counter = 1;
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
-    final int MAX_FRAME_COUNT = 100;                                // 각 시뮬레이션마다 최대 frame의 수
+    final int MAX_FRAME_COUNT = 80;                                // 각 시뮬레이션마다 최대 frame의 수
 
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
@@ -218,7 +218,7 @@ public class SoSSimulationProgram implements KeyListener {
 
         programEndTime = System.nanoTime();
         System.out.println("=== Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");          // 전체 프로그램 실행 시간
-        System.out.println("Rescued People: " + world.rescuedPatientCount);
+//        System.out.println("Rescued People: " + world.rescuedPatientCount);
 
         return log;
     }
@@ -276,15 +276,18 @@ public class SoSSimulationProgram implements KeyListener {
     // Upodate 실행하는 함수
     protected void update(int deltaTime, Log log){
 
-        System.out.println("Simulation repeated: " + simulation_count + " Frame count: " + timeImpl.getFrameCount());
+//        System.out.println("Simulation repeated: " + simulation_count + " Frame count: " + timeImpl.getFrameCount());
 
 
         time += deltaTime;
         if(time >= Time.fromSecond(0.0f)) {
             timeImpl.update(deltaTime);
             world.update();
-            if(world.isFinished()) {
+            if(world.isFinished()) {                        //Maximum frame 지나면 true로 들어올 수 있음
+//                System.out.println("isFinished is ture!!!!!!!!!!!!!!!!!!!!!!!!!");
                 log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.getSavedRate()));
+//                System.out.println("log add 후에 모습: !!!!");
+//                log.printSnapshot();
 //                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.rescuedPatientCount));
 //                Sheet sheet = statisticsSheet;
 //                Row row = sheet.createRow(simulation_count);

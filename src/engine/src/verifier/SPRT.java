@@ -51,11 +51,10 @@ public class SPRT extends Verifier {
                 System.out.println("Over maximum repeat: " + maxNumSamples);
                 break;
             }
-            simulation.setRunning();            // 시뮬레이션 시작 전에 running 변수의 값을 true로
+            simulation.setRunning();            // 시뮬레이션 시작 전에 running 변수의 값을 true로 바꿔준다.
             Log log = simulation.run();
-            System.out.println("출력문 확인!!!!!!!!!!!!!!!!!!!!");
-            System.out.println();
-            log.printSnapshot();
+//            System.out.println("출력문 확인!!!!!!!!!!!!!!!!!!!!");
+//            log.printSnapshot();
 
             if (this.propertychecker.check(log, verificationProperty)) {
                 numTrue += 1;

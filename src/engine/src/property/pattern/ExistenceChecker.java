@@ -20,7 +20,7 @@ public abstract class ExistenceChecker extends PropertyChecker {
         HashMap<Integer, Snapshot> snapshots = log.getSnapshotMap();
         int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
 
-        for (int i = 0; i < logSize; i++) {
+        for (int i = 1; i <= logSize; i++) {                                // 0번째는 아무정보가 없음 null   , 1번부터 시작
             if (evaluateState(snapshots.get(i), verificationProperty)) {
                 return true;
             }

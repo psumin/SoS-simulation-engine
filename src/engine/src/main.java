@@ -13,7 +13,7 @@ public class main {
         //verification
         SPRT verifier;
         //ComfortZoneChecker comfortZoneChecker = new ComfortZoneChecker();
-        MCIProperty rescuedProperty = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIPropertyType", 0.80);
+        MCIProperty rescuedProperty = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIPropertyType", 0.01);
 
         MCIPropertyChecker checker = new MCIPropertyChecker();
         //verifier = new SPRT(comfortZoneChecker);
@@ -29,7 +29,7 @@ public class main {
         double satisfactionProb = 0;
         Boolean satisfaction = true;
         for (int i = 1; i < 100; i++) {
-            System.out.println("inside for loop:" + simulationEngine.getRunning());
+//            System.out.println("inside for loop:" + simulationEngine.getRunning());
             double theta = i * 0.01;
             //Existence, Absence, Universality
             //verificationResult = verifier.verifyWithSimulationGUI(smartHomeSimulation, null, 2000, theta);
