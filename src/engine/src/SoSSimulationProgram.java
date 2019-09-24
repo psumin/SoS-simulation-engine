@@ -1,6 +1,7 @@
 
 import core.DataStructure;
 import core.World;
+import log.Log;
 import misc.Time;
 
 import java.awt.*;
@@ -28,7 +29,7 @@ import misc.ExcelHelper;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class SoSSimulationProgram implements Runnable, KeyListener {
+public class SoSSimulationProgram implements KeyListener {
 
     int super_counter = 1;
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
@@ -143,7 +144,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     XSSFSheet inputScenarioSheet;
     CellStyle headerStyle;
 
-    public void run(){
+    public Log run(){
 //        Scanner scan = new Scanner();
         long beginLoopTime;
         long endLoopTime;
@@ -151,6 +152,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         long lastUpdateTime;
         long deltaLoop;
 
+        Log log = new Log();
 //        statisticsSheet = workbook.createSheet("statistics");
 //        inputScenarioSheet = workbook.createSheet("inputScenarios");
 //
@@ -175,7 +177,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                 lastUpdateTime = currentUpdateTime;
                 currentUpdateTime = System.nanoTime();
                 if (!pause) {
-                    update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)));
+                    update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
                 } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
                     frame.setVisible(false);                            // pause 상태에서는 GUI 를 숨긴다.
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
@@ -198,13 +200,15 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                     }
                 }
             } else {                                                    // 첫 번째 시뮬레이션이 아니면 그냥 계속해서 업데이트 진행. stop 없음
-                update(1);
+                update(1, log);
             }
         }
 
         programEndTime = System.nanoTime();
         System.out.println("=== Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");          // 전체 프로그램 실행 시간
         System.out.println("Rescued People: " + world.rescuedPatientCount);
+
+        return log;
     }
 
     // Rendering
@@ -258,7 +262,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
 
     // Upodate 실행하는 함수
-    protected void update(int deltaTime){
+    protected void update(int deltaTime, Log log){
 
         System.out.println("Simulation repeated: " + simulation_count + " Frame count: " + timeImpl.getFrameCount());
 
@@ -268,6 +272,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
             timeImpl.update(deltaTime);
             world.update();
             if(world.isFinished()) {
+                log.addSnapshot(time, String.valueOf(world.getSavedRate()));
 //                Sheet sheet = statisticsSheet;
 //                Row row = sheet.createRow(simulation_count);
 //                ExcelHelper.getCell(row, 0).setCellValue("" + world.getSavedRate());
@@ -469,7 +474,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         ExcelHelper.save(workbook, filePath);
     }
 
-    public static void main(String [] args){
+    /*public static void main(String [] args){
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
         for (int i = 0; i < 5; i++) {
@@ -478,7 +483,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
             simulationEngine.super_counter++;
         }
 //        new Thread(simulationEngine).start();
-    }
+    }*/
     /**
      * Insertion parts
      */

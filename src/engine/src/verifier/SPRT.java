@@ -4,7 +4,8 @@ import javafx.util.Pair;
 import log.Log;
 import property.Property;
 import property.PropertyChecker;
-import simulation.Simulation;
+
+//import simulation.Simulation;
 
 public class SPRT extends Verifier {
     double alpha;
@@ -28,13 +29,14 @@ public class SPRT extends Verifier {
     /**
      * Verify input simulation in GUI (Existence, Absence, Universality Checker).
      *
-     * @param simulation           the simulation
+     * //@param simulation           the simulation
      * @param verificationProperty the verification property
      * @param maxRepeat            the max repeat
      * @param theta                the theta
      * @return the pair
      */
-    public Pair<Pair<Integer,Boolean>, String> verifyWithSimulationGUI(//Simulation simulation,
+    public Pair<Pair<Integer,Boolean>, String> verifyWithSimulationGUI(//Simulation simulation
+                                                                       SoSSimulationProgram simulation,
                                                                        Property verificationProperty, int maxRepeat, double theta) {
         int maxNumSamples = maxRepeat;
         boolean ret = true;
@@ -50,11 +52,9 @@ public class SPRT extends Verifier {
                 break;
             }
             
-            //Log log = simulation.runSimulation();
-
+            Log log = simulation.run();
 
             if (this.propertychecker.check(log, verificationProperty)) {
-                
                 numTrue += 1;
             }
             numSamples += 1;
