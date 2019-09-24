@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import log.Log;
 import property.Property;
 import property.PropertyChecker;
+import simulation.SoSSimulationProgram;
 
 //import simulation.Simulation;
 

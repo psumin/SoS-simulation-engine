@@ -1,3 +1,4 @@
+package simulation;
 
 import core.DataStructure;
 import core.World;
@@ -20,7 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import misc.ExcelHelper;
 
 // 참고: http://www.java-gaming.org/topics/basic-game/21919/view.html
-// SoSSimulationProgram 클래스에서 참조하고 있는 클래스: Time, SoSObject, SoSScenario
+// simulation.SoSSimulationProgram 클래스에서 참조하고 있는 클래스: Time, SoSObject, SoSScenario
 
 /**
  * Project: NewSimulator
@@ -33,7 +34,7 @@ public class SoSSimulationProgram implements KeyListener {
 
     int super_counter = 1;
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
-    final int MAX_FRAME_COUNT = 200;                                // 각 시뮬레이션마다 최대 frame의 수
+    final int MAX_FRAME_COUNT = 100;                                // 각 시뮬레이션마다 최대 frame의 수
 
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
@@ -100,6 +101,17 @@ public class SoSSimulationProgram implements KeyListener {
 
     }
 
+    public void setRunning() {
+        this.running = true;
+    }
+
+    public Boolean getRunning() {
+        return this.running;
+    }
+
+    public void setSuper_counter() {
+        this.super_counter++;
+    }
 
     boolean pause = false;
 
@@ -273,6 +285,7 @@ public class SoSSimulationProgram implements KeyListener {
             world.update();
             if(world.isFinished()) {
                 log.addSnapshot(time, String.valueOf(world.getSavedRate()));
+//                log.addSnapshot(time, String.valueOf(world.rescuedPatientCount));
 //                Sheet sheet = statisticsSheet;
 //                Row row = sheet.createRow(simulation_count);
 //                ExcelHelper.getCell(row, 0).setCellValue("" + world.getSavedRate());
@@ -476,7 +489,7 @@ public class SoSSimulationProgram implements KeyListener {
 
     /*public static void main(String [] args){
 
-        SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
+        simulation.SoSSimulationProgram simulationEngine = new simulation.SoSSimulationProgram();
         for (int i = 0; i < 5; i++) {
             simulationEngine.running = true;
             simulationEngine.run();

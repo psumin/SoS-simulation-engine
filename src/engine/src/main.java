@@ -2,13 +2,14 @@ import javafx.util.Pair;
 import log.Log;
 import property.MCIProperty;
 import property.MCIPropertyChecker;
+import simulation.SoSSimulationProgram;
 import verifier.SPRT;
 
 public class main {
 
     Log log = new Log();
     public static void main(String [] args){
-
+        boolean ruuning = true;
         //verification
         SPRT verifier;
         //ComfortZoneChecker comfortZoneChecker = new ComfortZoneChecker();
@@ -20,13 +21,14 @@ public class main {
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
-        simulationEngine.running = true;
+        simulationEngine.setRunning();
         simulationEngine.run();
-        simulationEngine.super_counter++;
+        simulationEngine.setSuper_counter();
 
         double satisfactionProb = 0;
         Boolean satisfaction = true;
         for (int i = 1; i < 100; i++) {
+            System.out.println(simulationEngine.getRunning());
             double theta = i * 0.01;
             //Existence, Absence, Universality
             //verificationResult = verifier.verifyWithSimulationGUI(smartHomeSimulation, null, 2000, theta);

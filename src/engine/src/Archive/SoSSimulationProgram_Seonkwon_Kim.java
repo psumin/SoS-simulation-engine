@@ -10,7 +10,7 @@
 //// Add parts of key
 //
 //// 참고: http://www.java-gaming.org/topics/basic-game/21919/view.html
-//// SoSSimulationProgram 클래스에서 참조하고 있는 클래스: Time, SoSObject, SoSScenario
+//// simulation.SoSSimulationProgram 클래스에서 참조하고 있는 클래스: Time, SoSObject, SoSScenario
 //
 ///**
 // * Project: NewSimulator
@@ -19,7 +19,7 @@
 // * Github: https://github.com/sumin0407/NewSimulator.git
 // */
 //
-//public class SoSSimulationProgram implements Runnable, KeyListener {
+//public class simulation.SoSSimulationProgram implements Runnable, KeyListener {
 //
 //    final int SIMULATION_WIDTH = 910;
 //    final int SIMULATION_HEIGHT = 910;
@@ -32,7 +32,7 @@
 //    boolean isExpert = false;
 //
 //
-//    public SoSSimulationProgram(){
+//    public simulation.SoSSimulationProgram(){
 //        frame = new JFrame("SimulationEngine");
 //
 //        JPanel panel = (JPanel) frame.getContentPane();
@@ -233,7 +233,7 @@
 //
 //    public static void main(String [] args){
 //
-//        SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
+//        simulation.SoSSimulationProgram simulationEngine = new simulation.SoSSimulationProgram();
 //        new Thread(simulationEngine).start();
 //
 //    }
