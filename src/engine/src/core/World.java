@@ -1451,4 +1451,8 @@ public class World extends SoSObject{
     public float getSavedRate() {
         return savedPatientCount / (float)maxPatient;
     }
+
+    public float getRescuedRate() {
+        return rescuedPatientCount / (float)maxPatient;
+    }
 }
