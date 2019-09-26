@@ -15,12 +15,13 @@ import java.util.ArrayList;
  */
 
 public class Map extends SoSObject {
-//    public static final Size mapSize = new Size(65, 65);            // Total number of the tiles ==> Map Size
-//    public static final Size tileSize = new Size(15, 15);           // Each Tile Size
-
     //test
-    public static final Size mapSize = new Size(35, 35);            // Total number of the tiles ==> Map Size
-    public static final Size tileSize = new Size(26, 26);           // Each Tile Size
+    public static final Size mapSize = new Size(65, 65);            // Total number of the tiles ==> Map Size
+    public static final Size tileSize = new Size(15, 15);           // Each Tile Size
+
+
+//    public static final Size mapSize = new Size(35, 35);            // Total number of the tiles ==> Map Size
+//    public static final Size tileSize = new Size(26, 26);           // Each Tile Size
 
     ArrayList<Tile> tiles;
     public Map() {
