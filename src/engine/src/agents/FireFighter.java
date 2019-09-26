@@ -32,7 +32,7 @@ public class FireFighter extends CS {
     public ImageObject firstAid;
 
 
-    public int defaultSightRange = 3;               // Fire fighter's sight range
+    public int defaultSightRange = 1;               // Fire fighter's sight range
     public int sightRange = defaultSightRange;
     public int communicationRange = 5;             // Communication range between firefighters
     public FireFighter(World world, String name) {
