@@ -160,7 +160,8 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 
         Sheet sheet = statisticsSheet;
         Row row = sheet.createRow(0);
-        ExcelHelper.getCell(row, 0).setCellValue("saved rate");
+//        ExcelHelper.getCell(row, 0).setCellValue("saved rate");
+        ExcelHelper.getCell(row, 0).setCellValue("rescued rate");
         ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
 
         init();                                                         // World 초기화
@@ -265,7 +266,8 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
             if(world.isFinished()) {
                 Sheet sheet = statisticsSheet;
                 Row row = sheet.createRow(simulation_count);
-                ExcelHelper.getCell(row, 0).setCellValue("" + world.getSavedRate());
+//                ExcelHelper.getCell(row, 0).setCellValue("" + world.getSavedRate());
+                ExcelHelper.getCell(row, 0).setCellValue("" + world.getRescuedRate());
                 if(isFirstSimulation) {                                                 // 첫 번째 시뮬레이션일 때 초기 정보 저장
                     sheet = inputScenarioSheet;
                     int rowNum = 0;
