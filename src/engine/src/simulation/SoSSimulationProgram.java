@@ -180,7 +180,7 @@ public class SoSSimulationProgram implements KeyListener {
 
         init();                                                         // World 초기화
 
-        programStartTime = System.nanoTime();
+//        programStartTime = System.nanoTime();
         while(running) {
             if (isFirstSimulation) {                                    // 첫 번째 시뮬레이션에만 적용
                 beginLoopTime = System.nanoTime();
@@ -195,6 +195,7 @@ public class SoSSimulationProgram implements KeyListener {
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
                         expertMode();                                   // String 으로 stimulus 입력 가능
                     } else {
+                        beginnerMode();                                 // 메뉴에 따라서 stimulus 입력 가능
                         beginnerMode();                                 // 메뉴에 따라서 stimulus 입력 가능
                     }
                 }
@@ -216,8 +217,8 @@ public class SoSSimulationProgram implements KeyListener {
             }
         }
 
-        programEndTime = System.nanoTime();
-        System.out.println("=== Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");          // 전체 프로그램 실행 시간
+//        programEndTime = System.nanoTime();
+//        System.out.println("=== Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");          // 전체 프로그램 실행 시간
 //        System.out.println("Rescued People: " + world.rescuedPatientCount);
 
         return log;
@@ -285,7 +286,9 @@ public class SoSSimulationProgram implements KeyListener {
             world.update();
             if(world.isFinished()) {                        //Maximum frame 지나면 true로 들어올 수 있음
 //                System.out.println("isFinished is ture!!!!!!!!!!!!!!!!!!!!!!!!!");
-                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.getSavedRate()));
+                System.out.println("getRescuedRate: " + world.getRescuedRate());
+//                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.getSavedRate()));
+                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.getRescuedRate()));
 //                System.out.println("log add 후에 모습: !!!!");
 //                log.printSnapshot();
 //                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.rescuedPatientCount));
