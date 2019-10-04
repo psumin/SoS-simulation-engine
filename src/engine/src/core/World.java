@@ -171,8 +171,8 @@ public class World extends SoSObject{
         // static stimulus injection technique
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
-//        writeScenario2();         // interactive simulation test
-        router.add(new Loss(1, 3000, "FF", "FF"));        //모든 통신 제거
+        writeScenario2();         // interactive simulation test
+//        router.add(new Loss(1, 3000, "FF", "FF"));        //모든 통신 제거
 
         for(int i = 0; i < maxFireFighter; ++i) {
             firefighterNames.add(fireFighterPrefix + (i + 1));
