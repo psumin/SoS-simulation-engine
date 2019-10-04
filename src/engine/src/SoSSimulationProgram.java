@@ -30,8 +30,8 @@ import misc.ExcelHelper;
 
 public class SoSSimulationProgram implements Runnable, KeyListener {
 
-    final int MAX_SIMULATION_COUNT = 200;                          // 시뮬레이션 반복 횟수
-    final int MAX_FRAME_COUNT = 1000;                                // 각 시뮬레이션마다 최대 frame의 수
+    final int MAX_SIMULATION_COUNT = 10;                          // 시뮬레이션 반복 횟수
+    final int MAX_FRAME_COUNT = 80;                                // 각 시뮬레이션마다 최대 frame의 수
 
     final int SIMULATION_WIDTH = 960;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 960;                              // 시뮬레이션 GUI의 높이
@@ -46,6 +46,11 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     long programStartTime;                                          // 프로그램 시작 시간
     long programEndTime;                                            // 프로그램 종료 시간
 
+    long simEndTime;
+
+    long interactiveStartTime;                                          // interactive 시작 시간
+    long interactiveEndTime;                                            // interactive 종료 시간
+    long total_spendTime = 0;
 
     public SoSSimulationProgram(){
         frame = new JFrame("SimulationEngine");
@@ -106,6 +111,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_S) {                          // 첫번째 시뮬레이션에서 "S" key 가 눌리면 pause 의 value 를 true 로!
             if(isFirstSimulation) {
                 //System.out.println("Stop button pressed!");
+
                 pause = true;
             }
         }
@@ -130,7 +136,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 //        }
 //    }
 
-    long desiredFPS = 10;
+    long desiredFPS = 60;
     long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
 
     boolean running = true;
@@ -182,8 +188,11 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
                         expertMode();                                   // String 으로 stimulus 입력 가능
                     } else {
+                        interactiveStartTime = System.nanoTime();
                         beginnerMode();                                 // 메뉴에 따라서 stimulus 입력 가능
+                        interactiveEndTime = System.nanoTime();
                     }
+                    total_spendTime += (interactiveEndTime - interactiveStartTime);
                 }
 
                 endLoopTime = System.nanoTime();
@@ -199,12 +208,15 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                     }
                 }
             } else {                                                    // 첫 번째 시뮬레이션이 아니면 그냥 계속해서 업데이트 진행. stop 없음
+                render();
                 update(1);
             }
         }
 
         programEndTime = System.nanoTime();
-        System.out.println("=== Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");          // 전체 프로그램 실행 시간
+//        System.out.println("interactive running time: " +  (total_spendTime)  / (float)1000_000_000 + " sec");
+//        System.out.println("asdasdasd running time: " +  (programEndTime - programStartTime) / (float)1000_000_000 + " sec");
+        System.out.println("=== Program running time: " + ((programEndTime - programStartTime) - (total_spendTime )) / (float)1000_000_000 + " sec");          // 전체 프로그램 실행 시간
     }
 
     // Rendering
@@ -256,7 +268,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     // Upodate 실행하는 함수
     protected void update(int deltaTime){
 
-        System.out.println("Simulation repeated: " + simulation_count + " Frame count: " + timeImpl.getFrameCount());
+//        System.out.println("Simulation repeated: " + simulation_count + " Frame count: " + timeImpl.getFrameCount());
 
 
         time += deltaTime;
@@ -435,6 +447,8 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                     simulation_count++;                                         // 시뮬레이션 실행 횟수는 증가
                     timeImpl.reset();                                           // frame 의 시작은 0으로 초기화.
                     isFirstSimulation = false;                                  // 첫 번째 시뮬레이션이 아니므로 boolean 값을 false 로 바꿔준다
+                    long simEndTime = System.nanoTime();
+                    System.out.println((simulation_count-1) +"번째 시뮬레이션 종료 시간=  " + (simEndTime - programStartTime - total_spendTime) / (float)1000_000_000 + " sec");
                     world = new World(MAX_FRAME_COUNT, false);      // world 를 다시 생성한다.
                 } else {
                     clear();
@@ -599,6 +613,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     }
 
     private void beginnerMode() {
+
         System.out.println("현재 시뮬레이션 Frame: " + timeImpl.getFrameCount());
         String menu = "===== Menu\n" +
                 "  1. Speed\n" +
@@ -846,6 +861,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                 frame.setVisible(true);
                 canvas.requestFocus();
                 pause = false;
+//                interactiveEndTime = System.nanoTime();
                 break;
             }
         }

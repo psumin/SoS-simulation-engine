@@ -172,6 +172,7 @@ public class World extends SoSObject{
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
 //        writeScenario2();         // interactive simulation test
+        router.add(new Loss(1, 3000, "FF", "FF"));        //모든 통신 제거
 
         for(int i = 0; i < maxFireFighter; ++i) {
             firefighterNames.add(fireFighterPrefix + (i + 1));
@@ -1049,8 +1050,8 @@ public class World extends SoSObject{
 //        stimuli.add(new RemoveEntity(this, 140, "Ambulance4", this::removeCS));
 //
 //        // TODO: add FireFighter
-        for(int i = 0; i < 40; i++) {
-            stimuli.add(new AddEntity(this, 100, this::addFireFighter));
+        for(int i = 0; i < 10; i++) {
+            stimuli.add(new AddEntity(this, 30, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
