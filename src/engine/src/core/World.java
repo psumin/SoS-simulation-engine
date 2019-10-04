@@ -172,7 +172,7 @@ public class World extends SoSObject {
         // static stimulus injection technique
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
-//        writeScenario2();         // interactive simulation test
+        writeScenario2();         // interactive simulation test
 
         for (int i = 0; i < maxFireFighter; ++i) {
             firefighterNames.add(fireFighterPrefix + (i + 1));
@@ -996,7 +996,7 @@ public class World extends SoSObject {
 //        stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.6f));
 //        stimuli.add(new SightRange(this, 2130, new Range(8, 8, 26, 26), 0.3f));      // 4층 위로 fire
 //
-        stimuli.add(new SightRange(this, 2415, new Range(8, 8, 26, 26), 0.3f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+//        stimuli.add(new SightRange(this, 2415, new Range(8, 8, 26, 26), 0.3f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
 //        stimuli.add(new SightRange(this, 2415, new Range(10, 10, 24, 24), 0.1f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
 //
 //        stimuli.add(new SightRange(this, 2655, new Range(10, 10, 24, 24), 0.3f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
@@ -1096,7 +1096,7 @@ public class World extends SoSObject {
 
     // TODO: Msg Loss 없었다고 가정하자.
     // CS && CS
-        router.add(new Loss(2, 100, "FF", "FF"));
+        router.add(new Loss(1, 10000, "FF", "FF"));
 //        router.add(new Loss(2130, 3000, "FF", "FF"));
 //        router.add(new Loss(2130, 3000, "ALL", "ALL"));
 //        router.add(new Loss(1, 3000, "FF", "FF"));

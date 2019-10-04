@@ -286,7 +286,7 @@ public class SoSSimulationProgram implements KeyListener {
             world.update();
             if(world.isFinished()) {                        //Maximum frame 지나면 true로 들어올 수 있음
 //                System.out.println("isFinished is ture!!!!!!!!!!!!!!!!!!!!!!!!!");
-                System.out.println("getRescuedRate: " + world.getRescuedRate());
+//                System.out.println("getRescuedRate: " + world.getRescuedRate());
 //                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.getSavedRate()));
                 log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.getRescuedRate()));
 //                System.out.println("log add 후에 모습: !!!!");
