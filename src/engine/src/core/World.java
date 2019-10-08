@@ -171,7 +171,7 @@ public class World extends SoSObject{
         // static stimulus injection technique
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
-        writeScenario2();         // interactive simulation test
+//        writeScenario2();         // interactive simulation test
 //        router.add(new Loss(1, 3000, "FF", "FF"));        //모든 통신 제거
 
         for(int i = 0; i < maxFireFighter; ++i) {
@@ -1052,6 +1052,54 @@ public class World extends SoSObject{
 //        // TODO: add FireFighter
         for(int i = 0; i < 10; i++) {
             stimuli.add(new AddEntity(this, 30, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 10; i++) {
+            stimuli.add(new AddEntity(this, 60, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 10; i++) {
+            stimuli.add(new AddEntity(this, 90, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 10; i++) {
+            stimuli.add(new AddEntity(this, 120, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 10; i++) {
+            stimuli.add(new AddEntity(this, 150, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 10; i++) {
+            stimuli.add(new AddEntity(this, 180, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 10; i++) {
+            stimuli.add(new AddEntity(this, 210, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 10; i++) {
+            stimuli.add(new AddEntity(this, 240, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 10; i++) {
+            stimuli.add(new AddEntity(this, 270, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
