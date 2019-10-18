@@ -144,7 +144,7 @@ public class SoSSimulationProgram implements KeyListener {
 //        }
 //    }
 
-    long desiredFPS = 10;
+    long desiredFPS = 60;
     long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
 
     boolean running = true;

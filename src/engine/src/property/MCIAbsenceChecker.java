@@ -2,10 +2,11 @@ package property;
 
 import log.Log;
 import log.Snapshot;
-import property.pattern.ExistenceChecker;
+import property.pattern.AbsenceChecker;
+
 import java.util.StringTokenizer;
 
-public class MCIAbsenceChecker extends ExistenceChecker {
+public class MCIAbsenceChecker extends AbsenceChecker {
     
     public MCIAbsenceChecker() {
         super();
@@ -22,11 +23,11 @@ public class MCIAbsenceChecker extends ExistenceChecker {
         double rescueRate = Double.parseDouble(st.nextToken());
         System.out.println(rescueRate);
         
-        if(rescueRate > verificationProperty.getValue()){
-            return true;
+        if(rescueRate > verificationProperty.getThresholdPatient()){
+            return false;
         }
         else{
-            return false;
+            return true;
         }
     }
     
