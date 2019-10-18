@@ -3,13 +3,11 @@ package property;
 import log.Log;
 import log.Snapshot;
 import property.pattern.ExistenceChecker;
-
 import java.util.StringTokenizer;
 
-public class MCIPropertyChecker extends ExistenceChecker {
+public class MCIAbsenceChecker extends ExistenceChecker {
     
-    public MCIPropertyChecker() {
-        
+    public MCIAbsenceChecker() {
         super();
     }
     
@@ -24,7 +22,7 @@ public class MCIPropertyChecker extends ExistenceChecker {
         double rescueRate = Double.parseDouble(st.nextToken());
         System.out.println(rescueRate);
         
-        if(rescueRate >= verificationProperty.getValue()){
+        if(rescueRate > verificationProperty.getValue()){
             return true;
         }
         else{
@@ -51,4 +49,4 @@ public class MCIPropertyChecker extends ExistenceChecker {
     public boolean check(Log log, Property verificationProperty, int t, int T) {
         return false;
     }
-  }
+}

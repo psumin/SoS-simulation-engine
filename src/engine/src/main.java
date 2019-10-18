@@ -1,5 +1,6 @@
 import javafx.util.Pair;
 import log.Log;
+import property.MCIAbsenceChecker;
 import property.MCIProperty;
 import property.MCIPropertyChecker;
 import simulation.SoSSimulationProgram;
@@ -17,11 +18,15 @@ public class main {
         //verification
         SPRT verifier;
         //ComfortZoneChecker comfortZoneChecker = new ComfortZoneChecker();
-        MCIProperty rescuedProperty = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIPropertyType", 0.01);
-
-        MCIPropertyChecker checker = new MCIPropertyChecker();
+        MCIProperty existenceProperty = new MCIProperty("RescuePatientPropertyE", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
+        MCIProperty absenceProperty = new MCIProperty("RescuePatientPropertyA", "RescuedPatientRatioNotLowerThanValue", "MCIAbsence", 0);
+        
+        MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
+        MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
+        
         //verifier = new SPRT(comfortZoneChecker);
-        verifier = new SPRT(checker);
+        //verifier = new SPRT(existenceChecker);
+        verifier = new SPRT(absenceChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
 
@@ -43,8 +48,8 @@ public class main {
             //Existence, Absence, Universality
             //verificationResult = verifier.verifyWithSimulationGUI(smartHomeSimulation, null, 2000, theta);
 
-            thetaStartTime = System.nanoTime();
-            verificationResult = verifier.verifyWithSimulationGUI(simulationEngine, rescuedProperty, 2000, theta);    //or T = 3
+            thetaStartTime = System.nanoTime();                                     // TODO Property Checker 바꿀때 Property도 바꿔주기
+            verificationResult = verifier.verifyWithSimulationGUI(simulationEngine, absenceProperty, 2000, theta);    //or T = 3
             thetaEndTime = System.nanoTime();
             System.out.println(i /(float)100 + " theta verification running time: " + (thetaEndTime - thetaStartTime) / (float)1000_000_000 + " sec");          // 한 theta 실행 시간
 
