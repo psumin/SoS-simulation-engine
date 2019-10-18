@@ -23,9 +23,9 @@ public class main {
         // Existence
         MCIProperty property = new MCIProperty("RescuePatientPropertyE", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
         // Absence
-        //property.setThresholdPatient(0);
+        property.setThresholdPatient(0);
         // Universality
-        property.setThresholdPatient(1.0);
+        //property.setThresholdPatient(1.0);
         
         MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
         MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
@@ -33,9 +33,9 @@ public class main {
         
         //verifier = new SPRT(comfortZoneChecker);
         
-        //verifier = new SPRT(existenceChecker);
+        verifier = new SPRT(existenceChecker);
         //verifier = new SPRT(absenceChecker);
-        verifier = new SPRT(universalityChecker);
+        //verifier = new SPRT(universalityChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();

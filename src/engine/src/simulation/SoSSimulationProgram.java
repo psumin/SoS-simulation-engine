@@ -279,19 +279,21 @@ public class SoSSimulationProgram implements KeyListener {
 
 //        System.out.println("Simulation repeated: " + simulation_count + " Frame count: " + timeImpl.getFrameCount());
 
-
         time += deltaTime;
         if(time >= Time.fromSecond(0.0f)) {
             timeImpl.update(deltaTime);
             world.update();
+            log.addSnapshot(timeImpl.getFrameCount(), "RescuedPatient: " + String.valueOf(world.rescuedPatientCount));
+//            System.out.println(timeImpl.getFrameCount());
             if(world.isFinished()) {                        //Maximum frame 지나면 true로 들어올 수 있음
-//                System.out.println("isFinished is ture!!!!!!!!!!!!!!!!!!!!!!!!!");
+//                System.out.println("isFinished is true!!!!!!!!!!!!!!!!!!!!!!!!!");
+//                System.out.println(timeImpl.getFrameCount());
 //                System.out.println("getRescuedRate: " + world.getRescuedRate());
 //                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.getSavedRate()));
-                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.getRescuedRate()));
+                log.addSnapshot(timeImpl.getFrameCount() + 1, "RescuedRate: " + String.valueOf(world.getRescuedRate()));
 //                System.out.println("log add 후에 모습: !!!!");
 //                log.printSnapshot();
-//                log.addSnapshot(time, "RescuedRate: " + String.valueOf(world.rescuedPatientCount));
+//                log.addSnapshot(time, "RescuedPatient: " + String.valueOf(world.rescuedPatientCount));
 //                Sheet sheet = statisticsSheet;
 //                Row row = sheet.createRow(simulation_count);
 //                ExcelHelper.getCell(row, 0).setCellValue("" + world.getSavedRate());

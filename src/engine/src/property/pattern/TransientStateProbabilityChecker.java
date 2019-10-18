@@ -21,7 +21,7 @@ public abstract class TransientStateProbabilityChecker extends PropertyChecker {
         int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
         int satisfiedCount = 0;
 
-        for (int i = t; i < logSize; i++) {
+        for (int i = t; i <= logSize; i++) {
             if (evaluateState(snapshots.get(i), verificationProperty)) {
                 satisfiedCount++;
             }
