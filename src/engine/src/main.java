@@ -1,9 +1,6 @@
 import javafx.util.Pair;
 import log.Log;
-import property.MCIAbsenceChecker;
-import property.MCIProperty;
-import property.MCIPropertyChecker;
-import property.MCIUniversalityChecker;
+import property.*;
 import simulation.SoSSimulationProgram;
 import verifier.SPRT;
 
@@ -26,16 +23,20 @@ public class main {
         property.setThresholdPatient(0);
         // Universality
         //property.setThresholdPatient(1.0);
+        // TransientStateProbability
+        property.setStateProbabilityValues(0.6, 60, 81);
         
         MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
         MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
         MCIUniversalityChecker universalityChecker = new MCIUniversalityChecker();
+        MCITransientSPChecker transientSPChecker = new MCITransientSPChecker();
         
         //verifier = new SPRT(comfortZoneChecker);
         
-        verifier = new SPRT(existenceChecker);
+        //verifier = new SPRT(existenceChecker);
         //verifier = new SPRT(absenceChecker);
         //verifier = new SPRT(universalityChecker);
+        verifier = new SPRT(transientSPChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();

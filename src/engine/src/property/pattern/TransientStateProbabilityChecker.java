@@ -16,12 +16,15 @@ public abstract class TransientStateProbabilityChecker extends PropertyChecker {
     protected abstract boolean evaluateState(Snapshot state, Property verificationProperty);
 
     @Override
-    public boolean check(Log log, Property verificationProperty, double prob, int t, int T) {
+    public boolean check(Log log, Property verificationProperty) {
         HashMap<Integer, Snapshot> snapshots = log.getSnapshotMap();
         int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
         int satisfiedCount = 0;
-
-        for (int i = t; i <= logSize; i++) {
+        double prob = verificationProperty.getProb();
+        int t = verificationProperty.getT();
+        int T = verificationProperty.getTT();
+        
+        for (int i = t; i < logSize; i++) {
             if (evaluateState(snapshots.get(i), verificationProperty)) {
                 satisfiedCount++;
             }
