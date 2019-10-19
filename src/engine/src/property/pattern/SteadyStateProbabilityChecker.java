@@ -16,18 +16,19 @@ public abstract class SteadyStateProbabilityChecker extends PropertyChecker{
     protected abstract boolean evaluateState(Snapshot state, Property verificationProperty);
 
     @Override
-    public boolean check(Log log, Property verificationProperty, double prob, int T) {
+    public boolean check(Log log, Property verificationProperty) {
         HashMap<Integer, Snapshot> snapshots = log.getSnapshotMap();
         int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
         int satisfiedCount = 0;
-
-        for (int i = 0; i < logSize; i++) {
+    
+        double prob = verificationProperty.getProb();
+        int T = verificationProperty.getTT();
+        
+        for (int i = 1; i < logSize; i++) {
             if (evaluateState(snapshots.get(i), verificationProperty)) {
                 satisfiedCount++;
             }
         }
-        
-        //System.out.println(satisfiedCount);
         
         if ((double)satisfiedCount/(double)T >= prob){
             return true;

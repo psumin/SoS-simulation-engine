@@ -25,18 +25,22 @@ public class main {
         //property.setThresholdPatient(1.0);
         // TransientStateProbability
         property.setStateProbabilityValues(0.6, 60, 81);
+        // SteadyStateProbability
+        property.setStateProbabilityValues(0.15, 0, 81);
         
         MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
         MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
         MCIUniversalityChecker universalityChecker = new MCIUniversalityChecker();
         MCITransientSPChecker transientSPChecker = new MCITransientSPChecker();
+        MCISteadySPChecker steadySPChecker = new MCISteadySPChecker();
         
         //verifier = new SPRT(comfortZoneChecker);
         
         //verifier = new SPRT(existenceChecker);
         //verifier = new SPRT(absenceChecker);
         //verifier = new SPRT(universalityChecker);
-        verifier = new SPRT(transientSPChecker);
+        //verifier = new SPRT(transientSPChecker);
+        verifier = new SPRT(steadySPChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();

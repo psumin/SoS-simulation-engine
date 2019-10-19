@@ -2,13 +2,12 @@ package property;
 
 import log.Log;
 import log.Snapshot;
-import property.pattern.TransientStateProbabilityChecker;
+import property.pattern.SteadyStateProbabilityChecker;
 
 import java.util.StringTokenizer;
 
-public class MCITransientSPChecker extends TransientStateProbabilityChecker {
-    
-    public MCITransientSPChecker() {
+public class MCISteadySPChecker extends SteadyStateProbabilityChecker {
+    public MCISteadySPChecker() {
         super();
     }
     
