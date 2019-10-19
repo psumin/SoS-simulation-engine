@@ -20,16 +20,19 @@ public class main {
         // Existence
         MCIProperty property = new MCIProperty("RescuePatientPropertyE", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
         // Absence
-        property.setThresholdValue(0); // RescueRate
+//        property.setThresholdValue(0); // RescueRate
         // Universality
-        //property.setThresholdValue(1.0); // RescueRate
+//        property.setThresholdValue(1.0); // RescueRate
         // TransientStateProbability
-        property.setStateProbabilityValues(0.6, 60, 81);
+//        property.setStateProbabilityValues(0.6, 60, 81);
         // SteadyStateProbability
-        property.setStateProbabilityValues(0.15, 0, 81);
+//        property.setStateProbabilityValues(0.15, 0, 81);
         // MinimumDuration
-        property.setThresholdValue(10); // FF가 10명 이상 활동하고 있어야 한다.
-        property.setDuration(65); // 최소 65 Frame 이상
+//        property.setThresholdValue(10); // FF가 10명 이상 활동하고 있어야 한다.
+//        property.setDuration(65); // 최소 65 Frame 이상
+        // MaximumDuration
+        property.setThresholdValue(0); // Rescurate
+        property.setDuration(60); // 최대 65 Frame 이하
         
         MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
         MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
@@ -37,6 +40,7 @@ public class main {
         MCITransientSPChecker transientSPChecker = new MCITransientSPChecker();
         MCISteadySPChecker steadySPChecker = new MCISteadySPChecker();
         MCIMinimumDurationChecker minimumDurationChecker = new MCIMinimumDurationChecker();
+        MCIMaximumDurationChecker maximumDurationChecker = new MCIMaximumDurationChecker();
         
 //        verifier = new SPRT(comfortZoneChecker);
         
@@ -45,7 +49,8 @@ public class main {
 //        verifier = new SPRT(universalityChecker);
 //        verifier = new SPRT(transientSPChecker);
 //        verifier = new SPRT(steadySPChecker);
-        verifier = new SPRT(minimumDurationChecker);
+//        verifier = new SPRT(minimumDurationChecker);
+        verifier = new SPRT(maximumDurationChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
