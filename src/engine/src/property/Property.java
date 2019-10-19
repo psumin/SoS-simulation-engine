@@ -21,7 +21,7 @@ public class Property {
 
     // this method is for inherited classes' getValue call like MCI Property
     public double getValue() { return  -1; }
-    public double getThresholdPatient() {return -1;}
+    public double getThresholdValue() {return -1;}
     public double getProb() {
         return -1;
     }
@@ -29,4 +29,5 @@ public class Property {
         return -1;
     }
     public int getTT() {return -1;}
+    public int getDuration() {return -1;}
 }

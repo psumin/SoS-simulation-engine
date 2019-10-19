@@ -3,7 +3,7 @@ package property;
 public class MCIProperty extends Property {
 
   double rescueRate;
-  double thresholdPatient;
+  double thresholdValue;
   public MCIProperty(String name, String specification, String propertyType, double etc) {
     super(name, specification, propertyType);
     this.rescueRate = etc;
@@ -12,6 +12,7 @@ public class MCIProperty extends Property {
   double prob;
   int t;
   int T;
+  int duration;
   
   public void setStateProbabilityValues(double prob, int t, int T) {
     this.prob = prob;
@@ -27,13 +28,21 @@ public class MCIProperty extends Property {
   }
   public int getTT() {return this.T;}
   
-  public void setThresholdPatient(double thresholdPatient) {
-    this.thresholdPatient = thresholdPatient;
+  public void setDuration(int duration) {
+    this.duration = duration;
+  }
+  
+  public int getDuration() {
+    return this.duration;
+  }
+  
+  public void setThresholdValue(double thresholdV) {
+    this.thresholdValue = thresholdV;
   }
   
   public double getValue() {
     return this.rescueRate;
   }
   
-  public double getThresholdPatient() {return this.thresholdPatient;}
+  public double getThresholdValue() {return this.thresholdValue;}
 }

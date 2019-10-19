@@ -104,8 +104,7 @@ public class World extends SoSObject {
     int patientCounter = 0;
     int fireFighterCounter = 0;
     int ambulanceCounter = 0;
-    int currentFirefighterCounter = 0;
-
+    public int currentFirefighterCounter = 0;
 
     // Initial Values
 //    public static final int maxPatient = 294;

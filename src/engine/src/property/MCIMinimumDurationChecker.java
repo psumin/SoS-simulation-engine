@@ -2,13 +2,11 @@ package property;
 
 import log.Log;
 import log.Snapshot;
-import property.pattern.AbsenceChecker;
+import property.pattern.MinimumDurationChecker;
 
 import java.util.StringTokenizer;
-
-public class MCIAbsenceChecker extends AbsenceChecker {
-    
-    public MCIAbsenceChecker() {
+public class MCIMinimumDurationChecker extends MinimumDurationChecker {
+    public MCIMinimumDurationChecker() {
         super();
     }
     
@@ -16,18 +14,17 @@ public class MCIAbsenceChecker extends AbsenceChecker {
     protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         while(st.hasMoreTokens()) {
-            if(st.nextToken().equals("RescuedRate:"))
+            if(st.nextToken().equals("CurrentFF:"))
                 break;
         }
         
-        double rescueRate = Double.parseDouble(st.nextToken());
-        System.out.println(rescueRate);
+        int currentActivatedCSs = Integer.parseInt(st.nextToken());
         
-        if(rescueRate > verificationProperty.getThresholdValue()){
-            return false;
+        if(currentActivatedCSs >= (int) verificationProperty.getThresholdValue()){
+            return true;
         }
         else{
-            return true;
+            return false;
         }
     }
     

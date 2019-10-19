@@ -20,27 +20,32 @@ public class main {
         // Existence
         MCIProperty property = new MCIProperty("RescuePatientPropertyE", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
         // Absence
-        property.setThresholdPatient(0);
+        property.setThresholdValue(0); // RescueRate
         // Universality
-        //property.setThresholdPatient(1.0);
+        //property.setThresholdValue(1.0); // RescueRate
         // TransientStateProbability
         property.setStateProbabilityValues(0.6, 60, 81);
         // SteadyStateProbability
         property.setStateProbabilityValues(0.15, 0, 81);
+        // MinimumDuration
+        property.setThresholdValue(10); // FF가 10명 이상 활동하고 있어야 한다.
+        property.setDuration(65); // 최소 65 Frame 이상
         
         MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
         MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
         MCIUniversalityChecker universalityChecker = new MCIUniversalityChecker();
         MCITransientSPChecker transientSPChecker = new MCITransientSPChecker();
         MCISteadySPChecker steadySPChecker = new MCISteadySPChecker();
+        MCIMinimumDurationChecker minimumDurationChecker = new MCIMinimumDurationChecker();
         
-        //verifier = new SPRT(comfortZoneChecker);
+//        verifier = new SPRT(comfortZoneChecker);
         
-        //verifier = new SPRT(existenceChecker);
-        //verifier = new SPRT(absenceChecker);
-        //verifier = new SPRT(universalityChecker);
-        //verifier = new SPRT(transientSPChecker);
-        verifier = new SPRT(steadySPChecker);
+//        verifier = new SPRT(existenceChecker);
+//        verifier = new SPRT(absenceChecker);
+//        verifier = new SPRT(universalityChecker);
+//        verifier = new SPRT(transientSPChecker);
+//        verifier = new SPRT(steadySPChecker);
+        verifier = new SPRT(minimumDurationChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
