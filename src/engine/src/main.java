@@ -35,6 +35,8 @@ public class main {
         double satisfactionProb = 0;
         Boolean satisfaction = true;
 
+        // Test algorithm to improve Statistical Model Checking
+
         for (int i = 1; i < 100; i++) {
 //            programStartTime = System.nanoTime();           // 첫번째 시뮬레이션을 제외하려면 여기에 정의
 
