@@ -17,7 +17,7 @@ public class main {
         //verification
         SPRT verifier;
         //ComfortZoneChecker comfortZoneChecker = new ComfortZoneChecker();
-        MCIProperty rescuedProperty = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIPropertyType", 0.01);
+        MCIProperty rescuedProperty = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIPropertyType", 0.03);
 
         MCIPropertyChecker checker = new MCIPropertyChecker();
         //verifier = new SPRT(comfortZoneChecker);
