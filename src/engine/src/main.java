@@ -36,6 +36,12 @@ public class main {
         Boolean satisfaction = true;
 
         // Test algorithm to improve Statistical Model Checking
+        // 1이 false면 끝
+        // 1이 true이고, 99가 true이면 끝
+        // 1이 true이고 99가 false이면 계속 진행
+        // 처음 시작은 1 그 다음은 99, 그리고 50. 그 이후로는 반씩 나누면서
+        // 50이 true이면 75로, 50이 false이면 25로.   이후도 반복적으로 진행
+
 
         for (int i = 1; i < 100; i++) {
 //            programStartTime = System.nanoTime();           // 첫번째 시뮬레이션을 제외하려면 여기에 정의
