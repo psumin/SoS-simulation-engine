@@ -18,7 +18,7 @@ public class main {
         //ComfortZoneChecker comfortZoneChecker = new ComfortZoneChecker();
         
         // Existence
-        MCIProperty property = new MCIProperty("RescuePatientPropertyE", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
+        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
         // Absence
 //        property.setThresholdValue(0); // RescueRate
         // Universality

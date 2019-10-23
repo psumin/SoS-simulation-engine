@@ -668,7 +668,7 @@ public class World extends SoSObject {
 
         long nano = System.currentTimeMillis();
         String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        String filePath = "log/test/" + date + ".xlsx";
+        String filePath = "log/state/" + date + ".xlsx";
 
         ExcelHelper.autoSizeAllColumn(workbook);
         ExcelHelper.save(workbook, filePath);
