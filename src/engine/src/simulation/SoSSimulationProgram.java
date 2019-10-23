@@ -283,7 +283,8 @@ public class SoSSimulationProgram implements KeyListener {
         if(time >= Time.fromSecond(0.0f)) {
             timeImpl.update(deltaTime);
             world.update();
-            log.addSnapshot(timeImpl.getFrameCount(), "RescuedRate: " + String.valueOf(world.getRescuedRate()) + " CurrentFF: " + world.currentFirefighterCounter);
+            log.addSnapshot(timeImpl.getFrameCount(), "RescuedRate: " + String.valueOf(world.getRescuedRate()) + "TreatmentRate: " +  String.valueOf(world.getTreatmentRate()) +
+                    " CurrentFF: " + world.getFFNumber());
 //            System.out.println(timeImpl.getFrameCount());
             if(world.isFinished()) {                        //Maximum frame 지나면 true로 들어올 수 있음
 //                System.out.println("isFinished is true!!!!!!!!!!!!!!!!!!!!!!!!!");

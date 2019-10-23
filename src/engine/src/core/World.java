@@ -104,7 +104,7 @@ public class World extends SoSObject {
     int patientCounter = 0;
     int fireFighterCounter = 0;
     int ambulanceCounter = 0;
-    public int currentFirefighterCounter = 0;
+    int currentFirefighterCounter = 0;
 
     // Initial Values
 //    public static final int maxPatient = 294;
@@ -1443,10 +1443,14 @@ public class World extends SoSObject {
     public boolean isFinished() {
         return !_canUpdate;
     }
-    public float getSavedRate() {
+    public float getTreatmentRate() {
         return savedPatientCount / (float)maxPatient;               // hospital 에서 치료 받은 환자 수 기준
     }
     public float getRescuedRate() {
         return rescuedPatientCount / (float)maxPatient;         // bridehead에 도착한 환자 수 기준
+    }
+
+    public int getFFNumber() {
+        return fireFighterCounter;
     }
 }
