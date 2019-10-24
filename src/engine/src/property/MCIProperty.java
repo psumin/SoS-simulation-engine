@@ -4,6 +4,8 @@ public class MCIProperty extends Property {
 
   double rescueRate;
   double thresholdValue;
+  String state;
+  
   public MCIProperty(String name, String specification, String propertyType, double etc) {
     super(name, specification, propertyType);
     this.rescueRate = etc;
@@ -45,4 +47,8 @@ public class MCIProperty extends Property {
   }
   
   public double getThresholdValue() {return this.thresholdValue;}
+  
+  public void setState(String state) { this.state = state; }
+  
+  public String getState() { return this.state; }
 }

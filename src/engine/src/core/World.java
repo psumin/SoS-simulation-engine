@@ -454,9 +454,9 @@ public class World extends SoSObject {
 //            printFireFighterLog(true);
             return;
         } else {                                                        // It is not an end condition. continue.
-            //printPatientLog(false);
-            //printFireFighterLog(false);
-            //printAmbulanceLog(false);
+//            printPatientLog(false);
+//            printFireFighterLog(false);
+//            printAmbulanceLog(false);
             frameCount++;
 //            System.out.println("FrameCount: " + frameCount);
         }

@@ -30,4 +30,5 @@ public class Property {
     }
     public int getTT() {return -1;}
     public int getDuration() {return -1;}
+    public String getState() {return "-1";}
 }
