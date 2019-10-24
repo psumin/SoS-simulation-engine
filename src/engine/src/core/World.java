@@ -1610,4 +1610,8 @@ public class World extends SoSObject {
     public int getFFNumber() {
         return fireFighterCounter;
     }
+
+    public int getAmbNumber() {
+        return ambulanceCounter;
+    }
 }
