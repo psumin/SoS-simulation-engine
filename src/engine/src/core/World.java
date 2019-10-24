@@ -502,18 +502,16 @@ public class World extends SoSObject {
         String temp = "";
         
         // Current FF Pos & Action
-        ret += "FF: { ";
+        ret += "FF: ";
         for (int i = 0; i < fireFighters.size(); i++) {
             ret += fireFighters.get(i).position.toString() + "/" + fireFighters.get(i).currentAction.name + " ";
         }
-        ret += "} ";
         
         // Current Ambulance Pos & Action
-        ret += "Amb: { ";
+        ret += "Amb: ";
         for(int i = 0; i < ambulances.size(); i++) {
             ret += ambulances.get(i).position.toString() + "/" + ambulances.get(i).currentAction.name + " ";
         }
-        ret += "}";
         
         return ret;
     }
