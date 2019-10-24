@@ -454,9 +454,9 @@ public class World extends SoSObject {
 //            printFireFighterLog(true);
             return;
         } else {                                                        // It is not an end condition. continue.
-            printPatientLog(false);
-            printFireFighterLog(false);
-            printAmbulanceLog(false);
+            //printPatientLog(false);
+            //printFireFighterLog(false);
+            //printAmbulanceLog(false);
             frameCount++;
 //            System.out.println("FrameCount: " + frameCount);
         }
@@ -496,8 +496,28 @@ public class World extends SoSObject {
         savedPatientCell.setCellValue(savedPatientCount);
         rescuedPatientCell.setCellValue(rescuedPatientCount);
     }
-
-
+    
+    public String printCSSnapshot() {
+        String ret = "";
+        String temp = "";
+        
+        // Current FF Pos & Action
+        ret += "FF: { ";
+        for (int i = 0; i < fireFighters.size(); i++) {
+            ret += fireFighters.get(i).position.toString() + "/" + fireFighters.get(i).currentAction.name + " ";
+        }
+        ret += "} ";
+        
+        // Current Ambulance Pos & Action
+        ret += "Amb: { ";
+        for(int i = 0; i < ambulances.size(); i++) {
+            ret += ambulances.get(i).position.toString() + "/" + ambulances.get(i).currentAction.name + " ";
+        }
+        ret += "}";
+        
+        return ret;
+    }
+    
     private void printFireFighterLog(boolean isFinish) {
 
         ExcelHelper.getCell(fireFighterSheet, 0, 0).setCellValue("frame count");
