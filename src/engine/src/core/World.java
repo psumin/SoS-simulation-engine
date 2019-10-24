@@ -1050,59 +1050,85 @@ public class World extends SoSObject{
 //        stimuli.add(new RemoveEntity(this, 140, "Ambulance4", this::removeCS));
 //
 //        // TODO: add FireFighter
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 30, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 60, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 90, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 120, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 150, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 180, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 210, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 240, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 270, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
         }
+
+        for(int i = 0; i < 1; i++) {
+            stimuli.add(new AddEntity(this, 300, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 1; i++) {
+            stimuli.add(new AddEntity(this, 330, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 1; i++) {
+            stimuli.add(new AddEntity(this, 360, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+        for(int i = 0; i < 1; i++) {
+            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+
+
 //        for(int i = 0; i < 5; i++) {
 //            stimuli.add(new AddEntity(this, 435, this::addFireFighter));
 //            stimuli.add(new AddEntity(this, 465, this::addFireFighter));
