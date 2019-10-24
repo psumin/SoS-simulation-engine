@@ -30,8 +30,8 @@ import misc.ExcelHelper;
 
 public class SoSSimulationProgram implements Runnable, KeyListener {
 
-    final int MAX_SIMULATION_COUNT = 100;                          // 시뮬레이션 반복 횟수
-    final int MAX_FRAME_COUNT = 1000;                                // 각 시뮬레이션마다 최대 frame의 수
+    final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
+    final int MAX_FRAME_COUNT = 400;                                // 각 시뮬레이션마다 최대 frame의 수
 
     final int SIMULATION_WIDTH = 960;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 960;                              // 시뮬레이션 GUI의 높이
@@ -140,7 +140,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
 //        }
 //    }
 
-    long desiredFPS = 60;
+    long desiredFPS = 28;
     long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
 
     boolean running = true;
