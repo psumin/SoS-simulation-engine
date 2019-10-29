@@ -133,7 +133,7 @@ public class World extends SoSObject {
 //    public static final String ambulancePrefix = "Amb";
 
     XSSFWorkbook workbook = new XSSFWorkbook();
-    XSSFSheet statisticsSheet;
+//    XSSFSheet statisticsSheet;
     XSSFSheet hospitalSheet;
     XSSFSheet patientSheet;
     XSSFSheet ambulanceSheet;
@@ -679,7 +679,7 @@ public class World extends SoSObject {
 //        ExcelHelper.getCell(row, 1).setCellValue(maxBridgehead);
 //        row = ExcelHelper.nextRow(row);
 
-        router.clear();
+        router.clear();         // 여기서 처리해야함. state\log ㅐ에 대한거 처리하고 나머지는 아래에서 처리
 
         printPatientLog(true);
         printFireFighterLog(true);
