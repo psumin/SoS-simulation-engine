@@ -184,7 +184,7 @@ public class World extends SoSObject {
         //map.canUpdate(false);
 
         // Create router
-        router = new MsgRouter(this);
+        router = new MsgRouter(this, workbook);
         addChild(router);
 
         createObjects();
@@ -193,7 +193,7 @@ public class World extends SoSObject {
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
 //        writeScenario2();         // interactive simulation test
-        router.add(new Loss(1, 10000, "FF", "FF"));
+//        router.add(new Loss(1, 10000, "FF", "FF"));
 
         for (int i = 0; i < maxFireFighter; ++i) {
             firefighterNames.add(fireFighterPrefix + (i + 1));
@@ -679,6 +679,7 @@ public class World extends SoSObject {
 //        ExcelHelper.getCell(row, 1).setCellValue(maxBridgehead);
 //        row = ExcelHelper.nextRow(row);
 
+        router.clear();
 
         printPatientLog(true);
         printFireFighterLog(true);
@@ -691,7 +692,7 @@ public class World extends SoSObject {
         ExcelHelper.autoSizeAllColumn(workbook);
         ExcelHelper.save(workbook, filePath);
 
-        router.clear();
+//        router.clear();
 
 
 
