@@ -4,6 +4,7 @@ public class MCIProperty extends Property {
 
   double rescueRate;
   double thresholdValue;
+  String prevState;
   String state;
   
   public MCIProperty(String name, String specification, String propertyType, double etc) {
@@ -50,5 +51,9 @@ public class MCIProperty extends Property {
   
   public void setState(String state) { this.state = state; }
   
+  public void setPrevState(String state) {this.prevState = state; }
+  
   public String getState() { return this.state; }
+  
+  public String getPrevState() {return this.prevState; }
 }

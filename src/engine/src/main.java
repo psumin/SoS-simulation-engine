@@ -36,6 +36,9 @@ public class main {
         // Bounded Existence
         property.setDuration(33); // Bounded Frame 40
         property.setState("Free"); // State가 Free인게 아님을 확인하기 위해
+        // Precedence
+        property.setPrevState("MoveToPatient");
+        property.setState("FirstAid");
         
         MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
         MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
@@ -45,6 +48,7 @@ public class main {
         MCIMinimumDurationChecker minimumDurationChecker = new MCIMinimumDurationChecker();
         MCIMaximumDurationChecker maximumDurationChecker = new MCIMaximumDurationChecker();
         MCIBoundedExistenceChecker boundedExistenceChecker = new MCIBoundedExistenceChecker();
+        MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
         
 //        verifier = new SPRT(comfortZoneChecker);
         
@@ -55,7 +59,8 @@ public class main {
 //        verifier = new SPRT(steadySPChecker);
 //        verifier = new SPRT(minimumDurationChecker);
 //        verifier = new SPRT(maximumDurationChecker);
-        verifier = new SPRT(boundedExistenceChecker);
+//        verifier = new SPRT(boundedExistenceChecker);
+        verifier = new SPRT(precedenceChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();

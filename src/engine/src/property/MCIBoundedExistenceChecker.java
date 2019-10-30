@@ -56,4 +56,7 @@ public class MCIBoundedExistenceChecker extends BoundedExistenceChecker {
     public boolean check(Log log, Property verificationProperty, int t, int T) {
         return false;
     }
+    
+    @Override
+    protected boolean evaluateState(Log log, Property verificationProperty) {return false; }
 }
