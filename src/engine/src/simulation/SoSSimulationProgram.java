@@ -317,8 +317,9 @@ public class SoSSimulationProgram implements KeyListener {
                     ExcelHelper.getCell(row, 3).setCellValue("# of Ambulance");
                     ExcelHelper.getCell(row, 4).setCellValue("# of Bridgehead");
                     ExcelHelper.getCell(row, 5).setCellValue("Max frame count");
-                    ExcelHelper.getCell(row, 6).setCellValue("Max simulation time");
-                    for(int i = 0; i < 7; ++i) {
+//                    ExcelHelper.getCell(row, 6).setCellValue("Max simulation time");
+//                    for(int i = 0; i < 7; ++i) {
+                    for(int i = 0; i < 6; ++i) {
                         ExcelHelper.getCell(row, i).setCellStyle(headerStyle);
                     }
 
@@ -329,7 +330,7 @@ public class SoSSimulationProgram implements KeyListener {
                     ExcelHelper.getCell(row, 3).setCellValue(World.maxAmbulance);
                     ExcelHelper.getCell(row, 4).setCellValue(World.maxBridgehead);
                     ExcelHelper.getCell(row, 5).setCellValue(MAX_FRAME_COUNT);
-                    ExcelHelper.getCell(row, 6).setCellValue(MAX_SIMULATION_COUNT);
+//                    ExcelHelper.getCell(row, 6).setCellValue(MAX_SIMULATION_COUNT);
 
                     row = sheet.createRow(rowNum++);
                     for(DataStructure.AddCS inputData: World.addCS) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 제외)
