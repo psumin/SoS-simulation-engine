@@ -19,13 +19,10 @@ public class AmbulanceFree extends AmbulanceAction {
     }
 
     boolean isFirstUpdate = true;
-
-    int timeout = 8;               // timeout duration, 1frame을 4초로 생각했을 때 1분간!
-    int frameCounter = timeout;
-
-    int maxTimeout = 3;             // timeoutCounter, number of timeout
-    int timeoutCounter = maxTimeout;
-
+    int mobilize = 8;
+    int frameCounter = mobilize;
+    int mobilize_delay_repeat = 1;             // counter, number of mobilize
+    int counter = mobilize_delay_repeat;
 
     @Override
     public void onUpdate() {
@@ -38,12 +35,12 @@ public class AmbulanceFree extends AmbulanceAction {
                     .setData(ambulance));
         }
         if(frameCounter <= 0) {
-            frameCounter = timeout;
-            if(timeoutCounter <= 0) {
-                timeoutCounter = maxTimeout;
+            frameCounter = mobilize;
+            if(counter <= 0) {
+                counter = mobilize_delay_repeat;
                 ambulance.changeAction(new AmbulanceSearch(ambulance));     // Search at Bridgehead
             }
-            timeoutCounter--;
+            counter--;
         }
         frameCounter--;
     }
