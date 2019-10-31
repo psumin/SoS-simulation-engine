@@ -2,8 +2,8 @@ package action.firefighteraction;
 
 import agents.FireFighter;
 
-public class FireFighterDead extends FireFighterAction {
-    public FireFighterDead(FireFighter target) {
+public class FireFighterHalt extends FireFighterAction {
+    public FireFighterHalt(FireFighter target) {
         super(target);
 
         name = "Halt";
