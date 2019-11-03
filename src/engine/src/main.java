@@ -34,11 +34,14 @@ public class main {
 //        property.setThresholdValue(0); // Rescurate
 //        property.setDuration(60); // 최대 60 Frame 이하
         // Bounded Existence
-        property.setDuration(33); // Bounded Frame 40
-        property.setState("Free"); // State가 Free인게 아님을 확인하기 위해
+//        property.setDuration(33); // Bounded Frame 40
+//        property.setState("Free"); // State가 Free인게 아님을 확인하기 위해
         // Precedence
-        property.setPrevState("MoveToPatient");
-        property.setState("FirstAid");
+//        property.setPrevState("MoveToPatient");
+//        property.setState("FirstAid");
+        // Response
+        property.setPrevState("FirstAid");
+        property.setState("TransferToBridgehead");
         
         MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
         MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
@@ -49,6 +52,7 @@ public class main {
         MCIMaximumDurationChecker maximumDurationChecker = new MCIMaximumDurationChecker();
         MCIBoundedExistenceChecker boundedExistenceChecker = new MCIBoundedExistenceChecker();
         MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
+        MCIResponseChecker responseChecker = new MCIResponseChecker();
         
 //        verifier = new SPRT(comfortZoneChecker);
         
@@ -60,7 +64,8 @@ public class main {
 //        verifier = new SPRT(minimumDurationChecker);
 //        verifier = new SPRT(maximumDurationChecker);
 //        verifier = new SPRT(boundedExistenceChecker);
-        verifier = new SPRT(precedenceChecker);
+//        verifier = new SPRT(precedenceChecker);
+        verifier = new SPRT(responseChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
