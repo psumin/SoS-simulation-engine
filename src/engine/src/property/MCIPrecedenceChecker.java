@@ -18,7 +18,6 @@ public class MCIPrecedenceChecker extends PrecedenceChecker {
     
     @Override
     protected boolean evaluateState(Log log, Property verificationProperty) {
-        System.out.println("Precedence Checker");
         String prev = verificationProperty.getPrevState();
         String latter = verificationProperty.getState();
         String temp = "";
@@ -60,9 +59,13 @@ public class MCIPrecedenceChecker extends PrecedenceChecker {
                 }
             }
         }
-        System.out.println(prevList);
-        System.out.println(latterList);
-        return false;
+//        System.out.println(prevList);
+//        System.out.println(latterList);
+
+        for(int i = 0; i < 50; i++) {
+            if(prevList.get(i) > latterList.get(i) && latterList.get(i) != -1) { return false; }
+        }
+        return true;
     }
     
     @Override
