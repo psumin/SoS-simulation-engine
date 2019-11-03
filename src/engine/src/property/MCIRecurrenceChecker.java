@@ -19,16 +19,14 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
     @Override
     protected boolean evaluateState(Log log, Property verificationProperty) {
         String prev = verificationProperty.getPrevState();
-        String latter = verificationProperty.getState();
         String temp = "";
         int numFF = 0;
         int counter = 0;
         HashMap<Integer, Snapshot> snapshots = log.getSnapshotMap();
         int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
-        ArrayList<Integer> prevList = new ArrayList<>(Collections.nCopies(50,-1));
-        ArrayList<Integer> latterList = new ArrayList<>(Collections.nCopies(50,-1));
-        ArrayList<Integer> indexCounter = new ArrayList<>(Collections.nCopies(15,0));
+        ArrayList<ArrayList<Integer>> stateList = new ArrayList<>();
 
+        ArrayList<Integer> tempA = new ArrayList<>();
         for(int i = 1; i < logSize; i++) {
             temp = snapshots.get(i).getSnapshotString();
 
@@ -44,26 +42,30 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
                 if(tokens.equals("FF:")) {
                     while(counter < numFF) {
                         String fflog = st.nextToken();
-                        if(fflog.contains(prev)) { // 마지막으로 prev state가 관찰될때
-                            if(prevList.get(counter + 12 * indexCounter.get(counter)) != -1
-                                    && latterList.get(counter + 12 * indexCounter.get(counter)) != -1) // prev&latterList가 모두 꽉 차 있을때 Index 하나 더 증가
-                                indexCounter.set(counter, indexCounter.get(counter)+1);
-
-                            prevList.set(counter + 12 * indexCounter.get(counter), i);
-                        } else if (fflog.contains(latter) ) { // 처음 latter state가 관찰될때
-                            if(latterList.get(counter + 12 * indexCounter.get(counter)) == -1)
-                                latterList.set(counter + 12 * indexCounter.get(counter), i);
+                        if(fflog.contains(prev)) {
+                            tempA.add(counter, i);
                         }
                         counter++;
                     }
                 }
             }
+            stateList.add(tempA);
+            tempA.clear();
         }
 //        System.out.println(prevList);
-//        System.out.println(latterList);
 
-        for(int i = 0; i < 50; i++) {
-            if(prevList.get(i) > latterList.get(i) && latterList.get(i) != -1) { return false; }
+        int sub = -1;
+        ArrayList<Integer> startingIndex = new ArrayList<>(Collections.nCopies(12,0));
+        for(int i = 1; i < stateList.size(); i++) { // 12 == # of FFs
+            for(int j = 0; j < 12; j++) {
+                sub = stateList.get(i).get(j) - stateList.get(startingIndex.get(j)).get(j);
+                if(sub != 1) {
+                    if(sub > verificationProperty.getValue()) { // 구조 주기의 차이가 value보다 크면 return false
+                        return false;
+                    }
+                    startingIndex.set(j,i);
+                }
+            }
         }
         return true;
     }
