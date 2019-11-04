@@ -40,8 +40,11 @@ public class main {
 //        property.setPrevState("MoveToPatient");
 //        property.setState("FirstAid");
         // Response
-        property.setPrevState("FirstAid");
-        property.setState("TransferToBridgehead");
+//        property.setPrevState("FirstAid");
+//        property.setState("TransferToBridgehead");
+        // Recurrence
+        property.setPrevState("MoveToPatient");
+        property.setThresholdValue(51);
         
         MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
         MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
@@ -53,6 +56,7 @@ public class main {
         MCIBoundedExistenceChecker boundedExistenceChecker = new MCIBoundedExistenceChecker();
         MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
         MCIResponseChecker responseChecker = new MCIResponseChecker();
+        MCIRecurrenceChecker recurrenceChecker = new MCIRecurrenceChecker();
         
 //        verifier = new SPRT(comfortZoneChecker);
         
@@ -65,7 +69,8 @@ public class main {
 //        verifier = new SPRT(maximumDurationChecker);
 //        verifier = new SPRT(boundedExistenceChecker);
 //        verifier = new SPRT(precedenceChecker);
-        verifier = new SPRT(responseChecker);
+//        verifier = new SPRT(responseChecker);
+        verifier = new SPRT(recurrenceChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();

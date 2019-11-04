@@ -4,10 +4,7 @@ import log.Log;
 import log.Snapshot;
 import property.pattern.RecurrenceChecker;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class MCIRecurrenceChecker extends RecurrenceChecker {
 
@@ -22,16 +19,18 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
         String temp = "";
         int numFF = 0;
         int counter = 0;
+        boolean flagFF = false;
         HashMap<Integer, Snapshot> snapshots = log.getSnapshotMap();
         int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
         ArrayList<ArrayList<Integer>> stateList = new ArrayList<>();
 
-        ArrayList<Integer> tempA = new ArrayList<>();
+        ArrayList<Integer> tempA;
         for(int i = 1; i < logSize; i++) {
             temp = snapshots.get(i).getSnapshotString();
 
             StringTokenizer st = new StringTokenizer(temp, " ");
             counter = 0;
+            tempA = new ArrayList<>(Collections.nCopies(12,0));
             while(st.hasMoreTokens()) {
                 String tokens = st.nextToken();
                 if(tokens.equals("Amb:")) break;
@@ -43,27 +42,44 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
                     while(counter < numFF) {
                         String fflog = st.nextToken();
                         if(fflog.contains(prev)) {
-                            tempA.add(counter, i);
+                            tempA.set(counter, i);
+                            flagFF = true;
                         }
                         counter++;
                     }
+                    if(flagFF) {
+                        stateList.add((ArrayList<Integer>)tempA.clone());
+//                        System.out.println(tempA);
+                        flagFF = false;
+                        tempA.clear();
+                    }
                 }
             }
-            stateList.add(tempA);
-            tempA.clear();
         }
-//        System.out.println(prevList);
+//        System.out.println(stateList);
 
         int sub = -1;
-        ArrayList<Integer> startingIndex = new ArrayList<>(Collections.nCopies(12,0));
-        for(int i = 1; i < stateList.size(); i++) { // 12 == # of FFs
+        ArrayList<Boolean> periodFlags = new ArrayList<>(Collections.nCopies(12,false));
+        ArrayList<Integer> startingValues= new ArrayList<>(Collections.nCopies(12,0));
+        for(int i = 0; i < stateList.size(); i++) { // 12 == # of FFs
             for(int j = 0; j < 12; j++) {
-                sub = stateList.get(i).get(j) - stateList.get(startingIndex.get(j)).get(j);
-                if(sub != 1) {
-                    if(sub > verificationProperty.getValue()) { // 구조 주기의 차이가 value보다 크면 return false
+                if(stateList.get(i).get(j) == 0) { // 주기가 바뀌는 경우
+                    if(startingValues.get(j) != 0 && !periodFlags.get(j)) periodFlags.set(j,true);
+                    continue;
+                }
+                else if (startingValues.get(j) == 0) { // 처음에 해당 FF 자리에 0이 아닌 값이 나오는 경우
+                    startingValues.set(j,stateList.get(i).get(j));
+                    continue;
+                }
+                
+                if(periodFlags.get(j)) {
+                    sub = stateList.get(i).get(j) - startingValues.get(j);
+//                    System.out.println(i + "th FF" + j + " :" + sub);
+                    if (sub > verificationProperty.getThresholdValue()) { // 구조 주기의 차이가 value보다 크면 return false
                         return false;
                     }
-                    startingIndex.set(j,i);
+                    startingValues.set(j,stateList.get(i).get(j));
+                    periodFlags.set(j, false);
                 }
             }
         }
