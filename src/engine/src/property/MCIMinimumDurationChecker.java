@@ -20,6 +20,8 @@ public class MCIMinimumDurationChecker extends MinimumDurationChecker {
         
         int currentActivatedCSs = Integer.parseInt(st.nextToken());
         
+        System.out.println("Current Activated FFs: " + currentActivatedCSs);
+        
         if(currentActivatedCSs >= (int) verificationProperty.getThresholdValue()){
             return true;
         }
