@@ -29,6 +29,8 @@ public abstract class SteadyStateProbabilityChecker extends PropertyChecker{
                 satisfiedCount++;
             }
         }
+    
+        System.out.println("Satisfied count: " + satisfiedCount + " among " + T + " ticks");
         
         if ((double)satisfiedCount/(double)T >= prob){
             return true;

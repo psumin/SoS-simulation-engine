@@ -24,9 +24,9 @@ public class main {
         // Universality
 //        property.setThresholdValue(1.0); // RescueRate
         // TransientStateProbability
-        property.setStateProbabilityValues(0.6, 60, 81);
+//        property.setStateProbabilityValues(0.6, 60, 81);
         // SteadyStateProbability
-//        property.setStateProbabilityValues(0.15, 0, 81);
+        property.setStateProbabilityValues(0.15, 0, 81);
         // MinimumDuration
 //        property.setThresholdValue(10); // FF가 10명 이상 활동하고 있어야 한다.
 //        property.setDuration(65); // 최소 65 Frame 이상
@@ -66,8 +66,8 @@ public class main {
 //        verifier = new SPRT(existenceChecker);
 //        verifier = new SPRT(absenceChecker);
 //        verifier = new SPRT(universalityChecker);
-        verifier = new SPRT(transientSPChecker);
-//        verifier = new SPRT(steadySPChecker);
+//        verifier = new SPRT(transientSPChecker);
+        verifier = new SPRT(steadySPChecker);
 //        verifier = new SPRT(minimumDurationChecker);
 //        verifier = new SPRT(maximumDurationChecker);
 //        verifier = new SPRT(boundedExistenceChecker);
