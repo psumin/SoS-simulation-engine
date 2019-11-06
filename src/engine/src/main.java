@@ -37,11 +37,11 @@ public class main {
 //        property.setDuration(15); // Bounded Frame 20
 //        property.setState("Free"); // State가 Free인게 아님을 확인하기 위해
         // Precedence
-        property.setPrevState("MoveToPatient");
-        property.setState("FirstAid");
+//        property.setPrevState("MoveToPatient");
+//        property.setState("FirstAid");
         // Response
-//        property.setPrevState("FirstAid");
-//        property.setState("TransferToBridgehead");
+        property.setPrevState("FirstAid");
+        property.setState("TransferToBridgehead");
         // Recurrence
 //        property.setPrevState("MoveToPatient");
 //        property.setThresholdValue(51);
@@ -71,8 +71,8 @@ public class main {
 //        verifier = new SPRT(minimumDurationChecker);
 //        verifier = new SPRT(maximumDurationChecker);
 //        verifier = new SPRT(boundedExistenceChecker);
-        verifier = new SPRT(precedenceChecker);
-//        verifier = new SPRT(responseChecker);
+//        verifier = new SPRT(precedenceChecker);
+        verifier = new SPRT(responseChecker);
 //        verifier = new SPRT(recurrenceChecker);
 //        verifier = new SPRT(untilChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
