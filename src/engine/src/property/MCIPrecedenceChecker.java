@@ -59,8 +59,8 @@ public class MCIPrecedenceChecker extends PrecedenceChecker {
                 }
             }
         }
-//        System.out.println(prevList);
-//        System.out.println(latterList);
+        System.out.println("Tick list of Rescue Activity: " + prevList);
+        System.out.println("Tick list of Treatment Activity: " + latterList);
 
         for(int i = 0; i < 50; i++) {
             if(prevList.get(i) > latterList.get(i) && latterList.get(i) != -1) { return false; }
