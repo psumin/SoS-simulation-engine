@@ -21,7 +21,7 @@ public class MCIUniversalityChecker extends UniversalityChecker {
         }
         
         double rescueRate = Double.parseDouble(st.nextToken());
-        System.out.println(rescueRate);
+        System.out.println("Rescue Rate: " + rescueRate);
         
         if(rescueRate <= verificationProperty.getThresholdValue() && rescueRate > 0){
             return true;
