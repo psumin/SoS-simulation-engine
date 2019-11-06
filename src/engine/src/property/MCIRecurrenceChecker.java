@@ -56,7 +56,10 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
                 }
             }
         }
-//        System.out.println(stateList);
+        System.out.println("FFs Rescue Activity Time Table");
+        for(int i = 0; i < stateList.size(); i++) {
+            System.out.println(stateList.get(i));
+        }
 
         int sub = -1;
         ArrayList<Boolean> periodFlags = new ArrayList<>(Collections.nCopies(12,false));
@@ -74,7 +77,7 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
                 
                 if(periodFlags.get(j)) {
                     sub = stateList.get(i).get(j) - startingValues.get(j);
-//                    System.out.println(i + "th FF" + j + " :" + sub);
+                    System.out.println(j + "th FF: " + sub);
                     if (sub > verificationProperty.getThresholdValue()) { // 구조 주기의 차이가 value보다 크면 return false
                         return false;
                     }
