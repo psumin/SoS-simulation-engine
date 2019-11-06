@@ -22,6 +22,8 @@ public class MCIMaximumDurationChecker extends MaximumDurationChecker {
     
         double rescueRate = Double.parseDouble(st.nextToken());
     
+        System.out.println("Rescue Rate per tick: " + rescueRate);
+        
         if(rescueRate == verificationProperty.getThresholdValue()){
             return true;
         }

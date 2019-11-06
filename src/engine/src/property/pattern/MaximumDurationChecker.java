@@ -23,6 +23,8 @@ public abstract class MaximumDurationChecker extends PropertyChecker {
             }
         }
         
+        System.out.println("The duration of simulation with rescue rate 0%: " + satisfiedCount);
+        
         if (satisfiedCount <= duration){
             return true;
         }

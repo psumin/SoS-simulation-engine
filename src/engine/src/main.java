@@ -28,11 +28,11 @@ public class main {
         // SteadyStateProbability
 //        property.setStateProbabilityValues(0.15, 0, 81);
         // MinimumDuration
-        property.setThresholdValue(10); // FF가 10명 이상 활동하고 있어야 한다.
-        property.setDuration(65); // 최소 65 Frame 이상
+//        property.setThresholdValue(10); // FF가 10명 이상 활동하고 있어야 한다.
+//        property.setDuration(65); // 최소 65 Frame 이상
         // MaximumDuration
-//        property.setThresholdValue(0); // Rescurate
-//        property.setDuration(60); // 최대 60 Frame 이하
+        property.setThresholdValue(0); // Rescurate
+        property.setDuration(60); // 최대 60 Frame 이하
         // Bounded Existence
 //        property.setDuration(33); // Bounded Frame 40
 //        property.setState("Free"); // State가 Free인게 아님을 확인하기 위해
@@ -68,8 +68,8 @@ public class main {
 //        verifier = new SPRT(universalityChecker);
 //        verifier = new SPRT(transientSPChecker);
 //        verifier = new SPRT(steadySPChecker);
-        verifier = new SPRT(minimumDurationChecker);
-//        verifier = new SPRT(maximumDurationChecker);
+//        verifier = new SPRT(minimumDurationChecker);
+        verifier = new SPRT(maximumDurationChecker);
 //        verifier = new SPRT(boundedExistenceChecker);
 //        verifier = new SPRT(precedenceChecker);
 //        verifier = new SPRT(responseChecker);
