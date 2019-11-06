@@ -21,7 +21,7 @@ public class AmbulanceFree extends AmbulanceAction {
     boolean isFirstUpdate = true;
     int mobilize = 8;
     int frameCounter = mobilize;
-    int mobilize_delay_repeat = 1;             // counter, number of mobilize
+    int mobilize_delay_repeat = 0;             // counter, number of mobilize
     int counter = mobilize_delay_repeat;
 
     @Override
