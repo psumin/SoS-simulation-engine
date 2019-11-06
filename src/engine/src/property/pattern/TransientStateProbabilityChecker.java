@@ -30,6 +30,8 @@ public abstract class TransientStateProbabilityChecker extends PropertyChecker {
             }
         }
 
+        System.out.println("Satisfied count: " + satisfiedCount + " among " + (T-t) + " ticks");
+        
         if ((double)satisfiedCount/(double)(T-t) >= prob){
             return true;
         }

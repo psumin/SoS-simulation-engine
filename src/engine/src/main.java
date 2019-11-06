@@ -22,9 +22,9 @@ public class main {
         // Absence
 //        property.setThresholdValue(0); // RescueRate - TreatmentRate
         // Universality
-        property.setThresholdValue(1.0); // RescueRate
+//        property.setThresholdValue(1.0); // RescueRate
         // TransientStateProbability
-//        property.setStateProbabilityValues(0.6, 60, 81);
+        property.setStateProbabilityValues(0.6, 60, 81);
         // SteadyStateProbability
 //        property.setStateProbabilityValues(0.15, 0, 81);
         // MinimumDuration
@@ -65,8 +65,8 @@ public class main {
         
 //        verifier = new SPRT(existenceChecker);
 //        verifier = new SPRT(absenceChecker);
-        verifier = new SPRT(universalityChecker);
-//        verifier = new SPRT(transientSPChecker);
+//        verifier = new SPRT(universalityChecker);
+        verifier = new SPRT(transientSPChecker);
 //        verifier = new SPRT(steadySPChecker);
 //        verifier = new SPRT(minimumDurationChecker);
 //        verifier = new SPRT(maximumDurationChecker);
