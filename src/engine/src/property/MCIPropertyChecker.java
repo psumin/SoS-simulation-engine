@@ -22,7 +22,7 @@ public class MCIPropertyChecker extends ExistenceChecker {
         }
         
         double TreatmentRate = Double.parseDouble(st.nextToken());
-        System.out.println(TreatmentRate);
+//        System.out.println(TreatmentRate);
         
         if(TreatmentRate >= verificationProperty.getValue()){
             return true;

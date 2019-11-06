@@ -193,7 +193,7 @@ public class World extends SoSObject {
         // static stimulus injection technique
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
-//        writeScenario2();         // interactive simulation test
+        writeScenario2();         // interactive simulation test
 //        router.add(new Loss(1, 10000, "FF", "FF"));
 
         for (int i = 0; i < maxFireFighter; ++i) {
@@ -1215,8 +1215,19 @@ public class World extends SoSObject {
 //        for(int i = 0; i < 15; i++) {
 //            stimuli.add(new AddEntity(this, 990, this::addFireFighter));
 //        }
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 30, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 60, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 90, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 120, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 150, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 180, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 210, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 240, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 270, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 300, this::addFireFighter));
+
+
         }
 
     // TODO: add Ambulance
