@@ -27,8 +27,9 @@ public class MCIBoundedExistenceChecker extends BoundedExistenceChecker {
                     tmp = st.nextToken();
                     StringTokenizer st2 = new StringTokenizer(tmp, "/");
                     st2.nextToken();
-                    
-                    if(st2.nextToken().equals(verificationProperty.getState())) { // Ambulance의 State가 Free인지 아닌지 확인
+                    String state = st2.nextToken();
+                    System.out.println("Ambulance state: " + state);
+                    if(state.equals(verificationProperty.getState())) { // Ambulance의 State가 Free인지 아닌지 확인
                         return false;
                     }
                 }
