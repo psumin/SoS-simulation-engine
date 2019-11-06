@@ -34,7 +34,7 @@ public class FireFighter extends CS {
 
     public int defaultSightRange = 5;               // Fire fighter's sight range
     public int sightRange = defaultSightRange;
-    public int communicationRange = 3;             // Communication range between firefighters
+    public int communicationRange = 0;             // Communication range between firefighters
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;

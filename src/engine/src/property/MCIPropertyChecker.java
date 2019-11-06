@@ -17,14 +17,14 @@ public class MCIPropertyChecker extends ExistenceChecker {
     protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         while(st.hasMoreTokens()) {
-            if(st.nextToken().equals("RescuedRate:"))
+            if(st.nextToken().equals("TreatmentRate:"))
                 break;
         }
         
-        double rescueRate = Double.parseDouble(st.nextToken());
-        System.out.println(rescueRate);
+        double TreatmentRate = Double.parseDouble(st.nextToken());
+        System.out.println(TreatmentRate);
         
-        if(rescueRate >= verificationProperty.getValue()){
+        if(TreatmentRate >= verificationProperty.getValue()){
             return true;
         }
         else{

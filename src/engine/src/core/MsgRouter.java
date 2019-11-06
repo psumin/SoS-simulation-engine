@@ -88,8 +88,8 @@ public class MsgRouter extends SoSObject {
     World world;
     Map worldMap;
 
-    private XSSFWorkbook workbook;
-    private XSSFSheet sheet;
+//    private XSSFWorkbook workbook;
+//    private XSSFSheet sheet;
 
     private int rowNum = 0;
 
@@ -97,106 +97,107 @@ public class MsgRouter extends SoSObject {
     CellStyle centerAlignmentStyle;
 
     // For the log. Save at the Excel
-    public MsgRouter(World world, XSSFWorkbook workbook) {
-        centerAlignmentStyle = workbook.createCellStyle();
-        centerAlignmentStyle.setAlignment(HorizontalAlignment.CENTER);
+//    public MsgRouter(World world, XSSFWorkbook workbook) {
+    public MsgRouter(World world) {
+//        centerAlignmentStyle = workbook.createCellStyle();
+//        centerAlignmentStyle.setAlignment(HorizontalAlignment.CENTER);
 
         this.world = world;
         worldMap = world.getMap();
 
-        this.workbook = workbook;
-        sheet = workbook.createSheet("communications");     // communication sheet at log file
-//        sheet.trackAllColumnsForAutoSizing();
-
-        // Initial format of the communication sheet
-        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
-        Row row = currentRow;
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Type");
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("FF->FF");
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
-        row.createCell(row.getPhysicalNumberOfCells());
-        row.createCell(row.getPhysicalNumberOfCells());
-
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("FF->Org");
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
-        row.createCell(row.getPhysicalNumberOfCells());
-        row.createCell(row.getPhysicalNumberOfCells());
-
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Org->FF");
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
-        row.createCell(row.getPhysicalNumberOfCells());
-        row.createCell(row.getPhysicalNumberOfCells());
-
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Amb->Org");
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
-        row.createCell(row.getPhysicalNumberOfCells());
-        row.createCell(row.getPhysicalNumberOfCells());
-
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Org->Amb");
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
-        row.createCell(row.getPhysicalNumberOfCells());
-        row.createCell(row.getPhysicalNumberOfCells());
-
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Bridge->Org");
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
-        row.createCell(row.getPhysicalNumberOfCells());
-        row.createCell(row.getPhysicalNumberOfCells());
-
-        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Org->Bridge");
-        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
-        row.createCell(row.getPhysicalNumberOfCells());
-        row.createCell(row.getPhysicalNumberOfCells());
-
-        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
-        row = currentRow;
-        row.createCell(0).setCellValue("frame count");
-
-        for (int i = 0; i < 7; ++i) {
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Send");
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-
-            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Received");
-            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
-
-            row.createCell(row.getPhysicalNumberOfCells());
-        }
+//        this.workbook = workbook;
+//        sheet = workbook.createSheet("communications");     // communication sheet at log file
+////        sheet.trackAllColumnsForAutoSizing();
+//
+//        // Initial format of the communication sheet
+//        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
+//        Row row = currentRow;
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Type");
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("FF->FF");
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+//        row.createCell(row.getPhysicalNumberOfCells());
+//        row.createCell(row.getPhysicalNumberOfCells());
+//
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("FF->Org");
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+//        row.createCell(row.getPhysicalNumberOfCells());
+//        row.createCell(row.getPhysicalNumberOfCells());
+//
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Org->FF");
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+//        row.createCell(row.getPhysicalNumberOfCells());
+//        row.createCell(row.getPhysicalNumberOfCells());
+//
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Amb->Org");
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+//        row.createCell(row.getPhysicalNumberOfCells());
+//        row.createCell(row.getPhysicalNumberOfCells());
+//
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Org->Amb");
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+//        row.createCell(row.getPhysicalNumberOfCells());
+//        row.createCell(row.getPhysicalNumberOfCells());
+//
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Bridge->Org");
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+//        row.createCell(row.getPhysicalNumberOfCells());
+//        row.createCell(row.getPhysicalNumberOfCells());
+//
+//        row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Org->Bridge");
+//        row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//        sheet.addMergedRegion(new CellRangeAddress(0, 0, row.getPhysicalNumberOfCells() - 1, row.getPhysicalNumberOfCells()));
+//        row.createCell(row.getPhysicalNumberOfCells());
+//        row.createCell(row.getPhysicalNumberOfCells());
+//
+//        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
+//        row = currentRow;
+//        row.createCell(0).setCellValue("frame count");
+//
+//        for (int i = 0; i < 7; ++i) {
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Send");
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//
+//            row.createCell(row.getPhysicalNumberOfCells()).setCellValue("Received");
+//            row.getCell(row.getPhysicalNumberOfCells() - 1).setCellStyle(centerAlignmentStyle);
+//
+//            row.createCell(row.getPhysicalNumberOfCells());
+//        }
     }
 
     boolean isFirstUpdate = true;
     @Override
     public void onUpdate() {
-        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
-        currentRow.createCell(0).setCellValue(Time.getFrameCount());
-
-        ExcelHelper.getCell(currentRow, 1).setCellValue(FF_TO_FF_SEND / 2);     // 2가지 종류의 메시지를 보내므로 (local map, patient memory)
-        ExcelHelper.getCell(currentRow, 2).setCellValue(FF_TO_FF_RECV / 2);
-
-        ExcelHelper.getCell(currentRow, 4).setCellValue(FF_TO_ORG_SEND);
-        ExcelHelper.getCell(currentRow, 5).setCellValue(FF_TO_ORG_RECV);
-
-        ExcelHelper.getCell(currentRow, 7).setCellValue(ORG_TO_FF_SEND);
-        ExcelHelper.getCell(currentRow, 8).setCellValue(ORG_TO_FF_RECV);
-
-        ExcelHelper.getCell(currentRow, 10).setCellValue(AMB_TO_ORG_SEND);
-        ExcelHelper.getCell(currentRow, 11).setCellValue(AMB_TO_ORG_RECV);
-
-        ExcelHelper.getCell(currentRow, 13).setCellValue(ORG_TO_AMB_SEND);
-        ExcelHelper.getCell(currentRow, 14).setCellValue(ORG_TO_AMB_RECV);
-
-        ExcelHelper.getCell(currentRow, 16).setCellValue(BRIDGE_TO_ORG_SEND);
-        ExcelHelper.getCell(currentRow, 17).setCellValue(BRIDGE_TO_ORG_RECV);
-
-        ExcelHelper.getCell(currentRow, 19).setCellValue(ORG_TO_BRIDGE_SEND);
-        ExcelHelper.getCell(currentRow, 20).setCellValue(ORG_TO_BRIDGE_RECV);
+//        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
+//        currentRow.createCell(0).setCellValue(Time.getFrameCount());
+//
+//        ExcelHelper.getCell(currentRow, 1).setCellValue(FF_TO_FF_SEND / 2);     // 2가지 종류의 메시지를 보내므로 (local map, patient memory)
+//        ExcelHelper.getCell(currentRow, 2).setCellValue(FF_TO_FF_RECV / 2);
+//
+//        ExcelHelper.getCell(currentRow, 4).setCellValue(FF_TO_ORG_SEND);
+//        ExcelHelper.getCell(currentRow, 5).setCellValue(FF_TO_ORG_RECV);
+//
+//        ExcelHelper.getCell(currentRow, 7).setCellValue(ORG_TO_FF_SEND);
+//        ExcelHelper.getCell(currentRow, 8).setCellValue(ORG_TO_FF_RECV);
+//
+//        ExcelHelper.getCell(currentRow, 10).setCellValue(AMB_TO_ORG_SEND);
+//        ExcelHelper.getCell(currentRow, 11).setCellValue(AMB_TO_ORG_RECV);
+//
+//        ExcelHelper.getCell(currentRow, 13).setCellValue(ORG_TO_AMB_SEND);
+//        ExcelHelper.getCell(currentRow, 14).setCellValue(ORG_TO_AMB_RECV);
+//
+//        ExcelHelper.getCell(currentRow, 16).setCellValue(BRIDGE_TO_ORG_SEND);
+//        ExcelHelper.getCell(currentRow, 17).setCellValue(BRIDGE_TO_ORG_RECV);
+//
+//        ExcelHelper.getCell(currentRow, 19).setCellValue(ORG_TO_BRIDGE_SEND);
+//        ExcelHelper.getCell(currentRow, 20).setCellValue(ORG_TO_BRIDGE_RECV);
 
         // Initialize to zero. To count the messages for each frame
         FF_TO_FF_SEND = 0;
@@ -512,28 +513,28 @@ public class MsgRouter extends SoSObject {
     @Override
     public void clear() {
 //        row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
-        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
-        currentRow.createCell(0).setCellValue("Total communication");
-        ExcelHelper.getCell(currentRow, 1).setCellValue(TOTAL_FF_TO_FF_SEND / 2);
-        ExcelHelper.getCell(currentRow, 2).setCellValue(TOTAL_FF_TO_FF_RECV / 2);
-
-        ExcelHelper.getCell(currentRow, 4).setCellValue(TOTAL_FF_TO_ORG_SEND);
-        ExcelHelper.getCell(currentRow, 5).setCellValue(TOTAL_FF_TO_ORG_RECV);
-
-        ExcelHelper.getCell(currentRow, 7).setCellValue(TOTAL_ORG_TO_FF_SEND);
-        ExcelHelper.getCell(currentRow, 8).setCellValue(TOTAL_ORG_TO_FF_RECV);
-
-        ExcelHelper.getCell(currentRow, 10).setCellValue(TOTAL_AMB_TO_ORG_SEND);
-        ExcelHelper.getCell(currentRow, 11).setCellValue(TOTAL_AMB_TO_ORG_RECV);
-
-        ExcelHelper.getCell(currentRow, 13).setCellValue(TOTAL_ORG_TO_AMB_SEND);
-        ExcelHelper.getCell(currentRow, 14).setCellValue(TOTAL_ORG_TO_AMB_RECV);
-
-        ExcelHelper.getCell(currentRow, 16).setCellValue(TOTAL_BRIDGE_TO_ORG_SEND);
-        ExcelHelper.getCell(currentRow, 17).setCellValue(TOTAL_BRIDGE_TO_ORG_RECV);
-
-        ExcelHelper.getCell(currentRow, 19).setCellValue(TOTAL_ORG_TO_BRIDGE_SEND);
-        ExcelHelper.getCell(currentRow, 20).setCellValue(TOTAL_ORG_TO_BRIDGE_RECV);
+//        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
+//        currentRow.createCell(0).setCellValue("Total communication");
+//        ExcelHelper.getCell(currentRow, 1).setCellValue(TOTAL_FF_TO_FF_SEND / 2);
+//        ExcelHelper.getCell(currentRow, 2).setCellValue(TOTAL_FF_TO_FF_RECV / 2);
+//
+//        ExcelHelper.getCell(currentRow, 4).setCellValue(TOTAL_FF_TO_ORG_SEND);
+//        ExcelHelper.getCell(currentRow, 5).setCellValue(TOTAL_FF_TO_ORG_RECV);
+//
+//        ExcelHelper.getCell(currentRow, 7).setCellValue(TOTAL_ORG_TO_FF_SEND);
+//        ExcelHelper.getCell(currentRow, 8).setCellValue(TOTAL_ORG_TO_FF_RECV);
+//
+//        ExcelHelper.getCell(currentRow, 10).setCellValue(TOTAL_AMB_TO_ORG_SEND);
+//        ExcelHelper.getCell(currentRow, 11).setCellValue(TOTAL_AMB_TO_ORG_RECV);
+//
+//        ExcelHelper.getCell(currentRow, 13).setCellValue(TOTAL_ORG_TO_AMB_SEND);
+//        ExcelHelper.getCell(currentRow, 14).setCellValue(TOTAL_ORG_TO_AMB_RECV);
+//
+//        ExcelHelper.getCell(currentRow, 16).setCellValue(TOTAL_BRIDGE_TO_ORG_SEND);
+//        ExcelHelper.getCell(currentRow, 17).setCellValue(TOTAL_BRIDGE_TO_ORG_RECV);
+//
+//        ExcelHelper.getCell(currentRow, 19).setCellValue(TOTAL_ORG_TO_BRIDGE_SEND);
+//        ExcelHelper.getCell(currentRow, 20).setCellValue(TOTAL_ORG_TO_BRIDGE_RECV);
         super.clear();
     }
 }
