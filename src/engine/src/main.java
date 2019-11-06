@@ -20,7 +20,7 @@ public class main {
         // Existence
         MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
         // Absence
-//        property.setThresholdValue(0); // RescueRate - TreatmentRate
+        property.setThresholdValue(0); // RescueRate - TreatmentRate
         // Universality
 //        property.setThresholdValue(1.0); // RescueRate
         // TransientStateProbability
@@ -63,8 +63,8 @@ public class main {
         
 //        verifier = new SPRT(comfortZoneChecker);
         
-        verifier = new SPRT(existenceChecker);
-//        verifier = new SPRT(absenceChecker);
+//        verifier = new SPRT(existenceChecker);
+        verifier = new SPRT(absenceChecker);
 //        verifier = new SPRT(universalityChecker);
 //        verifier = new SPRT(transientSPChecker);
 //        verifier = new SPRT(steadySPChecker);

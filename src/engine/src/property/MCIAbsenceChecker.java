@@ -20,10 +20,13 @@ public class MCIAbsenceChecker extends AbsenceChecker {
         while(st.hasMoreTokens()) {
             if(st.nextToken().equals("RescuedRate:")) {
                 rescueRate = Double.parseDouble(st.nextToken());
-            } else if (st.nextToken().equals("TreatmentRate:")) {
+            }
+            if (st.nextToken().equals("TreatmentRate:")) {
                 treatRate = Double.parseDouble(st.nextToken());
             }
         }
+        
+        System.out.println("Rescue Rate: " + rescueRate + " Treatment Rate: " + treatRate);
         
         if(rescueRate - treatRate >= verificationProperty.getThresholdValue()){
             return false;
