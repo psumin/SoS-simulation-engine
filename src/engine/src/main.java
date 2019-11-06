@@ -46,7 +46,7 @@ public class main {
 //        property.setPrevState("MoveToPatient");
 //        property.setThresholdValue(51);
         // Until
-        property.setPrevState("Free");
+//        property.setPrevState("Free");
         
         MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
         MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
@@ -63,7 +63,7 @@ public class main {
         
 //        verifier = new SPRT(comfortZoneChecker);
         
-//        verifier = new SPRT(existenceChecker);
+        verifier = new SPRT(existenceChecker);
 //        verifier = new SPRT(absenceChecker);
 //        verifier = new SPRT(universalityChecker);
 //        verifier = new SPRT(transientSPChecker);
@@ -74,7 +74,7 @@ public class main {
 //        verifier = new SPRT(precedenceChecker);
 //        verifier = new SPRT(responseChecker);
 //        verifier = new SPRT(recurrenceChecker);
-        verifier = new SPRT(untilChecker);
+//        verifier = new SPRT(untilChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
