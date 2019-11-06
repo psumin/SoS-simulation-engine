@@ -17,13 +17,13 @@ public class MCIUntilChecker extends UntilChecker {
     
     @Override
     protected boolean evaluateState(Log log, Property verificationProperty) {
-    String prev = verificationProperty.getPrevState();
-    String temp = "";
-    int numFF = 0;
-    int counter = 0;
-    HashMap<Integer, Snapshot> snapshots = log.getSnapshotMap();
-    int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
-    ArrayList<Integer> prevList = new ArrayList<>(Collections.nCopies(12,-1));
+        String prev = verificationProperty.getPrevState();
+        String temp = "";
+        int numFF = 0;
+        int counter = 0;
+        HashMap<Integer, Snapshot> snapshots = log.getSnapshotMap();
+        int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
+        ArrayList<Integer> prevList = new ArrayList<>(Collections.nCopies(12,-1));
         
         for(int i = 1; i < logSize; i++) {
         temp = snapshots.get(i).getSnapshotString();
@@ -43,19 +43,21 @@ public class MCIUntilChecker extends UntilChecker {
                     if(fflog.contains(prev)) { // 마지막으로 prev state가 관찰될때
                         if(prevList.get(counter) != -1) // prev&latterList가 모두 꽉 차 있을때 Index 하나 더 증가
                             prevList.set(counter, i);
-                    }
+                        }
                     counter++;
+                    }
                 }
             }
         }
-    }
+        
+        System.out.println("FF Free State Check Table");
         System.out.println(prevList);
 
         for(int i = 0; i < 12; i++) {
             if(prevList.get(i) != -1) { return false; }
         }
         return true;
-}
+    }
     
     @Override
     public boolean check(Log log, Property verificationProperty, int until) {
