@@ -78,7 +78,7 @@ public class FireFighterSearch extends FireFighterAction {
     private Tile selectUnvisitedTile() {
         while(unvisitedTiles.isEmpty() == false) {
             Tile tile = unvisitedTiles.poll();
-            if(tile.isVisited() == true) {
+            if(tile.isVisited() == false) {
                 return tile;
             }
         }

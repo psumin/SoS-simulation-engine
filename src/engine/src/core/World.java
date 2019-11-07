@@ -193,7 +193,7 @@ public class World extends SoSObject {
         // static stimulus injection technique
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
-        writeScenario2();         // interactive simulation test for evaluation
+//        writeScenario2();         // interactive simulation test for evaluation
 //        router.add(new Loss(1, 10000, "FF", "FF"));
 
         for (int i = 0; i < maxFireFighter; ++i) {
