@@ -375,7 +375,7 @@ public class World extends SoSObject {
 //            if(i == 0){
 //                hospital.setCapacity(2);
 //            } else {
-            hospital.setCapacity(2);
+            hospital.setCapacity(10);
 //            }
         }
         hospitals.get(0).setPosition(0, 0);
