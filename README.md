@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/SESoS/SIMVA-SoS.svg?branch=master)](https://travis-ci.org/SESoS/SIMVA-SoS)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache2.0-yellow.svg)](https://opensource.org/licenses/Apache-2.0)
 
 # Dynamic-SoS
