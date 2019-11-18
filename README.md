@@ -36,6 +36,8 @@ If the modules are not considered as source code, please apply the src as source
 
 Previously, we implemented SIMVA-SoS (SIMulation-based Verification and Analysis tool for System of Systems). We are sorry to tell you that some of the related publications are written in Korean. If you have any questions or suggesitions, please email us, [smpark@se.kaist.ac.kr](mailto:smpark@se.kaist.ac.kr). We are pleased to have talks with you.
 
+https://github.com/SESoS/SIMVA-SoS
+
 [Mingyu Jin, Donghwan Shin, Junho Kim, Doo-Hwan Bae. "System-of-Systems-level Goal Achievement Verification Tool." Proceedings of KIISE,  (2017.6): 552-554.](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07207302)
 
 [Junho Kim, Donghwan Shin, Doo-Hwan Bae. "An Applicability Study of Action-Benefit-Cost Model and Statistical Model Checking for System of Systems Goal Achievement Verification." KIISE Transactions on Computing Practices, 23.4 (2017.4): 256-261.](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07153954)
