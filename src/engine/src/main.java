@@ -91,6 +91,10 @@ public class main {
                 satisfaction = false;
             }
 
+            if(i == 1 && satisfaction == false) {
+                satisfactionProb = 0.0;
+            }
+
         }
         if (satisfaction == true) {
             satisfactionProb = 1;
