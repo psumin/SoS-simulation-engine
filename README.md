@@ -41,7 +41,7 @@ https://github.com/SESoS/SIMVA-SoS
 
 [Junho Kim, Donghwan Shin, Doo-Hwan Bae. "An Applicability Study of Action-Benefit-Cost Model and Statistical Model Checking for System of Systems Goal Achievement Verification." KIISE Transactions on Computing Practices, 23.4 (2017.4): 256-261.](http://www.dbpia.co.kr/Journal/ArticleDetail/NODE07153954)
 
-[Park, Sumin, Zelalem Mihret Belay, and Doo-Hwan Bae. "A simulation-based behavior analysis for MCI response system of systems." 2019 IEEE/ACM 7th International Workshop on Software Engineering for Systems-of-Systems (SESoS) and 13th Workshop on Distributed Software Development, Software Ecosystems and Systems-of-Systems (WDES). IEEE, 2019.](https://ieeexplore.ieee.org/abstract/document/8882856)
+[Park Sumin, Zelalem Mihret Belay, and Doo-Hwan Bae. "A simulation-based behavior analysis for MCI response system of systems." 2019 IEEE/ACM 7th International Workshop on Software Engineering for Systems-of-Systems (SESoS) and 13th Workshop on Distributed Software Development, Software Ecosystems and Systems-of-Systems (WDES). IEEE, 2019.](https://ieeexplore.ieee.org/abstract/document/8882856)
 
 
 
