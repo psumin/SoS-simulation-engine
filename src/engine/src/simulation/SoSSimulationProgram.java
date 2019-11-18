@@ -79,8 +79,8 @@ public class SoSSimulationProgram implements KeyListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);               // 종료를 위한건데, 없어도 동작하네?
         frame.pack();
         frame.setResizable(false);
-        frame.setVisible(true);
-
+//        frame.setVisible(true);
+        frame.setVisible(false);
         canvas.createBufferStrategy(2);
         bufferStrategy = canvas.getBufferStrategy();
 
@@ -191,7 +191,7 @@ public class SoSSimulationProgram implements KeyListener {
         while(running) {
             if (isFirstSimulation) {                                    // 첫 번째 시뮬레이션에만 적용
                 beginLoopTime = System.nanoTime();
-                render();                                               // 첫 번째 시뮬레이션에서만 GUI 를 rendering 한다.
+//                render();                                               // 첫 번째 시뮬레이션에서만 GUI 를 rendering 한다.
 
                 lastUpdateTime = currentUpdateTime;
                 currentUpdateTime = System.nanoTime();
