@@ -168,7 +168,7 @@ public class SoSSimulationProgram implements KeyListener {
         if(isFirstSimulation) {
             long nano = System.currentTimeMillis();
             String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-            filePath = "log/new_log/" + date + ".xlsx";
+            filePath = "D://SoS-simulation-engine/log/new_log/" + date + ".xlsx";
             statisticsSheet = workbook.createSheet("statistics");
             inputScenarioSheet = workbook.createSheet("inputScenarios");
         }
