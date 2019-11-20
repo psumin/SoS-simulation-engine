@@ -1,14 +1,14 @@
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache2.0-yellow.svg)](https://opensource.org/licenses/Apache-2.0)
 
-# Dynamic-SoS
+# Dynamic SIMVA-SoS
 
-Dynamic-SoS is a dynamic simulation-based verification and analysis tool for system of systems. Dynamic simulation means that the user can stop the simulation and inject the new scenario events while simulation is executing. To support these features, we adopted discrete time multi-agent simulation structure. Discrete time multi-agent simulation is a good structure to controll the injected events simultaneously. Also, it focuses only for the agents, not the whole system, and that provides a proper level of abstraction for reducing the complexity of simulation. Dynamic-SoS simulates a system of systems with injected scenarios, and performs statistical model checking to verify the achievement of SoS-level goals when simulation ends. SoS-level goals can be translated into properties of the SoS.
+Dynamic SIMVA-SoS is a dynamic simulation-based verification and analysis tool for system of systems. Dynamic simulation means that the user can stop the simulation and inject the new scenario events while simulation is executing. To support these features, we adopted discrete time multi-agent simulation structure. Discrete time multi-agent simulation is a good structure to controll the injected events simultaneously. Also, it focuses only for the agents, not the whole system, and that provides a proper level of abstraction for reducing the complexity of simulation. Dynamic SIMVA-SoS simulates a system of systems with injected scenarios, and performs statistical model checking to verify the achievement of SoS-level goals when simulation ends. SoS-level goals can be translated into properties of the SoS.
 
 # Installation Guide
 
 [Preparation]
 
-You need to install following environment to run our Dynamic-SoS:
+You need to install following environment to run our Dynamic SIMVA-SoS:
 
 ● JVM 1.8 or later
 ● Gradle 3.1 or later
@@ -16,7 +16,7 @@ We recommend that you install IntelliJ to run our tool easier.
 
 [Process]
 
-Checkout our Dynamic-SoS where you want it installed.
+Checkout our Dynamic SIMVA-SoS where you want it installed.
 $ git clone https://github.com/sumin0407/SoS-simulation-engine.git
 Please import the stored libraries in project structure. These libraries are used for writing logs in Excel file.
 
