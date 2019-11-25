@@ -21,7 +21,7 @@ import java.util.Scanner;
 
 public class SoSSimulationProgram implements Runnable, KeyListener {
     final int MAX_SIMULATION_COUNT = 2;
-
+ 
     final int SIMULATION_WIDTH = 910;
     final int SIMULATION_HEIGHT = 910;
 //    final int CONSOLE_WIDTH = 200;
