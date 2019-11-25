@@ -44,7 +44,6 @@ https://github.com/SESoS/SIMVA-SoS
 [Park Sumin, Zelalem Mihret Belay, and Doo-Hwan Bae. "A simulation-based behavior analysis for MCI response system of systems." 2019 IEEE/ACM 7th International Workshop on Software Engineering for Systems-of-Systems (SESoS) and 13th Workshop on Distributed Software Development, Software Ecosystems and Systems-of-Systems (WDES). IEEE, 2019.](https://ieeexplore.ieee.org/abstract/document/8882856)
 
 
-
 ## Copyright
 
 Copyright 2017 - SESoS Group in Korea Advanced Institute of Science and Technology (KAIST).
