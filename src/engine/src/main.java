@@ -19,7 +19,7 @@ public class main {
         
         // Existence
 //        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.1);
-        MCIProperty property = new MCIProperty("TreatmentPatientProperty", "TreatmentPatientRatioUpperThanValue", "MCIExistence", 0.33);
+        MCIProperty property = new MCIProperty("TreatmentPatientProperty", "TreatmentPatientRatioUpperThanValue", "MCIExistence", 0.21);
         // Absence
 //        property.setThresholdValue(0); // RescueRate - TreatmentRate
         // Universality
