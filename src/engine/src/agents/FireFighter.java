@@ -63,7 +63,7 @@ public class FireFighter extends CS {
         //currentAction = new FireFighterCollaborativeAction(this);
         currentAction = new FireFighterSearch(this);        // Start action
 
-        moveDelay = 2;
+        moveDelay = 1;
         frameCounter = moveDelay;
     }
 

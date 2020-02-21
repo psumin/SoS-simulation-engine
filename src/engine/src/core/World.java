@@ -118,7 +118,7 @@ public class World extends SoSObject {
 //    public static final int maxPatient = 65;
     public static final int maxFireFighter = 4;            // 4
     public static final int maxHospital = 4;
-    public static final int maxAmbulance = 16;              // 16
+    public static final int maxAmbulance = 12;              // 16
     public static final int maxBridgehead = 4;
 
     public Map map;
@@ -990,15 +990,16 @@ public class World extends SoSObject {
         }
 
         // TODO: speed
-        stimuli.add(new Speed(this, 600, new Range(8, 8, 26, 26), 3.0f));      // smoke 시작 4층 위로
-        stimuli.add(new Speed(this, 900, new Range(8, 8, 26, 26), 6.0f));
-        stimuli.add(new Speed(this, 2130, new Range(8, 8, 26, 26), 9.0f));      // 4층 위로 fire
 
-        stimuli.add(new Speed(this, 2415, new Range(8, 8, 26, 26), 6.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
-        stimuli.add(new Speed(this, 2415, new Range(10, 10, 24, 24), 9.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
-
-        stimuli.add(new Speed(this, 2655, new Range(10, 10, 24, 24), 6.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
-        stimuli.add(new Speed(this, 2655, new Range(12, 12, 22, 22), 9.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+        stimuli.add(new Speed(this, 300, new Range(8, 8, 26, 26), 3.0f));      // smoke 시작 4층 위로
+        stimuli.add(new Speed(this, 450, new Range(8, 8, 26, 26), 6.0f));
+//        stimuli.add(new Speed(this, 2130, new Range(8, 8, 26, 26), 9.0f));      // 4층 위로 fire
+//
+//        stimuli.add(new Speed(this, 2415, new Range(8, 8, 26, 26), 6.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+//        stimuli.add(new Speed(this, 2415, new Range(10, 10, 24, 24), 9.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+//
+//        stimuli.add(new Speed(this, 2655, new Range(10, 10, 24, 24), 6.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+//        stimuli.add(new Speed(this, 2655, new Range(12, 12, 22, 22), 9.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
 
 //        stimuli.add(new Speed(this, 100, AmbulanceNames, 10));                              // 특정 frame count 이후 Ambulance 전체 move speed 변경
 //        stimuli.add(new Speed(this, 100, "Ambulance1", 7));
@@ -1008,14 +1009,16 @@ public class World extends SoSObject {
 //        stimuli.add(new SightRange(this, 600, firefighterNames, 1));                    // 특정 frame count 이후 전체 FF의 sight range 변화
         //stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.3f));      // smoke 시작 4층 위로
 
-        stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.6f));
-        stimuli.add(new SightRange(this, 2130, new Range(8, 8, 26, 26), 0.3f));      // 4층 위로 fire
-
-        stimuli.add(new SightRange(this, 2415, new Range(8, 8, 26, 26), 0.3f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
-        stimuli.add(new SightRange(this, 2415, new Range(10, 10, 24, 24), 0.1f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
-
-        stimuli.add(new SightRange(this, 2655, new Range(10, 10, 24, 24), 0.3f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
-        stimuli.add(new SightRange(this, 2655, new Range(12, 12, 22, 22), 0.1f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+        stimuli.add(new SightRange(this, 300, new Range(8, 8, 26, 26), 0.6f));
+        stimuli.add(new SightRange(this, 450, new Range(8, 8, 26, 26), 0.3f));
+//        stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.6f));
+//        stimuli.add(new SightRange(this, 2130, new Range(8, 8, 26, 26), 0.3f));      // 4층 위로 fire
+//
+//        stimuli.add(new SightRange(this, 2415, new Range(8, 8, 26, 26), 0.3f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+//        stimuli.add(new SightRange(this, 2415, new Range(10, 10, 24, 24), 0.1f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+//
+//        stimuli.add(new SightRange(this, 2655, new Range(10, 10, 24, 24), 0.3f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
+//        stimuli.add(new SightRange(this, 2655, new Range(12, 12, 22, 22), 0.1f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
 
 
 ////        // TODO: communicationRange (FF 관련)     range는 그냥 default로 유지됐다고 가정
@@ -1059,40 +1062,41 @@ public class World extends SoSObject {
 //
 //        // TODO: add FireFighter
         for (int i = 0; i < 2; i++) {
-            stimuli.add(new AddEntity(this, 275, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 138, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 158, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 195, this::addFireFighter));
         }
         for (int i = 0; i < 5; i++) {
-            stimuli.add(new AddEntity(this, 435, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 465, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 218, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 233, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 248, this::addFireFighter));
         }
         for (int i = 0; i < 15; i++) {
-            stimuli.add(new AddEntity(this, 990, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
         }
 //        for(int i = 0; i < 10; i++) {
 //            stimuli.add(new AddEntity(this, 600, this::addFireFighter));
 //        }
 
         // TODO: add Ambulance
-//        for(int i = 0; i < 2; i++) {
+//        for(int i = 0; i < 1; i++) {
 //            stimuli.add(new AddEntity(this, 300, this::addAmbulance));
 //            stimuli.add(new AddEntity(this, 400, this::addAmbulance));
-//            stimuli.add(new AddEntity(this, 800, this::addAmbulance));
-//            stimuli.add(new AddEntity(this, 1000, this::addAmbulance));
+//            stimuli.add(new AddEntity(this, 500, this::addAmbulance));
+//            stimuli.add(new AddEntity(this, 600, this::addAmbulance));
+//            stimuli.add(new AddEntity(this, 700, this::addAmbulance));
 //        }
 //        // TODO: Msg Delay
 //        // CS && CS
 //        router.add(new Delay(900, 2130, "FF", "FF", 75));
-        router.add(new Delay(600, 2130, "FF", "FF", 75));       // 5분간 delay
-        router.add(new Delay(2130, 2655, "FF", "FF", 150));     // 10분간 delay
+        router.add(new Delay(300, 500, "FF", "FF", 75));
+//        router.add(new Delay(2130, 2655, "FF", "FF", 150));     // 10분간 delay
 
 
 //        router.add(new Delay(600, 2655, "FF", "FF", 100));       // 5분간 delay
 
 
-        router.add(new Loss(900, 2130, "FF", "FF"));
+//        router.add(new Loss(900, 2130, "FF", "FF"));
 //        router.add(new Loss(2130, 2655, "FF", "FF"));
 //        router.add(new Delay(10, 100, "FF", "FF", 20));
 //        router.add(new Delay(10, 200, "All", "ALL", 20));
@@ -1211,31 +1215,19 @@ public class World extends SoSObject {
 //        stimuli.add(new RemoveEntity(this, 140, "Ambulance4", this::removeCS));
 //
 //        // TODO: add FireFighter
-//        for(int i = 0; i < 40; i++) {
-//            stimuli.add(new AddEntity(this, 100, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
-//    }
-//        for(int i = 0; i < 5; i++) {
-//            stimuli.add(new AddEntity(this, 435, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 465, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
-//        }
-//        for(int i = 0; i < 15; i++) {
-//            stimuli.add(new AddEntity(this, 990, this::addFireFighter));
-//        }
-//        for(int i = 0; i < 1; i++) {
-//            stimuli.add(new AddEntity(this, 30, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 60, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 90, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 120, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 150, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 180, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 210, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 240, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 270, this::addFireFighter));
-//            stimuli.add(new AddEntity(this, 300, this::addFireFighter));
-//        }
+        for (int i = 0; i < 2; i++) {
+            stimuli.add(new AddEntity(this, 275, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 315, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 390, this::addFireFighter));
+        }
+        for (int i = 0; i < 5; i++) {
+            stimuli.add(new AddEntity(this, 435, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 465, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
+        }
+        for (int i = 0; i < 15; i++) {
+            stimuli.add(new AddEntity(this, 990, this::addFireFighter));
+        }
 
     // TODO: add Ambulance
 //        for(int i = 0; i < 2; i++) {
