@@ -151,10 +151,10 @@ public class SoSSimulationProgram implements KeyListener {
 
     boolean stop = false;
 
-    XSSFWorkbook workbook = new XSSFWorkbook();
-    XSSFSheet statisticsSheet;
-    XSSFSheet inputScenarioSheet;
-    CellStyle headerStyle;
+//    XSSFWorkbook workbook = new XSSFWorkbook();
+//    XSSFSheet statisticsSheet;
+//    XSSFSheet inputScenarioSheet;
+//    CellStyle headerStyle;
 
     public Log run(){
 //        Scanner scan = new Scanner();
@@ -165,25 +165,25 @@ public class SoSSimulationProgram implements KeyListener {
         long deltaLoop;
 
         Log log = new Log();
-        if(isFirstSimulation) {
-            long nano = System.currentTimeMillis();
-            String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-            filePath = "log/new_log/" + date + ".xlsx";
-            statisticsSheet = workbook.createSheet("statistics");
-            inputScenarioSheet = workbook.createSheet("inputScenarios");
-        }
+//        if(isFirstSimulation) {
+//            long nano = System.currentTimeMillis();
+//            String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
+//            filePath = "log/new_log/" + date + ".xlsx";
+//            statisticsSheet = workbook.createSheet("statistics");
+//            inputScenarioSheet = workbook.createSheet("inputScenarios");
+//        }
 //
 //
 
-        headerStyle = workbook.createCellStyle();
-        headerStyle.setAlignment(HorizontalAlignment.CENTER);
-        headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-        Sheet sheet = statisticsSheet;
-        Row row = sheet.createRow(0);
-        ExcelHelper.getCell(row, 0).setCellValue("Rescued rate");
-        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
+//        headerStyle = workbook.createCellStyle();
+//        headerStyle.setAlignment(HorizontalAlignment.CENTER);
+//        headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+//        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//
+//        Sheet sheet = statisticsSheet;
+//        Row row = sheet.createRow(0);
+//        ExcelHelper.getCell(row, 0).setCellValue("Rescued rate");
+//        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
 
         init();                                                         // World 초기화
 
@@ -303,170 +303,170 @@ public class SoSSimulationProgram implements KeyListener {
 //                System.out.println("log add 후에 모습: !!!!");
 //                log.printSnapshot();
 //                log.addSnapshot(time, "RescuedPatient: " + String.valueOf(world.rescuedPatientCount));
-                Sheet sheet = statisticsSheet;
-                Row row = sheet.createRow(simulation_count);
-                ExcelHelper.getCell(row, 0).setCellValue("" + world.getRescuedRate());
+//                Sheet sheet = statisticsSheet;
+//                Row row = sheet.createRow(simulation_count);
+//                ExcelHelper.getCell(row, 0).setCellValue("" + world.getRescuedRate());
                 if(isFirstSimulation) {                                                 // 첫 번째 시뮬레이션일 때 초기 정보 저장
-                    sheet = inputScenarioSheet;
-                    int rowNum = 0;
-
-                    row = sheet.createRow(rowNum++);
-                    ExcelHelper.getCell(row, 0).setCellValue("# of Patient");
-                    ExcelHelper.getCell(row, 1).setCellValue("# of FireFighter");
-                    ExcelHelper.getCell(row, 2).setCellValue("# of Hospital");
-                    ExcelHelper.getCell(row, 3).setCellValue("# of Ambulance");
-                    ExcelHelper.getCell(row, 4).setCellValue("# of Bridgehead");
-                    ExcelHelper.getCell(row, 5).setCellValue("Max frame count");
-//                    ExcelHelper.getCell(row, 6).setCellValue("Max simulation time");
-//                    for(int i = 0; i < 7; ++i) {
-                    for(int i = 0; i < 6; ++i) {
-                        ExcelHelper.getCell(row, i).setCellStyle(headerStyle);
-                    }
-
-                    row = sheet.createRow(rowNum++);
-                    ExcelHelper.getCell(row, 0).setCellValue(World.maxPatient);
-                    ExcelHelper.getCell(row, 1).setCellValue(World.maxFireFighter);
-                    ExcelHelper.getCell(row, 2).setCellValue(World.maxHospital);
-                    ExcelHelper.getCell(row, 3).setCellValue(World.maxAmbulance);
-                    ExcelHelper.getCell(row, 4).setCellValue(World.maxBridgehead);
-                    ExcelHelper.getCell(row, 5).setCellValue(MAX_FRAME_COUNT);
-//                    ExcelHelper.getCell(row, 6).setCellValue(MAX_SIMULATION_COUNT);
-
-
-                                                                                                       // 사용자에 의해서 추가되는 시나리오가 있으면 log에 추가된다. ==> new_log
-                    row = sheet.createRow(rowNum++);
-                    for(DataStructure.AddCS inputData: World.addCS) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 제외)
-                        row = sheet.createRow(rowNum++);
-                        int colNum = 0;
-                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("How many?: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.count);
-                    }
-
-                    row = sheet.createRow(rowNum++);
-                    for(DataStructure.Message inputData: World.message) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
-                        row = sheet.createRow(rowNum++);
-                        int colNum = 0;
-                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("start frame: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.startFrame);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("end frame: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.finishFrame);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("sender: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.sender);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("receiver: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.receiver);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("delay duration: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.duration);
-                    }
-
-                    row = sheet.createRow(rowNum++);
-                    for(DataStructure.Range inputData: World.range) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
-                        row = sheet.createRow(rowNum++);
-                        int colNum = 0;
-                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("left: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.left);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("top: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.top);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("right: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.right);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("bottom: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.bottom);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("ratio: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue((Float) inputData.value);
-                    }
-
-                    row = sheet.createRow(rowNum++);
-                    for(DataStructure.ChangeAll inputData: World.changeAll) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
-                        row = sheet.createRow(rowNum++);
-                        int colNum = 0;
-                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("value: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue((int) inputData.value);
-                    }
-
-                    row = sheet.createRow(rowNum++);
-                    for(DataStructure.ChangeOne inputData: World.changeOne) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
-                        row = sheet.createRow(rowNum++);
-                        int colNum = 0;
-                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("number: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.number);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("value: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue((int) inputData.value);
-                    }
-
-                    row = sheet.createRow(rowNum++);
-                    for(DataStructure.RemoveCS inputData: World.removeCS) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
-                        row = sheet.createRow(rowNum++);
-                        int colNum = 0;
-                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
-
-                        ExcelHelper.getCell(row, colNum).setCellValue("number: ");
-                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
-                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.number);
-                    }
+//                    sheet = inputScenarioSheet;
+//                    int rowNum = 0;
+//
+//                    row = sheet.createRow(rowNum++);
+//                    ExcelHelper.getCell(row, 0).setCellValue("# of Patient");
+//                    ExcelHelper.getCell(row, 1).setCellValue("# of FireFighter");
+//                    ExcelHelper.getCell(row, 2).setCellValue("# of Hospital");
+//                    ExcelHelper.getCell(row, 3).setCellValue("# of Ambulance");
+//                    ExcelHelper.getCell(row, 4).setCellValue("# of Bridgehead");
+//                    ExcelHelper.getCell(row, 5).setCellValue("Max frame count");
+////                    ExcelHelper.getCell(row, 6).setCellValue("Max simulation time");
+////                    for(int i = 0; i < 7; ++i) {
+//                    for(int i = 0; i < 6; ++i) {
+//                        ExcelHelper.getCell(row, i).setCellStyle(headerStyle);
+//                    }
+//
+//                    row = sheet.createRow(rowNum++);
+//                    ExcelHelper.getCell(row, 0).setCellValue(World.maxPatient);
+//                    ExcelHelper.getCell(row, 1).setCellValue(World.maxFireFighter);
+//                    ExcelHelper.getCell(row, 2).setCellValue(World.maxHospital);
+//                    ExcelHelper.getCell(row, 3).setCellValue(World.maxAmbulance);
+//                    ExcelHelper.getCell(row, 4).setCellValue(World.maxBridgehead);
+//                    ExcelHelper.getCell(row, 5).setCellValue(MAX_FRAME_COUNT);
+////                    ExcelHelper.getCell(row, 6).setCellValue(MAX_SIMULATION_COUNT);
+//
+//
+//                                                                                                       // 사용자에 의해서 추가되는 시나리오가 있으면 log에 추가된다. ==> new_log
+//                    row = sheet.createRow(rowNum++);
+//                    for(DataStructure.AddCS inputData: World.addCS) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 제외)
+//                        row = sheet.createRow(rowNum++);
+//                        int colNum = 0;
+//                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("How many?: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.count);
+//                    }
+//
+//                    row = sheet.createRow(rowNum++);
+//                    for(DataStructure.Message inputData: World.message) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+//                        row = sheet.createRow(rowNum++);
+//                        int colNum = 0;
+//                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("start frame: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.startFrame);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("end frame: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.finishFrame);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("sender: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.sender);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("receiver: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.receiver);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("delay duration: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.duration);
+//                    }
+//
+//                    row = sheet.createRow(rowNum++);
+//                    for(DataStructure.Range inputData: World.range) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+//                        row = sheet.createRow(rowNum++);
+//                        int colNum = 0;
+//                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("left: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.left);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("top: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.top);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("right: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.right);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("bottom: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.bottom);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("ratio: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue((Float) inputData.value);
+//                    }
+//
+//                    row = sheet.createRow(rowNum++);
+//                    for(DataStructure.ChangeAll inputData: World.changeAll) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+//                        row = sheet.createRow(rowNum++);
+//                        int colNum = 0;
+//                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("value: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue((int) inputData.value);
+//                    }
+//
+//                    row = sheet.createRow(rowNum++);
+//                    for(DataStructure.ChangeOne inputData: World.changeOne) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+//                        row = sheet.createRow(rowNum++);
+//                        int colNum = 0;
+//                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("number: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.number);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("value: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue((int) inputData.value);
+//                    }
+//
+//                    row = sheet.createRow(rowNum++);
+//                    for(DataStructure.RemoveCS inputData: World.removeCS) {                                  // 첫 번째 시뮬레이션일 때 적용한 시나리오 저장 (router, msg 관련)
+//                        row = sheet.createRow(rowNum++);
+//                        int colNum = 0;
+//                        ExcelHelper.getCell(row, colNum).setCellValue("command: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.command);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("frame: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.frame);
+//
+//                        ExcelHelper.getCell(row, colNum).setCellValue("number: ");
+//                        ExcelHelper.getCell(row, colNum++).setCellStyle(headerStyle);
+//                        ExcelHelper.getCell(row, colNum++).setCellValue(inputData.number);
+//                    }
 
 
                 }
@@ -500,12 +500,12 @@ public class SoSSimulationProgram implements KeyListener {
 
     protected void clear() {
         world.clear();
-        long nano = System.currentTimeMillis();
-        String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        String filePath = "log/new_log/" + date + ".xlsx";
-
-        ExcelHelper.autoSizeAllColumn(workbook);
-        ExcelHelper.save(workbook, filePath);
+//        long nano = System.currentTimeMillis();
+//        String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
+//        String filePath = "log/new_log/" + date + ".xlsx";
+//
+//        ExcelHelper.autoSizeAllColumn(workbook);
+//        ExcelHelper.save(workbook, filePath);
     }
 
     /*public static void main(String [] args){
