@@ -184,8 +184,8 @@ public class World extends SoSObject {
         //map.canUpdate(false);
 
         // Create router
-//        router = new MsgRouter(this, workbook);
-        router = new MsgRouter(this);
+        router = new MsgRouter(this, workbook);         // communication sheet 필요할때
+//        router = new MsgRouter(this);                     // communication sheet 없을때
         addChild(router);
 
         createObjects();
@@ -1244,7 +1244,7 @@ public class World extends SoSObject {
 
 //        router.add(new Delay(600, 2655, "FF", "FF", 100));       // 5분간 delay
 
-
+        router.add(new Loss(100, 180, "FF", "FF"));
 //        router.add(new Loss(900, 2130, "FF", "FF"));
 //        router.add(new Loss(2130, 2655, "FF", "FF"));
 //        router.add(new Delay(10, 100, "FF", "FF", 20));
