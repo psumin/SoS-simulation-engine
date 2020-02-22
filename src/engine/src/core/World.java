@@ -1090,7 +1090,7 @@ public class World extends SoSObject {
 //        // TODO: Msg Delay
 //        // CS && CS
 //        router.add(new Delay(900, 2130, "FF", "FF", 75));
-        router.add(new Delay(300, 500, "FF", "FF", 75));
+        router.add(new Delay(200, 400, "FF", "FF", 75));
 //        router.add(new Delay(2130, 2655, "FF", "FF", 150));     // 10분간 delay
 
 
