@@ -81,7 +81,7 @@ public class main {
             double theta = i * 0.01;
 
             thetaStartTime = System.nanoTime();
-            verificationResult = verifier.verifyWithSimulationGUI(simulationEngine, property, 500, theta);    //or T = 3
+            verificationResult = verifier.verifyWithSimulationGUI(simulationEngine, property, 400, theta);    //or T = 3
             thetaEndTime = System.nanoTime();
             System.out.println(i /(float)100 + " theta verification running time: " + (thetaEndTime - thetaStartTime) / (float)1000_000_000 + " sec");          // 한 theta 실행 시간
 

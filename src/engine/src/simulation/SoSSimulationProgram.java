@@ -182,7 +182,7 @@ public class SoSSimulationProgram implements KeyListener {
 
         Sheet sheet = statisticsSheet;
         Row row = sheet.createRow(0);
-        ExcelHelper.getCell(row, 0).setCellValue("Rescued rate");
+        ExcelHelper.getCell(row, 0).setCellValue("Treatment rate");
         ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
 
         init();                                                         // World 초기화
