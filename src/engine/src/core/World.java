@@ -991,7 +991,7 @@ public class World extends SoSObject {
 
         // TODO: speed
 
-        stimuli.add(new Speed(this, 300, new Range(8, 8, 26, 26), 3.0f));      // smoke 시작 4층 위로
+        stimuli.add(new Speed(this, 300, new Range(8, 8, 26, 26), 4.0f));      // smoke 시작 4층 위로
         stimuli.add(new Speed(this, 400, new Range(8, 8, 26, 26), 6.0f));
 //        stimuli.add(new Speed(this, 2130, new Range(8, 8, 26, 26), 9.0f));      // 4층 위로 fire
 //
