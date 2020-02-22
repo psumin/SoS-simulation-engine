@@ -113,12 +113,12 @@ public class World extends SoSObject {
 
     // Initial Values
 //    public static final int maxPatient = 294;
-    public static final int maxPatient = 223;                // 223
-    //    public static final int maxPatient = 100;
+//    public static final int maxPatient = 223;                // 223
+        public static final int maxPatient = 100;
 //    public static final int maxPatient = 65;
     public static final int maxFireFighter = 4;            // 4
     public static final int maxHospital = 4;
-    public static final int maxAmbulance = 12;              // 16
+    public static final int maxAmbulance = 16;              // 16
     public static final int maxBridgehead = 4;
 
     public Map map;
@@ -992,7 +992,7 @@ public class World extends SoSObject {
         // TODO: speed
 
         stimuli.add(new Speed(this, 300, new Range(8, 8, 26, 26), 3.0f));      // smoke 시작 4층 위로
-        stimuli.add(new Speed(this, 450, new Range(8, 8, 26, 26), 6.0f));
+        stimuli.add(new Speed(this, 400, new Range(8, 8, 26, 26), 6.0f));
 //        stimuli.add(new Speed(this, 2130, new Range(8, 8, 26, 26), 9.0f));      // 4층 위로 fire
 //
 //        stimuli.add(new Speed(this, 2415, new Range(8, 8, 26, 26), 6.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
@@ -1010,7 +1010,7 @@ public class World extends SoSObject {
         //stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.3f));      // smoke 시작 4층 위로
 
         stimuli.add(new SightRange(this, 300, new Range(8, 8, 26, 26), 0.6f));
-        stimuli.add(new SightRange(this, 450, new Range(8, 8, 26, 26), 0.3f));
+        stimuli.add(new SightRange(this, 400, new Range(8, 8, 26, 26), 0.3f));
 //        stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.6f));
 //        stimuli.add(new SightRange(this, 2130, new Range(8, 8, 26, 26), 0.3f));      // 4층 위로 fire
 //
@@ -1062,27 +1062,28 @@ public class World extends SoSObject {
 //
 //        // TODO: add FireFighter
         for (int i = 0; i < 2; i++) {
-            stimuli.add(new AddEntity(this, 138, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 158, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 195, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 100, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 150, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 200, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 250, this::addFireFighter));
         }
         for (int i = 0; i < 5; i++) {
-            stimuli.add(new AddEntity(this, 218, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 233, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 248, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 300, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 350, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 400, this::addFireFighter));
         }
-        for (int i = 0; i < 15; i++) {
-            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
-        }
+//        for (int i = 0; i < 15; i++) {
+//            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
+//        }
 //        for(int i = 0; i < 10; i++) {
 //            stimuli.add(new AddEntity(this, 600, this::addFireFighter));
 //        }
 
         // TODO: add Ambulance
 //        for(int i = 0; i < 1; i++) {
+//            stimuli.add(new AddEntity(this, 200, this::addAmbulance));
 //            stimuli.add(new AddEntity(this, 300, this::addAmbulance));
 //            stimuli.add(new AddEntity(this, 400, this::addAmbulance));
-//            stimuli.add(new AddEntity(this, 500, this::addAmbulance));
 //            stimuli.add(new AddEntity(this, 600, this::addAmbulance));
 //            stimuli.add(new AddEntity(this, 700, this::addAmbulance));
 //        }
@@ -1386,9 +1387,9 @@ public class World extends SoSObject {
             stimuli.add(new AddEntity(this, 233, this::addFireFighter));
             stimuli.add(new AddEntity(this, 248, this::addFireFighter));
         }
-        for (int i = 0; i < 15; i++) {
-            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
-        }
+//        for (int i = 0; i < 15; i++) {
+//            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
+//        }
 //        for(int i = 0; i < 10; i++) {
 //            stimuli.add(new AddEntity(this, 600, this::addFireFighter));
 //        }

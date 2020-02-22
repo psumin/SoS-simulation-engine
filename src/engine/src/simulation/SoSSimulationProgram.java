@@ -34,7 +34,7 @@ public class SoSSimulationProgram implements KeyListener {
     String filePath;
     int super_counter = 1;
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
-    final int MAX_FRAME_COUNT = 1000;                                // 각 시뮬레이션마다 최대 frame의 수
+    final int MAX_FRAME_COUNT = 500;                                // 각 시뮬레이션마다 최대 frame의 수
 
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
@@ -151,10 +151,10 @@ public class SoSSimulationProgram implements KeyListener {
 
     boolean stop = false;
 
-//    XSSFWorkbook workbook = new XSSFWorkbook();
-//    XSSFSheet statisticsSheet;
-//    XSSFSheet inputScenarioSheet;
-//    CellStyle headerStyle;
+    XSSFWorkbook workbook = new XSSFWorkbook();
+    XSSFSheet statisticsSheet;
+    XSSFSheet inputScenarioSheet;
+    CellStyle headerStyle;
 
     public Log run(){
 //        Scanner scan = new Scanner();
@@ -165,25 +165,25 @@ public class SoSSimulationProgram implements KeyListener {
         long deltaLoop;
 
         Log log = new Log();
-//        if(isFirstSimulation) {
-//            long nano = System.currentTimeMillis();
-//            String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-//            filePath = "log/new_log/" + date + ".xlsx";
-//            statisticsSheet = workbook.createSheet("statistics");
+        if(isFirstSimulation) {
+            long nano = System.currentTimeMillis();
+            String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
+            filePath = "log/new_log/" + date + ".xlsx";
+            statisticsSheet = workbook.createSheet("statistics");
 //            inputScenarioSheet = workbook.createSheet("inputScenarios");
-//        }
-//
-//
+        }
 
-//        headerStyle = workbook.createCellStyle();
-//        headerStyle.setAlignment(HorizontalAlignment.CENTER);
-//        headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-//        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-//
-//        Sheet sheet = statisticsSheet;
-//        Row row = sheet.createRow(0);
-//        ExcelHelper.getCell(row, 0).setCellValue("Rescued rate");
-//        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
+
+
+        headerStyle = workbook.createCellStyle();
+        headerStyle.setAlignment(HorizontalAlignment.CENTER);
+        headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        Sheet sheet = statisticsSheet;
+        Row row = sheet.createRow(0);
+        ExcelHelper.getCell(row, 0).setCellValue("Rescued rate");
+        ExcelHelper.getCell(row, 0).setCellStyle(headerStyle);
 
         init();                                                         // World 초기화
 
@@ -303,9 +303,10 @@ public class SoSSimulationProgram implements KeyListener {
 //                System.out.println("log add 후에 모습: !!!!");
 //                log.printSnapshot();
 //                log.addSnapshot(time, "RescuedPatient: " + String.valueOf(world.rescuedPatientCount));
-//                Sheet sheet = statisticsSheet;
-//                Row row = sheet.createRow(simulation_count);
+                Sheet sheet = statisticsSheet;
+                Row row = sheet.createRow(simulation_count);
 //                ExcelHelper.getCell(row, 0).setCellValue("" + world.getRescuedRate());
+                ExcelHelper.getCell(row, 0).setCellValue("" + world.getTreatmentRate());
                 if(isFirstSimulation) {                                                 // 첫 번째 시뮬레이션일 때 초기 정보 저장
 //                    sheet = inputScenarioSheet;
 //                    int rowNum = 0;
@@ -500,12 +501,12 @@ public class SoSSimulationProgram implements KeyListener {
 
     protected void clear() {
         world.clear();
-//        long nano = System.currentTimeMillis();
-//        String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-//        String filePath = "log/new_log/" + date + ".xlsx";
-//
-//        ExcelHelper.autoSizeAllColumn(workbook);
-//        ExcelHelper.save(workbook, filePath);
+        long nano = System.currentTimeMillis();
+        String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
+        String filePath = "log/new_log/" + date + ".xlsx";
+
+        ExcelHelper.autoSizeAllColumn(workbook);
+        ExcelHelper.save(workbook, filePath);
     }
 
     /*public static void main(String [] args){
