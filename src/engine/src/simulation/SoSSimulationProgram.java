@@ -168,7 +168,7 @@ public class SoSSimulationProgram implements KeyListener {
         if(isFirstSimulation) {
             long nano = System.currentTimeMillis();
             String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-            filePath = "log/new_log/" + date + ".xlsx";
+            filePath = "log/new_log/good2/" + date + ".xlsx";
             statisticsSheet = workbook.createSheet("statistics");
 //            inputScenarioSheet = workbook.createSheet("inputScenarios");
         }
@@ -503,7 +503,7 @@ public class SoSSimulationProgram implements KeyListener {
         world.clear();
         long nano = System.currentTimeMillis();
         String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        String filePath = "log/new_log/" + date + ".xlsx";
+        String filePath = "log/new_log/good2/" + date + ".xlsx";
 
         ExcelHelper.autoSizeAllColumn(workbook);
         ExcelHelper.save(workbook, filePath);

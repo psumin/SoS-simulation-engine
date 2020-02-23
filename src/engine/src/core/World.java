@@ -197,8 +197,8 @@ public class World extends SoSObject {
 
 
 
-        writeScenario1();            // baseline for SoSE 2020
-//        writeScenario2();            // bad case for SoSE 2020
+//        writeScenario1();            // baseline for SoSE 2020
+        writeScenario2();            // bad case for SoSE 2020
 //        writeScenario3();            // good case for SoSE 2020
 
 
@@ -697,7 +697,7 @@ public class World extends SoSObject {
 
         long nano = System.currentTimeMillis();
         String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        String filePath = "log/state/" + date + ".xlsx";
+        String filePath = "log/state/good2/" + date + ".xlsx";
 
         ExcelHelper.autoSizeAllColumn(workbook);
         ExcelHelper.save(workbook, filePath);
@@ -1149,8 +1149,9 @@ public class World extends SoSObject {
 
         // TODO: speed
 
-        stimuli.add(new Speed(this, 300, new Range(8, 8, 26, 26), 3.0f));      // smoke 시작 4층 위로
-        stimuli.add(new Speed(this, 450, new Range(8, 8, 26, 26), 6.0f));
+        stimuli.add(new Speed(this, 300, new Range(8, 8, 26, 26), 4.0f));      // smoke 시작 4층 위로
+        stimuli.add(new Speed(this, 400, new Range(8, 8, 26, 26), 6.0f));
+        stimuli.add(new Speed(this, 450, new Range(8, 8, 26, 26), 4.0f));
 //        stimuli.add(new Speed(this, 2130, new Range(8, 8, 26, 26), 9.0f));      // 4층 위로 fire
 //
 //        stimuli.add(new Speed(this, 2415, new Range(8, 8, 26, 26), 6.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
@@ -1168,7 +1169,8 @@ public class World extends SoSObject {
         //stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.3f));      // smoke 시작 4층 위로
 
         stimuli.add(new SightRange(this, 300, new Range(8, 8, 26, 26), 0.6f));
-        stimuli.add(new SightRange(this, 450, new Range(8, 8, 26, 26), 0.3f));
+        stimuli.add(new SightRange(this, 400, new Range(8, 8, 26, 26), 0.3f));
+        stimuli.add(new SightRange(this, 450, new Range(8, 8, 26, 26), 0.6f));
 //        stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.6f));
 //        stimuli.add(new SightRange(this, 2130, new Range(8, 8, 26, 26), 0.3f));      // 4층 위로 fire
 //
@@ -1220,34 +1222,39 @@ public class World extends SoSObject {
 //
 //        // TODO: add FireFighter
         for (int i = 0; i < 2; i++) {
-            stimuli.add(new AddEntity(this, 138, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 158, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 195, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 100, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 150, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 200, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 250, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 300, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 400, this::addFireFighter));
         }
         for (int i = 0; i < 5; i++) {
-            stimuli.add(new AddEntity(this, 218, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 233, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 248, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 300, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 350, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 400, this::addFireFighter));
         }
-        for (int i = 0; i < 15; i++) {
-            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
-        }
+
+//        for (int i = 0; i < 15; i++) {
+//            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
+//        }
 //        for(int i = 0; i < 10; i++) {
 //            stimuli.add(new AddEntity(this, 600, this::addFireFighter));
 //        }
 
         // TODO: add Ambulance
-//        for(int i = 0; i < 1; i++) {
-//            stimuli.add(new AddEntity(this, 300, this::addAmbulance));
-//            stimuli.add(new AddEntity(this, 400, this::addAmbulance));
-//            stimuli.add(new AddEntity(this, 500, this::addAmbulance));
-//            stimuli.add(new AddEntity(this, 600, this::addAmbulance));
-//            stimuli.add(new AddEntity(this, 700, this::addAmbulance));
-//        }
+        for(int i = 0; i < 2; i++) {
+//            stimuli.add(new AddEntity(this, 200, this::addAmbulance));
+            stimuli.add(new AddEntity(this, 300, this::addAmbulance));
+            stimuli.add(new AddEntity(this, 400, this::addAmbulance));
+        }
+
+
+
 //        // TODO: Msg Delay
 //        // CS && CS
 //        router.add(new Delay(900, 2130, "FF", "FF", 75));
-        router.add(new Delay(300, 500, "FF", "FF", 75));
+//        router.add(new Delay(200, 400, "FF", "FF", 75));
 //        router.add(new Delay(2130, 2655, "FF", "FF", 150));     // 10분간 delay
 
 
@@ -1290,6 +1297,7 @@ public class World extends SoSObject {
 //
 //        // Entity && Entity
 //        router.add(new Loss(1, 20, "FF1", "FF5"));
+
 
     }
 
@@ -1307,8 +1315,8 @@ public class World extends SoSObject {
 
         // TODO: speed
 
-        stimuli.add(new Speed(this, 300, new Range(8, 8, 26, 26), 3.0f));      // smoke 시작 4층 위로
-        stimuli.add(new Speed(this, 450, new Range(8, 8, 26, 26), 6.0f));
+        stimuli.add(new Speed(this, 300, new Range(8, 8, 26, 26), 4.0f));      // smoke 시작 4층 위로
+        stimuli.add(new Speed(this, 400, new Range(8, 8, 26, 26), 6.0f));
 //        stimuli.add(new Speed(this, 2130, new Range(8, 8, 26, 26), 9.0f));      // 4층 위로 fire
 //
 //        stimuli.add(new Speed(this, 2415, new Range(8, 8, 26, 26), 6.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
@@ -1326,7 +1334,7 @@ public class World extends SoSObject {
         //stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.3f));      // smoke 시작 4층 위로
 
         stimuli.add(new SightRange(this, 300, new Range(8, 8, 26, 26), 0.6f));
-        stimuli.add(new SightRange(this, 450, new Range(8, 8, 26, 26), 0.3f));
+        stimuli.add(new SightRange(this, 400, new Range(8, 8, 26, 26), 0.3f));
 //        stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.6f));
 //        stimuli.add(new SightRange(this, 2130, new Range(8, 8, 26, 26), 0.3f));      // 4층 위로 fire
 //
@@ -1378,14 +1386,15 @@ public class World extends SoSObject {
 //
 //        // TODO: add FireFighter
         for (int i = 0; i < 2; i++) {
-            stimuli.add(new AddEntity(this, 138, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 158, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 195, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 100, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 150, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 200, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 250, this::addFireFighter));
         }
         for (int i = 0; i < 5; i++) {
-            stimuli.add(new AddEntity(this, 218, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 233, this::addFireFighter));
-            stimuli.add(new AddEntity(this, 248, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 300, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 350, this::addFireFighter));
+            stimuli.add(new AddEntity(this, 400, this::addFireFighter));
         }
 //        for (int i = 0; i < 15; i++) {
 //            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
@@ -1396,16 +1405,16 @@ public class World extends SoSObject {
 
         // TODO: add Ambulance
 //        for(int i = 0; i < 1; i++) {
+//            stimuli.add(new AddEntity(this, 200, this::addAmbulance));
 //            stimuli.add(new AddEntity(this, 300, this::addAmbulance));
 //            stimuli.add(new AddEntity(this, 400, this::addAmbulance));
-//            stimuli.add(new AddEntity(this, 500, this::addAmbulance));
 //            stimuli.add(new AddEntity(this, 600, this::addAmbulance));
 //            stimuli.add(new AddEntity(this, 700, this::addAmbulance));
 //        }
 //        // TODO: Msg Delay
 //        // CS && CS
 //        router.add(new Delay(900, 2130, "FF", "FF", 75));
-        router.add(new Delay(300, 500, "FF", "FF", 75));
+        router.add(new Delay(200, 400, "FF", "FF", 75));
 //        router.add(new Delay(2130, 2655, "FF", "FF", 150));     // 10분간 delay
 
 
@@ -1448,6 +1457,7 @@ public class World extends SoSObject {
 //
 //        // Entity && Entity
 //        router.add(new Loss(1, 20, "FF1", "FF5"));
+
 
     }
 
