@@ -50,7 +50,7 @@ public class AmbulanceFree extends AmbulanceAction {
     public void recvMsg(Msg msg) {
         if(msg.title == "move to bridgehead") {
             Bridgehead bridgehead = (Bridgehead)msg.data;
-            ambulance.changeAction(new AmbulanceMoveTobridgehead(ambulance, bridgehead));
+            ambulance.changeAction(new AmbulanceMoveToBridgehead(ambulance, bridgehead));
         }
     }
 }

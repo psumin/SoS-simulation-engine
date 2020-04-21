@@ -1,7 +1,7 @@
 package core;
 
 import action.ambulanceaction.AmbulanceFree;
-import action.ambulanceaction.AmbulanceMoveTobridgehead;
+import action.ambulanceaction.AmbulanceMoveToBridgehead;
 import action.ambulanceaction.AmbulanceSearch;
 import action.ambulanceaction.AmbulanceTransferToHospital;
 import action.firefighteraction.*;
@@ -1317,7 +1317,7 @@ public class World extends SoSObject {
 
         stimuli.add(new Speed(this, 300, new Range(8, 8, 26, 26), 4.0f));      // smoke 시작 4층 위로
         stimuli.add(new Speed(this, 400, new Range(8, 8, 26, 26), 6.0f));
-        stimuli.add(new Speed(this, 450, new Range(8, 8, 26, 26), 10.0f));
+        stimuli.add(new Speed(this, 450, new Range(8, 8, 26, 26), 100.0f));
 //        stimuli.add(new Speed(this, 2130, new Range(8, 8, 26, 26), 9.0f));      // 4층 위로 fire
 //
 //        stimuli.add(new Speed(this, 2415, new Range(8, 8, 26, 26), 6.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
@@ -1566,8 +1566,8 @@ public class World extends SoSObject {
                 AmbulanceFree action = (AmbulanceFree) cs.currentAction;
                 AmbulanceNames.remove(ambulance);
                 ambulanceCounter--;
-            } else if(cs.currentAction instanceof AmbulanceMoveTobridgehead) {
-                AmbulanceMoveTobridgehead action = (AmbulanceMoveTobridgehead) cs.currentAction;
+            } else if(cs.currentAction instanceof AmbulanceMoveToBridgehead) {
+                AmbulanceMoveToBridgehead action = (AmbulanceMoveToBridgehead) cs.currentAction;
                 AmbulanceNames.remove(ambulance);
                 ambulanceCounter--;
             } else if(cs.currentAction instanceof AmbulanceSearch) {

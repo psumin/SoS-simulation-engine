@@ -14,11 +14,11 @@ import java.util.ArrayList;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class AmbulanceMoveTobridgehead extends AmbulanceAction {
+public class AmbulanceMoveToBridgehead extends AmbulanceAction {
 
     Bridgehead bridgehead;
 
-    public AmbulanceMoveTobridgehead(Ambulance target, Bridgehead bridgehead) {
+    public AmbulanceMoveToBridgehead(Ambulance target, Bridgehead bridgehead) {
         super(target);
 
         this.bridgehead = bridgehead;

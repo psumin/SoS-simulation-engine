@@ -1,7 +1,7 @@
 //package core;
 //
 //import action.ambulanceaction.AmbulanceFree;
-//import action.ambulanceaction.AmbulanceMoveTobridgehead;
+//import action.ambulanceaction.AmbulanceMoveToBridgehead;
 //import action.ambulanceaction.AmbulanceSearch;
 //import action.ambulanceaction.AmbulanceTransferToHospital;
 //import action.firefighteraction.*;
@@ -863,8 +863,8 @@
 //                AmbulanceFree action = (AmbulanceFree) cs.currentAction;
 //                AmbulanceNames.remove(ambulance);
 //                ambulanceCounter--;
-//            } else if(cs.currentAction instanceof AmbulanceMoveTobridgehead) {
-//                AmbulanceMoveTobridgehead action = (AmbulanceMoveTobridgehead) cs.currentAction;
+//            } else if(cs.currentAction instanceof AmbulanceMoveToBridgehead) {
+//                AmbulanceMoveToBridgehead action = (AmbulanceMoveToBridgehead) cs.currentAction;
 //                AmbulanceNames.remove(ambulance);
 //                ambulanceCounter--;
 //            } else if(cs.currentAction instanceof AmbulanceSearch) {
