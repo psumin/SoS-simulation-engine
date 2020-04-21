@@ -1,8 +1,8 @@
-package property.pattern;/*package new_simvasos.property.pattern;
+package property.pattern;
 
-import new_simvasos.log.Log;
-import new_simvasos.log.Snapshot;
-import new_simvasos.property.Property;
+import log.Log;
+import log.Snapshot;
+import property.Property;
 
 
 import java.util.HashMap;
@@ -23,5 +23,5 @@ public abstract class ExistenceUntilChecker extends ExistenceChecker{
         }
         return false;
     }
-}*/
+}
 
