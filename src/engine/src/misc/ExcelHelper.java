@@ -11,6 +11,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Iterator;
 
+/**
+ * Project: NewSimulator
+ * Created by IntelliJ IDEA
+ * Author: Sumin Park <smpark@se.kaist.ac.kr>
+ * Github: https://github.com/sumin0407/NewSimulator.git
+ */
+
 public class ExcelHelper {
 
     public static Row nextRow(Row row) {

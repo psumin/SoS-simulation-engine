@@ -34,7 +34,7 @@ public class SoSSimulationProgram implements KeyListener {
     String filePath;
     int super_counter = 1;
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
-    final int MAX_FRAME_COUNT = 10;                                // 각 시뮬레이션마다 최대 frame의 수
+    final int MAX_FRAME_COUNT = 1000;                                // 각 시뮬레이션마다 최대 frame의 수
 
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
@@ -202,7 +202,6 @@ public class SoSSimulationProgram implements KeyListener {
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
                         expertMode();                                   // String 으로 stimulus 입력 가능
                     } else {
-                        beginnerMode();                                 // 메뉴에 따라서 stimulus 입력 가능
                         beginnerMode();                                 // 메뉴에 따라서 stimulus 입력 가능
                     }
                 }
