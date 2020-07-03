@@ -1,6 +1,6 @@
 package simulation;
 
-import core.DataStructure;
+import core.RuntimeMonitoring;
 import core.World;
 import log.Log;
 import misc.Time;
@@ -158,6 +158,8 @@ public class SoSSimulationProgram implements KeyListener {
 
     public Log run(){
 //        Scanner scan = new Scanner();
+        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
+        String className = "core.World";
         long beginLoopTime;
         long endLoopTime;
         long currentUpdateTime = System.nanoTime();
@@ -197,6 +199,7 @@ public class SoSSimulationProgram implements KeyListener {
                 currentUpdateTime = System.nanoTime();
                 if (!pause) {
                     update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
+
                 } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
                     frame.setVisible(true);                            // pause 상태에서는 GUI 를 숨긴다.
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
@@ -221,6 +224,10 @@ public class SoSSimulationProgram implements KeyListener {
             } else {                                                    // 첫 번째 시뮬레이션이 아니면 그냥 계속해서 업데이트 진행. stop 없음
                 update(1, log);
             }
+            runtimeMonitoring.classLoader(className, 0.5);
+
+
+
         }
 
 //        programEndTime = System.nanoTime();
@@ -289,7 +296,8 @@ public class SoSSimulationProgram implements KeyListener {
         if(time >= Time.fromSecond(0.0f)) {
             timeImpl.update(deltaTime);
             world.update();
-            log.addSnapshot(timeImpl.getFrameCount(), " RescuedRate: " + String.valueOf(world.getRescuedRate())  + " TreatmentRate: " +  String.valueOf(world.getTreatmentRate()) +
+            log.addSnapshot(timeImpl.getFrameCount(), " RescuedRate: " + String.valueOf(world.getRescuedRate())
+                    + " TreatmentRate: " +  String.valueOf(world.getTreatmentRate()) +
                     " CurrentFF: " + world.getFFNumber() + " CurrentAmb: " + world.getAmbNumber() + " " + world.printCSSnapshot());
 //            System.out.println(timeImpl.getFrameCount());
             if(world.isFinished()) {                        //Maximum frame 지나면 true로 들어올 수 있음
