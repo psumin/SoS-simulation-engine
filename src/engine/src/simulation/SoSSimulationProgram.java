@@ -158,8 +158,8 @@ public class SoSSimulationProgram implements KeyListener {
 
     public Log run(){
 //        Scanner scan = new Scanner();
-        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
-        String className = "core.World";
+//        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
+//        String className = "core.World";
         long beginLoopTime;
         long endLoopTime;
         long currentUpdateTime = System.nanoTime();
@@ -199,7 +199,7 @@ public class SoSSimulationProgram implements KeyListener {
                 currentUpdateTime = System.nanoTime();
                 if (!pause) {
                     update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
-
+//                    runtimeMonitoring.classLoader(className, 0.5);
                 } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
                     frame.setVisible(true);                            // pause 상태에서는 GUI 를 숨긴다.
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
@@ -223,8 +223,9 @@ public class SoSSimulationProgram implements KeyListener {
                 }
             } else {                                                    // 첫 번째 시뮬레이션이 아니면 그냥 계속해서 업데이트 진행. stop 없음
                 update(1, log);
+
             }
-            runtimeMonitoring.classLoader(className, 0.5);
+
 
 
 
@@ -508,12 +509,12 @@ public class SoSSimulationProgram implements KeyListener {
 
     protected void clear() {
         world.clear();
-        long nano = System.currentTimeMillis();
-        String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        String filePath = "log/new_log/bad1/" + date + ".xlsx";
-
-        ExcelHelper.autoSizeAllColumn(workbook);
-        ExcelHelper.save(workbook, filePath);
+//        long nano = System.currentTimeMillis();
+//        String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
+//        String filePath = "log/new_log/bad1/" + date + ".xlsx";
+//
+//        ExcelHelper.autoSizeAllColumn(workbook);
+//        ExcelHelper.save(workbook, filePath);
     }
 
     /*public static void main(String [] args){

@@ -199,7 +199,7 @@ public class World extends SoSObject {
 
 //        writeScenario1();            // baseline for SoSE 2020
 //        writeScenario2();            // good case for SoSE 2020
-        writeScenario3();            // bad case for SoSE 2020
+//        writeScenario3();            // bad case for SoSE 2020
 
 
 
@@ -447,7 +447,8 @@ public class World extends SoSObject {
     // Update at every frame
     @Override
     public void onUpdate() {
-
+        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
+        String className = "core.World";
         // end condition ==> current frame count is equal or bigger than the max frame count.
         if (frameCount >= maxFrame) {
             canUpdate(false);
@@ -480,7 +481,7 @@ public class World extends SoSObject {
             }
         }
         stimuli.removeAll(mustRemove);
-
+        runtimeMonitoring.classLoader(this, className, 0.5);
     }
 
 
@@ -691,16 +692,16 @@ public class World extends SoSObject {
 
 //        router.clear();         // 여기서 처리해야함. state\log ㅐ에 대한거 처리하고 나머지는 아래에서 처리
 
-        printPatientLog(true);
-//        printFireFighterLog(true);
-//        printAmbulanceLog(true);
-
-        long nano = System.currentTimeMillis();
-        String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
-        String filePath = "log/state/bad1/" + date + ".xlsx";
-
-        ExcelHelper.autoSizeAllColumn(workbook);
-        ExcelHelper.save(workbook, filePath);
+//        printPatientLog(true);
+////        printFireFighterLog(true);
+////        printAmbulanceLog(true);
+//
+//        long nano = System.currentTimeMillis();
+//        String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
+//        String filePath = "log/state/bad1/" + date + ".xlsx";
+//
+//        ExcelHelper.autoSizeAllColumn(workbook);
+//        ExcelHelper.save(workbook, filePath);
 
         router.clear();
 
