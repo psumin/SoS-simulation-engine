@@ -44,8 +44,10 @@ public class Tile extends SoSObject {
 
         setPosition(position);
 
-        light = new ImageObject("src/engine/resources/tile30x30.png");              // For visited tiles
-        dark = new ImageObject("src/engine/resources/tile_dark30x30.png");          // For unvisited tiles
+        light = new ImageObject("C:/Users/User/IdeaProjects/SoS-simulation-engine/src/engine/resources/tile30x30.png");              // For visited tiles
+        dark = new ImageObject("C:/Users/User/IdeaProjects/SoS-simulation-engine/src/engine/resources/tile_dark30x30.png");          // For unvisited tiles
+//        light = new ImageObject("src/engine/resources/tile30x30.png");              // For visited tiles
+//        dark = new ImageObject("src/engine/resources/tile_dark30x30.png");          // For unvisited tiles
 
         addChild(light);
         addChild(dark);

@@ -63,8 +63,10 @@ public class Patient extends CS {
 
     public Patient(World world, String name) {
         super(world, name);
-        serious = new ImageObject("src/engine/resources/patient_serious1.png");              // Red dot
-        wounded = new ImageObject("src/engine/resources/patient_wounded1.png");              // Blue dot
+        serious = new ImageObject("C:/Users/User/IdeaProjects/SoS-simulation-engine/src/engine/resources/patient_serious1.png");              // Red dot
+        wounded = new ImageObject("C:/Users/User/IdeaProjects/SoS-simulation-engine/src/engine/resources/patient_wounded1.png");              // Blue dot
+//        serious = new ImageObject("src/engine/resources/patient_serious1.png");              // Red dot
+//        wounded = new ImageObject("src/engine/resources/patient_wounded1.png");              // Blue dot
         addChild(serious);
         addChild(wounded);
     }

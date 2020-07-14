@@ -29,7 +29,8 @@ public class Hospital extends CS {
     public Hospital(World world, String name) {
         super(world, name);
         router = world.router;
-        addChild(new ImageObject("src/engine/resources/hospital.png"));
+        addChild(new ImageObject("C:/Users/User/IdeaProjects/SoS-simulation-engine/src/engine/resources/hospital.png"));
+//        addChild(new ImageObject("src/engine/resources/hospital.png"));
     }
 
     // 환자 수용 공간이 남아있는지
