@@ -2,3 +2,6 @@
 \.idea/
 
 out/
+/log/new_log/
+/log/state/
+/.gradle/

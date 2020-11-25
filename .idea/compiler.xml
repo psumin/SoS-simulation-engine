@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <option name="BUILD_PROCESS_HEAP_SIZE" value="1024" />
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8">
       <module name="NewSimulator_main" target="1.8" />
       <module name="NewSimulator_test" target="1.8" />
     </bytecodeTargetLevel>

@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Unnamed" type="PIT" factoryName="PIT Runner" singleton="false" REPORT_DIR="$PROJECT_DIR$/build/reports/pit" SOURCE_DIRS="$PROJECT_DIR$/src/engine/src" TARGET_CLASSES="action.*, agents.*,core.*,log.*,misc.*,property.*,verifier.*" TARGET_TESTS="" otherParams="--outputFormats XML,HTML --jvmArgs -Djava.awt.headless=false" nameIsGenerated="true">
+    <module name="SoS-simulation-engine" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
