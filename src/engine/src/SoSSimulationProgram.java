@@ -1,10 +1,12 @@
 import core.World;
+import misc.Settings;
 import misc.Time;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 // Add parts of key
@@ -31,6 +33,7 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     BufferStrategy bufferStrategy;
     boolean isExpert = false;
 
+    private static Settings settingsInstance = Settings.getSettingsInstance();
 
     public SoSSimulationProgram(){
         frame = new JFrame("SimulationEngine");
@@ -214,6 +217,10 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
                 simulation_count++;
                 world = new World();
             }
+            else if (world.isFinished() && simulation_count == MAX_SIMULATION_COUNT) {
+                System.exit(0);
+            }
+
             time = 0;
         }
     }
@@ -232,6 +239,38 @@ public class SoSSimulationProgram implements Runnable, KeyListener {
     }
 
     public static void main(String [] args){
+
+        ArrayList<String> parsed = new ArrayList<>();
+
+        if (args.length>0) {
+            for (int i=0;i< args.length;i++){
+                String arguments = args[i];
+                if(arguments.equalsIgnoreCase("-a")) {
+                    parsed.add(args[i]);
+                    parsed.add(args[i+1]);
+                    settingsInstance.setMaxAmbulance(Integer.parseInt(args[i+1]));
+                } else if(arguments.equalsIgnoreCase("-ff")) {
+                    parsed.add(args[i]);
+                    parsed.add(args[i+1]);
+                    settingsInstance.setMaxFireFighter(Integer.parseInt(args[i+1]));
+                } else if(arguments.equalsIgnoreCase("-p")) {
+                    parsed.add(args[i]);
+                    parsed.add(args[i+1]);
+                    settingsInstance.setMaxPatient(Integer.parseInt(args[i+1]));
+                } else if(arguments.equalsIgnoreCase("-h")) {
+                    parsed.add(args[i]);
+                    parsed.add(args[i+1]);
+                    settingsInstance.setMaxHospital(Integer.parseInt(args[i+1]));
+                } else if(arguments.equalsIgnoreCase("-bh")) {
+                    parsed.add(args[i]);
+                    parsed.add(args[i+1]);
+                    settingsInstance.setMaxBridgehead(Integer.parseInt(args[i+1]));
+                }
+            }
+        }
+        if (parsed.size() != args.length) {
+            System.out.println("SOME ARGS NOT RECOGNISED!");
+        }
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
         new Thread(simulationEngine).start();

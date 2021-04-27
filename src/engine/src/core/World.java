@@ -7,11 +7,8 @@ import action.ambulanceaction.AmbulanceTransferToHospital;
 import action.firefighteraction.*;
 
 import agents.*;
-import misc.ExcelHelper;
-import misc.Position;
+import misc.*;
 
-import misc.Range;
-import misc.Time;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -43,6 +40,8 @@ public class World extends SoSObject{
     private final ArrayList<Stimulus> stimuli = new ArrayList<>();
     private final ArrayList<String> firefighterNames = new ArrayList<>();
     private final ArrayList<String> AmbulanceNames = new ArrayList<>();
+    private static Settings settingsInstance = Settings.getSettingsInstance();
+
     int patientCounter = 0;
     int fireFighterCounter = 0;
     int ambulanceCounter = 0;
@@ -51,13 +50,19 @@ public class World extends SoSObject{
 
     // Initial Values
 //    public static final int maxPatient = 294;
-    public static final int maxPatient = 20;
-    //    public static final int maxPatient = 100;
-//    public static final int maxPatient = 65;
-    public static final int maxFireFighter = 40;
-    public static final int maxHospital = 4;
-    public static final int maxAmbulance = 40;
-    public static final int maxBridgehead = 4;
+//    public static final int maxPatient = 20;
+//    //    public static final int maxPatient = 100;
+////    public static final int maxPatient = 65;
+//    public static final int maxFireFighter = 40;
+//    public static final int maxHospital = 4;
+//    public static final int maxAmbulance = 40;
+//    public static final int maxBridgehead = 4;
+
+    public static final int maxPatient = settingsInstance.getMaxPatient();
+    public static final int maxFireFighter = settingsInstance.getMaxFireFighter();
+    public static final int maxHospital = settingsInstance.getMaxHospital();
+    public static final int maxAmbulance = settingsInstance.getMaxAmbulance();
+    public static final int maxBridgehead = settingsInstance.getMaxBridgehead();
 
     public Map map;
     public MsgRouter router;
@@ -498,7 +503,7 @@ public class World extends SoSObject{
         String filePath = "log/RQ1/" + date + ".xlsx";
 
         ExcelHelper.autoSizeAllColumn(workbook);
-        ExcelHelper.save(workbook, filePath);
+        //ExcelHelper.save(workbook, filePath);
     }
 
 
