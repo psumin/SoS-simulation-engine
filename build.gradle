@@ -4,8 +4,17 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: "info.solidsoft.pitest"
+apply plugin: 'com.github.johnrengelman.shadow'
 
-mainClassName = 'Action'
+sourceSets.main.java.srcDirs = ['src']
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/engine/resources"
+        }
+    }
+}
+mainClassName = 'SoSSimulationProgram'
 sourceCompatibility = 1.8
 version = '1.0'
 
@@ -19,6 +28,9 @@ repositories {
 }
 
 dependencies {
+    //include deps in lib
+    compile fileTree(include: ['*.jar'], dir: 'lib')
+
     // https://mvnrepository.com/artifact/com.opencsv/opencsv
      compile group: 'com.opencsv', name: 'opencsv', version: '3.7'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
@@ -75,9 +87,15 @@ buildscript {
         mavenCentral()
         //Needed only for SNAPSHOT versions
         //maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
+
+        //shadow
+        jcenter()
     }
     dependencies {
         classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.4'
+
+        //shadow
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
     }
 }
 
@@ -85,3 +103,7 @@ pitest {
     targetClasses = ['new main.*']
     threads = 4
 }
+
+//shadow
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'

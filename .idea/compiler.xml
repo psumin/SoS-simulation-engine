@@ -5,6 +5,9 @@
     <bytecodeTargetLevel>
       <module name="NewSimulator_main" target="1.8" />
       <module name="NewSimulator_test" target="1.8" />
+      <module name="SoS-simulation-engine" target="1.8" />
+      <module name="SoS-simulation-engine.main" target="1.8" />
+      <module name="SoS-simulation-engine.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
