@@ -19,8 +19,10 @@ public class Ambulance extends CS{
     public Ambulance(World world, String name) {
         super(world, name);
         router = world.router;
-        transferImage = new ImageObject("src/engine/resources/transfer2.png");
-        defaultImage = new ImageObject("src/engine/resources/ambulance1.png");
+//        transferImage = new ImageObject("src/engine/resources/transfer2.png");
+//        defaultImage = new ImageObject("src/engine/resources/ambulance1.png");
+        transferImage = new ImageObject("engine/resources/transfer2.png");
+        defaultImage = new ImageObject("engine/resources/ambulance1.png");
 
 //        addChild(new ImageObject("src/engine/resources/ambulance.png"));
 

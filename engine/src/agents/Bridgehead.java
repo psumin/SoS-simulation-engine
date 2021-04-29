@@ -21,7 +21,8 @@ public class Bridgehead extends CS {
     private int scale = 3;
     public Bridgehead(World world, String name) {
         super(world, name);
-        addChild(new ImageObject("src/engine/resources/bridgehead.png", scale));
+//        addChild(new ImageObject("src/engine/resources/bridgehead.png", scale));
+        addChild(new ImageObject("engine/resources/bridgehead.png", scale));
         addChild(textObject);
         textObject.fontColor = Color.red;
     }

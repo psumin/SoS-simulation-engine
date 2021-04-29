@@ -31,7 +31,9 @@ public class Hospital extends CS {
     public Hospital(World world, String name, Sheet sheet) {
         super(world, name);
         router = world.router;
-        addChild(new ImageObject("src/engine/resources/hospital.png"));
+//        addChild(new ImageObject("src/engine/resources/hospital.png"));
+
+        addChild(new ImageObject("engine/resources/hospital.png"));
 
         this.sheet = sheet;
     }

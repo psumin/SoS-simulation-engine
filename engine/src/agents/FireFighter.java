@@ -39,10 +39,15 @@ public class FireFighter extends CS {
         super(world, name);
         this.world = world;
 
-        transferImage = new ImageObject("src/engine/resources/transfer1.png");
-        defaultImage = new ImageObject("src/engine/resources/firefighter1.png");
-        moveToPatient = new ImageObject("src/engine/resources/moveToPatient1.png");
-        firstAid = new ImageObject("src/engine/resources/firstAid.png");
+//        transferImage = new ImageObject("src/engine/resources/transfer1.png");
+//        defaultImage = new ImageObject("src/engine/resources/firefighter1.png");
+//        moveToPatient = new ImageObject("src/engine/resources/moveToPatient1.png");
+//        firstAid = new ImageObject("src/engine/resources/firstAid.png");
+
+        transferImage = new ImageObject("engine/resources/transfer1.png");
+        defaultImage = new ImageObject("engine/resources/firefighter1.png");
+        moveToPatient = new ImageObject("engine/resources/moveToPatient1.png");
+        firstAid = new ImageObject("engine/resources/firstAid.png");
 
         transferImage.visible(false);
         defaultImage.visible(true);

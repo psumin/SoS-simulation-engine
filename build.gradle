@@ -3,17 +3,20 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'application'
-apply plugin: "info.solidsoft.pitest"
 apply plugin: 'com.github.johnrengelman.shadow'
 
-sourceSets.main.java.srcDirs = ['src']
+
 sourceSets {
     main {
+        java {
+            srcDirs = ['engine/src']
+        }
         resources {
-            srcDirs "src/engine/resources"
+            srcDirs = ['engine/resources']
         }
     }
 }
+
 mainClassName = 'SoSSimulationProgram'
 sourceCompatibility = 1.8
 version = '1.0'
@@ -39,69 +42,19 @@ dependencies {
      compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
     // https://mvnrepository.com/artifact/com.internetitem/logback-elasticsearch-appender
      compile group: 'com.internetitem', name: 'logback-elasticsearch-appender', version: '1.4'
-//
-//
-//    // https://mvnrepository.com/artifact/javax.activation/activation
-//    compile group: 'javax.activation', name: 'activation', version: '1.1.1'
-//    // https://mvnrepository.com/artifact/commons-codec/commons-codec
-//    compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
-//    // https://mvnrepository.com/artifact/commons-logging/commons-logging
-//    compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
-//    // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
-//    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.2'
-//
-//    // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
-//    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
-//    // https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-core
-//    compile group: 'org.glassfish.jaxb', name: 'jaxb-core', version: '2.3.0.1'
-//    // https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl
-//    compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0.1'
-//    // https://mvnrepository.com/artifact/log4j/log4j
-//    compile group: 'log4j', name: 'log4j', version: '1.2.17'
-//
-//    // https://mvnrepository.com/artifact/com.github.virtuald/curvesapi
-//    compile group: 'com.github.virtuald', name: 'curvesapi', version: '1.05'
-//    // https://mvnrepository.com/artifact/org.dom4j/dom4j
-//    compile group: 'org.dom4j', name: 'dom4j', version: '2.1.1'
-//    // https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans
-//    compile group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.0.1'
-//
-//    // https://mvnrepository.com/artifact/org.apache.poi/poi
-//    compile group: 'org.apache.poi', name: 'poi', version: '4.0.0'
-//    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
-//    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.0'
-
-//     // https://mvnrepository.com/artifact/org.apache.poi/poi
-//     compile group: 'org.apache.poi', name: 'poi', version: '3.9'
-//
-//     // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
-//     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-//    testRuntime("org.junit.platform:junit-platform-launcher:1.0.0-M6")
-//    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0-M6")
 }
 
 buildscript {
     repositories {
         mavenCentral()
-        //Needed only for SNAPSHOT versions
-        //maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
 
         //shadow
         jcenter()
     }
     dependencies {
-        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.4'
-
         //shadow
         classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
     }
-}
-
-pitest {
-    targetClasses = ['new main.*']
-    threads = 4
 }
 
 //shadow
