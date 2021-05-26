@@ -63,10 +63,8 @@ public class Patient extends CS {
 
     public Patient(World world, String name) {
         super(world, name);
-//        serious = new ImageObject("src/engine/resources/patient_serious1.png");              // Red dot
-//        wounded = new ImageObject("src/engine/resources/patient_wounded1.png");              // Blue dot
         serious = new ImageObject("engine/resources/patient_serious1.png");              // Red dot
-        wounded = new ImageObject("engine/resources/patient_wounded1.png");
+        wounded = new ImageObject("engine/resources/patient_wounded1.png");              // Blue dot
         addChild(serious);
         addChild(wounded);
     }
@@ -77,8 +75,8 @@ public class Patient extends CS {
     }
 
     private Hospital currentHospital = null;
-    private int seriousTreatmentTime = 93;                              // Hospital's treatment time for Serious patient
-    private int woundedTreatmentTime = 93;                               // Hospital's treatment time for Wounded patient
+    private int seriousTreatmentTime = 10;                              // Hospital's treatment time for Serious patient
+    private int woundedTreatmentTime = 10;                               // Hospital's treatment time for Wounded patient
     private boolean isTreatmenting = false;
     private int counter = 0;
     public void treatmentStart(Hospital hospital) {

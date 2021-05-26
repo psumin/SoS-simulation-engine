@@ -1,6 +1,6 @@
 package misc;
 
-// SoSSimulationProgram.java에서 misc.Time 클래스의 콘크리트 클래스 구현
+// simulation.SoSSimulationProgram.java에서 misc.Time 클래스의 콘크리트 클래스 구현
 // 그 구현에 update() 메소드가 있고, update 메소드에서 변수들의 값을 업데이트
 
 // 단위: 밀리 세컨드(아마... 까먹... 맞을듯)

@@ -37,9 +37,9 @@ public class FireFighterTransferToBridgehead extends FireFighterAction {
     @Override
     public void onUpdate() {
         fireFighter.observe();
-        fireFighter.moveTo(bridgehead.position);              // Transfer the patient to the Bridgehead
+        fireFighter.moveTo(bridgehead.position);                                // Transfer the patient to the Bridgehead
         fireFighter.markVisitedTiles();
-        if(fireFighter.isArrivedAt(bridgehead.position)) {    // When the Firefighter arrived at the Bridgehead
+        if(fireFighter.isArrivedAt(bridgehead.position)) {                      // When the Firefighter arrived at the Bridgehead
             bridgehead.arrivedPatient(targetPatient);
 
             fireFighter.moveDelay = prevMoveDelay;

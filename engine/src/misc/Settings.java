@@ -5,10 +5,10 @@ public class Settings {
     //singleton class
     private static Settings settingsInstance = new Settings();
 
-    private int maxPatient = 20;
-    private int maxFireFighter = 40;
+    private int maxPatient = 200;
+    private int maxFireFighter = 12;
     private int maxHospital = 4;
-    private int maxAmbulance = 40;
+    private int maxAmbulance = 4;
     private int maxBridgehead = 4;
 
     public static Settings getSettingsInstance(){return settingsInstance;}

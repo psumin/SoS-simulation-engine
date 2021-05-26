@@ -90,6 +90,7 @@ public class MsgRouter extends SoSObject {
 
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
+
     private int rowNum = 0;
 
     private Row currentRow;
@@ -105,7 +106,7 @@ public class MsgRouter extends SoSObject {
 
         this.workbook = workbook;
         sheet = workbook.createSheet("communications");     // communication sheet at log file
-        //sheet.trackAllColumnsForAutoSizing();
+//        sheet.trackAllColumnsForAutoSizing();
 
         // Initial format of the communication sheet
         currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
@@ -510,6 +511,7 @@ public class MsgRouter extends SoSObject {
 
     @Override
     public void clear() {
+//        row = fireFighterSheet.createRow(fireFighterSheet.getPhysicalNumberOfRows());
         currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
         currentRow.createCell(0).setCellValue("Total communication");
         ExcelHelper.getCell(currentRow, 1).setCellValue(TOTAL_FF_TO_FF_SEND / 2);

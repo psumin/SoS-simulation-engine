@@ -1,6 +1,6 @@
 package stimulus.StateStimulus;
 
-import action.firefighteraction.FireFighterDead;
+import action.firefighteraction.FireFighterHalt;
 import agents.FireFighter;
 import core.World;
 import misc.Position;
@@ -29,7 +29,7 @@ public class State extends Stimulus {
 
         Position position = target.position;
         world.addPatient(position);
-        target.changeAction(new FireFighterDead(target));
+        target.changeAction(new FireFighterHalt(target));
         world.removeChild(target);
         world.map.remove(target);
     }

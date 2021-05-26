@@ -17,7 +17,7 @@ sourceSets {
     }
 }
 
-mainClassName = 'SoSSimulationProgram'
+mainClassName = 'main'
 sourceCompatibility = 1.8
 version = '1.0'
 
@@ -35,13 +35,13 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'lib')
 
     // https://mvnrepository.com/artifact/com.opencsv/opencsv
-     compile group: 'com.opencsv', name: 'opencsv', version: '3.7'
+    compile group: 'com.opencsv', name: 'opencsv', version: '3.7'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
     compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
-     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
     // https://mvnrepository.com/artifact/com.internetitem/logback-elasticsearch-appender
-     compile group: 'com.internetitem', name: 'logback-elasticsearch-appender', version: '1.4'
+    compile group: 'com.internetitem', name: 'logback-elasticsearch-appender', version: '1.4'
 }
 
 buildscript {

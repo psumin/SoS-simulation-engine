@@ -44,11 +44,8 @@ public class Tile extends SoSObject {
 
         setPosition(position);
 
-//        light = new ImageObject("src/engine/resources/tile30x30.png");              // For visited tiles
-//        dark = new ImageObject("src/engine/resources/tile_dark30x30.png");          // For unvisited tiles
         light = new ImageObject("engine/resources/tile30x30.png");              // For visited tiles
         dark = new ImageObject("engine/resources/tile_dark30x30.png");          // For unvisited tiles
-
 
         addChild(light);
         addChild(dark);
@@ -86,6 +83,8 @@ public class Tile extends SoSObject {
 //        return false;
     }
 
+    // 속도를 느리게 만들면서 타일의 색깔을 변경 시켜준다.
+    // float 값은 9까지 가능.
     @Override
     public void onUpdate() {
         light.setColor(new Color(255, 255 - (int)(255 * (moveDelayFactor - 1) / 10), 255 - (int)(255 * (moveDelayFactor - 1)/ 10)));        // 색깔 변경을 위한 method

@@ -30,20 +30,8 @@ public class SoSImage {
             image.setFilePath(filePath);
             try {
                 image.setImage(ImageIO.read(new File(filePath)));
-            } catch (Exception e) {
-                //during jar, images are copied to root.
-                //if you unzip the packaged jar, you can see images are in root folder.
-                //split for example "engine/resources/bridgehead.png" into "bridgehead.png
-                String newFileName = (filePath.split("/"))[2];
-                System.out.println(newFileName);
-
-                try {
-                    image.setImage(ImageIO.read(SoSImage.class.getClassLoader().getResource(newFileName)));
-                } catch (Exception exception) {
-                    if (exception.getClass() != IllegalArgumentException.class) {
-                        exception.printStackTrace();
-                    }
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             strToImage.put(filePath, image);
         }

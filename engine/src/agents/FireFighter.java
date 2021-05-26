@@ -34,15 +34,10 @@ public class FireFighter extends CS {
 
     public int defaultSightRange = 5;               // Fire fighter's sight range
     public int sightRange = defaultSightRange;
-    public int communicationRange = 5;             // Communication range between firefighters
+    public int communicationRange = 3;             // Communication range between firefighters
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;
-
-//        transferImage = new ImageObject("src/engine/resources/transfer1.png");
-//        defaultImage = new ImageObject("src/engine/resources/firefighter1.png");
-//        moveToPatient = new ImageObject("src/engine/resources/moveToPatient1.png");
-//        firstAid = new ImageObject("src/engine/resources/firstAid.png");
 
         transferImage = new ImageObject("engine/resources/transfer1.png");
         defaultImage = new ImageObject("engine/resources/firefighter1.png");

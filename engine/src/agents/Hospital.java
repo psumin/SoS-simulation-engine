@@ -25,17 +25,11 @@ public class Hospital extends CS {
 
     // 대기열
     private final ArrayList<Patient> patients = new ArrayList<>();
-    private Sheet sheet;
-    private Row row;
 
-    public Hospital(World world, String name, Sheet sheet) {
+    public Hospital(World world, String name) {
         super(world, name);
         router = world.router;
-//        addChild(new ImageObject("src/engine/resources/hospital.png"));
-
         addChild(new ImageObject("engine/resources/hospital.png"));
-
-        this.sheet = sheet;
     }
 
     // 환자 수용 공간이 남아있는지
@@ -51,12 +45,6 @@ public class Hospital extends CS {
 
     @Override
     public void onUpdate() {
-        row = sheet.createRow(sheet.getPhysicalNumberOfRows());
-        row.createCell(0).setCellValue(Time.getFrameCount());
-        row.createCell(1).setCellValue(name);
-        row.createCell(2).setCellValue(treatmentPatients.size());
-        row.createCell(3).setCellValue(patients.size());
-
 //        if(isAvailable() && !patients.isEmpty()) {
 //            Patient treatmentTarget = null;
 //            for(Patient p: patients) {
