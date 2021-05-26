@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import misc.ExcelHelper;
+import misc.Settings;
 
 // 참고: http://www.java-gaming.org/topics/basic-game/21919/view.html
 // simulation.SoSSimulationProgram 클래스에서 참조하고 있는 클래스: Time, SoSObject, SoSScenario
@@ -31,10 +32,11 @@ import misc.ExcelHelper;
  */
 
 public class SoSSimulationProgram implements KeyListener {
+    private Settings settingsInstance = Settings.getSettingsInstance();
     String filePath;
     int super_counter = 1;
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
-    final int MAX_FRAME_COUNT = 800;                                // 각 시뮬레이션마다 최대 frame의 수
+    final int MAX_FRAME_COUNT = settingsInstance.getMaxFrameCount();                                // 각 시뮬레이션마다 최대 frame의 수
 
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
@@ -43,7 +45,7 @@ public class SoSSimulationProgram implements KeyListener {
     JFrame frame;
     Canvas canvas;
     BufferStrategy bufferStrategy;
-    boolean isExpert = false;
+    boolean isExpert = settingsInstance.getExpertMode();
     boolean isFirstSimulation = true;
 
     long programStartTime;                                          // 프로그램 시작 시간

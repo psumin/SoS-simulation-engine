@@ -42,6 +42,25 @@ public class main {
                     parsed.add(args[i]);
                     parsed.add(args[i+1]);
                     settingsInstance.setMaxBridgehead(Integer.parseInt(args[i+1]));
+                } else if (arguments.equalsIgnoreCase("-e")) {
+                    parsed.add(args[i]);
+                    String value = args[i+1];
+                    parsed.add(value.toLowerCase());
+                    switch (value.toLowerCase()) {
+                        case "true":
+                        case "t":
+                            settingsInstance.setExpertMode(true);
+                            break;
+                        case "false":
+                        case "f":
+                            settingsInstance.setExpertMode(false);
+                            break;
+                    }
+                } else if (arguments.equalsIgnoreCase("-fc")) {
+                    parsed.add(args[i]);
+                    parsed.add(args[i+1]);
+                    int value = Integer.valueOf(args[i+1]);
+                    settingsInstance.setMaxFrameCount(value);
                 }
             }
         }

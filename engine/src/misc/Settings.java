@@ -10,6 +10,8 @@ public class Settings {
     private int maxHospital = 4;
     private int maxAmbulance = 4;
     private int maxBridgehead = 4;
+    private int maxFrameCount = 800;
+    private boolean expertMode = false;
 
     public static Settings getSettingsInstance(){return settingsInstance;}
 
@@ -33,6 +35,10 @@ public class Settings {
         return maxBridgehead;
     }
 
+    public boolean getExpertMode() { return expertMode; }
+
+    public int getMaxFrameCount() { return maxFrameCount; }
+
     public void setMaxPatient(int maxPatient) {
         this.maxPatient = maxPatient;
     }
@@ -52,4 +58,8 @@ public class Settings {
     public void setMaxBridgehead(int maxBridgehead) {
         this.maxBridgehead = maxBridgehead;
     }
+
+    public void setExpertMode(boolean expertMode){ this.expertMode = expertMode; }
+
+    public void setMaxFrameCount(int maxFrameCount){ this.maxFrameCount = maxFrameCount; }
 }
