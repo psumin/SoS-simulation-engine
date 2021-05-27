@@ -4,8 +4,11 @@ import agents.FireFighter;
 import agents.Patient;
 import core.ImageObject;
 import core.World;
+import misc.ElasticHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.LinkedHashMap;
 
 /**
  * Project: NewSimulator
@@ -20,6 +23,7 @@ public class FireFighterFirstAid extends FireFighterAction {
     public Patient targetPatient;
     private int frameCounter = firstAidTime;
     private static Logger LOGGER = LoggerFactory.getLogger(FireFighterFirstAid.class);
+    private ElasticHelper elasticHelperInstance = ElasticHelper.getElasticHelperInstance();
 
     public FireFighterFirstAid(FireFighter target, Patient targetPatient) {
         super(target);
@@ -34,6 +38,11 @@ public class FireFighterFirstAid extends FireFighterAction {
             targetPatient.assignedFireFighter = fireFighter;
         }
         targetPatient.isSaved = true;
+        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+        logArgs.put("action", "firefighter.firstaid");
+        logArgs.put("firefighter", fireFighter.name);
+        logArgs.put("patient", targetPatient.name);
+        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
         LOGGER.info(target.name + "performed first aid on " + targetPatient.name);
     }
 

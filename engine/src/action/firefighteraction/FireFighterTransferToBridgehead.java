@@ -3,8 +3,11 @@ package action.firefighteraction;
 import agents.Bridgehead;
 import agents.FireFighter;
 import agents.Patient;
+import misc.ElasticHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.LinkedHashMap;
 
 /**
  * Project: NewSimulator
@@ -20,6 +23,7 @@ public class FireFighterTransferToBridgehead extends FireFighterAction {
 
     int prevMoveDelay;
     private static Logger LOGGER = LoggerFactory.getLogger(FireFighterTransferToBridgehead.class);
+    private ElasticHelper elasticHelperInstance = ElasticHelper.getElasticHelperInstance();
 
     public FireFighterTransferToBridgehead(FireFighter target, Bridgehead bridgehead, Patient targetPatient) {
         super(target);
@@ -44,6 +48,12 @@ public class FireFighterTransferToBridgehead extends FireFighterAction {
         fireFighter.markVisitedTiles();
         if(fireFighter.isArrivedAt(bridgehead.position)) {                      // When the Firefighter arrived at the Bridgehead
             bridgehead.arrivedPatient(targetPatient);
+            LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+            logArgs.put("action", "firefighter.transfertobridgehead");
+            logArgs.put("firefighter", fireFighter.name);
+            logArgs.put("patient", targetPatient.name);
+            logArgs.put("bridehead", bridgehead.name);
+            elasticHelperInstance.indexLogs(this.getClass(), logArgs);
             LOGGER.info(fireFighter.name + " successfully transferred " + targetPatient.name + " to " + bridgehead.name);
             fireFighter.moveDelay = prevMoveDelay;
             fireFighter.changeAction(new FireFighterSearch(fireFighter));       // Change the Firefighter's action to "Search"
