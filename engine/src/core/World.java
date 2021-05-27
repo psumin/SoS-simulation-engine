@@ -40,7 +40,7 @@ import java.util.LinkedHashMap;
 public class World extends SoSObject {
     private static Settings settingsInstance = Settings.getSettingsInstance();
     private static Logger LOGGER = LoggerFactory.getLogger(World.class);
-    ElasticHelper elasticHelperInstance = ElasticHelper.getElasticHelperInstance();
+    private ElasticHelper elasticHelperInstance = ElasticHelper.getElasticHelperInstance();
 //    // Structure of stimuli
 //    public static class InputData {
 //        public String command;
@@ -484,6 +484,7 @@ public class World extends SoSObject {
             LOGGER.info("Time's up: " + endMessage1 + " | " + endMessage2);
             LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
             logArgs.put("action", "world.end");
+            logArgs.put("unvisited_tiles", String.valueOf(map.getUnvisitedTileCount()));
             logArgs.put("patients_saved", String.valueOf(savedPatientCount));
             logArgs.put("patients_total", String.valueOf(patients.size()));
             logArgs.put("patients_allsaved", "false");

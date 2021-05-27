@@ -3,8 +3,11 @@ package action.firefighteraction;
 import agents.FireFighter;
 import agents.Hospital;
 import agents.Patient;
+import misc.ElasticHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.LinkedHashMap;
 
 /**
  * Project: NewSimulator
@@ -20,7 +23,7 @@ public class FireFighterTransferToHospital extends FireFighterAction {
 
     int prevMoveDelay;
     private static Logger LOGGER = LoggerFactory.getLogger(FireFighterTransferToHospital.class);
-
+    private ElasticHelper elasticHelperInstance = ElasticHelper.getElasticHelperInstance();
 
     public FireFighterTransferToHospital(FireFighter target, Hospital hospital, Patient targetPatient) {
         super(target);
@@ -45,6 +48,12 @@ public class FireFighterTransferToHospital extends FireFighterAction {
         fireFighter.markVisitedTiles();
         if(fireFighter.isArrivedAt(hospital.position)) {    // When the Firefighter arrived at the hospital
             hospital.hospitalize(targetPatient);            // Patient is hospitalized at the hospital
+            LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+            logArgs.put("action", "firefighter.transfertohospital");
+            logArgs.put("firefighter", fireFighter.name);
+            logArgs.put("patient", targetPatient.name);
+            logArgs.put("hospital", hospital.name);
+            elasticHelperInstance.indexLogs(this.getClass(), logArgs);
             LOGGER.info(fireFighter.name + " successfully transferred " + targetPatient.name + " to " + hospital.name);
             //world.addChild(targetPatient);
 

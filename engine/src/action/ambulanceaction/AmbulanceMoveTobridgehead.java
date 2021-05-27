@@ -5,10 +5,12 @@ import agents.Ambulance;
 import agents.Bridgehead;
 import agents.Hospital;
 import agents.Patient;
+import misc.ElasticHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * Project: NewSimulator
@@ -21,7 +23,7 @@ public class AmbulanceMoveTobridgehead extends AmbulanceAction {
 
     Bridgehead bridgehead;
     private static Logger LOGGER = LoggerFactory.getLogger(AmbulanceMoveTobridgehead.class);
-
+    private ElasticHelper elasticHelperInstance = ElasticHelper.getElasticHelperInstance();
 
     public AmbulanceMoveTobridgehead(Ambulance target, Bridgehead bridgehead) {
         super(target);
@@ -47,8 +49,13 @@ public class AmbulanceMoveTobridgehead extends AmbulanceAction {
             }
 
             bridgehead.leavePatient(patient);                                           // Select the patient at the Bridgehead
+            LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+            logArgs.put("action", "ambulance.transfertohospital");
+            logArgs.put("ambulance", ambulance.name);
+            logArgs.put("patient", patient.name);
+            logArgs.put("bridgehead", bridgehead.name);
+            elasticHelperInstance.indexLogs(this.getClass(), logArgs);
             LOGGER.info(ambulance.name + " moving " + patient.name + " with status:" + patient.getStatus().name() + " to " + nearestHospital.name);
-
             ambulance.changeAction(new AmbulanceTransferToHospital(ambulance, nearestHospital, patient));       // Transfer the patient to the hospital
         }
     }

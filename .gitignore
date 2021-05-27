@@ -10,6 +10,10 @@ log/
 #grade
 .gradle
 
+#venv
+scripts/venv
+scripts/mcirsos*
+
 #build
 build/*
 !build/libs

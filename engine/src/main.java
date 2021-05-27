@@ -172,7 +172,7 @@ public class main {
 //        System.out.println("Verification property satisfaction probability: " + satisfactionProb);
         programEndTime = System.nanoTime();
         System.out.println("=== Total Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");          // 전체 프로그램 실행 시간
-
+        System.exit(0);
 //        new Thread(simulationEngine).start();
     }
 }

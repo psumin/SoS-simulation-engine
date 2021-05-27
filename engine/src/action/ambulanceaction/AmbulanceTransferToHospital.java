@@ -3,8 +3,11 @@ package action.ambulanceaction;
 import agents.Ambulance;
 import agents.Hospital;
 import agents.Patient;
+import misc.ElasticHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.LinkedHashMap;
 
 /**
  * Project: NewSimulator
@@ -15,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class AmbulanceTransferToHospital extends AmbulanceAction {
     private static Logger LOGGER = LoggerFactory.getLogger(AmbulanceTransferToHospital.class);
+    private ElasticHelper elasticHelperInstance = ElasticHelper.getElasticHelperInstance();
     public Hospital hospital;
     public Patient patient;
     public AmbulanceTransferToHospital(Ambulance target, Hospital hospital, Patient targetPatient) {
@@ -33,6 +37,12 @@ public class AmbulanceTransferToHospital extends AmbulanceAction {
         ambulance.moveTo(hospital.position);
         if(ambulance.isArrivedAt(hospital.position)) {
             hospital.hospitalize(patient);
+            LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+            logArgs.put("action", "ambulance.transfertohospital");
+            logArgs.put("ambulance", ambulance.name);
+            logArgs.put("patient", patient.name);
+            logArgs.put("hospital", hospital.name);
+            elasticHelperInstance.indexLogs(this.getClass(), logArgs);
             LOGGER.info(ambulance.name + " carrying " + patient.name + " arrived in " + hospital.name);
             world.transferCounter++;
             ambulance.transferImage.visible(false);
