@@ -350,10 +350,6 @@ public class World extends SoSObject {
             patient.setPosition(randomPosition);
             this.addChild(patient);
         }
-        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
-        logArgs.put("action", "world.create_patients");
-        logArgs.put("p_args", String.valueOf(maxPatient));
-        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
         LOGGER.info("Patients created.");
     }
 
@@ -380,10 +376,6 @@ public class World extends SoSObject {
         }
         currentFirefighterCounter = fireFighterCounter;
         // count number of firefighters
-        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
-        logArgs.put("action", "world.create_firefighters");
-        logArgs.put("ff_args", String.valueOf(maxFireFighter));
-        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
         LOGGER.info("Firefighters created.");
     }
 
@@ -406,10 +398,6 @@ public class World extends SoSObject {
         hospitals.get(3).setPosition(Map.mapSize.width - 1, Map.mapSize.height - 1);
 //        hospitals.get(4).setPosition(0, (Map.mapSize.height - 1) / 2);
 //        hospitals.get(5).setPosition(Map.mapSize.width - 1, (Map.mapSize.height - 1) / 2);
-        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
-        logArgs.put("action", "world.create_hospitals");
-        logArgs.put("h_args", String.valueOf(maxHospital));
-        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
         LOGGER.info("Hospitals created.");
     }
 
@@ -429,11 +417,7 @@ public class World extends SoSObject {
         bridgeheads.get(1).setPosition(new Position(7 * Map.mapSize.width / 8, Map.mapSize.height / 8));
         bridgeheads.get(2).setPosition(new Position(7 * Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
         bridgeheads.get(3).setPosition(new Position(Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
-        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
-        logArgs.put("action", "world.create_bridgehead");
-        logArgs.put("bh_args", String.valueOf(maxBridgehead));
-        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
-        LOGGER.info("Brigeheads created.");
+        LOGGER.info("Bridgeheads created.");
     }
 
     int ambulancePositionIndex = 0;
@@ -455,10 +439,6 @@ public class World extends SoSObject {
                 ambulancePositionIndex = 0;
             }
         }
-        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
-        logArgs.put("action", "world.create_ambulances");
-        logArgs.put("a_args", String.valueOf(maxAmbulance));
-        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
         LOGGER.info("Brigeheads created.");
     }
 

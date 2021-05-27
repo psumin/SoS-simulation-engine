@@ -60,10 +60,10 @@ def randomiseVariables(size="r.small"):
     if ("r.small" in size):
         #small cities
         argument_dict = {
-            "a" : randint(1,2),
-            "ff" : randint(1,2),
-            "p" : randint(1,20),
-            "h" : 1,
+            "a" : randint(1,20),
+            "ff" : randint(1,20),
+            "p" : randint(1,50),
+            "h" : 4,
             "bh" : 4
         }
     
@@ -86,7 +86,7 @@ def executeJar(mr):
     bh = str(var_dict["bh"])
     
     maxframe = '-fc'
-    fc = '1000'
+    fc = '2000'
     
     indexName = '-indexname'
     now = datetime.now()
@@ -108,7 +108,7 @@ def executeJar(mr):
 
         while inter.poll() is None:
             timeInter = time.time() - timeStarted
-            if int(timeInter%60) > 30 :
+            if int(timeInter%60) > 60 :
                 inter.terminate()
                 return False, dt_string, ipaddr, fname, var_dict
                 break
@@ -208,7 +208,7 @@ def checkMRConsistentEmergencyResponse(index, host, fname, var_dict, ret):
         returnValue = False;
         for hit in response:
             values = hit.to_dict()
-            print(values)
+            print("values:" , values)
             
         print("MRConsistentEmergencyResponse --", index, "-- result:", returnValue)
         

@@ -3,6 +3,7 @@ package simulation;
 import core.DataStructure;
 import core.World;
 import log.Log;
+import misc.ElasticHelper;
 import misc.Time;
 
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.awt.event.*;
 
 import java.awt.image.BufferStrategy;
 import java.text.SimpleDateFormat;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -36,6 +38,7 @@ import org.slf4j.LoggerFactory;
 public class SoSSimulationProgram implements KeyListener {
     private Settings settingsInstance = Settings.getSettingsInstance();
     private static Logger LOGGER = LoggerFactory.getLogger(SoSSimulationProgram.class);
+    private ElasticHelper elasticHelperInstance = ElasticHelper.getElasticHelperInstance();
     String filePath;
     int super_counter = 1;
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
@@ -287,7 +290,7 @@ public class SoSSimulationProgram implements KeyListener {
 
     //counter to log every x frames
     int log_counter = 0;
-    int x_frame = MAX_FRAME_COUNT/10;
+    int x_frame = (MAX_FRAME_COUNT/10/10)+1;
 
     // Upodate 실행하는 함수
     protected void update(int deltaTime, Log log){
@@ -301,6 +304,14 @@ public class SoSSimulationProgram implements KeyListener {
             world.update();
 
             if (log_counter>=x_frame) {
+
+                LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+                logArgs.put("action", "world.update");
+                logArgs.put("frame", String.valueOf(timeImpl.getFrameCount()));
+                logArgs.put("rescue_rate", String.valueOf(world.getRescuedRate()));
+                logArgs.put("treatment_rate", String.valueOf(world.getTreatmentRate()));
+                elasticHelperInstance.indexLogs(this.getClass(), logArgs);
+
                 String message = "Frame:" + timeImpl.getFrameCount() + " RescuedRate: " + String.valueOf(world.getRescuedRate()) + " TreatmentRate: " + String.valueOf(world.getTreatmentRate()) +
                         " CurrentFF: " + world.getFFNumber() + " CurrentAmb: " + world.getAmbNumber(); //+ " " + world.printCSSnapshot();
                 LOGGER.info(message);

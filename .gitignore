@@ -11,8 +11,9 @@ log/
 .gradle
 
 #venv
-scripts/venv
-scripts/mcirsos*
+scripts/*
+!scripts/requirements.txt
+!scripts/requirements.txt
 
 #build
 build/*
