@@ -66,13 +66,24 @@ def randomiseVariables(size="r.small"):
             "h" : 4,
             "bh" : 4
         }
+        
+    elif ("r.original" in size):
+        #small cities
+        argument_dict = {
+            "a" : randint(1,100),
+            "ff" : randint(1,100),
+            "p" : randint(1,100),
+            "h" : randint(1,100),
+            "bh" : randint(1,100),
+        }
+    
     
     # argument_list.append(pg,pd,sh,ev)
     print(argument_dict)
     return argument_dict
 
 def executeJar(mr):
-    var_dict = randomiseVariables("r.small")
+    var_dict = randomiseVariables("r.original")
     
     ambulance = '-a'
     a = str(var_dict["a"])
@@ -152,11 +163,11 @@ def writeToES(host, indexname, msgBody):
     return res
 
 def checkMRConsistentEmergencyResponse(index, host, fname, var_dict, ret):
-    indexname = "experiment_results__mc1"
+    indexname = "experiment_results_mc1"
     msgBody = {
         "timestamp" : "",
         "mr" : "",
-        "test_type" : "r.large",
+        "test_type" : "r.original",
         "result" : "",
         "exception_body" : "",
         "test_indexname" : "",
@@ -208,9 +219,29 @@ def checkMRConsistentEmergencyResponse(index, host, fname, var_dict, ret):
         returnValue = False;
         for hit in response:
             values = hit.to_dict()
-            print("values:" , values)
+            if 'world.end' in values.values():
+                patients_saved = values['patients_saved']
+                if (int(patients_saved) > 0):
+                    returnValue = True
+                    break
             
         print("MRConsistentEmergencyResponse --", index, "-- result:", returnValue)
+        
+        if (returnValue == True):
+            msgBody["timestamp"] = datetime.now().replace(microsecond=0).isoformat()
+            msgBody["mr"] = "MRConsistentEmergencyResponse"
+            msgBody["result"] = "PASSED"
+            msgBody["exception_body"] = "none"
+            msgBody["test_indexname"] = index
+        else:
+            msgBody["timestamp"] = datetime.now().replace(microsecond=0).isoformat()
+            msgBody["mr"] = "MRConsistentEmergencyResponse"
+            msgBody["result"] = "FAILED"
+            msgBody["exception_body"] = "none"
+            msgBody["test_indexname"] = index
+        
+        res = writeToES(host=host, indexname=indexname, msgBody=msgBody)
+        print(res)
         
 
 def runTests(times, instances, testname):
@@ -240,7 +271,7 @@ def main():
     #     thread.join()
     
     # "MRConsistentPowerRegulation" | "MRConsistentReliabilityThreshold"
-    runTests(1,1, "MRConsistentEmergencyResponse")
+    runTests(50,1, "MRConsistentEmergencyResponse")
 
     # checkMRConsistentReliabilityThreshold(index="smartgrid-2021-05-10t01.53.54.282694", host="192.168.25.19")
     # checkMRConsistentPowerRegulation('smartgridsos')
