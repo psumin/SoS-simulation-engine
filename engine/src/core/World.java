@@ -7,14 +7,13 @@ import action.ambulanceaction.AmbulanceTransferToHospital;
 import action.firefighteraction.*;
 
 import agents.*;
-import misc.ExcelHelper;
-import misc.Position;
+import misc.*;
 
-import misc.Range;
-import misc.Time;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import stimulus.*;
 import stimulus.EntityStimulus.RemoveEntity;
 import stimulus.MessageStimulus.Delay;
@@ -24,12 +23,12 @@ import stimulus.ValueStimulus.CommunicationRange;
 import stimulus.ValueStimulus.SightRange;
 import stimulus.ValueStimulus.Speed;
 import stimulus.EntityStimulus.AddEntity;
-import misc.Settings;
 
 import java.awt.*;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * Project: NewSimulator
@@ -40,6 +39,8 @@ import java.util.ArrayList;
 
 public class World extends SoSObject {
     private static Settings settingsInstance = Settings.getSettingsInstance();
+    private static Logger LOGGER = LoggerFactory.getLogger(World.class);
+    ElasticHelper elasticHelperInstance = ElasticHelper.getElasticHelperInstance();
 //    // Structure of stimuli
 //    public static class InputData {
 //        public String command;
@@ -161,6 +162,10 @@ public class World extends SoSObject {
     boolean saveInputData = false;
 
     public World(int maxFrame, boolean saveInputData) {
+        LOGGER.info("World started.");
+        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+        logArgs.put("action", "world.init");
+        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
         this.maxFrame = maxFrame;
         this.saveInputData = saveInputData;
 //        startTime = System.currentTimeMillis();
@@ -345,6 +350,11 @@ public class World extends SoSObject {
             patient.setPosition(randomPosition);
             this.addChild(patient);
         }
+        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+        logArgs.put("action", "world.create_patients");
+        logArgs.put("p_args", String.valueOf(maxPatient));
+        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
+        LOGGER.info("Patients created.");
     }
 
     // Create Firefighters at the edge position
@@ -368,7 +378,13 @@ public class World extends SoSObject {
 //            }
             addChild(ff);
         }
-        currentFirefighterCounter = fireFighterCounter;                         // count number of firefighters
+        currentFirefighterCounter = fireFighterCounter;
+        // count number of firefighters
+        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+        logArgs.put("action", "world.create_firefighters");
+        logArgs.put("ff_args", String.valueOf(maxFireFighter));
+        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
+        LOGGER.info("Firefighters created.");
     }
 
     // Create Hospitals at the edge position
@@ -390,6 +406,11 @@ public class World extends SoSObject {
         hospitals.get(3).setPosition(Map.mapSize.width - 1, Map.mapSize.height - 1);
 //        hospitals.get(4).setPosition(0, (Map.mapSize.height - 1) / 2);
 //        hospitals.get(5).setPosition(Map.mapSize.width - 1, (Map.mapSize.height - 1) / 2);
+        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+        logArgs.put("action", "world.create_hospitals");
+        logArgs.put("h_args", String.valueOf(maxHospital));
+        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
+        LOGGER.info("Hospitals created.");
     }
 
     // Create the Bridgeheads at the quarter position of the map
@@ -408,7 +429,11 @@ public class World extends SoSObject {
         bridgeheads.get(1).setPosition(new Position(7 * Map.mapSize.width / 8, Map.mapSize.height / 8));
         bridgeheads.get(2).setPosition(new Position(7 * Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
         bridgeheads.get(3).setPosition(new Position(Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
-
+        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+        logArgs.put("action", "world.create_bridgehead");
+        logArgs.put("bh_args", String.valueOf(maxBridgehead));
+        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
+        LOGGER.info("Brigeheads created.");
     }
 
     int ambulancePositionIndex = 0;
@@ -430,12 +455,19 @@ public class World extends SoSObject {
                 ambulancePositionIndex = 0;
             }
         }
+        LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+        logArgs.put("action", "world.create_ambulances");
+        logArgs.put("a_args", String.valueOf(maxAmbulance));
+        elasticHelperInstance.indexLogs(this.getClass(), logArgs);
+        LOGGER.info("Brigeheads created.");
     }
 
     // Create Organization.  Not visible
     private void createOrganization() {
         Organization organization = new Organization(this, "Organization");
         addChild(organization);
+        LOGGER.info("Organization created.");
+
     }
 
     int frameCount = 0;
@@ -447,6 +479,15 @@ public class World extends SoSObject {
 
         // end condition ==> current frame count is equal or bigger than the max frame count.
         if (frameCount >= maxFrame) {
+            String endMessage1 = "saved_patients/total_patients = " + savedPatientCount+ "/" + patients.size();
+            String endMessage2 = "unvisited_tiles = " + map.getUnvisitedTileCount();
+            LOGGER.info("Time's up: " + endMessage1 + " | " + endMessage2);
+            LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+            logArgs.put("action", "world.end");
+            logArgs.put("patients_saved", String.valueOf(savedPatientCount));
+            logArgs.put("patients_total", String.valueOf(patients.size()));
+            logArgs.put("patients_allsaved", "false");
+            elasticHelperInstance.indexLogs(this.getClass(), logArgs);
             canUpdate(false);
             return;
         }
@@ -454,6 +495,13 @@ public class World extends SoSObject {
         // end condition ==> every patients are saved
         //if(getPatientCount() == 0 && map.getUnvisitedTileCount() == 0) {
         if (patients.size() == savedPatientCount && map.getUnvisitedTileCount() == 0) {
+            LOGGER.info("All patients saved, all tiles visited.");
+            LinkedHashMap<String, String> logArgs = new LinkedHashMap<>();
+            logArgs.put("action", "world.end");
+            logArgs.put("patients_saved", String.valueOf(savedPatientCount));
+            logArgs.put("patients_total", String.valueOf(patients.size()));
+            logArgs.put("patients_allsaved", "true");
+            elasticHelperInstance.indexLogs(this.getClass(), logArgs);
             canUpdate(false);
 //            endTime = System.currentTimeMillis();
 //            endFrame = frameCount;
@@ -1455,6 +1503,7 @@ public class World extends SoSObject {
             Stimulus stimulus = new AddEntity(this, frame, this::addFireFighter);
             stimuli.add(stimulus);
         }
+        LOGGER.info("Added " + count + " firefighters at frame " + frame);
     }
 
     // Interactive simulation에서 ambulance를 추가하는 것을 처리하는 함수
@@ -1466,6 +1515,7 @@ public class World extends SoSObject {
             Stimulus stimulus = new AddEntity(this, frame, this::addAmbulance);
             stimuli.add(stimulus);
         }
+        LOGGER.info("Added " + count + " ambulances at frame " + frame);
     }
 
     public void interMsgDelay(int startFrame, int finishFrame, String sender, String receiver, int duration) {
@@ -1558,6 +1608,7 @@ public class World extends SoSObject {
         }
         Stimulus stimulus = new RemoveEntity(this, frame, "FF" + number, this::removeCS);
         stimuli.add(stimulus);
+        LOGGER.info("Removed firefighter " + number + " at frame " + frame);
     }
 
     public void interRemoveAmb(int frame, int number) {
@@ -1566,6 +1617,7 @@ public class World extends SoSObject {
         }
         Stimulus stimulus = new RemoveEntity(this, frame, "Ambulance" + number, this::removeCS);
         stimuli.add(stimulus);
+        LOGGER.info("Removed ambulance " + number + " at frame " + frame);
     }
 
     //Communication Range

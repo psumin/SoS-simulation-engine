@@ -13,6 +13,22 @@ public class Settings {
     private int maxFrameCount = 800;
     private boolean expertMode = false;
 
+    //Elastic Flags
+    private boolean useElastic = false;
+    private String ELASTIC_HOST = "192.168.25.61";
+    private int ELASTIC_PORT = 9200;
+    private String INDEXNAME = "mcirsos";
+
+    public boolean getUseElastic(){return useElastic;}
+    public void setUseElastic(boolean elastic){useElastic=elastic;}
+    public String getELASTIC_HOST(){return ELASTIC_HOST;}
+    public int getELASTIC_PORT(){return ELASTIC_PORT;}
+    public void setELASTIC_HOST(String HOST){ELASTIC_HOST=HOST;}
+    public void setELASTIC_PORT(int PORT){ELASTIC_PORT=PORT;}
+    public String getINDEXNAME(){return INDEXNAME;}
+    public void setINDEXNAME(String indexname){INDEXNAME=indexname;}
+    //Elastic Flags
+
     public static Settings getSettingsInstance(){return settingsInstance;}
 
     public int getMaxPatient() {

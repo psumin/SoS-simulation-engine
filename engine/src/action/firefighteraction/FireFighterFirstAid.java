@@ -3,6 +3,9 @@ package action.firefighteraction;
 import agents.FireFighter;
 import agents.Patient;
 import core.ImageObject;
+import core.World;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Project: NewSimulator
@@ -16,6 +19,7 @@ public class FireFighterFirstAid extends FireFighterAction {
     private int firstAidTime = 10;
     public Patient targetPatient;
     private int frameCounter = firstAidTime;
+    private static Logger LOGGER = LoggerFactory.getLogger(FireFighterFirstAid.class);
 
     public FireFighterFirstAid(FireFighter target, Patient targetPatient) {
         super(target);
@@ -30,6 +34,7 @@ public class FireFighterFirstAid extends FireFighterAction {
             targetPatient.assignedFireFighter = fireFighter;
         }
         targetPatient.isSaved = true;
+        LOGGER.info(target.name + "performed first aid on " + targetPatient.name);
     }
 
     @Override

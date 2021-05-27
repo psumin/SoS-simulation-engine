@@ -1,10 +1,12 @@
 import javafx.util.Pair;
 import log.Log;
+import misc.ElasticHelper;
 import property.*;
 import simulation.SoSSimulationProgram;
 import misc.Settings;
 import verifier.SPRT;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class main {
@@ -61,6 +63,22 @@ public class main {
                     parsed.add(args[i+1]);
                     int value = Integer.valueOf(args[i+1]);
                     settingsInstance.setMaxFrameCount(value);
+                } else if (arguments.equalsIgnoreCase("-indexname")) {
+                    parsed.add(args[i]);
+                    parsed.add(args[i+1]);
+                    settingsInstance.setINDEXNAME(args[i+1]);
+                } else if (arguments.equalsIgnoreCase("-elastichost")) {
+                    parsed.add(args[i]);
+                    parsed.add(args[i+1]);
+                    settingsInstance.setELASTIC_HOST(args[i+1]);
+                    ElasticHelper elasticHelperInstance = ElasticHelper.getElasticHelperInstance();
+                    try {
+                        if (elasticHelperInstance.initElasticClient(settingsInstance.getELASTIC_HOST(), settingsInstance.getELASTIC_PORT()) == true) {
+                            settingsInstance.setUseElastic(true);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

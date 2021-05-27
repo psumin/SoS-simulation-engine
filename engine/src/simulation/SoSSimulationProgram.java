@@ -20,6 +20,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import misc.ExcelHelper;
 import misc.Settings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // 참고: http://www.java-gaming.org/topics/basic-game/21919/view.html
 // simulation.SoSSimulationProgram 클래스에서 참조하고 있는 클래스: Time, SoSObject, SoSScenario
@@ -33,6 +35,7 @@ import misc.Settings;
 
 public class SoSSimulationProgram implements KeyListener {
     private Settings settingsInstance = Settings.getSettingsInstance();
+    private static Logger LOGGER = LoggerFactory.getLogger(SoSSimulationProgram.class);
     String filePath;
     int super_counter = 1;
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
@@ -282,6 +285,9 @@ public class SoSSimulationProgram implements KeyListener {
     int time = 0;
     int simulation_count = 1;
 
+    //counter to log every x frames
+    int log_counter = 0;
+    int x_frame = MAX_FRAME_COUNT/10;
 
     // Upodate 실행하는 함수
     protected void update(int deltaTime, Log log){
@@ -290,8 +296,17 @@ public class SoSSimulationProgram implements KeyListener {
 
         time += deltaTime;
         if(time >= Time.fromSecond(0.0f)) {
+            log_counter+=1;
             timeImpl.update(deltaTime);
             world.update();
+
+            if (log_counter>=x_frame) {
+                String message = "Frame:" + timeImpl.getFrameCount() + " RescuedRate: " + String.valueOf(world.getRescuedRate()) + " TreatmentRate: " + String.valueOf(world.getTreatmentRate()) +
+                        " CurrentFF: " + world.getFFNumber() + " CurrentAmb: " + world.getAmbNumber(); //+ " " + world.printCSSnapshot();
+                LOGGER.info(message);
+                log_counter=0;
+            }
+
             log.addSnapshot(timeImpl.getFrameCount(), " RescuedRate: " + String.valueOf(world.getRescuedRate())  + " TreatmentRate: " +  String.valueOf(world.getTreatmentRate()) +
                     " CurrentFF: " + world.getFFNumber() + " CurrentAmb: " + world.getAmbNumber() + " " + world.printCSSnapshot());
 //            System.out.println(timeImpl.getFrameCount());

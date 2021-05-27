@@ -3,6 +3,8 @@ package action.firefighteraction;
 import agents.Bridgehead;
 import agents.FireFighter;
 import agents.Patient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Project: NewSimulator
@@ -17,6 +19,7 @@ public class FireFighterTransferToBridgehead extends FireFighterAction {
     public Patient targetPatient;
 
     int prevMoveDelay;
+    private static Logger LOGGER = LoggerFactory.getLogger(FireFighterTransferToBridgehead.class);
 
     public FireFighterTransferToBridgehead(FireFighter target, Bridgehead bridgehead, Patient targetPatient) {
         super(target);
@@ -41,7 +44,7 @@ public class FireFighterTransferToBridgehead extends FireFighterAction {
         fireFighter.markVisitedTiles();
         if(fireFighter.isArrivedAt(bridgehead.position)) {                      // When the Firefighter arrived at the Bridgehead
             bridgehead.arrivedPatient(targetPatient);
-
+            LOGGER.info(fireFighter.name + " successfully transferred " + targetPatient.name + " to " + bridgehead.name);
             fireFighter.moveDelay = prevMoveDelay;
             fireFighter.changeAction(new FireFighterSearch(fireFighter));       // Change the Firefighter's action to "Search"
             fireFighter.transferImage.visible(false);

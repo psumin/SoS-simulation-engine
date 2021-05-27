@@ -5,6 +5,8 @@ import core.*;
 import core.Map;
 import misc.Position;
 import misc.Time;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.util.*;
@@ -35,6 +37,9 @@ public class FireFighter extends CS {
     public int defaultSightRange = 5;               // Fire fighter's sight range
     public int sightRange = defaultSightRange;
     public int communicationRange = 3;             // Communication range between firefighters
+
+    private static Logger LOGGER = LoggerFactory.getLogger(FireFighter.class);
+
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;

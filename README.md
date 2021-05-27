@@ -1,5 +1,5 @@
-#MCI Response Simulator
-##Notes
+# MCI Response Simulator
+## Notes
 This branch (test/metamorphic_testing) is an attempt to preserve a stable version of the MCI SoS simulator
 for it to be easily used by others to test out concepts,
 methodology, etc.
@@ -16,9 +16,9 @@ Some quality of life changes include:
     (see main.java for a list of hints about the arguments)
 - Fixed cs agents image loading problems.
 
-##Download simulator
+## Download simulator
 - found in: `build/libs/SoS-simulation-engine-1.0-all.jar`
 - to execute:
-  - `java -jar SoS-simulation-engine-1.0-all.jar -a 5 -p 10 -ff 10 -bh 4 -h 4`'
+  - `java -jar SoS-simulation-engine-1.0-all.jar -a 5 -p 10 -ff 10 -bh 4 -h 4`
   
   - `java -jar SoS-simulation-engine-1.0-all.jar`

@@ -3,6 +3,8 @@ package action.firefighteraction;
 import agents.FireFighter;
 import agents.Hospital;
 import agents.Patient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Project: NewSimulator
@@ -17,6 +19,8 @@ public class FireFighterTransferToHospital extends FireFighterAction {
     public Patient targetPatient;
 
     int prevMoveDelay;
+    private static Logger LOGGER = LoggerFactory.getLogger(FireFighterTransferToHospital.class);
+
 
     public FireFighterTransferToHospital(FireFighter target, Hospital hospital, Patient targetPatient) {
         super(target);
@@ -41,6 +45,7 @@ public class FireFighterTransferToHospital extends FireFighterAction {
         fireFighter.markVisitedTiles();
         if(fireFighter.isArrivedAt(hospital.position)) {    // When the Firefighter arrived at the hospital
             hospital.hospitalize(targetPatient);            // Patient is hospitalized at the hospital
+            LOGGER.info(fireFighter.name + " successfully transferred " + targetPatient.name + " to " + hospital.name);
             //world.addChild(targetPatient);
 
             fireFighter.moveDelay = prevMoveDelay;
