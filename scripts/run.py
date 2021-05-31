@@ -4,6 +4,7 @@ import threading
 import re
 import time
 import json
+import signal
 
 from datetime import datetime
 from pathlib import Path
@@ -63,8 +64,8 @@ def randomiseVariables(size="r.small"):
             "a" : randint(1,20),
             "ff" : randint(1,20),
             "p" : randint(1,50),
-            "h" : 4,
-            "bh" : 4
+            "h" : 1,
+            "bh" : 1
         }
         
     elif ("r.original" in size):
@@ -76,6 +77,27 @@ def randomiseVariables(size="r.small"):
             "h" : randint(1,100),
             "bh" : randint(1,100),
         }
+        
+    elif ("r.discover" in size):
+        #small cities
+        argument_dict = {
+            "a" : randint(1,50),
+            "ff" : randint(1,50),
+            "p" : randint(1,50),
+            "h" : randint(1,10),
+            "bh" : randint(1,50),
+        }
+    
+    elif ("r.stable.100" in size):
+        #small cities
+        argument_dict = {
+            "a" : randint(50,100),
+            "ff" : randint(50,100),
+            "p" : randint(50,100),
+            "h" : 4,
+            "bh" : 4
+        }
+        
     
     
     # argument_list.append(pg,pd,sh,ev)
@@ -83,7 +105,7 @@ def randomiseVariables(size="r.small"):
     return argument_dict
 
 def executeJar(mr):
-    var_dict = randomiseVariables("r.original")
+    var_dict = randomiseVariables("r.stable.100")
     
     ambulance = '-a'
     a = str(var_dict["a"])
@@ -97,15 +119,16 @@ def executeJar(mr):
     bh = str(var_dict["bh"])
     
     maxframe = '-fc'
-    fc = '2000'
+    fc = '500'
     
     indexName = '-indexname'
     now = datetime.now()
     dt_string = now.strftime("mcirsos-%Y-%m-%dt%H.%M.%S.%f")
+    # dt_string = "mcirsos_test"
     # indexName = {'-indexname' : dt_string}
     
     elastichost = '-elastichost'
-    ipaddr = '192.168.0.31' #self
+    ipaddr = '192.168.0.32' #self
     #ipaddr = '192.168.25.61' #lab
     
     jarfile = getJarFile()
@@ -115,14 +138,20 @@ def executeJar(mr):
         fname = dt_string + "err.txt"
         f = open(fname, "w")
         timeStarted = time.time()
-        inter = subprocess.Popen(['java', '-jar', jarfile, ambulance, a, firefighter, ff, patients, p, hospital, h, bridgehead, bh, indexName, dt_string, elastichost, ipaddr],  stderr=f)
-
+        
+        cmd = "java -jar " + str(jarfile) + " " + ambulance + " " + a+ " " + firefighter+ " " + ff+ " " + patients+ " " + p+ " " + hospital+ " " + h+ " " + bridgehead+ " " + bh+ " " + indexName+ " " + str(dt_string)+ " " + elastichost+ " " + ipaddr
+        # print(cmd)
+        inter = subprocess.Popen("exec " + cmd,  stderr=f, shell=True)
+        val = False;
         while inter.poll() is None:
             timeInter = time.time() - timeStarted
-            if int(timeInter%60) > 60 :
-                inter.terminate()
+            seconds = int(timeInter%60)
+            # print("seconds elapsed:", seconds, " poll:", inter.poll())
+            if seconds > 40:
+                os.kill(inter.pid, signal.SIGKILL)
                 return False, dt_string, ipaddr, fname, var_dict
                 break
+                
 
         #ret = subprocess.call(['java', '-jar', jarfile, ambulance, a, firefighter, ff, patients, p, hospital, h, bridgehead, bh, indexName, dt_string, elastichost, ipaddr],  stderr=f)
     
@@ -163,7 +192,8 @@ def writeToES(host, indexname, msgBody):
     return res
 
 def checkMRConsistentEmergencyResponse(index, host, fname, var_dict, ret):
-    indexname = "experiment_results_mc1"
+    indexname = "experiment_results_mc4"
+    # indexname = "experiment_results_mc_test"
     msgBody = {
         "timestamp" : "",
         "mr" : "",
@@ -183,7 +213,7 @@ def checkMRConsistentEmergencyResponse(index, host, fname, var_dict, ret):
             print("LINE")
         
         strExcept = str1 = ''.join(exceptions)
-        exceptions_head = re.findall(r'^(.*?)Exception', strExcept, re.M)
+        exceptions_head = re.findall(r'^(.+?Exception)', strExcept, re.M)
         
         msgBody["timestamp"] = datetime.now().replace(microsecond=0).isoformat()
         msgBody["mr"] = "MRConsistentEmergencyResponse"
@@ -202,12 +232,13 @@ def checkMRConsistentEmergencyResponse(index, host, fname, var_dict, ret):
             print("LINE")
         
         strExcept = str1 = ''.join(exceptions)
-        exceptions_head = re.findall(r'^(.*?)Exception', strExcept, re.M)
+        exceptions_head = re.findall(r'^(.+?Exception)', strExcept, re.M)
         
         msgBody["timestamp"] = datetime.now().replace(microsecond=0).isoformat()
         msgBody["mr"] = "MRConsistentEmergencyResponse"
         msgBody["result"] = "FAILED_DUE_TO_HANG"
-        msgBody["exception_head"] = exceptions_head[0]
+        if (exceptions_head):
+            msgBody["exception_head"] = exceptions_head[0]
         msgBody["exception_body"] = strExcept
         msgBody["test_indexname"] = index
         
@@ -271,7 +302,7 @@ def main():
     #     thread.join()
     
     # "MRConsistentPowerRegulation" | "MRConsistentReliabilityThreshold"
-    runTests(50,1, "MRConsistentEmergencyResponse")
+    runTests(30,1, "MRConsistentEmergencyResponse")
 
     # checkMRConsistentReliabilityThreshold(index="smartgrid-2021-05-10t01.53.54.282694", host="192.168.25.19")
     # checkMRConsistentPowerRegulation('smartgridsos')

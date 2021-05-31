@@ -290,7 +290,7 @@ public class SoSSimulationProgram implements KeyListener {
 
     //counter to log every x frames
     int log_counter = 0;
-    int x_frame = (MAX_FRAME_COUNT/10/10)+1;
+    int x_frame = (MAX_FRAME_COUNT/10)+1;
 
     // Upodate 실행하는 함수
     protected void update(int deltaTime, Log log){
