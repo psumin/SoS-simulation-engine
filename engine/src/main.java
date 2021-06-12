@@ -8,6 +8,9 @@ import verifier.SPRT;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class main {
     private static Settings settingsInstance = Settings.getSettingsInstance();
@@ -79,12 +82,27 @@ public class main {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                } else if (arguments.equalsIgnoreCase("-stimulus")) {
+                    parsed.add(args[i]);
+                    Matcher m = Pattern.compile("\\((.*?)\\)").matcher(Arrays.toString(args));
+                    String subArgs = "";
+                    while (m.find()) {
+                        subArgs = m.group(1);
+                    }
+                    settingsInstance.setStimulus(subArgs);
+
+                    String[] split = subArgs.split(",");
+                    for (String s:split){
+                        parsed.add(s);
+                    }
                 }
             }
         }
         if (parsed.size() != args.length) {
             System.out.println("SOME ARGS NOT RECOGNISED!");
+            System.out.print("parsed:" + parsed.size() + " args:" + args.length);
         }
+
         //runtime init args parse code END
 
         //verification code START

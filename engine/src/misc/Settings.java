@@ -11,7 +11,8 @@ public class Settings {
     private int maxAmbulance = 4;
     private int maxBridgehead = 4;
     private int maxFrameCount = 800;
-    private boolean expertMode = false;
+    private boolean expertMode = true;
+    private String stimulus = "";
 
     //Elastic Flags
     private boolean useElastic = false;
@@ -55,6 +56,8 @@ public class Settings {
 
     public int getMaxFrameCount() { return maxFrameCount; }
 
+    public String getStimulus() { return stimulus; }
+
     public void setMaxPatient(int maxPatient) {
         this.maxPatient = maxPatient;
     }
@@ -78,4 +81,6 @@ public class Settings {
     public void setExpertMode(boolean expertMode){ this.expertMode = expertMode; }
 
     public void setMaxFrameCount(int maxFrameCount){ this.maxFrameCount = maxFrameCount; }
+
+    public void setStimulus(String stimulus){ this.stimulus = stimulus; }
 }

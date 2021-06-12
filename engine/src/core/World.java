@@ -201,6 +201,7 @@ public class World extends SoSObject {
 
         createObjects();
 
+        //feed stimulus here
         // static stimulus injection technique
 //        writeScenario();          // old version
 //        writeScenario1();         // baseline
@@ -313,6 +314,7 @@ public class World extends SoSObject {
             }
         }
 
+        addStimulus();
 
     }
 
@@ -468,6 +470,7 @@ public class World extends SoSObject {
             logArgs.put("patients_saved", String.valueOf(savedPatientCount));
             logArgs.put("patients_total", String.valueOf(patients.size()));
             logArgs.put("patients_allsaved", "false");
+            logArgs.put("frame_count", String.valueOf(frameCount));
             elasticHelperInstance.indexLogs(this.getClass(), logArgs);
             canUpdate(false);
             return;
@@ -482,6 +485,7 @@ public class World extends SoSObject {
             logArgs.put("patients_saved", String.valueOf(savedPatientCount));
             logArgs.put("patients_total", String.valueOf(patients.size()));
             logArgs.put("patients_allsaved", "true");
+            logArgs.put("frame_count", String.valueOf(frameCount));
             elasticHelperInstance.indexLogs(this.getClass(), logArgs);
             canUpdate(false);
 //            endTime = System.currentTimeMillis();
@@ -789,6 +793,31 @@ public class World extends SoSObject {
         }
     }
 
+    private void addStimulus() {
+        Settings settings = Settings.getSettingsInstance();
+        String stimulus = settings.getStimulus();
+
+        if (!stimulus.isEmpty()) {
+            LOGGER.info(stimulus);
+            if (stimulus.contains("all")) {
+                if (stimulus.contains("speed")) {
+                    String[] subArgs = stimulus.split(",");
+                    Object speed = Integer.parseInt(subArgs[subArgs.length-1].trim());
+                    int frame = Integer.parseInt(subArgs[subArgs.length-2].trim());
+                    if (stimulus.contains("firefighter")) {
+                        String message = "Speed: " + speed.toString() + " frame: " + frame;
+                        LOGGER.info(message);
+                        interSpeedAllFF(frame, speed);
+                    } else if (stimulus.contains("ambulance")) {
+                        String message = "Speed: " + speed.toString() + " frame: " + frame;
+                        LOGGER.info(message);
+                        interSpeedAllAmb(frame, speed);
+                    }
+                }
+            }
+        }
+
+    }
 
     private void writeScenario() {
 
