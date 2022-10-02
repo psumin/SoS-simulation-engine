@@ -18,7 +18,7 @@ public class main {
         //ComfortZoneChecker comfortZoneChecker = new ComfortZoneChecker();
 
         // Existence
-        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
+        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.8);
         // Absence
 //        property.setThresholdValue(0); // RescueRate - TreatmentRate
         // Universality
@@ -63,7 +63,7 @@ public class main {
 
 //        verifier = new SPRT(comfortZoneChecker);
 
-//        verifier = new SPRT(existenceChecker);
+        verifier = new SPRT(existenceChecker);
 //        verifier = new SPRT(absenceChecker);
 //        verifier = new SPRT(universalityChecker);
 //        verifier = new SPRT(transientSPChecker);
@@ -74,7 +74,7 @@ public class main {
 //        verifier = new SPRT(precedenceChecker);
 //        verifier = new SPRT(responseChecker);
 //        verifier = new SPRT(recurrenceChecker);
-        verifier = new SPRT(untilChecker);
+//        verifier = new SPRT(untilChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();

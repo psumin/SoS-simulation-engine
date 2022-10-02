@@ -50,8 +50,8 @@ public class MCIUntilChecker extends UntilChecker {
             }
         }
         
-        System.out.println("FF Free State Check Table");
-        System.out.println(prevList);
+//        System.out.println("FF Free State Check Table");
+//        System.out.println(prevList);
 
         for(int i = 0; i < 12; i++) {
             if(prevList.get(i) != -1) { return false; }

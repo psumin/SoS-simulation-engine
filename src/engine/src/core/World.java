@@ -1317,7 +1317,7 @@ public class World extends SoSObject {
 
         stimuli.add(new Speed(this, 300, new Range(8, 8, 26, 26), 4.0f));      // smoke 시작 4층 위로
         stimuli.add(new Speed(this, 400, new Range(8, 8, 26, 26), 6.0f));
-        stimuli.add(new Speed(this, 450, new Range(8, 8, 26, 26), 100.0f));
+        stimuli.add(new Speed(this, 450, new Range(8, 8, 26, 26), 9.0f));
 //        stimuli.add(new Speed(this, 2130, new Range(8, 8, 26, 26), 9.0f));      // 4층 위로 fire
 //
 //        stimuli.add(new Speed(this, 2415, new Range(8, 8, 26, 26), 6.0f));      // 100 frame 부터 16, 16, 48, 48 위치에서 이속 감소 (3배 감소)
@@ -1402,11 +1402,11 @@ public class World extends SoSObject {
 
 
 
-        stimuli.add(new RemoveEntity(this, 300, "FF1", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 400, "FF2", this::removeCS));
-
-        stimuli.add(new RemoveEntity(this, 300, "Ambulance1", this::removeCS));
-        stimuli.add(new RemoveEntity(this, 400, "Ambulance2", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 300, "FF1", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 400, "FF2", this::removeCS));
+//
+//        stimuli.add(new RemoveEntity(this, 300, "Ambulance1", this::removeCS));
+//        stimuli.add(new RemoveEntity(this, 400, "Ambulance2", this::removeCS));
 
 
 //        for (int i = 0; i < 15; i++) {
