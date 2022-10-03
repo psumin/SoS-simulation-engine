@@ -29,7 +29,7 @@ public class AmbulanceMoveToBridgehead extends AmbulanceAction {
     // Move to the Bridgehead
     public void onUpdate() {
         ambulance.moveTo(bridgehead.position);
-        if(ambulance.isArrivedAt(bridgehead.position)) {
+        if(!ambulance.isArrivedAt(bridgehead.position)) {
 
             Hospital nearestHospital = (Hospital)ambulance.nearestObject(new ArrayList<>(world.hospitals));
             Patient patient = bridgehead.getPatient(Patient.Status.Serious);          // Serious patient first
