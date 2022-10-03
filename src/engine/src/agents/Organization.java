@@ -61,7 +61,7 @@ public class Organization extends CS {
     }
 
     private void patientArrivedAtBridgehead(Msg msg) {
-        if(freeStateAmbulances.isEmpty()) {
+        if(!freeStateAmbulances.isEmpty()) {
             msgsFromBridgehead.add(msg);
         } else {
             Bridgehead bridgehead = (Bridgehead)msg.data;

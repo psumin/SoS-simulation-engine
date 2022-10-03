@@ -114,7 +114,7 @@ public class World extends SoSObject {
     // Initial Values
 //    public static final int maxPatient = 294;
 //    public static final int maxPatient = 223;                // 223
-        public static final int maxPatient = 130;
+        public static final int maxPatient = 120;
 //    public static final int maxPatient = 65;
     public static final int maxFireFighter = 4;            // 4
     public static final int maxHospital = 4;
@@ -384,7 +384,7 @@ public class World extends SoSObject {
 //            if(i == 0){
 //                hospital.setCapacity(2);
 //            } else {
-            hospital.setCapacity(8);
+            hospital.setCapacity(10);
 //            }
         }
         hospitals.get(0).setPosition(0, 0);
