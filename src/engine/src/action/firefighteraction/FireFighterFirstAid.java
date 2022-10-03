@@ -35,7 +35,7 @@ public class FireFighterFirstAid extends FireFighterAction {
     @Override
     public void onUpdate() {
 
-        if(targetPatient.assignedFireFighter != fireFighter) {          // If there is another Firefighter at the target patient, change the action to "Search"
+        if(targetPatient.assignedFireFighter == fireFighter) {          // If there is another Firefighter at the target patient, change the action to "Search"
             fireFighter.changeAction(new FireFighterSearch(fireFighter));
             fireFighter.defaultImage.visible(true);
             fireFighter.firstAid.visible(false);
