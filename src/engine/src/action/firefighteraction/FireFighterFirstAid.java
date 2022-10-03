@@ -35,7 +35,7 @@ public class FireFighterFirstAid extends FireFighterAction {
     @Override
     public void onUpdate() {
 
-        if(targetPatient.assignedFireFighter == fireFighter) {          // If there is another Firefighter at the target patient, change the action to "Search"
+        if(targetPatient.assignedFireFighter != fireFighter) {          // If there is another Firefighter at the target patient, change the action to "Search"
             fireFighter.changeAction(new FireFighterSearch(fireFighter));
             fireFighter.defaultImage.visible(true);
             fireFighter.firstAid.visible(false);
@@ -51,7 +51,8 @@ public class FireFighterFirstAid extends FireFighterAction {
 
         if(frameCounter <= 0) {                                         // After First Aid, transfer the patient
             world.removeChild(targetPatient);
-            fireFighter.changeAction(new FireFighterSelectTransferDestination(fireFighter, targetPatient));
+//            fireFighter.changeAction(new FireFighterSelectTransferDestination(fireFighter, targetPatient));
+            fireFighter.changeAction(new FireFighterSearch(fireFighter));
             fireFighter.transferImage.visible(true);
             fireFighter.firstAid.visible(false);
         }
