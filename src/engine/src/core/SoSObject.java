@@ -1,5 +1,6 @@
 package core;
 
+import agents.Hospital;
 import misc.Position;
 
 import java.awt.*;
@@ -192,6 +193,8 @@ public abstract class SoSObject {
                 minObject = object;
             } else {
                 if(distanceBetween(this, minObject) >= distanceBetween(this, object)) {
+//                    Hospital hospital = (Hospital) object;
+//                    if (hospital.isAvailable())
                     minObject = object;
                 }
             }
