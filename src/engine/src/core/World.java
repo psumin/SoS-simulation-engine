@@ -1168,9 +1168,9 @@ public class World extends SoSObject {
 //        stimuli.add(new SightRange(this, 600, firefighterNames, 1));                    // 특정 frame count 이후 전체 FF의 sight range 변화
         //stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.3f));      // smoke 시작 4층 위로
 
-        stimuli.add(new SightRange(this, 300, new Range(8, 8, 26, 26), 0.6f));
-        stimuli.add(new SightRange(this, 400, new Range(8, 8, 26, 26), 0.3f));
-        stimuli.add(new SightRange(this, 450, new Range(8, 8, 26, 26), 0.6f));
+//        stimuli.add(new SightRange(this, 300, new Range(8, 8, 26, 26), 0.6f));
+//        stimuli.add(new SightRange(this, 400, new Range(8, 8, 26, 26), 0.3f));
+//        stimuli.add(new SightRange(this, 450, new Range(8, 8, 26, 26), 0.6f));
 //        stimuli.add(new SightRange(this, 600, new Range(8, 8, 26, 26), 0.6f));
 //        stimuli.add(new SightRange(this, 2130, new Range(8, 8, 26, 26), 0.3f));      // 4층 위로 fire
 //
@@ -1201,16 +1201,16 @@ public class World extends SoSObject {
 //        stimuli.add(new Injury(this, 100, "FF6"));
 //
 //        // TODO: remove FireFighter
-//        stimuli.add(new RemoveEntity(this, 600, "FF1", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 600, "FF2", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 600, "FF3", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 600, "FF4", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 600, "FF5", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 600, "FF6", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 600, "FF7", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 600, "FF8", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 600, "FF9", this::removeCS));
-//        stimuli.add(new RemoveEntity(this, 600, "FF10", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 600, "FF1", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 600, "FF2", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 600, "FF3", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 600, "FF4", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 600, "FF5", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 600, "FF6", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 600, "FF7", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 600, "FF8", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 600, "FF9", this::removeCS));
+        stimuli.add(new RemoveEntity(this, 600, "FF10", this::removeCS));
 
 
 //
@@ -1235,12 +1235,12 @@ public class World extends SoSObject {
             stimuli.add(new AddEntity(this, 400, this::addFireFighter));
         }
 
-//        for (int i = 0; i < 15; i++) {
-//            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
-//        }
-//        for(int i = 0; i < 10; i++) {
-//            stimuli.add(new AddEntity(this, 600, this::addFireFighter));
-//        }
+        for (int i = 0; i < 15; i++) {
+            stimuli.add(new AddEntity(this, 495, this::addFireFighter));
+        }
+        for(int i = 0; i < 10; i++) {
+            stimuli.add(new AddEntity(this, 600, this::addFireFighter));
+        }
 
         // TODO: add Ambulance
         for(int i = 0; i < 2; i++) {
