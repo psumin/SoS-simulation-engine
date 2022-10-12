@@ -1182,14 +1182,14 @@ public class World extends SoSObject {
 
 
 ////        // TODO: communicationRange (FF 관련)     range는 그냥 default로 유지됐다고 가정
-//        stimuli.add(new CommunicationRange(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
-//        stimuli.add(new CommunicationRange(this, 800, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
-//        stimuli.add(new CommunicationRange(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 communication range 변화
+        stimuli.add(new CommunicationRange(this, 100, "FF1", 7));                               // 특정 frame count 이후 FF1의 communication range 변화
+        stimuli.add(new CommunicationRange(this, 800, firefighterNames, 7));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+        stimuli.add(new CommunicationRange(this, 10, new Range(0, 0, 10, 10), 5.0f));           // 특정 frame count 이후 특정 구역의 communication range 변화
 
 
-//        stimuli.add(new CommunicationRange(this, 600, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 communication range 변화
-//        stimuli.add(new CommunicationRange(this, 1000, firefighterNames, 3));
-//        stimuli.add(new CommunicationRange(this, 2130, firefighterNames, 1));
+        stimuli.add(new CommunicationRange(this, 600, firefighterNames, 3));                    // 특정 frame count 이후 전체 FF의 communication range 변화
+        stimuli.add(new CommunicationRange(this, 1000, firefighterNames, 3));
+        stimuli.add(new CommunicationRange(this, 2130, firefighterNames, 1));
 
 
 //        // TODO: FireFighter => Patient
@@ -1280,12 +1280,12 @@ public class World extends SoSObject {
 
         // TODO: Msg Loss 없었다고 가정하자.
         // CS && CS
-        router.add(new Loss(2130, 3000, "FF", "FF"));
-        router.add(new Loss(2130, 3000, "ALL", "ALL"));
-        router.add(new Loss(1, 3000, "FF", "FF"));
-        router.add(new Loss(1, 20, "FF", "FF"));
-        router.add(new Loss(10, 200, "All", "All"));
-        router.add(new Loss(1, 20, "Ambulance", "Org"));
+//        router.add(new Loss(2130, 3000, "FF", "FF"));
+//        router.add(new Loss(2130, 3000, "ALL", "ALL"));
+//        router.add(new Loss(1, 3000, "FF", "FF"));
+//        router.add(new Loss(1, 20, "FF", "FF"));
+//        router.add(new Loss(10, 200, "All", "All"));
+//        router.add(new Loss(1, 20, "Ambulance", "Org"));
 
 //        // Entity && CS
 //        router.add(new Loss(1, 20, "FF1", "FF"));
