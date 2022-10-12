@@ -1253,19 +1253,19 @@ public class World extends SoSObject {
 
 //        // TODO: Msg Delay
 //        // CS && CS
-        router.add(new Delay(900, 2130, "FF", "FF", 75));
-        router.add(new Delay(200, 400, "FF", "FF", 75));
-        router.add(new Delay(2130, 2655, "FF", "FF", 150));     // 10분간 delay
-
-
-        router.add(new Delay(600, 2655, "FF", "FF", 100));       // 5분간 delay
-
-
-        router.add(new Loss(900, 2130, "FF", "FF"));
-        router.add(new Loss(2130, 2655, "FF", "FF"));
-        router.add(new Delay(10, 100, "FF", "FF", 20));
-        router.add(new Delay(10, 200, "All", "ALL", 20));
-        router.add(new Delay(1, 20,"Ambulance", "Org", 20));
+//        router.add(new Delay(900, 2130, "FF", "FF", 75));
+//        router.add(new Delay(200, 400, "FF", "FF", 75));
+//        router.add(new Delay(2130, 2655, "FF", "FF", 150));     // 10분간 delay
+//
+//
+//        router.add(new Delay(600, 2655, "FF", "FF", 100));       // 5분간 delay
+//
+//
+//        router.add(new Loss(900, 2130, "FF", "FF"));
+//        router.add(new Loss(2130, 2655, "FF", "FF"));
+//        router.add(new Delay(10, 100, "FF", "FF", 20));
+//        router.add(new Delay(10, 200, "All", "ALL", 20));
+//        router.add(new Delay(1, 20,"Ambulance", "Org", 20));
 
 //        // Entity && CS
 //        router.add(new Delay(1, 20, "FF1", "FF", 20));
@@ -1280,13 +1280,13 @@ public class World extends SoSObject {
 
         // TODO: Msg Loss 없었다고 가정하자.
         // CS && CS
-//        router.add(new Loss(2130, 3000, "FF", "FF"));
-//        router.add(new Loss(2130, 3000, "ALL", "ALL"));
-//        router.add(new Loss(1, 3000, "FF", "FF"));
-//        router.add(new Loss(1, 20, "FF", "FF"));
-//        router.add(new Loss(10, 200, "All", "All"));
-//        router.add(new Loss(1, 20, "Ambulance", "Org"));
-//
+        router.add(new Loss(2130, 3000, "FF", "FF"));
+        router.add(new Loss(2130, 3000, "ALL", "ALL"));
+        router.add(new Loss(1, 3000, "FF", "FF"));
+        router.add(new Loss(1, 20, "FF", "FF"));
+        router.add(new Loss(10, 200, "All", "All"));
+        router.add(new Loss(1, 20, "Ambulance", "Org"));
+
 //        // Entity && CS
 //        router.add(new Loss(1, 20, "FF1", "FF"));
 //        router.add(new Loss(1, 20, "Ambulance1", "Org"));
